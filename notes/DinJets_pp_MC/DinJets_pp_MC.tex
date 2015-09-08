@@ -1,15 +1,9 @@
 \documentclass[ALICE,manyauthors]{ALICE_analysis_notes}
 %
-%\newcommand{\jpsi}{\rm J/$\psi$}
-%\newcommand{\psip}{$\psi^\prime$}
-%\newcommand{\jpsiDY}{\rm J/$\psi$\,/\,DY}
-%\newcommand{\dd}{\mathrm{d}}
-%\newcommand{\chic}{$\chi_{\rm c}$}
-%\newcommand{\ezdc}{$E_{\rm ZDC}$}
-%\newcommand{\red}{\textcolor{red}}
-%\newcommand{\blue}{\textcolor{blue}}
-\newcommand{\slfrac}[2]{\left.#1\right/#2}
+\input{commands}
+
 \usepackage{rotating}
+\usepackage{listings}
 %
 \begin{document}%
 %%%%%%%%%%%%% ptdr definitions %%%%%%%%%%%%%%%%%%%%%
@@ -22,22 +16,27 @@
 \PHdate{\today}
 %
 %%% Put your own title + short title here:
-\title{My analysis note}
-\ShortTitle{My analysis note}   % appears on right page headers
+\title{D mesons in jets in pp collisions at $\sqrt{s}=7$~TeV: simulation figures for Quark Matter 2015}
+\ShortTitle{D mesons in jets in pp collisions: simulation figures}   % appears on right page headers
 %
 \author{Salvatore Aiola$^{1}$}
 \author{
-1. Yale University\\
+1. Yale University, New Haven, CT, USA\\
 }
 \author{Email: salvatore.aiola@yale.edu}
 %
 \ShortAuthor{ALICE Analysis Note 2012}      % appears on left page headers, do not change
 %
 \begin{abstract}
-Here goes your abstract
+D mesons come from the fragmentation of charm quark, thus providing an excellent way to tag charm jets.
+The aim of this analysis is to study the fragmentation function of D mesons in jets produced in pp collisions.
+All the results shown in this document come from a PYTHIA \pp\ simulation at $\sqrt{s}=7$~TeV anchored to
+the \pp\ data collected in 2010.
+This document contains some details about the simulation figures prepared for the Quark Matter 2015 conference.
 \end{abstract}
 \end{titlepage}
 %
-%\input{alice_mynote.tex}               %%%%%%%%%%% put the body of the article here
-
+\tableofcontents
+\newpage
+\input{content.tex}               %%%%%%%%%%% put the body of the article here
 \end{document}
