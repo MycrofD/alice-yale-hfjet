@@ -7,7 +7,8 @@ In addition all D mesons are forced to decay hadronically. The tune used in the 
 {\fontfamily{\ttdefault}kPyBeautyppMNRwmi} process.
 The total number of analyzed events is 28.5 M. Results shown below come from the LEGO train Jets\_EMC\_pp\_MC, run n. 508.
 \section{Overview of the analysis}
-The \Dzero\ meson candidates are selected using the ``standard 2010 pp'' cuts, which are accessed through the static method AliRDHFCuts::SetStandardCutsPP2010(). Background is completely rejected by selecting only candidates that
+The \Dzero\ meson candidates are selected using the ``standard 2010 pp'' cuts, which are accessed through the static method AliRDHFCuts::SetStandardCutsPP2010(). 
+Background is completely rejected by selecting only candidates that
 have a MC label corresponding to a true generator-level \Dzero. In order to prepare the input for the jet finder, the daughters of the \Dzero\ mesons are 
 removed from the charged particle collection (generator level) and from the track collection (detector level). The \Dzero\ particles and the \Dzero\ candidates are
 added respectively to the charged particle collection and to the track collection. These collections are then used as inputs for the jet finder.
@@ -72,6 +73,7 @@ this efficiency.
 %%%%
 Figure~\ref{fig:D0_Full_R060_ResponseMatrix_JetPt_Z_20_100_DPt_01_30_Norm} shows the response matrix (\ptchjetgen, \ptchjetdet), obtained by
 projecting the 4-dimensional response matrix (\zpargen, \ptchjetgen, \zpardet, \ptchjetdet), i.e. integrating in both \zpargen and \zpardet.
+The response matrix is normalized such that the integral of each y-axis slice (including overflow bins) is unity.
 \begin{figure}[tbh]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{img/D0_Full_R060_ResponseMatrix_JetPt_Z_20_100_DPt_01_30_Norm}
@@ -85,6 +87,7 @@ projecting the 4-dimensional response matrix (\zpargen, \ptchjetgen, \zpardet, \
 Figure~\ref{fig:D0_Full_R060_ResponseMatrix_Z_JetPt_5_8_DPt_01_30_Norm} shows the response matrix (\zpargen and \zpardet), obtained by
 projecting the 4-dimensional response matrix (\zpargen, \ptchjetgen, \zpardet, \ptchjetdet), i.e. integrating in $5<\ptchjetgen<8$~\GeVc\ and in  \ptchjetdet over the
 full range.
+The response matrix is normalized such that the integral of each y-axis slice (including overflow bins) is unity.
 \begin{figure}[tbh]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{img/D0_Full_R060_ResponseMatrix_Z_JetPt_5_8_DPt_01_30_Norm}
