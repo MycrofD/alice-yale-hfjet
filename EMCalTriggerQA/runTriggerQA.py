@@ -5,12 +5,13 @@ import ROOT
 import argparse
 from ROOT import gROOT
 from enum import Enum
+import array
 
 import IPython
 
 globalList = []
 
-ADCtoGeV = 0.018970588 * 4  # 0.075882352
+ADCtoGeV = 0.018970588 * 4 
 
 class Axis(Enum):
     GeV = 1
@@ -120,14 +121,116 @@ def PlotPatchAmp(hname, variable, offline, recalc, patchtype, patchsize, hlist, 
         
     return canvas
 
-def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch =True, GAvsJEpatch=True, 
+def PlotNHits(hlist, hname, nevents, nhitsTh):
+    #geom = ROOT.AliEMCALGeometry.GetInstanceFromRunNumber(237673)
+    
+    canvas = ROOT.TCanvas("FastORNHits", "FastORNHits")
+    canvas.SetLogy()
+    hist = hlist.FindObject(hname)
+    if not hist:
+        print "Could not get histogram '" + hname + "' in list '" + hlist.GetName() + "'. Skipping..."
+        hlist.Print()
+        return
+    
+    histNHits = ROOT.TH1D("FastORNHits", "FastORNHits;number of hits per event;probability", 1500, 0, 1.5)
+    
+    f = open('badchannels.txt', 'w')
+    
+    #col = array.array('i', [-1])
+    #row = array.array('i', [-1])
+    for i in range(1, hist.GetNbinsX()):
+        nhits = hist.GetBinContent(i) / nevents
+        histNHits.Fill(nhits)
+        if nhits > nhitsTh:
+            #geom.GetPositionInEMCALFromAbsFastORIndex(i-1, col, row)
+            #f.write(str(col[0]) + " " + str(row[0]) + '\n')
+            f.write(str(i-1) + '\n')
+        
+    f.close()
+    canvas.cd()
+    histNHits.GetXaxis().SetRangeUser(0,1.01)
+    histNHits.Draw()
+    globalList.append(canvas)
+    globalList.append(histNHits)
+    
+    return canvas
+
+def GeneratePedestal(hlist, hname, nevents, nhitsTh, controlPlots):
+    canvas = ROOT.TCanvas("PedestalCanvas", "PedestalCanvas")
+    canvas2 = ROOT.TCanvas("BadChannels", "BadChannels")
+    canvas2.SetLogy()
+    
+    hist = hlist.FindObject(hname)
+    if not hist:
+        print "Could not get histogram '" + hname + "' in list '" + hlist.GetName() + "'. Skipping..."
+        hlist.Print()
+        return
+
+    histPedestal = ROOT.TH1D("Pedestal", "Pedestal;FastOR abs. ID;ADC counts", 5000, 0, 5000)
+    
+    f = open('pedestal.txt', 'w')
+    
+    iplots = 0;
+    
+    hist.Sumw2()
+    proj = hist.ProjectionY(hist.GetName() + "_projAll", 0, -1)
+    canvas2.cd()
+    proj.SetMarkerColor(ROOT.kBlack)
+    proj.SetLineColor(ROOT.kBlack)
+    proj.SetMarkerStyle(ROOT.kFullCircle)
+    proj.SetMarkerSize(0.9)
+    proj.Scale(1. / proj.Integral())
+    proj.Draw()
+    proj.GetXaxis().SetRangeUser(0, 150)
+    globalList.append(proj)
+    
+    colors = (ROOT.kRed+1, ROOT.kBlue+1, ROOT.kOrange+1, ROOT.kGreen+1, ROOT.kMagenta+1, ROOT.kCyan+1, ROOT.kPink+1, ROOT.kTeal+1, ROOT.kYellow+1, ROOT.kSpring+1)
+    
+    for i in range(1, hist.GetNbinsX()):
+        if iplots < 10 and i-1 in controlPlots:
+            proj = hist.ProjectionY(hist.GetName() + "_proj" + str(i-1), i, i)
+            canvas2.cd()
+            proj.SetMarkerColor(colors[iplots])
+            proj.SetLineColor(colors[iplots])
+            proj.SetMarkerStyle(ROOT.kOpenCircle)
+            proj.SetMarkerSize(0.9)
+            proj.Scale(1. / proj.Integral())
+            proj.Draw("same")
+            globalList.append(proj)
+            iplots += 1
+        
+        ped = 0
+        for j in range(1, hist.GetNbinsY()):
+            nhits = hist.GetBinContent(i, j) / nevents
+            if nhits > nhitsTh:
+                ped = hist.GetYaxis().GetBinLowEdge(j)
+        histPedestal.SetBinContent(i, ped)
+        f.write(str(ped) + '\n')
+
+    f.close()
+    canvas.cd()
+    histPedestal.GetXaxis().SetRangeUser(0, 4500)
+    histPedestal.Draw()
+    globalList.append(canvas)
+    globalList.append(canvas2)
+    globalList.append(histPedestal)
+    
+    return canvas
+
+def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch =True, GAvsJEpatch=True, pedestal=True,
          axis="ADC", run="237673", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     
     ROOT.TH1.AddDirectory(False)
     ROOT.gStyle.SetOptTitle(False)
     ROOT.gStyle.SetOptStat(0)
     
-    fileName = inputPath + "/" + train + "/AnalysisResults_" + run + "_" + jetsize + ".root"
+    fileName = inputPath + "/" + train + "/AnalysisResults"
+    if run:
+        fileName += "_" + run 
+    if jetsize:
+        fileName += "_" + jetsize    
+    fileName += ".root"
+    
     listName = "AliEmcalTriggerQATaskPP_" + trigger + "_histos"
     hlistName = "histos" + "AliEmcalTriggerQATaskPP_" + trigger
     #hlistName = "histos" + "AliEmcalTriggerQATaskPP_" + trigger
@@ -212,7 +315,16 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
         if recalc:
             canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", thresholds_JE, thresholds_GA, nevents, eaxis)
             canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Recalc.pdf")
-
+            
+    if pedestal:
+        canvas = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 0.01)
+        canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
+        
+        controlPlots = [40, 299, 320, 442, 608, 644, 734, 920, 1006, 1683]
+        
+        canvas = GeneratePedestal(hlist, "EMCTRQA_histFastORL0Amp", nevents, 0.01, controlPlots)
+        canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
+        
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='EMCal trigger QA.')
@@ -236,20 +348,23 @@ if __name__ == '__main__':
     parser.add_argument('--GAvsJEpatch', action='store_const',
                         default=False, const=True,
                         help='GA vs JE patch')
+    parser.add_argument('--pedestal', action='store_const',
+                        default=False, const=True,
+                        help='Run pedestal analysis')
     parser.add_argument('--axis', metavar='axis',
                         default="ADC",
                         help='Axis type (GeV or ADC)')
     parser.add_argument('--run', metavar='run',
-                        default="237673",
+                        default="",
                         help='Run number')
     parser.add_argument('--size', metavar='size',
-                        default="16x16",
+                        default="",
                         help='Jet patch size')
     parser.add_argument('--input-path', metavar='input-path',
                         default="/Users/sa639/Documents/Work/ALICE/TriggerQA",
                         help='Input path')
     args = parser.parse_args()
     
-    main(args.train, args.trigger, args.offline, args.recalc, args.GApatch, args.JEpatch, args.GAvsJEpatch, args.axis, args.run, args.size, args.input_path)
+    main(args.train, args.trigger, args.offline, args.recalc, args.GApatch, args.JEpatch, args.GAvsJEpatch, args.pedestal, args.axis, args.run, args.size, args.input_path)
     
     IPython.embed()
