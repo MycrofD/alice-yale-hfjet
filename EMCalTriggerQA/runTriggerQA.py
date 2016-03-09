@@ -48,15 +48,51 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
     totEntries = hist.GetEntries()
     print "Total number of entries is", totEntries
     
-    for th1,th2 in zip(thresholds1, thresholds2):
+    colors = (ROOT.kBlack, ROOT.kRed+1, ROOT.kBlue+1, ROOT.kOrange+1, ROOT.kGreen+1, ROOT.kMagenta+1, ROOT.kCyan+1, ROOT.kPink+1, ROOT.kTeal+1, ROOT.kYellow+1, ROOT.kSpring+1)
+    projList = []
+    ratioList = []
+    canvasProj = ROOT.TCanvas(hname + "_proj", hname + "_proj")
+    canvasProj.SetLogy()
+    canvasRatio = ROOT.TCanvas(hname + "_ratio", hname + "_ratio")
+    globalList.append(projList)
+    globalList.append(ratioList)
+    globalList.append(canvasProj)
+    globalList.append(canvasRatio)
+    
+    ith = 0
+    for th1 in thresholds1:
         if axis is Axis.ADC:
             th1 /= ADCtoGeV
-            th2 /= ADCtoGeV
-            
-        entries = hist.Integral(hist.GetXaxis().FindBin(th1), -1, hist.GetXaxis().FindBin(th2), -1)
-        suppression = entries / nevents
         
-        print str(th1) + ";" + str(th2) + ";" + str(entries) + ";" + str(suppression)
+        proj = hist.ProjectionX(hname + "_proj_" + str(th1), hist.GetYaxis().FindBin(th1), hist.GetNbinsY()+1)
+        proj.Rebin(11)
+        proj.SetTitle("L0 " + str(th1) + " GeV")
+        projList.append(proj)
+        canvasProj.cd()
+        proj.SetLineColor(colors[ith])
+        proj.SetLineWidth(2)
+        proj.SetLineStyle(ith+1)
+
+        if ith == 0: proj.Draw("lhist")
+        else: proj.Draw("lhistsame")
+        
+        ratio = proj.Clone(proj.GetName() + "_ratio")
+        ratio.Divide(projList[0])
+        ratioList.append(ratio)
+        canvasRatio.cd()
+        
+        if ith == 0: ratio.Draw("lhist")
+        else: ratio.Draw("lhistsame")
+        
+        for th2 in thresholds2:
+            if axis is Axis.ADC:
+                th2 /= ADCtoGeV
+                
+            entries = hist.Integral(hist.GetXaxis().FindBin(th2), -1, hist.GetYaxis().FindBin(th1), -1)
+            suppression = entries / nevents
+            print str(th1) + ";" + str(th2) + ";" + str(entries) + ";" + str(suppression)
+            
+        ith += 1
     
     return canvas
 
@@ -97,7 +133,6 @@ def Plot1D(hlist, hname, thresholds, nevents, color, marker, axis, canvas, opt, 
     return hist
         
 def PlotPatchAmp(hname, variable, offline, recalc, patchtype, patchsize, hlist, nevents, thresholds, eaxis, max):
-    
     canvas = ROOT.TCanvas(variable + patchtype + patchsize, variable + patchtype + patchsize)
     canvas.SetLogy()
     
@@ -122,8 +157,6 @@ def PlotPatchAmp(hname, variable, offline, recalc, patchtype, patchsize, hlist, 
     return canvas
 
 def PlotNHits(hlist, hname, nevents, nhitsTh):
-    #geom = ROOT.AliEMCALGeometry.GetInstanceFromRunNumber(237673)
-    
     canvas = ROOT.TCanvas("FastORNHits", "FastORNHits")
     canvas.SetLogy()
     hist = hlist.FindObject(hname)
@@ -135,15 +168,11 @@ def PlotNHits(hlist, hname, nevents, nhitsTh):
     histNHits = ROOT.TH1D("FastORNHits", "FastORNHits;number of hits per event;probability", 1500, 0, 1.5)
     
     f = open('badchannels.txt', 'w')
-    
-    #col = array.array('i', [-1])
-    #row = array.array('i', [-1])
+
     for i in range(1, hist.GetNbinsX()):
         nhits = hist.GetBinContent(i) / nevents
         histNHits.Fill(nhits)
         if nhits > nhitsTh:
-            #geom.GetPositionInEMCALFromAbsFastORIndex(i-1, col, row)
-            #f.write(str(col[0]) + " " + str(row[0]) + '\n')
             f.write(str(i-1) + '\n')
         
     f.close()
@@ -155,7 +184,7 @@ def PlotNHits(hlist, hname, nevents, nhitsTh):
     
     return canvas
 
-def GeneratePedestal(hlist, hname, nevents, nhitsTh, controlPlots):
+def GeneratePedestal(hlist, hname, nevents, nhitsTh):
     canvas = ROOT.TCanvas("PedestalCanvas", "PedestalCanvas")
     canvas2 = ROOT.TCanvas("BadChannels", "BadChannels")
     canvas2.SetLogy()
@@ -184,21 +213,7 @@ def GeneratePedestal(hlist, hname, nevents, nhitsTh, controlPlots):
     proj.GetXaxis().SetRangeUser(0, 150)
     globalList.append(proj)
     
-    colors = (ROOT.kRed+1, ROOT.kBlue+1, ROOT.kOrange+1, ROOT.kGreen+1, ROOT.kMagenta+1, ROOT.kCyan+1, ROOT.kPink+1, ROOT.kTeal+1, ROOT.kYellow+1, ROOT.kSpring+1)
-    
     for i in range(1, hist.GetNbinsX()):
-        if iplots < 10 and i-1 in controlPlots:
-            proj = hist.ProjectionY(hist.GetName() + "_proj" + str(i-1), i, i)
-            canvas2.cd()
-            proj.SetMarkerColor(colors[iplots])
-            proj.SetLineColor(colors[iplots])
-            proj.SetMarkerStyle(ROOT.kOpenCircle)
-            proj.SetMarkerSize(0.9)
-            proj.Scale(1. / proj.Integral())
-            proj.Draw("same")
-            globalList.append(proj)
-            iplots += 1
-        
         ped = 0
         for j in range(1, hist.GetNbinsY()):
             nhits = hist.GetBinContent(i, j) / nevents
@@ -217,7 +232,7 @@ def GeneratePedestal(hlist, hname, nevents, nhitsTh, controlPlots):
     
     return canvas
 
-def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch =True, GAvsJEpatch=True, pedestal=True,
+def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, pedestal=True,
          axis="ADC", run="237673", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     
     ROOT.TH1.AddDirectory(False)
@@ -231,9 +246,12 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
         fileName += "_" + jetsize    
     fileName += ".root"
     
-    listName = "AliEmcalTriggerQATaskPP_" + trigger + "_histos"
-    hlistName = "histos" + "AliEmcalTriggerQATaskPP_" + trigger
-    #hlistName = "histos" + "AliEmcalTriggerQATaskPP_" + trigger
+    if trigger:
+        listName = "AliEmcalTriggerQATaskPP_" + trigger + "_histos"
+        hlistName = "histosAliEmcalTriggerQATaskPP_" + trigger
+    else:
+        listName = "AliEmcalTriggerQATaskPP_histos"
+        hlistName = "histosAliEmcalTriggerQATaskPP"
     
     file = ROOT.TFile.Open(fileName);
     if not file:
@@ -256,8 +274,8 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
         print "Could not get hash list '" + hlistName + "' in list '" + listName + "' from file '" + fileName + "'! Aborting..."
         exit(1)
     
-    thresholds_GA = [3, 4,  5,  6,  7,  8,  9, 10]
-    thresholds_JE = [6, 8, 10, 12, 14, 16, 18, 20]
+    thresholds_GA = [0, 3, 4, 6, 8]
+    thresholds_JE = [5, 10, 15, 20]
     
     hEventsName = "fHistEventCount"
     hevents = list.FindObject(hEventsName)
@@ -309,20 +327,27 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
     
     if GAvsJEpatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", thresholds_JE, thresholds_GA, nevents, eaxis)
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis)
             canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Offline.pdf")
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", thresholds_JE, thresholds_GA, nevents, eaxis)
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis)
+            canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Recalc.pdf")
+            
+    if L0vsJEpatch:
+        if offline:
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", thresholds_JE, thresholds_GA, nevents, eaxis)
+            canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Offline.pdf")
+            
+        if recalc:
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", thresholds_JE, thresholds_GA, nevents, eaxis)
             canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Recalc.pdf")
             
     if pedestal:
         canvas = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 0.01)
         canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
         
-        controlPlots = [40, 299, 320, 442, 608, 644, 734, 920, 1006, 1683]
-        
-        canvas = GeneratePedestal(hlist, "EMCTRQA_histFastORL0Amp", nevents, 0.01, controlPlots)
+        canvas = GeneratePedestal(hlist, "EMCTRQA_histFastORL0Amp", nevents, 0.01)
         canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
         
 if __name__ == '__main__':
@@ -348,6 +373,9 @@ if __name__ == '__main__':
     parser.add_argument('--GAvsJEpatch', action='store_const',
                         default=False, const=True,
                         help='GA vs JE patch')
+    parser.add_argument('--L0vsJEpatch', action='store_const',
+                        default=False, const=True,
+                        help='L0 vs JE patch')
     parser.add_argument('--pedestal', action='store_const',
                         default=False, const=True,
                         help='Run pedestal analysis')
@@ -365,6 +393,6 @@ if __name__ == '__main__':
                         help='Input path')
     args = parser.parse_args()
     
-    main(args.train, args.trigger, args.offline, args.recalc, args.GApatch, args.JEpatch, args.GAvsJEpatch, args.pedestal, args.axis, args.run, args.size, args.input_path)
+    main(args.train, args.trigger, args.offline, args.recalc, args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.pedestal, args.axis, args.run, args.size, args.input_path)
     
     IPython.embed()
