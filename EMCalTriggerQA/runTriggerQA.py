@@ -59,6 +59,10 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
     globalList.append(canvasProj)
     globalList.append(canvasRatio)
     
+    legend = ROOT.TLegend(0.7, 0.67, 0.88, 0.88, "", "NBNDC")
+    legend.SetBorderSize(0)
+    globalList.append(legend)
+    
     ith = 0
     for th1 in thresholds1:
         if axis is Axis.ADC:
@@ -72,6 +76,8 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
         proj.SetLineColor(colors[ith])
         proj.SetLineWidth(2)
         proj.SetLineStyle(ith+1)
+        
+        legend.AddEntry(proj, proj.GetTitle(), "l")
 
         if ith == 0: proj.Draw("lhist")
         else: proj.Draw("lhistsame")
@@ -93,6 +99,12 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
             print str(th1) + ";" + str(th2) + ";" + str(entries) + ";" + str(suppression)
             
         ith += 1
+        
+    canvasRatio.cd()
+    legend.Draw()
+    
+    canvasProj.cd()
+    legend.Draw()
     
     return canvas
 
@@ -336,11 +348,11 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
             
     if L0vsJEpatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", thresholds_JE, thresholds_GA, nevents, eaxis)
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis)
             canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Offline.pdf")
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", thresholds_JE, thresholds_GA, nevents, eaxis)
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis)
             canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Recalc.pdf")
             
     if pedestal:
