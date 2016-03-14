@@ -245,18 +245,20 @@ def GeneratePedestal(hlist, hname, nevents, nhitsTh):
     return canvas
 
 def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, pedestal=True,
-         axis="ADC", run="237673", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
+         axis="ADC", run="", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
+    
+    suffix = ""
+    if run:
+        suffix += "_{0}".format(run)
+    if trigger:
+        suffix += "_{0}".format(trigger)
+    suffix += ".pdf"
     
     ROOT.TH1.AddDirectory(False)
     ROOT.gStyle.SetOptTitle(False)
     ROOT.gStyle.SetOptStat(0)
     
-    fileName = inputPath + "/" + train + "/AnalysisResults"
-    if run:
-        fileName += "_" + run 
-    if jetsize:
-        fileName += "_" + jetsize    
-    fileName += ".root"
+    fileName = "{0}/{1}/{2}/AnalysisResults.root".format(inputPath, train, run)
     
     if trigger:
         listName = "AliEmcalTriggerQATaskPP_" + trigger + "_histos"
@@ -315,10 +317,10 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
             recalcColor = -1
         
         canvas = PlotPatchAmp("EMCTRQA_histEMCal", "MaxPatchAmp", offlineColor, recalcColor, "GA", "2x2", hlist, nevents, thresholds_GA, eaxis, 50)
-        canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
+        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
         canvas = PlotPatchAmp("EMCTRQA_histEMCal", "PatchAmp", offlineColor, recalcColor, "GA", "2x2", hlist, nevents, [], eaxis, 50)
-        canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
+        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
     if JEpatch:
         if offline:
@@ -332,35 +334,35 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
             recalcColor = -1
             
         canvas = PlotPatchAmp("EMCTRQA_histEMCal", "MaxPatchAmp", offlineColor, recalcColor, "JE", jetsize, hlist, nevents, thresholds_JE, eaxis, 100)
-        canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
+        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
         canvas = PlotPatchAmp("EMCTRQA_histEMCal", "PatchAmp", offlineColor, recalcColor, "JE", jetsize, hlist, nevents, [], eaxis, 100)
-        canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
+        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
     
     if GAvsJEpatch:
         if offline:
             canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis)
-            canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Offline.pdf")
+            canvas.SaveAs("MaxGA2x2vsJE{0}_Offline{1}".format(jetsize, suffix))
             
         if recalc:
             canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis)
-            canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Recalc.pdf")
+            canvas.SaveAs("MaxGA2x2vsJE{0}_Recalc{1}".format(jetsize, suffix))
             
     if L0vsJEpatch:
         if offline:
             canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis)
-            canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Offline.pdf")
+            canvas.SaveAs("MaxL02x2vsJE{0}_Offline{1}".format(jetsize, suffix))
             
         if recalc:
             canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis)
-            canvas.SaveAs("MaxGA2x2vsJE" + jetsize + "_"+run+"_"+trigger+"_Recalc.pdf")
+            canvas.SaveAs("MaxL02x2vsJE{0}_Recalc{1}".format(jetsize, suffix))
             
     if pedestal:
         canvas = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 0.01)
-        canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
+        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
         canvas = GeneratePedestal(hlist, "EMCTRQA_histFastORL0Amp", nevents, 0.01)
-        canvas.SaveAs(canvas.GetName() + "_" + run + "_" + trigger + ".pdf")
+        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
 if __name__ == '__main__':
     
