@@ -17,7 +17,7 @@ class Axis(Enum):
     GeV = 1
     ADC = 2
     
-def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
+def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis, fname, suffix, maxX, maxY, rebin):
     hist = hlist.FindObject(hname)
     if not hist:
         print "Could not get histogram '" + hname + "' in list '" + hlist.GetName() + "'. Skipping..."
@@ -28,8 +28,6 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
     canvas.SetLogz()
     canvas.cd()
     
-    max = 100
-    
     if axis is Axis.GeV:
         hist.GetXaxis().SetLimits(hist.GetXaxis().GetXmin() * ADCtoGeV, hist.GetXaxis().GetXmax() * ADCtoGeV)
         hist.GetXaxis().SetTitle(hist.GetXaxis().GetTitle() + " (GeV)")
@@ -39,8 +37,8 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
         max /= ADCtoGeV
     
     hist.Sumw2()
-    hist.GetXaxis().SetRangeUser(0,max)
-    hist.GetYaxis().SetRangeUser(0,max)
+    hist.GetXaxis().SetRangeUser(0,maxX)
+    hist.GetYaxis().SetRangeUser(0,maxY)
     hist.Draw("colz")
     globalList.append(canvas)
     
@@ -69,7 +67,8 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
             th1 /= ADCtoGeV
         
         proj = hist.ProjectionX(hname + "_proj_" + str(th1), hist.GetYaxis().FindBin(th1), hist.GetNbinsY()+1)
-        proj.Rebin(11)
+        if rebin > 1:
+            proj.Rebin(rebin)
         proj.SetTitle("L0 " + str(th1) + " GeV")
         projList.append(proj)
         canvasProj.cd()
@@ -102,9 +101,13 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis):
         
     canvasRatio.cd()
     legend.Draw()
+    canvasRatio.SaveAs("{0}_Ratio{1}".format(fname, suffix))
     
     canvasProj.cd()
     legend.Draw()
+    canvasProj.SaveAs("{0}_Proj{1}".format(fname, suffix))
+    
+    canvas.SaveAs("{0}{1}".format(fname, suffix))
     
     return canvas
 
@@ -169,7 +172,7 @@ def PlotPatchAmp(hname, variable, offline, recalc, patchtype, patchsize, hlist, 
     return canvas
 
 def PlotNHits(hlist, hname, nevents, nhitsTh):
-    canvas = ROOT.TCanvas("FastORNHits", "FastORNHits")
+    canvas = ROOT.TCanvas(hname, hname)
     canvas.SetLogy()
     hist = hlist.FindObject(hname)
     if not hist:
@@ -179,7 +182,7 @@ def PlotNHits(hlist, hname, nevents, nhitsTh):
     
     histNHits = ROOT.TH1D("FastORNHits", "FastORNHits;number of hits per event;probability", 1500, 0, 1.5)
     
-    f = open('badchannels.txt', 'w')
+    f = open("badchannels_{0}.txt".format(hname), 'w')
 
     for i in range(1, hist.GetNbinsX()):
         nhits = hist.GetBinContent(i) / nevents
@@ -244,7 +247,7 @@ def GeneratePedestal(hlist, hname, nevents, nhitsTh):
     
     return canvas
 
-def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, pedestal=True,
+def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, L0vsGApatch=True, pedestal=True, badchannels=True,
          axis="ADC", run="", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     
     suffix = ""
@@ -341,26 +344,33 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
     
     if GAvsJEpatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis)
-            canvas.SaveAs("MaxGA2x2vsJE{0}_Offline{1}".format(jetsize, suffix))
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 3)
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis)
-            canvas.SaveAs("MaxGA2x2vsJE{0}_Recalc{1}".format(jetsize, suffix))
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 3)
             
     if L0vsJEpatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis)
-            canvas.SaveAs("MaxL02x2vsJE{0}_Offline{1}".format(jetsize, suffix))
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 3)
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis)
-            canvas.SaveAs("MaxL02x2vsJE{0}_Recalc{1}".format(jetsize, suffix))
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 3)
             
-    if pedestal:
-        canvas = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 0.01)
+    if L0vsGApatch:
+        if offline:
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxOffline", thresholds_GA, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Offline"+suffix, 20, 20, 1)
+            
+        if recalc:
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxRecalc", thresholds_GA, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Recalc"+suffix, 20, 20, 1)
+            
+    if badchannels:
+        canvas = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 3e-3)
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
+        canvas = PlotNHits(hlist, "EMCTRQA_histLargeAmpFastORL0", nevents, 7e-7)
+        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
+        
+    if pedestal:
         canvas = GeneratePedestal(hlist, "EMCTRQA_histFastORL0Amp", nevents, 0.01)
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
@@ -390,9 +400,15 @@ if __name__ == '__main__':
     parser.add_argument('--L0vsJEpatch', action='store_const',
                         default=False, const=True,
                         help='L0 vs JE patch')
+    parser.add_argument('--L0vsGApatch', action='store_const',
+                        default=False, const=True,
+                        help='L0 vs GA patch')
     parser.add_argument('--pedestal', action='store_const',
                         default=False, const=True,
                         help='Run pedestal analysis')
+    parser.add_argument('--badchannels', action='store_const',
+                        default=False, const=True,
+                        help='Run bad channel analysis')
     parser.add_argument('--axis', metavar='axis',
                         default="ADC",
                         help='Axis type (GeV or ADC)')
@@ -400,13 +416,13 @@ if __name__ == '__main__':
                         default="",
                         help='Run number')
     parser.add_argument('--size', metavar='size',
-                        default="",
+                        default="16x16",
                         help='Jet patch size')
     parser.add_argument('--input-path', metavar='input-path',
                         default="/Users/sa639/Documents/Work/ALICE/TriggerQA",
                         help='Input path')
     args = parser.parse_args()
     
-    main(args.train, args.trigger, args.offline, args.recalc, args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.pedestal, args.axis, args.run, args.size, args.input_path)
+    main(args.train, args.trigger, args.offline, args.recalc, args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.L0vsGApatch, args.pedestal, args.badchannels, args.axis, args.run, args.size, args.input_path)
     
     IPython.embed()
