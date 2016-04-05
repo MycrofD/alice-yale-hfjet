@@ -172,13 +172,14 @@ def PlotPatchAmp(hname, variable, offline, recalc, patchtype, patchsize, hlist, 
     return canvas
 
 def PlotNHits(hlist, hname, nevents, nhitsTh):
-    canvas = ROOT.TCanvas(hname, hname)
-    canvas.SetLogy()
     hist = hlist.FindObject(hname)
     if not hist:
         print "Could not get histogram '" + hname + "' in list '" + hlist.GetName() + "'. Skipping..."
         hlist.Print()
         return
+    
+    canvas = ROOT.TCanvas(hname, hist.GetYaxis().GetTitle())
+    canvas.SetLogy()
     
     histNHits = ROOT.TH1D("FastORNHits", "FastORNHits;number of hits per event;probability", 1500, 0, 1.5)
     
