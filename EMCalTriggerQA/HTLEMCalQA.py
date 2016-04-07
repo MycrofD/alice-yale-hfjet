@@ -35,7 +35,20 @@ def GetHistogramListOfflineAnalysis(fileName, listTaskName="AliEmcalTriggerQATas
     
     return histList
 
-def PlotbySM(histList, histNamePattern, minSM, maxSM, events, det, plotTitle, plotName, period, logz):
+def GetHistogramListOnlineAnalysis(fileName):
+    file = ROOT.TFile(fileName)
+    if not file or file.IsZombie():
+        print("Could not find file '{0}".format(filename))
+        return
+    
+    histList = dict()
+    for key in file.GetListOfKeys():
+        histList[key.GetName()] = file.Get(key.GetName())
+    
+    return histList
+
+def PlotbySM(histList, histNamePattern, minSM, maxSM, events, det, plotTitle, plotName, period, logz,
+             minX = 0, maxX = 0, minY = 0, maxY = 0):
     n = maxSM - minSM + 1 #number of canvases
     ncol = 2
     nrow = int(math.ceil(n / ncol))
@@ -74,6 +87,12 @@ def PlotbySM(histList, histNamePattern, minSM, maxSM, events, det, plotTitle, pl
         hist.GetZaxis().SetLabelSize(11)
         hist.GetZaxis().SetTitleOffset(3.4)
         hist.Scale(1. / events)
+        
+        if minX < maxX:
+            hist.GetXaxis().SetRangeUser(minX, maxX)
+        if minY < maxY:
+            hist.GetYaxis().SetRangeUser(minY, maxY)
+        
         hist.Draw("colz")
         
         t = ROOT.TPaveText(0.05, 0.9, 0.95, 1.0, "NB NDC")
@@ -106,7 +125,7 @@ def Plot1D(histList, histName, events, th, plotTitle, plotName, period):
     hist.Sumw2()
     hist.Scale(1. / events)
     
-    canvas = ROOT.TCanvas("{0}_{1}".format(period, plotName), plotTitle, 800, 600)
+    canvas = ROOT.TCanvas("{0}_{1}".format(period, plotName), "{0} - {1}".format(period, plotTitle), 800, 600)
     canvas.cd()
     hist.SetMarkerStyle(ROOT.kFullCircle)
     hist.SetMarkerSize(0.8)
@@ -146,38 +165,112 @@ def Plot1D(histList, histName, events, th, plotTitle, plotName, period):
     globalList.append(canvas)
     canvas.SaveAs("{0}.pdf".format(canvas.GetName()))
     return canvas
+
+def PlotMaxPatch(histList, patchType, triggerType, events, plotTitle, plotName, period):
+    detectors = ["EMCal", "DCal"]
+    colors = [ROOT.kRed+1, ROOT.kBlue+1]
+    markers = [ROOT.kFullCircle, ROOT.kOpenCircle]
+    options = ["", "same"]
+    canvas = ROOT.TCanvas("{0}_{1}".format(period, plotName), "{0} - {1}".format(period, plotTitle))
+    canvas.SetLogy(True)
+    canvas.cd()
+    
+    legend = ROOT.TLegend(0.6, 0.9, 0.9, 0.7)
+    legend.SetBorderSize(0)
+    legend.SetFillStyle(0)
+    for det,col,marker,opt in zip(detectors,colors,markers,options):
+        histName = "EMCTRQA_hist{0}MaxPatchAmp{1}{2}".format(det, triggerType, patchType)
+        hist = histList[histName]
+        hist.Sumw2()
+        hist.SetMarkerSize(0.8)
+        hist.SetMarkerStyle(marker)
+        hist.SetLineColor(col)
+        hist.SetMarkerColor(col)
+        hist.Scale(1./events)
+        hist.GetYaxis().SetTitle("entries / events")
+        legend.AddEntry(hist, det, "pe")
+        hist.Draw(opt)
         
-def main(fileName, offline, period):
+    legend.Draw()
+    globalList.append(legend)
+    globalList.append(canvas)
+    canvas.SaveAs("{0}.pdf".format(canvas.GetName()))   
+    return canvas
+
+def Plot2D(histList, histNamePrefix, patchType, triggerType, events, plotTitle, plotName, period):
+    canvas = ROOT.TCanvas("{0}_{1}".format(period, plotName), "{0} - {1}".format(period, plotTitle))
+    canvas.cd()
+    
+    histName = "{0}{1}{2}".format(histNamePrefix, triggerType, patchType)
+    hist = histList[histName]
+    hist.Scale(1./events)
+    hist.GetZaxis().SetTitle("entries / events")
+    hist.Draw("colz")
+    globalList.append(canvas)
+    canvas.SaveAs("{0}.pdf".format(canvas.GetName()))   
+    return canvas
+    
+def SaveRootFile(histList, period):
+    fname = "AnalysisResults_{0}.root".format(period)
+    file = ROOT.TFile(fname, "recreate")
+    file.cd()
+    for name, hist in histList.iteritems():
+        hist.Write()
+    file.Close()
+    
+def main(fileName, offline, period, saveRoot):
     ROOT.gStyle.SetOptStat(0)
     ROOT.gStyle.SetOptTitle(0)
+    ROOT.TH1.AddDirectory(False)
     
     if offline:
         histList = GetHistogramListOfflineAnalysis(fileName)
     else:
         histList = GetHistogramListOnlineAnalysis(fileName)
+    
+    if saveRoot:
+        SaveRootFile(histList, period)
         
     events = GetEvents(histList, "EMCTRQA_histEvents")
     
-    PlotbySM(histList, "EMCTRQA_histFastORL0", 0, 5, events, "EMCAL1", "Hit frequency", "HitFrequency", period, False)
-    PlotbySM(histList, "EMCTRQA_histFastORL0", 6, 11, events, "EMCAL2", "Hit frequency", "HitFrequency", period, False)
-    PlotbySM(histList, "EMCTRQA_histFastORL0", 12, 19, events, "DCAL", "Hit frequency", "HitFrequency", period, False)
+    for i in range(0,2):
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}".format(i), 0, 5, events, "EMCAL1", "L{0} hit frequency by SM".format(i), "L{0}HitFrequency".format(i), period, False)
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}".format(i), 6, 11, events, "EMCAL2", "L{0} hit frequency by SM".format(i), "L{0}HitFrequency".format(i), period, False)
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}".format(i), 12, 19, events, "DCAL", "L{0} hit frequency by SM".format(i), "L{0}HitFrequency".format(i), period, False)
+        
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}LargeAmp".format(i), 0, 5, events, "EMCAL1", "L{0} hit frequency (amp > 400) by SM".format(i), "L{0}HitFrequencyLargeAmp".format(i), period, False)
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}LargeAmp".format(i), 6, 11, events, "EMCAL2", "L{0} hit frequency (amp > 400) by SM".format(i), "L{0}HitFrequencyLargeAmp".format(i), period, False)
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}LargeAmp".format(i), 12, 19, events, "DCAL", "L{0} hit frequency (amp > 400) by SM".format(i), "L{0}HitFrequencyLargeAmp".format(i), period, False)
+        
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}Amp".format(i), 0, 5, events, "EMCAL1", "L{0} Average amplitude by SM".format(i), "L{0}AverageAmplitude".format(i), period, False)
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}Amp".format(i), 6, 11, events, "EMCAL2", "L{0} Average amplitude by SM".format(i), "L{0}AverageAmplitude".format(i), period, False)
+        PlotbySM(histList, "EMCTRQA_histFastORL{0}Amp".format(i), 12, 19, events, "DCAL", "L{0} Average amplitude by SM".format(i), "L{0}AverageAmplitude".format(i), period, False)
+        
+        Plot1D(histList, "EMCTRQA_histFastORL{0}".format(i), events, 3e-3, "L{0} Hit frequency".format(i), "L{0}HitFrequency".format(i), period)
+        Plot1D(histList, "EMCTRQA_histFastORL{0}LargeAmp".format(i), events, 7e-7, "L{0} Hit frequency (amp > 400)".format(i), "L{0}HitFrequencyLargeAmp".format(i), period)
+        Plot1D(histList, "EMCTRQA_histFastORL{0}Amp".format(i), events, 10000, "L{0} Average amplitude".format(i), "L{0}AverageAmplitude".format(i), period)
+ 
     
-    PlotbySM(histList, "EMCTRQA_histFastORL0LargeAmp", 0, 5, events, "EMCAL1", "Hit frequency (amp > 400)", "HitFrequencyLargeAmp", period, False)
-    PlotbySM(histList, "EMCTRQA_histFastORL0LargeAmp", 6, 11, events, "EMCAL2", "Hit frequency (amp > 400)", "HitFrequencyLargeAmp", period, False)
-    PlotbySM(histList, "EMCTRQA_histFastORL0LargeAmp", 12, 19, events, "DCAL", "Hit frequency (amp > 400)", "HitFrequencyLargeAmp", period, False)
-    
-    PlotbySM(histList, "EMCTRQA_histFastORL0Amp", 0, 5, events, "EMCAL1", "Average amplitude", "AverageAmplitude", period, False)
-    PlotbySM(histList, "EMCTRQA_histFastORL0Amp", 6, 11, events, "EMCAL2", "Average amplitude", "AverageAmplitude", period, False)
-    PlotbySM(histList, "EMCTRQA_histFastORL0Amp", 12, 19, events, "DCAL", "Average amplitude", "AverageAmplitude", period, False)
-    
-    PlotbySM(histList, "EMCTRQA_histFEEvsTRU", 0, 5, events, "EMCAL1", "FEE vs TRU", "FEEvsTRU", period, True)
-    PlotbySM(histList, "EMCTRQA_histFEEvsTRU", 6, 11, events, "EMCAL2", "FEE vs TRU", "FEEvsTRU", period, True)
-    PlotbySM(histList, "EMCTRQA_histFEEvsTRU", 12, 19, events, "DCAL", "FEE vs TRU", "FEEvsTRU", period, True)
-    
-    Plot1D(histList, "EMCTRQA_histFastORL0", events, 3e-3, "Hit frequency", "HitFrequency", period)
-    Plot1D(histList, "EMCTRQA_histFastORL0LargeAmp", events, 7e-7, "Hit frequency (amp > 400)", "HitFrequencyLargeAmp", period)
-    Plot1D(histList, "EMCTRQA_histFastORL0Amp", events, 10000, "Average amplitude", "AverageAmplitude", period)
+    PlotbySM(histList, "EMCTRQA_histFEEvsTRU", 0, 5, events, "EMCAL1", "FEE vs TRU", "FEEvsTRU", period, True, 0, 250, 0, 20)
+    PlotbySM(histList, "EMCTRQA_histFEEvsTRU", 6, 11, events, "EMCAL2", "FEE vs TRU", "FEEvsTRU", period, True, 0, 250, 0, 20)
+    PlotbySM(histList, "EMCTRQA_histFEEvsTRU", 12, 19, events, "DCAL", "FEE vs TRU", "FEEvsTRU", period, True, 0, 250, 0, 20)
 
+    PlotbySM(histList, "EMCTRQA_histFEEvsSTU", 0, 5, events, "EMCAL1", "FEE vs STU", "FEEvsSTU", period, True, 0, 250, 0, 20)
+    PlotbySM(histList, "EMCTRQA_histFEEvsSTU", 6, 11, events, "EMCAL2", "FEE vs STU", "FEEvsSTU", period, True, 0, 250, 0, 20)
+    PlotbySM(histList, "EMCTRQA_histFEEvsSTU", 12, 19, events, "DCAL", "FEE vs STU", "FEEvsSTU", period, True, 0, 250, 0, 20)
+   
+    PlotMaxPatch(histList, "Recalc", "EMCL0", events, "L0 trigger max patch (recalc)", "L0MaxPatchRecalc", period)
+    PlotMaxPatch(histList, "Recalc", "EMCGAH", events, "L1 GA trigger max patch (recalc)", "L1GAHMaxPatchRecalc", period)
+    PlotMaxPatch(histList, "Recalc", "EMCJEH", events, "L1 JE trigger max patch (recalc)", "L1JEHMaxPatchRecalc", period)
+
+    Plot2D(histList, "EMCTRQA_histMaxEdgePos", "Recalc", "EMCL0", events, "L0 trigger max patch position (recalc)", "L0MaxPatchRecalcPosition", period)
+    Plot2D(histList, "EMCTRQA_histMaxEdgePos", "Recalc", "EMCGAH", events, "L1 GA trigger max patch position (recalc)", "L1GAHMaxPatchRecalcPosition", period)
+    Plot2D(histList, "EMCTRQA_histMaxEdgePos", "Recalc", "EMCJEH", events, "L1 JE trigger max patch position (recalc)", "L1JEHMaxPatchRecalcPosition", period)
+
+    Plot2D(histList, "EMCTRQA_histAmpEdgePos", "Recalc", "EMCL0", events, "L0 trigger average amplitude (recalc)", "L0AverageAmpRecalcPosition", period)
+    Plot2D(histList, "EMCTRQA_histAmpEdgePos", "Recalc", "EMCGAH", events, "L1 GA trigger average amplitude (recalc)", "L1GAHAverageAmpRecalcPosition", period)
+    Plot2D(histList, "EMCTRQA_histAmpEdgePos", "Recalc", "EMCJEH", events, "L1 JE trigger average amplitude (recalc)", "L1JEHAverageAmpRecalcPosition", period)
+    
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='HLT EMCal trigger QA.')
@@ -187,9 +280,13 @@ if __name__ == '__main__':
                         default=False, const=True,
                         help='Offline')
     parser.add_argument('-p', '--period',
+                        default='LHC15j',
                         help='Run period (e.g. LHC16b)')
+    parser.add_argument('--save-root', action='store_const',
+                        default=False, const=True,
+                        help='Save a ROOT file with the histograms.')
     args = parser.parse_args()
     
-    main(args.fileName, args.offline, args.period)
+    main(args.fileName, args.offline, args.period, args.save_root)
     
     IPython.embed()
