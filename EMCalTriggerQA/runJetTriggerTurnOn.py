@@ -5,6 +5,7 @@ import ROOT
 import argparse
 import IPython
 import copy
+import math
 
 globalList = []
 
@@ -18,9 +19,64 @@ class JetDefinition:
             return "Jet_AKTCharged{0}_tracks_pT0150_pt_scheme".format(self.fRadius)
         elif self.fType == "Full":
             return "Jet_AKTFull{0}_tracks_pT0150_caloClusters_E0300_pt_scheme".format(self.fRadius)
+    
+    def GetName(self):
+        return "{0}_{1}".format(self.fType, self.fRadius)
+    
+    def GetTitle(self):
+        return "{0} {1}".format(self.fType, self.fRadius)
+        
+    def AddObservable(self, observable):
+        if not hasattr(self, "fObservableList"):
+            self.fObservableList = []
+        self.fObservableList.append(observable)
+        
+    def GenerateCanvasList(self, label="", noLogY=False):
+        canvasList = []
+        
+        for obs in self.fObservableList:
+            if label:
+                cname = "{0}_{1}_{2}".format(label, self.GetName(), obs.fName)
+                ctitle = "{0} {1} {2}".format(label, self.GetTitle(), obs.fTitle)
+            else:
+                cname = "{0}_{1}".format(self.GetName(), obs.fName)
+                ctitle = "{0} {1}".format(self.GetTitle(), obs.fTitle)
+            print("Generating canvas {0} for observable {1}".format(cname, obs.fName))
+            canvas = ROOT.TCanvas(cname, ctitle)
+            if not noLogY:
+                canvas.SetLogy(obs.fLogy)
+            canvasList.append(canvas)
+            globalList.append(canvas)
+            
+        return canvasList
+    
+    def DrawHisto(self, canvasList, histoName, opt, marker, color):
+        for obs,canvas in zip(self.fObservableList, canvasList):
+            canvas.cd()
+            histo = getattr(obs, histoName)
+            
+            resetMax = True
+            for histInList in canvas.GetListOfPrimitives():
+                if histInList.GetMaximum() > histo.GetMaximum():
+                    resetMax = False
+                    break
+            if resetMax:
+                firstHist = canvas.GetListOfPrimitives().At(0)
+                if hasattr(firstHist, "SetMaximum"):
+                    if obs.fLogy:
+                        firstHist.SetMaximum(histo.GetMaximum()*5)
+                    else:
+                        firstHist.SetMaximum(histo.GetMaximum()*1.2)
+            if not obs.fLogy:
+                histo.SetMinimum(0)
+            histo.SetMarkerSize(1)
+            histo.SetMarkerStyle(marker)
+            histo.SetMarkerColor(color)
+            histo.SetLineColor(color)
+            histo.Draw(opt)
 
 class Observable:
-    def __init__(self, name, title, bins, min, max, logY=False):
+    def __init__(self, name, title, bins, min, max, logY=False, norm=False):
         self.fName = name
         self.fTitle = title
         self.fBins = bins
@@ -28,6 +84,7 @@ class Observable:
         self.fMax = max
         self.fHistogram = None
         self.fLogy = logY
+        self.fNorm = norm
         
     def CreateHistogram(self, hname, htitle, xtitle="", ytitle=""):
         hname = "{0}_{1}".format(hname, self.fName)
@@ -46,8 +103,10 @@ class TreeProjector:
         self.fColor = color
         self.fMarker = marker
         
-    def SetJetDefinition(self, jetDef):
-        self.fJetDefinition = jetDef
+    def AddJetDefinition(self, jetDef):
+        if not hasattr(self, "fJetDefinitionList"):
+            self.fJetDefinitionList = []
+        self.fJetDefinitionList.append(jetDef)
     
     def CreateChain(self, path, subdirs, filename, trigger):
         treeName = "AliAnalysisTaskEmcalJetTree_{0}_jets".format(trigger)
@@ -57,79 +116,81 @@ class TreeProjector:
             fullFileName = "{0}/{1}/{2}".format(path, dir, filename)
             print("Adding {0}".format(fullFileName))
             self.fChain.Add(fullFileName)
-    
-    def AddObservable(self, observable):
-        if not hasattr(self, "fObservableList"):
-            self.fObservableList = []
-        self.fObservableList.append(observable)
             
     def ProjectTree(self, maxEntries=0):
         print("Projecting {0}".format(self.fName))
         
-        for observable in self.fObservableList:
-            observable.fHistogram = observable.CreateHistogram(self.fName, self.fTitle)
-            observable.fHistogram.Sumw2()
+        for jetDef in self.fJetDefinitionList:
+            for observable in jetDef.fObservableList:
+                observable.fHistogram = observable.CreateHistogram("{0}_{1}".format(self.fName, jetDef.GetName()), 
+                                                                   "{0} {1}".format(self.fTitle, jetDef.GetTitle()))
+                observable.fHistogram.Sumw2()
 
         for i, event in enumerate(self.fChain):
             if maxEntries>0 and i >= maxEntries:
                 break
             if i % 100000 == 0:
                 print("Entry {0}".format(i))
-            for observable in self.fObservableList:
-                jets = getattr(event, self.fJetDefinition.GetBranchName())
+            for jetDef in self.fJetDefinitionList:
+                jets = getattr(event, jetDef.GetBranchName())
                 for jet in jets:
-                    observable.fHistogram.Fill(getattr(jet, observable.fName))
+                    for observable in jetDef.fObservableList:
+                        val = getattr(jet, observable.fName)
+                        #print dir(jet)
+                        #print("Value {0} for observable {1}".format(val, observable.fName))
+                        observable.fHistogram.Fill(val)
+                        
+        for jetDef in self.fJetDefinitionList:
+            for observable in jetDef.fObservableList:               
+                if observable.fNorm:
+                    observable.fHistogram.Scale(1. / observable.fHistogram.Integral())
             
-    def GenerateCanvasList(self, label="", noLogY=False):
-        canvasList = []
-        for obs in self.fObservableList:
-            if label:
-                cname = "{0}_{1}".format(label, obs.fName)
-                ctitle = "{0} {1}".format(label, obs.fTitle)
-            else:
-                cname = obs.fName
-                ctitle = obs.fTitle
-            print("Generating canvas {0} for observable {1}".format(cname, obs.fName))
-            canvas = ROOT.TCanvas(cname, ctitle)
-            if not noLogY:
-                canvas.SetLogy(obs.fLogy)
-            canvasList.append(canvas)
-            globalList.append(canvas)
+    def GenerateTriggerTurnOn(self, treeMB):
+        for jetDefRare, jetDefMB in zip(self.fJetDefinitionList, treeMB.fJetDefinitionList):
+            for obsRare, obsMB in zip(jetDefRare.fObservableList, jetDefMB.fObservableList):
+                obsRare.fRatio = obsMB.CreateHistogram("TurnOn_{0}_{1}".format(jetDefRare.GetName(), self.fName), 
+                                                       "TurnOn {0} {1}".format(jetDefRare.GetTitle(), self.fTitle),
+                                                       "", "ratio")
+                obsRare.fRatio.Divide(obsRare.fHistogram, obsMB.fHistogram)
             
-        return canvasList
-                
-    def Draw(self, canvasList=None, ratioCanvasList=None, doRatios=False):
-        print("Drawing {0}...".format(self.fTitle))
-        if canvasList:
-            print("Using pre-existing canvas list...")
-            self.fListOfCanvases = canvasList;
-            opt = "same"
-        else:
-            print("Generating canvas list...")
-            self.fListOfCanvases = self.GenerateCanvasList()
-            opt = ""          
-        
-        self.DrawHisto(self.fListOfCanvases, "fHistogram", opt)
-        
-        if doRatios:
-            if len(ratioCanvasList) > 0:
-                self.ListOfRatioCanvases = ratioCanvasList
+    def Draw(self, doRatios=False, treeProj=None):
+        if treeProj:
+            for jetDef1, jetDef2 in zip(self.fJetDefinitionList, treeProj.fJetDefinitionList):
+                if hasattr(jetDef2, "fCanvasList") and not hasattr(jetDef1, "fCanvasList"):
+                    jetDef1.fCanvasList = jetDef2.fCanvasList
+                if hasattr(jetDef2, "fRatioCanvasList") and not hasattr(jetDef1, "fRatioCanvasList"):
+                    jetDef1.fRatioCanvasList = jetDef2.fRatioCanvasList
+
+        for jetDef in self.fJetDefinitionList:
+            print("Drawing {0} {1}...".format(self.fTitle, jetDef.GetTitle()))
+            if hasattr(jetDef, "fCanvasList") and jetDef.fCanvasList:
+                print("Using pre-existing canvas list...")
                 opt = "same"
             else:
-                self.ListOfRatioCanvases = self.GenerateCanvasList("Ratio", True)
-                opt = ""
+                print("Generating canvas list...")
+                jetDef.fCanvasList = jetDef.GenerateCanvasList()
+                opt = ""          
+        
+            jetDef.DrawHisto(jetDef.fCanvasList, "fHistogram", opt, self.fMarker, self.fColor)
+        
+            if doRatios:
+                if hasattr(jetDef, "fRatioCanvasList") and jetDef.fRatioCanvasList:
+                    opt = "same"
+                else:
+                    jetDef.fRatioCanvasList = jetDef.GenerateCanvasList("Ratio", True)
+                    opt = ""
             
-            self.DrawHisto(self.ListOfRatioCanvases, "fRatio", opt)
-    
-    def DrawHisto(self, canvasList, histoName, opt):
-        for obs,canvas in zip(self.fObservableList, canvasList):
-            canvas.cd()
-            histo = getattr(obs, histoName)
-            histo.SetMarkerSize(1)
-            histo.SetMarkerStyle(self.fMarker)
-            histo.SetMarkerColor(self.fColor)
-            histo.SetLineColor(self.fColor)
-            histo.Draw(opt)
+                jetDef.DrawHisto(jetDef.fRatioCanvasList, "fRatio", opt, self.fMarker, self.fColor)
+                
+    def DrawLegends(self, legend, ratioLegend):
+        for jetDef in self.fJetDefinitionList:
+            for canvas in jetDef.fCanvasList:
+                canvas.cd()
+                legend.Draw()
+            for canvas in jetDef.fRatioCanvasList:
+                canvas.cd()
+                ratioLegend.Draw()
+                
 
 class TriggerTurnOn:
     def __init__(self, triggerList, MBtrigger, path, subdirs, filename, entries):
@@ -141,35 +202,43 @@ class TriggerTurnOn:
         self.fMBTreeProjector = TreeProjector(MBtrigger, MBtrigger, path, subdirs, filename, MBtrigger, ROOT.kBlack, ROOT.kFullCircle)
         self.fEntries = entries
         
-    def SetJetDefinition(self, jetDef):
+    def AddJetDefinition(self, jetDef):
         for proj in self.fListOfTreeProjectors:
-            proj.SetJetDefinition(jetDef)
-        self.fMBTreeProjector.SetJetDefinition(jetDef)
-    
-    def AddObservable(self, observable):
-        for proj in self.fListOfTreeProjectors:
-            proj.AddObservable(copy.copy(observable))
-        self.fMBTreeProjector.AddObservable(copy.copy(observable))
-    
+            proj.AddJetDefinition(copy.deepcopy(jetDef))
+        self.fMBTreeProjector.AddJetDefinition(copy.deepcopy(jetDef))
+
     def GenerateTriggerTurnOn(self):
         self.fMBTreeProjector.ProjectTree(self.fEntries)
         for proj in self.fListOfTreeProjectors:
             proj.ProjectTree(self.fEntries)
-            self.GenerateTriggerTurnOnForProj(proj)
-            
-    def GenerateTriggerTurnOnForProj(self, proj):
-        for obsRare, obsMB in zip(proj.fObservableList, self.fMBTreeProjector.fObservableList):
-            obsRare.fRatio = obsMB.CreateHistogram("TurnOn_{0}".format(proj.fName), 
-                                                   "TurnOn {0}".format(proj.fTitle),
-                                                   "", "ratio")
-            obsRare.fRatio.Divide(obsRare.fHistogram, obsMB.fHistogram)
+            proj.GenerateTriggerTurnOn(self.fMBTreeProjector)
+    
+    def GenerateLegends(self, projList):
+        legend = ROOT.TLegend(0.5, 0.9, 0.9, 0.7)
+        legend.SetFillStyle(0)
+        legend.SetBorderSize(0)
+        legend.SetTextFont(43)
+        legend.SetTextSize(12)
+        for proj in projList:
+            entry = legend.AddEntry(None, proj.fTitle, "pe")
+            entry.SetMarkerSize(1)
+            entry.SetMarkerColor(proj.fColor)
+            entry.SetMarkerStyle(proj.fMarker)
+            entry.SetLineColor(proj.fColor)
+        return legend
             
     def Draw(self):
+        all = list(self.fListOfTreeProjectors)
+        all.append(self.fMBTreeProjector)
+        self.fLegend = self.GenerateLegends(all)
+        self.fRatioLegend = self.GenerateLegends(self.fListOfTreeProjectors)
+        
         self.fMBTreeProjector.Draw()
-        self.fListOfCanvases = self.fMBTreeProjector.fListOfCanvases
-        self.fListOfRatioCanvases = []
+        prev = self.fMBTreeProjector
         for proj in self.fListOfTreeProjectors:
-            proj.Draw(self.fListOfCanvases, self.fListOfRatioCanvases, True)
+            proj.Draw(True, prev)
+            prev = proj
+        self.fListOfTreeProjectors[0].DrawLegends(self.fLegend, self.fRatioLegend)
 
 def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, entries):
     ROOT.gSystem.Load("libCGAL")
@@ -197,9 +266,27 @@ def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, 
     print periodList
     
     triggerTurnOn = TriggerTurnOn(triggers.split(","), MBtrigger, "{0}/{1}".format(inputPath, train), periodList, filename, entries)
-    triggerTurnOn.SetJetDefinition(JetDefinition("Full", "R040"))
-    triggerTurnOn.AddObservable(Observable("fPt","#it{p}_{T} (GeV/#it{c})", 19, 5, 100, True))
-    triggerTurnOn.AddObservable(Observable("fNEF","#it{p}_{T} (GeV/#it{c})", 10, 0, 1, True))
+    chargedJetR040 = JetDefinition("Charged", "R040")
+    chargedJetR040.AddObservable(Observable("fPt","#it{p}_{T} (GeV/#it{c})", 19, 5, 100, True, False))
+    chargedJetR040.AddObservable(Observable("fEta","#it{#eta}", 50, -0.9, 0.9, False, True))
+    chargedJetR040.AddObservable(Observable("fPhi","#it{#phi}", 50, 0, 2*math.pi, False, True))
+    #chargedJetR040.AddObservable(Observable("fNConstituents","jet constituents", 50, -0.5, 49.5, True))
+    chargedJetR040.AddObservable(Observable("fZLeading","#it{z}^{leading}_{||}", 11, 0, 1.1, False, True))
+    
+    chargedJetR020 = copy.deepcopy(chargedJetR040)
+    chargedJetR020.fRadius = "R020"
+
+    fullJetR040 = copy.deepcopy(chargedJetR040)
+    fullJetR040.fType = "Full"
+    fullJetR040.AddObservable(Observable("fNEF","NEF", 11, 0, 1.1, False, True))
+    
+    fullJetR020 = copy.deepcopy(fullJetR040)
+    fullJetR020.fRadius = "R020"
+    
+    triggerTurnOn.AddJetDefinition(chargedJetR040)
+    triggerTurnOn.AddJetDefinition(chargedJetR020)
+    triggerTurnOn.AddJetDefinition(fullJetR040)
+    triggerTurnOn.AddJetDefinition(fullJetR020)
     triggerTurnOn.GenerateTriggerTurnOn()
     triggerTurnOn.Draw()
     
