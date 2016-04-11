@@ -94,6 +94,11 @@ class Observable:
             ytitle = "entries"
         htitle = "{0} {1};{2};{3}".format(htitle, self.fTitle, xtitle, ytitle)
         return ROOT.TH1F(hname, htitle, self.fBins, self.fMin, self.fMax)
+    
+    def AddCut(self, obs):
+        if not hasattr(self, "fListOfCuts"):
+            self.fListOfCuts = []
+        self.fListOfCuts.append(copy.deepcopy(obs))
         
 class TreeProjector:    
     def __init__(self, name, title, path, subdirs, filename, trigger, color, marker):
@@ -118,7 +123,7 @@ class TreeProjector:
             self.fChain.Add(fullFileName)
             
     def ProjectTree(self, maxEntries=0):
-        print("Projecting {0}".format(self.fName))
+        print("Projecting {0}, number of events: {1}".format(self.fName, self.fChain.GetEntries()))
         
         for jetDef in self.fJetDefinitionList:
             for observable in jetDef.fObservableList:
@@ -135,6 +140,15 @@ class TreeProjector:
                 jets = getattr(event, jetDef.GetBranchName())
                 for jet in jets:
                     for observable in jetDef.fObservableList:
+                        skip = False
+                        if hasattr(observable, "fListOfCuts"):
+                            for cut in observable.fListOfCuts:
+                                val = getattr(jet, cut.fName)
+                                if val > cut.fMax or val < cut.fMin:
+                                    skip = True
+                                    break
+                        if skip:
+                            continue
                         val = getattr(jet, observable.fName)
                         #print dir(jet)
                         #print("Value {0} for observable {1}".format(val, observable.fName))
@@ -143,7 +157,9 @@ class TreeProjector:
         for jetDef in self.fJetDefinitionList:
             for observable in jetDef.fObservableList:               
                 if observable.fNorm:
-                    observable.fHistogram.Scale(1. / observable.fHistogram.Integral())
+                    integral = observable.fHistogram.Integral()
+                    if integral > 1e-10:
+                        observable.fHistogram.Scale(1. / integral)
             
     def GenerateTriggerTurnOn(self, treeMB):
         for jetDefRare, jetDefMB in zip(self.fJetDefinitionList, treeMB.fJetDefinitionList):
@@ -191,6 +207,23 @@ class TreeProjector:
                 canvas.cd()
                 ratioLegend.Draw()
                 
+    def SaveCanvases(self, path, label):
+        for jetDef in self.fJetDefinitionList:
+            for canvas in jetDef.fCanvasList:
+                fname = "{0}/{1}{2}.pdf".format(path, label, canvas.GetName())
+                canvas.SaveAs(fname)
+            for canvas in jetDef.fRatioCanvasList:
+                fname = "{0}/{1}{2}.pdf".format(path, label, canvas.GetName())
+                canvas.SaveAs(fname)
+    
+    def SaveRoot(self, file):
+        file.cd()
+        for jetDef in self.fJetDefinitionList:
+            for observable in jetDef.fObservableList:
+                if hasattr(observable, "fHistogram"):
+                    observable.fHistogram.Write()
+                if hasattr(observable, "fRatio"):
+                    observable.fRatio.Write()
 
 class TriggerTurnOn:
     def __init__(self, triggerList, MBtrigger, path, subdirs, filename, entries):
@@ -239,8 +272,22 @@ class TriggerTurnOn:
             proj.Draw(True, prev)
             prev = proj
         self.fListOfTreeProjectors[0].DrawLegends(self.fLegend, self.fRatioLegend)
+        
+    def SaveAll(self, path, label=""):
+        file = ROOT.TFile("{0}/{1}TriggerTurnOnAnalysis.root".format(path, label), "recreate")
+        self.fMBTreeProjector.SaveRoot(file)
+        for proj in self.fListOfTreeProjectors:
+            proj.SaveRoot(file)
+            
+        file.Close()
+            
+        self.fListOfTreeProjectors[0].SaveCanvases(path, label)
 
-def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, entries):
+def AddCuts(obs, ptcut):
+    if ptcut > 0:
+        obs.AddCut(Observable("fPt","#it{p}_{T} (GeV/#it{c})", 10, ptcut, 1000, True, False))
+
+def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, entries, ptcut):
     ROOT.gSystem.Load("libCGAL")
     ROOT.gStyle.SetOptTitle(0)
     ROOT.gStyle.SetOptStat(0)
@@ -265,20 +312,30 @@ def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, 
         
     print periodList
     
-    triggerTurnOn = TriggerTurnOn(triggers.split(","), MBtrigger, "{0}/{1}".format(inputPath, train), periodList, filename, entries)
+    path = "{0}/{1}".format(inputPath, train)
+    
+    triggerTurnOn = TriggerTurnOn(triggers.split(","), MBtrigger, path, periodList, filename, entries)
     chargedJetR040 = JetDefinition("Charged", "R040")
-    chargedJetR040.AddObservable(Observable("fPt","#it{p}_{T} (GeV/#it{c})", 19, 5, 100, True, False))
-    chargedJetR040.AddObservable(Observable("fEta","#it{#eta}", 50, -0.9, 0.9, False, True))
-    chargedJetR040.AddObservable(Observable("fPhi","#it{#phi}", 50, 0, 2*math.pi, False, True))
+    chargedJetR040.AddObservable(Observable("fPt","#it{p}_{T} (GeV/#it{c})", 17, 5, 90, True, False))
+    etaObs = Observable("fEta","#it{#eta}", 15, -0.9, 0.9, False, True)
+    AddCuts(etaObs, ptcut)
+    chargedJetR040.AddObservable(etaObs)
+    phiObs = Observable("fPhi","#it{#phi}", 50, 0, 2*math.pi, False, True)
+    AddCuts(phiObs, ptcut)
+    chargedJetR040.AddObservable(phiObs)
     #chargedJetR040.AddObservable(Observable("fNConstituents","jet constituents", 50, -0.5, 49.5, True))
-    chargedJetR040.AddObservable(Observable("fZLeading","#it{z}^{leading}_{||}", 11, 0, 1.1, False, True))
+    zObs = Observable("fZLeading","#it{z}^{leading}_{||}", 12, 0, 1.2, False, True)
+    AddCuts(zObs, ptcut)
+    chargedJetR040.AddObservable(zObs)
     
     chargedJetR020 = copy.deepcopy(chargedJetR040)
     chargedJetR020.fRadius = "R020"
 
     fullJetR040 = copy.deepcopy(chargedJetR040)
     fullJetR040.fType = "Full"
-    fullJetR040.AddObservable(Observable("fNEF","NEF", 11, 0, 1.1, False, True))
+    nefObs = Observable("fNEF","NEF", 12, 0, 1.2, False, True)
+    AddCuts(nefObs, ptcut)
+    fullJetR040.AddObservable(nefObs)
     
     fullJetR020 = copy.deepcopy(fullJetR040)
     fullJetR020.fRadius = "R020"
@@ -289,6 +346,10 @@ def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, 
     triggerTurnOn.AddJetDefinition(fullJetR020)
     triggerTurnOn.GenerateTriggerTurnOn()
     triggerTurnOn.Draw()
+    label = ""
+    if ptcut > 0:
+        label = "Cut{0}GeV".format(ptcut)
+    triggerTurnOn.SaveAll(path, label)
     
     globalList.append(triggerTurnOn)
     
@@ -318,9 +379,12 @@ if __name__ == '__main__':
     parser.add_argument('--entries', metavar='entries',
                         default=0, type=int,
                         help='Input path')
+    parser.add_argument('--pt-cut', metavar='ptcut',
+                        default=0, type=int,
+                        help='Jet pT cut')
     args = parser.parse_args()
     
     
-    main(args.train, args.period, args.trainNumbers, args.input_path, args.file_name, args.trigger, args.mb_trigger, args.entries)
+    main(args.train, args.period, args.trainNumbers, args.input_path, args.file_name, args.trigger, args.mb_trigger, args.entries, args.pt_cut)
     
     IPython.embed()
