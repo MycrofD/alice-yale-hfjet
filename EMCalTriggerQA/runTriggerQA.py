@@ -171,6 +171,12 @@ def PlotPatchAmp(hname, variable, offline, recalc, patchtype, patchsize, hlist, 
         
     return canvas
 
+class PlotNHitsRes:
+    def __init__(self, canvas, histogram, badchannels):
+        self.fCanvas = canvas
+        self.fHistogram = histogram
+        self.fBadChannels = badchannels
+        
 def PlotNHits(hlist, hname, nevents, nhitsTh):
     hist = hlist.FindObject(hname)
     if not hist:
@@ -185,10 +191,13 @@ def PlotNHits(hlist, hname, nevents, nhitsTh):
     
     f = open("badchannels_{0}.txt".format(hname), 'w')
 
+    badchannels = []
+
     for i in range(1, hist.GetNbinsX()):
         nhits = hist.GetBinContent(i) / nevents
         histNHits.Fill(nhits)
         if nhits > nhitsTh:
+            badchannels.append(i-1)
             f.write(str(i-1) + '\n')
         
     f.close()
@@ -198,7 +207,7 @@ def PlotNHits(hlist, hname, nevents, nhitsTh):
     globalList.append(canvas)
     globalList.append(histNHits)
     
-    return canvas
+    return PlotNHitsRes(canvas, histNHits, badchannels)
 
 def GeneratePedestal(hlist, hname, nevents, nhitsTh):
     canvas = ROOT.TCanvas("PedestalCanvas", "PedestalCanvas")
@@ -365,11 +374,19 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
             canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxRecalc", thresholds_GA, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Recalc"+suffix, 20, 20, 1)
             
     if badchannels:
-        canvas = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 3e-3)
-        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
+        L0badchannels = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 3e-3)
+        L0badchannels.fCanvas.SaveAs("{0}{1}".format(L0badchannels.fCanvas.GetName(), suffix))
         
-        canvas = PlotNHits(hlist, "EMCTRQA_histLargeAmpFastORL0", nevents, 7e-7)
-        canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
+        L0badchannelsLarge = PlotNHits(hlist, "EMCTRQA_histLargeAmpFastORL0", nevents, 7e-7)
+        L0badchannelsLarge.fCanvas.SaveAs("{0}{1}".format(L0badchannelsLarge.fCanvas.GetName(), suffix))
+        
+        badchannels = set(L0badchannels.fBadChannels)
+        badchannels.update(L0badchannelsLarge.fBadChannels)
+        
+        f = open("badchannels.txt", 'w')
+        
+        for i in badchannels:
+             f.write(str(i) + '\n')
         
     if pedestal:
         canvas = GeneratePedestal(hlist, "EMCTRQA_histFastORL0Amp", nevents, 0.01)
