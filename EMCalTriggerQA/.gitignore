@@ -3,3 +3,4 @@
 *.pyc
 *.pdf
 *.root
+badchannels*.txt
