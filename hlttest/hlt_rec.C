@@ -10,9 +10,9 @@
 void hlt_rec(const char* input="./")
 {
   // For real data:
-  // AliCDBManager::Instance()->SetDefaultStorage("raw://");
+  AliCDBManager::Instance()->SetDefaultStorage("raw://");
   
-  if(!gSystem->AccessPathName("galice.root")){
+  if (!gSystem->AccessPathName("galice.root")){
     std::cerr << "please delete the galice.root or run at different place." <<std:: endl;
     return;
   }
@@ -29,13 +29,14 @@ void hlt_rec(const char* input="./")
   
   AliHLTSystem* gHLT = AliHLTPluginBase::GetInstance();
   
+  /*
   gHLT->LoadComponentLibraries("libAliHLTUtil.so");
   gHLT->LoadComponentLibraries("libAliHLTRCU.so");
   gHLT->LoadComponentLibraries("libAliHLTCalo.so");
   gHLT->LoadComponentLibraries("libAliHLTEMCAL.so");
   gHLT->LoadComponentLibraries("libAliHLTPHOS.so");
   gHLT->LoadComponentLibraries("libAliHLTGlobal.so");
-  
+  */
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //
   // define the analysis chain to be run
@@ -115,10 +116,6 @@ void hlt_rec(const char* input="./")
   //
   /////////////////////////////////////////////////////////////////////
   
-  TString option = "libAliHLTUtil.so libAliHLTRCU.so libAliHLTCalo.so libAliHLTEMCAL.so libAliHLTGlobal.so chains=";
-  //option+="ESD-CONVERTER";
-  option += "rootFileHisto loglevel=0x5f";
-  
   AliReconstruction rec;
   
   // uncomment for simulation
@@ -134,8 +131,9 @@ void hlt_rec(const char* input="./")
   //rec.SetInput("/Users/sa639/Documents/Work/ALICE/Data/2013/LHC13d/000195873/raw/13000195873000.10.root");
   //rec.SetInput("/Users/sa639/Documents/Work/ALICE/Data/2015/LHC15l/000239913/raw/15000239913030.1000.root");
   //rec.SetInput("/Users/sa639/Documents/Work/ALICE/Data/2015/LHC15i/236141/raw/15000236141030.101.root");
-  rec.SetInput("/Volumes/DATA/ALICE/Data/2015/LHC15o/000244918/raw/15000244918019.100.root");
+  //rec.SetInput("/Volumes/DATA/ALICE/Data/2015/LHC15o/000244918/raw/15000244918019.100.root");
   //rec.SetInput("/Volumes/DATA/ALICE/Data/2015/LHC15j/000237673/raw/15000237673030.101.root");
+  rec.SetInput("/Volumes/DATA/ALICE/Data/2016/LHC16c/000251269/raw/16000251269030.200.root");
   rec.SetRunVertexFinder(kFALSE);
   rec.SetRunMultFinder(kFALSE);
   rec.SetRunVertexFinderTracks(kFALSE);
@@ -148,6 +146,10 @@ void hlt_rec(const char* input="./")
   rec.SetRunQA(":");
   rec.SetRunGlobalQA(kFALSE);
   
+  //TString option = "libAliHLTUtil.so libAliHLTRCU.so libAliHLTCalo.so libAliHLTEMCAL.so libAliHLTGlobal.so chains=";
+  //option+="ESD-CONVERTER";
+  //option += "rootFileHisto loglevel=0x5f";
+  TString option = "chains=rootFileHisto loglevel=0x5f";
   rec.SetOption("HLT", option);
   
   rec.Run();
