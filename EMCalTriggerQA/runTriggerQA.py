@@ -177,17 +177,17 @@ class PlotNHitsRes:
         self.fHistogram = histogram
         self.fBadChannels = badchannels
         
-def PlotNHits(hlist, hname, nevents, nhitsTh):
+def PlotNHits(hlist, hname, nevents, nhitsTh, label, bins, minBin, maxBin):
     hist = hlist.FindObject(hname)
     if not hist:
         print "Could not get histogram '" + hname + "' in list '" + hlist.GetName() + "'. Skipping..."
         hlist.Print()
         return
     
-    canvas = ROOT.TCanvas(hname, hist.GetYaxis().GetTitle())
+    canvas = ROOT.TCanvas("{0}_{1}".format(label,hname), "{0} {1}".format(label, hist.GetYaxis().GetTitle()))
     canvas.SetLogy()
     
-    histNHits = ROOT.TH1D("FastORNHits", "FastORNHits;number of hits per event;probability", 1500, 0, 1.5)
+    histNHits = ROOT.TH1D("FastORNHits{0}".format(label), "FastORNHits{0};number of hits per event;probability".format(label), bins, minBin, maxBin)
     
     f = open("badchannels_{0}.txt".format(hname), 'w')
 
@@ -257,7 +257,9 @@ def GeneratePedestal(hlist, hname, nevents, nhitsTh):
     
     return canvas
 
-def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, L0vsGApatch=True, pedestal=True, badchannels=True,
+def main(train, trigger="EMC7", offline=True, recalc=True, 
+         GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, L0vsGApatch=True, 
+         pedestal=True, badchannels=True, level0=True, level1=False,
          axis="ADC", run="", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     
     suffix = ""
@@ -374,20 +376,37 @@ def main(train, trigger="EMC7", offline=True, recalc=True, GApatch=True, JEpatch
             canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxRecalc", thresholds_GA, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Recalc"+suffix, 20, 20, 1)
             
     if badchannels:
-        L0badchannels = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 3e-3)
-        L0badchannels.fCanvas.SaveAs("{0}{1}".format(L0badchannels.fCanvas.GetName(), suffix))
+        if level0:
+            L0badchannelsRes = PlotNHits(hlist, "EMCTRQA_histFastORL0", nevents, 3e-3, "Level0", 1500, 0, 1.5)
+            L0badchannelsRes.fCanvas.SaveAs("{0}{1}".format(L0badchannelsRes.fCanvas.GetName(), suffix))
+            
+            L0badchannelsLargeRes = PlotNHits(hlist, "EMCTRQA_histLargeAmpFastORL0", nevents, 7e-7, "Level0", 1000, 0, 0.002)
+            L0badchannelsLargeRes.fCanvas.SaveAs("{0}{1}".format(L0badchannelsLargeRes.fCanvas.GetName(), suffix))
+            
+            L0badchannels = set(L0badchannelsRes.fBadChannels)
+            L0badchannels.update(L0badchannelsLargeRes.fBadChannels)
+            
+            f = open("L0badchannels.txt", 'w')
+            
+            for i in L0badchannels:
+                 f.write(str(i) + '\n')
+                 
+        if level1:
+            L1badchannelsRes = PlotNHits(hlist, "EMCTRQA_histFastORL1", nevents, 3e-3, "Level1", 1500, 0, 1.5)
+            L1badchannelsRes.fCanvas.SaveAs("{0}{1}".format(L1badchannelsRes.fCanvas.GetName(), suffix))
+            
+            L1badchannelsLargeRes = PlotNHits(hlist, "EMCTRQA_histLargeAmpFastORL1", nevents, 7e-7, "Level1", 1000, 0, 0.002)
+            L1badchannelsLargeRes.fCanvas.SaveAs("{0}{1}".format(L1badchannelsLargeRes.fCanvas.GetName(), suffix))
+            
+            L1badchannels = set(L1badchannelsRes.fBadChannels)
+            L1badchannels.update(L1badchannelsLargeRes.fBadChannels)
+            
+            f = open("L1badchannels.txt", 'w')
+            
+            for i in L1badchannels:
+                 f.write(str(i) + '\n')
         
-        L0badchannelsLarge = PlotNHits(hlist, "EMCTRQA_histLargeAmpFastORL0", nevents, 7e-7)
-        L0badchannelsLarge.fCanvas.SaveAs("{0}{1}".format(L0badchannelsLarge.fCanvas.GetName(), suffix))
-        
-        badchannels = set(L0badchannels.fBadChannels)
-        badchannels.update(L0badchannelsLarge.fBadChannels)
-        
-        f = open("badchannels.txt", 'w')
-        
-        for i in badchannels:
-             f.write(str(i) + '\n')
-        
+            
     if pedestal:
         canvas = GeneratePedestal(hlist, "EMCTRQA_histFastORL0Amp", nevents, 0.01)
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
@@ -427,6 +446,12 @@ if __name__ == '__main__':
     parser.add_argument('--badchannels', action='store_const',
                         default=False, const=True,
                         help='Run bad channel analysis')
+    parser.add_argument('--level0', action='store_const',
+                        default=False, const=True,
+                        help='Run bad channel analysis for L0')
+    parser.add_argument('--level1', action='store_const',
+                        default=False, const=True,
+                        help='Run bad channel analysis for L1')
     parser.add_argument('--axis', metavar='axis',
                         default="ADC",
                         help='Axis type (GeV or ADC)')
@@ -441,6 +466,9 @@ if __name__ == '__main__':
                         help='Input path')
     args = parser.parse_args()
     
-    main(args.train, args.trigger, args.offline, args.recalc, args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.L0vsGApatch, args.pedestal, args.badchannels, args.axis, args.run, args.size, args.input_path)
+    main(args.train, args.trigger, args.offline, args.recalc, 
+         args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.L0vsGApatch, 
+         args.pedestal, args.badchannels, args.level0, args.level1,
+         args.axis, args.run, args.size, args.input_path)
     
     IPython.embed()
