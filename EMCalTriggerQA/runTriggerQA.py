@@ -6,6 +6,8 @@ import argparse
 from ROOT import gROOT
 from enum import Enum
 import array
+import math
+from collections import OrderedDict
 
 import IPython
 
@@ -17,7 +19,121 @@ class Axis(Enum):
     GeV = 1
     ADC = 2
     
-def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis, fname, suffix, maxX, maxY, rebin):
+class TriggerConfiguration:
+    def __init__(self, _lab, _th, _axis):
+        self.fLabel = _lab
+        self.fThreshold = _th
+        self.fAxis = _axis
+        self.fSharedEntries = OrderedDict()
+        self.fSharedEntriesErr = OrderedDict()
+        self.fShares = OrderedDict()
+        self.fSharesErr = OrderedDict()
+        
+    def CalculateSuppression(self, hist, nevents):
+        self.fEvents = nevents
+        if self.fAxis == "x":
+            self.fEntries = hist.Integral(hist.GetXaxis().FindBin(self.fThreshold), -1, 0, -1)
+        elif self.fAxis == "y":
+            self.fEntries = hist.Integral(0, -1, hist.GetYaxis().FindBin(self.fThreshold), -1)
+        else:
+            print("Error no axis defined!!!")
+
+        self.fEntriesErr = math.sqrt(self.fEntries)
+        self.fEventsErr = math.sqrt(self.fEvents)
+        
+        self.fSuppression = self.fEntries / self.fEvents
+        self.fErrSuppression= self.fSuppression * (1. / self.fEntriesErr + 1. / self.fEventsErr)
+        
+    def CalculateShare(self, hist, other):
+        if other.fAxis == self.fAxis:
+            #self trigger is a subset of the other
+            if other.fThreshold >= self.fThreshold:
+                #the other trigger has a higher threshold than self so other is fully contained in self
+                other.fSharedEntries[self.fLabel] = other.fEntries
+            else:
+                #the other trigger has a lower threshold than self so applying both triggers is equivalent to applying only self
+                other.fSharedEntries[self.fLabel] = self.fEntries
+        else:
+            #the two triggers are applied to different variables
+            if other.fAxis == "x":
+                thx = other.fThreshold
+            elif other.fAxis == "y":
+                thy = other.fThreshold
+                
+            if self.fAxis == "x":
+                thx = self.fThreshold
+            elif self.fAxis == "y":
+                thy = self.fThreshold
+        
+            print("{0}: applying {1} to the x axis and {2} to the y axis".format(self.fLabel, thx, thy))
+        
+            other.fSharedEntries[self.fLabel] = hist.Integral(hist.GetXaxis().FindBin(thx), -1, hist.GetYaxis().FindBin(thy), -1)
+        
+        other.fSharedEntriesErr[self.fLabel] = math.sqrt(other.fSharedEntries[self.fLabel])
+        
+        other.fShares[self.fLabel] = other.fSharedEntries[self.fLabel] / other.fEntries
+        other.fSharesErr[self.fLabel] = other.fShares[self.fLabel] * (1. / other.fSharedEntriesErr[self.fLabel] + 1. / other.fEntriesErr)
+        
+    def Print(self):
+        res = "|  *{0}*  ".format(self.fLabel)
+        for share in self.fShares.itervalues():
+            res += "|  {0:.2f}  ".format(share)
+        res += "|"
+        print(res)
+        
+class TriggerAnalysis:
+    fTriggerList = OrderedDict()
+    
+    def AddTrigger(self, trigger):
+        self.fTriggerList[trigger.fLabel] = trigger
+    
+    def DoAnalysis(self, hist, nevents):
+        for trigger in self.fTriggerList.itervalues():
+            trigger.CalculateSuppression(hist, nevents)
+        
+        for trigger1 in self.fTriggerList.itervalues():
+            for trigger2 in self.fTriggerList.itervalues():
+                trigger1.CalculateShare(hist, trigger2)
+                trigger2.CalculateShare(hist, trigger1)
+                
+        for trigger in self.fTriggerList.itervalues():
+            trigger.Print()
+        
+        self.PrintTriggerSuppression()
+        
+    def PrintTriggerSuppression(self):
+        highTrigRate = self.fTriggerList["CEMC7"].fShares["G1"] * (1. - self.fTriggerList["J1"].fShares["G1"]) + self.fTriggerList["CEMC7"].fShares["J1"]
+        lowTrigRate = self.fTriggerList["CEMC7"].fShares["G2"] * (1. - self.fTriggerList["J2"].fShares["G2"]) + self.fTriggerList["CEMC7"].fShares["J2"] - highTrigRate
+        
+        print("G1+J1 = {0:.3f}".format(highTrigRate))
+        print("G2+J2 = {0:.3f}".format(lowTrigRate))
+        
+def CalculateTriggerSuppression(hlist, hname, nevents):
+    hist = hlist.FindObject(hname)
+    if not hist:
+        print "Could not get histogram '" + hname + "' in list '" + hlist.GetName() + "'. Skipping..."
+        hlist.Print()
+        return
+    
+    print hname
+    totEntries = hist.GetEntries()
+    print "Total number of entries is", totEntries
+
+    hist.GetXaxis().SetLimits(hist.GetXaxis().GetXmin() * ADCtoGeV, hist.GetXaxis().GetXmax() * ADCtoGeV)
+    hist.GetXaxis().SetTitle(hist.GetXaxis().GetTitle() + " (GeV)")
+    hist.GetYaxis().SetLimits(hist.GetYaxis().GetXmin() * ADCtoGeV, hist.GetYaxis().GetXmax() * ADCtoGeV)
+    hist.GetYaxis().SetTitle(hist.GetYaxis().GetTitle() + " (GeV)")
+
+    triggerAna = TriggerAnalysis()
+    triggerAna.AddTrigger(TriggerConfiguration("G1", 6, "y"))
+    triggerAna.AddTrigger(TriggerConfiguration("G2", 4, "y"))
+    triggerAna.AddTrigger(TriggerConfiguration("J1", 15, "x"))
+    triggerAna.AddTrigger(TriggerConfiguration("J2", 10, "x"))
+    triggerAna.AddTrigger(TriggerConfiguration("CEMC7", 0, "x"))
+    triggerAna.DoAnalysis(hist, nevents)
+    
+def Plot2D(hlist, hname, trigLab1, trigLab2,
+           thresholds1, thresholds2, nevents, axis, fname, suffix, maxX, maxY, rebin):
     hist = hlist.FindObject(hname)
     if not hist:
         print "Could not get histogram '" + hname + "' in list '" + hlist.GetName() + "'. Skipping..."
@@ -65,11 +181,10 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis, fname, suffix,
     for th1 in thresholds1:
         if axis is Axis.ADC:
             th1 /= ADCtoGeV
-        
         proj = hist.ProjectionX(hname + "_proj_" + str(th1), hist.GetYaxis().FindBin(th1), hist.GetNbinsY()+1)
         if rebin > 1:
             proj.Rebin(rebin)
-        proj.SetTitle("L0 " + str(th1) + " GeV")
+        proj.SetTitle("{0} {1} GeV".format(trigLab1, th1))
         projList.append(proj)
         canvasProj.cd()
         proj.SetLineColor(colors[ith])
@@ -92,10 +207,34 @@ def Plot2D(hlist, hname, thresholds1, thresholds2, nevents, axis, fname, suffix,
         for th2 in thresholds2:
             if axis is Axis.ADC:
                 th2 /= ADCtoGeV
-                
-            entries = hist.Integral(hist.GetXaxis().FindBin(th2), -1, hist.GetYaxis().FindBin(th1), -1)
-            suppression = entries / nevents
-            print str(th1) + ";" + str(th2) + ";" + str(entries) + ";" + str(suppression)
+            #print("Applying th {0} to {1} and th {2} to {3}".format(th2, hist.GetXaxis().GetTitle(), th1, hist.GetYaxis().GetTitle()))
+            entriesBoth = hist.Integral(hist.GetXaxis().FindBin(th2), -1, hist.GetYaxis().FindBin(th1), -1)
+            entries1 = hist.Integral(0, -1, hist.GetYaxis().FindBin(th1), -1)
+            entries2 = hist.Integral(hist.GetXaxis().FindBin(th2), -1, 0, -1)
+            errentriesBoth = math.sqrt(entriesBoth)
+            errentries1 = math.sqrt(entries1)
+            errentries2 = math.sqrt(entries2)
+            share1 = entriesBoth / entries1
+            share2 = entriesBoth / entries2
+            suppression1 = entries1 / nevents
+            suppression2 = entries2 / nevents
+            errsuppression1 = suppression1 * (1. / math.sqrt(entries1) + 1. / math.sqrt(nevents))
+            errsuppression2 = suppression2 * (1. / math.sqrt(entries2) + 1. / math.sqrt(nevents))
+            errshare1 = share1 * (1. / math.sqrt(entriesBoth) + 1. / math.sqrt(entries1))
+            errshare2 = share2 * (1. / math.sqrt(entriesBoth) + 1. / math.sqrt(entries2))
+            print("{0}:{1}, {2}:{3}, "
+                  "ev. {0} = {4:.1f} ({5:.1f}), "
+                  "ev. {2} = {8:.1f} ({9:.1f}), "
+                  "suppr. {0} = {6:.4f} ({7:.4f}), "
+                  "suppr. {2} = {10:.4f} ({11:.4f}), "
+                  "share {0} = {12:.4f} ({13:.4f}), "
+                  "share {2} = {14:.4f} ({15:.4f})".format(trigLab1, th1, trigLab2, th2, 
+                                                           entries1, errentries1,
+                                                           suppression1, errsuppression1,
+                                                           entries2, errentries2,
+                                                           suppression2, errsuppression2,
+                                                           share1, errshare1,
+                                                           share2, errshare2))
             
         ith += 1
         
@@ -259,7 +398,7 @@ def GeneratePedestal(hlist, hname, nevents, nhitsTh):
 
 def main(train, trigger="EMC7", offline=True, recalc=True, 
          GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, L0vsGApatch=True, 
-         pedestal=True, badchannels=True, level0=True, level1=False,
+         pedestal=True, badchannels=True, level0=True, level1=False, triggerSuppression=True,
          axis="ADC", run="", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     
     suffix = ""
@@ -276,11 +415,11 @@ def main(train, trigger="EMC7", offline=True, recalc=True,
     fileName = "{0}/{1}/{2}/AnalysisResults.root".format(inputPath, train, run)
     
     if trigger:
-        listName = "AliEmcalTriggerQATaskPP_" + trigger + "_histos"
-        hlistName = "histosAliEmcalTriggerQATaskPP_" + trigger
+        listName = "AliEmcalTriggerQATask_" + trigger + "_histos"
+        hlistName = "histosAliEmcalTriggerQATask_" + trigger
     else:
-        listName = "AliEmcalTriggerQATaskPP_histos"
-        hlistName = "histosAliEmcalTriggerQATaskPP"
+        listName = "AliEmcalTriggerQATask_histos"
+        hlistName = "histosAliEmcalTriggerQATask"
     
     file = ROOT.TFile.Open(fileName);
     if not file:
@@ -303,8 +442,9 @@ def main(train, trigger="EMC7", offline=True, recalc=True,
         print "Could not get hash list '" + hlistName + "' in list '" + listName + "' from file '" + fileName + "'! Aborting..."
         exit(1)
     
-    thresholds_GA = [0, 3, 4, 6, 8]
-    thresholds_JE = [5, 10, 15, 20]
+    thresholds_L0 = [ 2.5 ]
+    thresholds_GA = [ 4,  5,  6,  8,  9, 10, 11]
+    thresholds_JE = [10, 12, 14, 15, 16, 18, 20]
     
     hEventsName = "fHistEventCount"
     hevents = list.FindObject(hEventsName)
@@ -354,26 +494,33 @@ def main(train, trigger="EMC7", offline=True, recalc=True,
         canvas = PlotPatchAmp("EMCTRQA_histEMCal", "PatchAmp", offlineColor, recalcColor, "JE", jetsize, hlist, nevents, [], eaxis, 100)
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
     
-    if GAvsJEpatch:
+    if triggerSuppression:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 3)
+            CalculateTriggerSuppression(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", nevents)
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 3)
+            CalculateTriggerSuppression(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", nevents)
+    
+    if GAvsJEpatch:
+        if offline:
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", "GA", "JE", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 1)
+            
+        if recalc:
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", "GA", "JE", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 1)
             
     if L0vsJEpatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 3)
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", "L0", "JE", thresholds_L0, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 1)
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 3)
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", "L0", "JE", thresholds_L0, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 1)
             
     if L0vsGApatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxOffline", thresholds_GA, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Offline"+suffix, 20, 20, 1)
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxOffline", "L0", "GA", thresholds_L0, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Offline"+suffix, 20, 20, 1)
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxRecalc", thresholds_GA, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Recalc"+suffix, 20, 20, 1)
+            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxRecalc", "L0", "GA", thresholds_L0, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Recalc"+suffix, 20, 20, 1)
             
     if badchannels:
         if level0:
@@ -440,6 +587,9 @@ if __name__ == '__main__':
     parser.add_argument('--L0vsGApatch', action='store_const',
                         default=False, const=True,
                         help='L0 vs GA patch')
+    parser.add_argument('--triggerSuppression', action='store_const',
+                        default=False, const=True,
+                        help='Trigger suppression analysis')
     parser.add_argument('--pedestal', action='store_const',
                         default=False, const=True,
                         help='Run pedestal analysis')
@@ -468,7 +618,7 @@ if __name__ == '__main__':
     
     main(args.train, args.trigger, args.offline, args.recalc, 
          args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.L0vsGApatch, 
-         args.pedestal, args.badchannels, args.level0, args.level1,
+         args.pedestal, args.badchannels, args.level0, args.level1, args.triggerSuppression,
          args.axis, args.run, args.size, args.input_path)
     
     IPython.embed()
