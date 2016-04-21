@@ -90,7 +90,7 @@ void hlt_rec(const char* input="./")
   AliHLTConfiguration trgmaker("EMCAL-TM", "EmcalTriggerMaker", tmInput.Data(), arg.Data());
 
   // The call for the trigger QA
-  arg = "-newTriggerBitConfig -noHistoReset";
+  arg = "-newTriggerBitConfig -noHistoReset -debugLevel0";
   TString tqaInput = "EMCAL-DM EMCAL-TRG EMCAL-TM";
   AliHLTConfiguration htConf("EMCAL-TQA", "EmcalTriggerQA", tqaInput, arg.Data());
   
@@ -105,7 +105,7 @@ void hlt_rec(const char* input="./")
   //AliHLTConfiguration hfConf("emcalHisto", "EmcalRawHistoMaker", fwInput.Data(), arg.Data());
   
   // Write the root file 
-  arg = "-datafile roothisto.root -concatenate-events -overwrite";
+  arg = "-datafile roothisto.root -concatenate-events -overwrite ";
   TString rwInput = "EMCAL-TQA";
   AliHLTConfiguration rwConf("rootFileHisto","ROOTFileWriter", rwInput.Data(), arg.Data());
   
@@ -125,7 +125,7 @@ void hlt_rec(const char* input="./")
   rec.SetDefaultStorage("raw://");
   
   rec.SetRunReconstruction(":");
-  rec.SetEventRange(0,1000);
+  rec.SetEventRange(0,-1);
   rec.SetInput(input);
   
   //rec.SetInput("/Users/sa639/Documents/Work/ALICE/Data/2013/LHC13d/000195873/raw/13000195873000.10.root");
@@ -134,6 +134,7 @@ void hlt_rec(const char* input="./")
   //rec.SetInput("/Volumes/DATA/ALICE/Data/2015/LHC15o/000244918/raw/15000244918019.100.root");
   //rec.SetInput("/Volumes/DATA/ALICE/Data/2015/LHC15j/000237673/raw/15000237673030.101.root");
   rec.SetInput("/Volumes/DATA/ALICE/Data/2016/LHC16c/000251269/raw/16000251269030.200.root");
+  //rec.SetInput("files_LHC16c_251269.txt");
   rec.SetRunVertexFinder(kFALSE);
   rec.SetRunMultFinder(kFALSE);
   rec.SetRunVertexFinderTracks(kFALSE);
