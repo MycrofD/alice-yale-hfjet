@@ -8,6 +8,12 @@ import copy
 import math
 
 globalList = []
+globalCanvasList = []
+
+def SaveCanvases(path, label):
+    for canvas in globalCanvasList:
+        fname = "{0}/{1}{2}.pdf".format(path, label, canvas.GetName())
+        canvas.SaveAs(fname)
 
 class JetDefinition:
     def __init__(self, _type, _radius):
@@ -31,7 +37,7 @@ class JetDefinition:
             self.fObservableList = []
         self.fObservableList.append(observable)
         
-    def GenerateCanvasList(self, label="", noLogY=False):
+    def GenerateCanvasList(self, label="", logY=False):
         canvasList = []
         
         for obs in self.fObservableList:
@@ -43,20 +49,34 @@ class JetDefinition:
                 ctitle = "{0} {1}".format(self.GetTitle(), obs.fTitle)
             print("Generating canvas {0} for observable {1}".format(cname, obs.fName))
             canvas = ROOT.TCanvas(cname, ctitle)
-            if not noLogY:
+            if logY:
                 canvas.SetLogy(obs.fLogy)
             canvasList.append(canvas)
-            globalList.append(canvas)
+            globalCanvasList.append(canvas)
             
         return canvasList
     
+    def DrawLegends(self, legend, ratioLegend):
+        for canvas in self.fCanvasList:
+            canvas.cd()
+            legend.Draw()
+        for canvas in self.fRatioCanvasList:
+            canvas.cd()
+            ratioLegend.Draw()
+
     def DrawHisto(self, canvasList, histoName, opt, marker, color):
         for obs,canvas in zip(self.fObservableList, canvasList):
             canvas.cd()
+            
+            if not hasattr(obs, histoName):
+                continue
+            
             histo = getattr(obs, histoName)
             
             resetMax = True
             for histInList in canvas.GetListOfPrimitives():
+                if not isinstance(histInList, ROOT.TH1):
+                    continue
                 if histInList.GetMaximum() > histo.GetMaximum():
                     resetMax = False
                     break
@@ -101,12 +121,14 @@ class Observable:
         self.fListOfCuts.append(copy.deepcopy(obs))
         
 class TreeProjector:    
-    def __init__(self, name, title, path, subdirs, filename, trigger, color, marker):
+    def __init__(self, name, title, triggerScale, path, subdirs, filename, trigger, color, marker):
         self.CreateChain(path, subdirs, filename, trigger)
         self.fName = name
         self.fTitle = title
         self.fColor = color
         self.fMarker = marker
+        self.fTriggerScale = triggerScale
+        self.fProjectionOk = False
         
     def AddJetDefinition(self, jetDef):
         if not hasattr(self, "fJetDefinitionList"):
@@ -160,8 +182,19 @@ class TreeProjector:
                     integral = observable.fHistogram.Integral()
                     if integral > 1e-10:
                         observable.fHistogram.Scale(1. / integral)
+                        
+        self.fProjectionOk = True
             
-    def GenerateTriggerTurnOn(self, treeMB):
+    def GenerateTriggerTurnOn(self, maxEntries, treeMB):
+        if not self.fProjectionOk:
+            self.ProjectTree(maxEntries)
+        
+        if not treeMB:
+            return
+        
+        if not treeMB.fProjectionOk:
+           treeMB.ProjectTree(maxEntries) 
+        
         for jetDefRare, jetDefMB in zip(self.fJetDefinitionList, treeMB.fJetDefinitionList):
             for obsRare, obsMB in zip(jetDefRare.fObservableList, jetDefMB.fObservableList):
                 obsRare.fRatio = obsMB.CreateHistogram("TurnOn_{0}_{1}".format(jetDefRare.GetName(), self.fName), 
@@ -169,7 +202,7 @@ class TreeProjector:
                                                        "", "ratio")
                 obsRare.fRatio.Divide(obsRare.fHistogram, obsMB.fHistogram)
             
-    def Draw(self, doRatios=False, treeProj=None):
+    def Draw(self, doRatios=False, treeProj=None, legend=None, ratioLegend=None):
         if treeProj:
             for jetDef1, jetDef2 in zip(self.fJetDefinitionList, treeProj.fJetDefinitionList):
                 if hasattr(jetDef2, "fCanvasList") and not hasattr(jetDef1, "fCanvasList"):
@@ -184,7 +217,7 @@ class TreeProjector:
                 opt = "same"
             else:
                 print("Generating canvas list...")
-                jetDef.fCanvasList = jetDef.GenerateCanvasList()
+                jetDef.fCanvasList = jetDef.GenerateCanvasList("", True)
                 opt = ""          
         
             jetDef.DrawHisto(jetDef.fCanvasList, "fHistogram", opt, self.fMarker, self.fColor)
@@ -193,28 +226,12 @@ class TreeProjector:
                 if hasattr(jetDef, "fRatioCanvasList") and jetDef.fRatioCanvasList:
                     opt = "same"
                 else:
-                    jetDef.fRatioCanvasList = jetDef.GenerateCanvasList("Ratio", True)
+                    jetDef.fRatioCanvasList = jetDef.GenerateCanvasList("Ratio", False)
                     opt = ""
             
                 jetDef.DrawHisto(jetDef.fRatioCanvasList, "fRatio", opt, self.fMarker, self.fColor)
-                
-    def DrawLegends(self, legend, ratioLegend):
-        for jetDef in self.fJetDefinitionList:
-            for canvas in jetDef.fCanvasList:
-                canvas.cd()
-                legend.Draw()
-            for canvas in jetDef.fRatioCanvasList:
-                canvas.cd()
-                ratioLegend.Draw()
-                
-    def SaveCanvases(self, path, label):
-        for jetDef in self.fJetDefinitionList:
-            for canvas in jetDef.fCanvasList:
-                fname = "{0}/{1}{2}.pdf".format(path, label, canvas.GetName())
-                canvas.SaveAs(fname)
-            for canvas in jetDef.fRatioCanvasList:
-                fname = "{0}/{1}{2}.pdf".format(path, label, canvas.GetName())
-                canvas.SaveAs(fname)
+            
+            jetDef.DrawLegends(legend, ratioLegend)
     
     def SaveRoot(self, file):
         file.cd()
@@ -226,25 +243,28 @@ class TreeProjector:
                     observable.fRatio.Write()
 
 class TriggerTurnOn:
-    def __init__(self, triggerList, MBtrigger, path, subdirs, filename, entries):
-        self.fListOfTreeProjectors = []
+    def __init__(self, triggerList, triggerScaleList, path, subdirs, filename, entries):
+        self.fListOfTreeProjectors = dict()
         colorList = [ROOT.kRed+1, ROOT.kBlue+1, ROOT.kGreen+1, ROOT.kOrange+1]
         markerList = [ROOT.kOpenCircle, ROOT.kOpenSquare, ROOT.kOpenDiamond, ROOT.kOpenCross]
-        for trigger,color,marker in zip(triggerList,colorList,markerList):
-            self.fListOfTreeProjectors.append(TreeProjector(trigger, trigger, path, subdirs, filename, trigger, color, marker))
-        self.fMBTreeProjector = TreeProjector(MBtrigger, MBtrigger, path, subdirs, filename, MBtrigger, ROOT.kBlack, ROOT.kFullCircle)
+        for trigger,triggerScale,color,marker in zip(triggerList,triggerScaleList,colorList,markerList):
+            if triggerScale:
+                print("Adding trigger {0} which will be scaled using {1}".format(trigger,triggerScale))
+                triggerScaleObj = self.fListOfTreeProjectors[triggerScale]
+            else:
+                print("Adding trigger {0} which will not be scaled".format(trigger))
+                triggerScaleObj = None
+            self.fListOfTreeProjectors[trigger] = TreeProjector(trigger, trigger, triggerScaleObj, path, subdirs, filename, trigger, color, marker)
+            print("Number of triggers is now {0}".format(len(self.fListOfTreeProjectors)))
         self.fEntries = entries
         
     def AddJetDefinition(self, jetDef):
-        for proj in self.fListOfTreeProjectors:
+        for proj in self.fListOfTreeProjectors.itervalues():
             proj.AddJetDefinition(copy.deepcopy(jetDef))
-        self.fMBTreeProjector.AddJetDefinition(copy.deepcopy(jetDef))
 
     def GenerateTriggerTurnOn(self):
-        self.fMBTreeProjector.ProjectTree(self.fEntries)
-        for proj in self.fListOfTreeProjectors:
-            proj.ProjectTree(self.fEntries)
-            proj.GenerateTriggerTurnOn(self.fMBTreeProjector)
+        for proj in self.fListOfTreeProjectors.itervalues():
+            proj.GenerateTriggerTurnOn(self.fEntries, proj.fTriggerScale)
     
     def GenerateLegends(self, projList):
         legend = ROOT.TLegend(0.5, 0.9, 0.9, 0.7)
@@ -259,35 +279,44 @@ class TriggerTurnOn:
             entry.SetMarkerStyle(proj.fMarker)
             entry.SetLineColor(proj.fColor)
         return legend
+    
+    def GenerateRatioLegends(self, projList):
+        legend = ROOT.TLegend(0.5, 0.9, 0.9, 0.7)
+        legend.SetFillStyle(0)
+        legend.SetBorderSize(0)
+        legend.SetTextFont(43)
+        legend.SetTextSize(12)
+        for proj in projList:
+            if not proj.fTriggerScale: 
+                continue
+            entry = legend.AddEntry(None, "{0}/{1}".format(proj.fTitle, proj.fTriggerScale.fTitle), "pe")
+            entry.SetMarkerSize(1)
+            entry.SetMarkerColor(proj.fColor)
+            entry.SetMarkerStyle(proj.fMarker)
+            entry.SetLineColor(proj.fColor)
+        return legend
             
     def Draw(self):
-        all = list(self.fListOfTreeProjectors)
-        all.append(self.fMBTreeProjector)
-        self.fLegend = self.GenerateLegends(all)
-        self.fRatioLegend = self.GenerateLegends(self.fListOfTreeProjectors)
+        self.fLegend = self.GenerateLegends(self.fListOfTreeProjectors.values())
+        self.fRatioLegend = self.GenerateRatioLegends(self.fListOfTreeProjectors.values())
         
-        self.fMBTreeProjector.Draw()
-        prev = self.fMBTreeProjector
-        for proj in self.fListOfTreeProjectors:
-            proj.Draw(True, prev)
+        prev = None
+        for proj in self.fListOfTreeProjectors.itervalues():
+            proj.Draw(True, prev, self.fLegend, self.fRatioLegend)
             prev = proj
-        self.fListOfTreeProjectors[0].DrawLegends(self.fLegend, self.fRatioLegend)
         
     def SaveAll(self, path, label=""):
         file = ROOT.TFile("{0}/{1}TriggerTurnOnAnalysis.root".format(path, label), "recreate")
-        self.fMBTreeProjector.SaveRoot(file)
-        for proj in self.fListOfTreeProjectors:
+        for proj in self.fListOfTreeProjectors.itervalues():
             proj.SaveRoot(file)
             
         file.Close()
-            
-        self.fListOfTreeProjectors[0].SaveCanvases(path, label)
 
 def AddCuts(obs, ptcut):
     if ptcut > 0:
         obs.AddCut(Observable("fPt","#it{p}_{T} (GeV/#it{c})", 10, ptcut, 1000, True, False))
 
-def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, entries, ptcut):
+def main(train, period, trainNumbers, inputPath, filename, triggers, entries, ptcut):
     ROOT.gSystem.Load("libCGAL")
     ROOT.gStyle.SetOptTitle(0)
     ROOT.gStyle.SetOptStat(0)
@@ -314,7 +343,17 @@ def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, 
     
     path = "{0}/{1}".format(inputPath, train)
     
-    triggerTurnOn = TriggerTurnOn(triggers.split(","), MBtrigger, path, periodList, filename, entries)
+    triggerList = []
+    triggerScaleList = []
+    for trigger in triggers.split(","):
+        pair = trigger.split(":")
+        triggerList.append(pair[0])
+        if len(pair) == 1:
+            triggerScaleList.append("")
+        else:
+            triggerScaleList.append(pair[1])
+    
+    triggerTurnOn = TriggerTurnOn(triggerList, triggerScaleList, path, periodList, filename, entries)
     chargedJetR040 = JetDefinition("Charged", "R040")
     chargedJetR040.AddObservable(Observable("fPt","#it{p}_{T} (GeV/#it{c})", 17, 5, 90, True, False))
     etaObs = Observable("fEta","#it{#eta}", 15, -0.9, 0.9, False, True)
@@ -350,6 +389,7 @@ def main(train, period, trainNumbers, inputPath, filename, triggers, MBtrigger, 
     if ptcut > 0:
         label = "Cut{0}GeV".format(ptcut)
     triggerTurnOn.SaveAll(path, label)
+    SaveCanvases(path, label)
     
     globalList.append(triggerTurnOn)
     
@@ -361,9 +401,6 @@ if __name__ == '__main__':
     parser.add_argument('--trigger', metavar='trigger',
                         default='EMCEJE',
                         help='Rare trigger name (e.g. EMCEJE)')
-    parser.add_argument('--mb-trigger', metavar='MBtrigger',
-                        default='AnyINT',
-                        help='MB trigger name (e.g. AnyINT)')
     parser.add_argument('--train', metavar='train',
                         default='Jets_EMC_pp',
                         help='Train name to be analyzed (e.g. Jets_EMC_pp)')
@@ -385,6 +422,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     
-    main(args.train, args.period, args.trainNumbers, args.input_path, args.file_name, args.trigger, args.mb_trigger, args.entries, args.pt_cut)
+    main(args.train, args.period, args.trainNumbers, args.input_path, args.file_name, args.trigger, args.entries, args.pt_cut)
     
     IPython.embed()
