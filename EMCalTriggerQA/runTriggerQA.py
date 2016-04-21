@@ -102,11 +102,11 @@ class TriggerAnalysis:
         self.PrintTriggerSuppression()
         
     def PrintTriggerSuppression(self):
-        highTrigRate = self.fTriggerList["CEMC7"].fShares["G1"] * (1. - self.fTriggerList["J1"].fShares["G1"]) + self.fTriggerList["CEMC7"].fShares["J1"]
-        lowTrigRate = self.fTriggerList["CEMC7"].fShares["G2"] * (1. - self.fTriggerList["J2"].fShares["G2"]) + self.fTriggerList["CEMC7"].fShares["J2"] - highTrigRate
+        highTrigRate = self.fTriggerList["L0"].fShares["G1"] * (1. - self.fTriggerList["J1"].fShares["G1"]) + self.fTriggerList["L0"].fShares["J1"]
+        lowTrigRate = self.fTriggerList["L0"].fShares["G2"] * (1. - self.fTriggerList["J2"].fShares["G2"]) + self.fTriggerList["L0"].fShares["J2"] - highTrigRate
         
         print("G1+J1 = {0:.3f}".format(highTrigRate))
-        print("G2+J2 = {0:.3f}".format(lowTrigRate))
+        print("G2+J2-(G1+J1) = {0:.3f}".format(lowTrigRate))
         
 def CalculateTriggerSuppression(hlist, hname, nevents):
     hist = hlist.FindObject(hname)
@@ -125,11 +125,11 @@ def CalculateTriggerSuppression(hlist, hname, nevents):
     hist.GetYaxis().SetTitle(hist.GetYaxis().GetTitle() + " (GeV)")
 
     triggerAna = TriggerAnalysis()
-    triggerAna.AddTrigger(TriggerConfiguration("G1", 6, "y"))
-    triggerAna.AddTrigger(TriggerConfiguration("G2", 4, "y"))
-    triggerAna.AddTrigger(TriggerConfiguration("J1", 15, "x"))
-    triggerAna.AddTrigger(TriggerConfiguration("J2", 10, "x"))
-    triggerAna.AddTrigger(TriggerConfiguration("CEMC7", 0, "x"))
+    triggerAna.AddTrigger(TriggerConfiguration("G1", 10, "y"))
+    triggerAna.AddTrigger(TriggerConfiguration("G2", 5, "y"))
+    triggerAna.AddTrigger(TriggerConfiguration("J1", 20, "x"))
+    triggerAna.AddTrigger(TriggerConfiguration("J2", 16, "x"))
+    triggerAna.AddTrigger(TriggerConfiguration("L0", 0, "x"))
     triggerAna.DoAnalysis(hist, nevents)
     
 def Plot2D(hlist, hname, trigLab1, trigLab2,
@@ -396,7 +396,7 @@ def GeneratePedestal(hlist, hname, nevents, nhitsTh):
     
     return canvas
 
-def main(train, trigger="EMC7", offline=True, recalc=True, 
+def main(train, trigger="EMC7", det="EMCal", offline=True, recalc=True, 
          GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, L0vsGApatch=True, 
          pedestal=True, badchannels=True, level0=True, level1=False, triggerSuppression=True,
          axis="ADC", run="", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
@@ -471,10 +471,10 @@ def main(train, trigger="EMC7", offline=True, recalc=True,
         else:
             recalcColor = -1
         
-        canvas = PlotPatchAmp("EMCTRQA_histEMCal", "MaxPatchAmp", offlineColor, recalcColor, "GA", "2x2", hlist, nevents, thresholds_GA, eaxis, 50)
+        canvas = PlotPatchAmp("EMCTRQA_hist{0}".format(det), "MaxPatchAmp", offlineColor, recalcColor, "GA", "2x2", hlist, nevents, thresholds_GA, eaxis, 50)
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
-        canvas = PlotPatchAmp("EMCTRQA_histEMCal", "PatchAmp", offlineColor, recalcColor, "GA", "2x2", hlist, nevents, [], eaxis, 50)
+        canvas = PlotPatchAmp("EMCTRQA_hist{0}".format(det), "PatchAmp", offlineColor, recalcColor, "GA", "2x2", hlist, nevents, [], eaxis, 50)
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
     if JEpatch:
@@ -488,39 +488,39 @@ def main(train, trigger="EMC7", offline=True, recalc=True,
         else:
             recalcColor = -1
             
-        canvas = PlotPatchAmp("EMCTRQA_histEMCal", "MaxPatchAmp", offlineColor, recalcColor, "JE", jetsize, hlist, nevents, thresholds_JE, eaxis, 100)
+        canvas = PlotPatchAmp("EMCTRQA_hist{0}".format(det), "MaxPatchAmp", offlineColor, recalcColor, "JE", jetsize, hlist, nevents, thresholds_JE, eaxis, 100)
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
         
-        canvas = PlotPatchAmp("EMCTRQA_histEMCal", "PatchAmp", offlineColor, recalcColor, "JE", jetsize, hlist, nevents, [], eaxis, 100)
+        canvas = PlotPatchAmp("EMCTRQA_hist{0}".format(det), "PatchAmp", offlineColor, recalcColor, "JE", jetsize, hlist, nevents, [], eaxis, 100)
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
     
     if triggerSuppression:
         if offline:
-            CalculateTriggerSuppression(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", nevents)
+            CalculateTriggerSuppression(hlist, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMaxOffline".format(det), nevents)
             
         if recalc:
-            CalculateTriggerSuppression(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", nevents)
+            CalculateTriggerSuppression(hlist, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMaxRecalc".format(det), nevents)
     
     if GAvsJEpatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxOffline", "GA", "JE", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 1)
+            canvas = Plot2D(hlist, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMaxOffline".format(det), "GA", "JE", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 1)
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCGAHMaxVsEMCJEHMaxRecalc", "GA", "JE", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 1)
+            canvas = Plot2D(hlist, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMaxRecalc".format(det), "GA", "JE", thresholds_GA, thresholds_JE, nevents, eaxis, "MaxGA2x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 1)
             
     if L0vsJEpatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxOffline", "L0", "JE", thresholds_L0, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 1)
+            canvas = Plot2D(hlist, "EMCTRQA_hist{0}EMCL0MaxVsEMCJEHMaxOffline".format(det), "L0", "JE", thresholds_L0, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Offline"+suffix, 100, 100, 1)
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCJEHMaxRecalc", "L0", "JE", thresholds_L0, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 1)
+            canvas = Plot2D(hlist, "EMCTRQA_hist{0}EMCL0MaxVsEMCJEHMaxRecalc".format(det), "L0", "JE", thresholds_L0, thresholds_JE, nevents, eaxis, "MaxL02x2vsJE{0}".format(jetsize), "_Recalc"+suffix, 100, 100, 1)
             
     if L0vsGApatch:
         if offline:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxOffline", "L0", "GA", thresholds_L0, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Offline"+suffix, 20, 20, 1)
+            canvas = Plot2D(hlist, "EMCTRQA_hist{0}EMCL0MaxVsEMCGAHMaxOffline".format(det), "L0", "GA", thresholds_L0, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Offline"+suffix, 20, 20, 1)
             
         if recalc:
-            canvas = Plot2D(hlist, "EMCTRQA_histEMCalEMCL0MaxVsEMCGAHMaxRecalc", "L0", "GA", thresholds_L0, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Recalc"+suffix, 20, 20, 1)
+            canvas = Plot2D(hlist, "EMCTRQA_hist{0}EMCL0MaxVsEMCGAHMaxRecalc".format(det), "L0", "GA", thresholds_L0, thresholds_GA, nevents, eaxis, "MaxL02x2vsGA2x2", "_Recalc"+suffix, 20, 20, 1)
             
     if badchannels:
         if level0:
@@ -566,6 +566,9 @@ if __name__ == '__main__':
     parser.add_argument('--trigger', metavar='trigger',
                         default="EMC7",
                         help='Trigger')
+    parser.add_argument('--detector', metavar='trigger',
+                        default="EMCal",
+                        help='Detector (EMCal or DCal)')
     parser.add_argument('--offline', action='store_const',
                         default=False, const=True,
                         help='Offline')
@@ -616,7 +619,7 @@ if __name__ == '__main__':
                         help='Input path')
     args = parser.parse_args()
     
-    main(args.train, args.trigger, args.offline, args.recalc, 
+    main(args.train, args.trigger, args.detector, args.offline, args.recalc, 
          args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.L0vsGApatch, 
          args.pedestal, args.badchannels, args.level0, args.level1, args.triggerSuppression,
          args.axis, args.run, args.size, args.input_path)
