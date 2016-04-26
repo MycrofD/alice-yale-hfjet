@@ -20,21 +20,39 @@ class Axis(Enum):
     ADC = 2
     
 class TriggerConfiguration:
-    def __init__(self, _lab, _th, _axis):
+    def __init__(self, _lab, _th, _hname, _axis, _hlist):
         self.fLabel = _lab
         self.fThreshold = _th
         self.fAxis = _axis
+        self.fHistogramName = _hname
+        self.RetrieveHistogram(_hlist)
         self.fSharedEntries = OrderedDict()
         self.fSharedEntriesErr = OrderedDict()
         self.fShares = OrderedDict()
         self.fSharesErr = OrderedDict()
         
-    def CalculateSuppression(self, hist, nevents):
+    def RetrieveHistogram(self, hlist):
+        self.fHistogram = hlist.FindObject(self.fHistogramName)
+        if not hist:
+            print "Could not get histogram '" + self.fHistogramName + "' in list '" + hlist.GetName() + "'. Skipping..."
+            hlist.Print()
+            return
+        
+        self.fTotalEntries = self.fHistogram.GetEntries()
+        print("Total number of entries in {0} is {1}.".format(self.fHistogramName, self.fTotalEntries))
+    
+        if not "GeV" in self.fHistogram.GetXaxis().GetTitle():
+            self.fHistogram.GetXaxis().SetLimits(self.fHistogram.GetXaxis().GetXmin() * ADCtoGeV, self.fHistogram.GetXaxis().GetXmax() * ADCtoGeV)
+            self.fHistogram.GetXaxis().SetTitle(self.fHistogram.GetXaxis().GetTitle() + " (GeV)")
+            self.fHistogram.GetYaxis().SetLimits(self.fHistogram.GetYaxis().GetXmin() * ADCtoGeV, self.fHistogram.GetYaxis().GetXmax() * ADCtoGeV)
+            self.fHistogram.GetYaxis().SetTitle(self.fHistogram.GetYaxis().GetTitle() + " (GeV)")
+    
+    def CalculateSuppression(self, nevents):
         self.fEvents = nevents
         if self.fAxis == "x":
-            self.fEntries = hist.Integral(hist.GetXaxis().FindBin(self.fThreshold), -1, 0, -1)
+            self.fEntries = self.fHistogram.Integral(hist.GetXaxis().FindBin(self.fThreshold), -1, 0, -1)
         elif self.fAxis == "y":
-            self.fEntries = hist.Integral(0, -1, hist.GetYaxis().FindBin(self.fThreshold), -1)
+            self.fEntries = self.fHistogram.Integral(0, -1, hist.GetYaxis().FindBin(self.fThreshold), -1)
         else:
             print("Error no axis defined!!!")
 
@@ -44,7 +62,7 @@ class TriggerConfiguration:
         self.fSuppression = self.fEntries / self.fEvents
         self.fErrSuppression= self.fSuppression * (1. / self.fEntriesErr + 1. / self.fEventsErr)
         
-    def CalculateShare(self, hist, other):
+    def CalculateShare(self, other):
         if other.fAxis == self.fAxis:
             #self trigger is a subset of the other
             if other.fThreshold >= self.fThreshold:
@@ -67,7 +85,7 @@ class TriggerConfiguration:
         
             print("{0}: applying {1} to the x axis and {2} to the y axis".format(self.fLabel, thx, thy))
         
-            other.fSharedEntries[self.fLabel] = hist.Integral(hist.GetXaxis().FindBin(thx), -1, hist.GetYaxis().FindBin(thy), -1)
+            other.fSharedEntries[self.fLabel] = hist.Integral(self.fHistogram.GetXaxis().FindBin(thx), -1, self.fHistogram.GetYaxis().FindBin(thy), -1)
         
         other.fSharedEntriesErr[self.fLabel] = math.sqrt(other.fSharedEntries[self.fLabel])
         
@@ -87,14 +105,14 @@ class TriggerAnalysis:
     def AddTrigger(self, trigger):
         self.fTriggerList[trigger.fLabel] = trigger
     
-    def DoAnalysis(self, hist, nevents):
+    def DoAnalysis(self, nevents):
         for trigger in self.fTriggerList.itervalues():
-            trigger.CalculateSuppression(hist, nevents)
+            trigger.CalculateSuppression(nevents)
         
         for trigger1 in self.fTriggerList.itervalues():
             for trigger2 in self.fTriggerList.itervalues():
-                trigger1.CalculateShare(hist, trigger2)
-                trigger2.CalculateShare(hist, trigger1)
+                trigger1.CalculateShare(trigger2)
+                trigger2.CalculateShare(trigger1)
                 
         for trigger in self.fTriggerList.itervalues():
             trigger.Print()
@@ -108,29 +126,18 @@ class TriggerAnalysis:
         print("G1+J1 = {0:.3f}".format(highTrigRate))
         print("G2+J2-(G1+J1) = {0:.3f}".format(lowTrigRate))
         
-def CalculateTriggerSuppression(hlist, hname, nevents):
-    hist = hlist.FindObject(hname)
-    if not hist:
-        print "Could not get histogram '" + hname + "' in list '" + hlist.GetName() + "'. Skipping..."
-        hlist.Print()
-        return
-    
-    print hname
-    totEntries = hist.GetEntries()
-    print "Total number of entries is", totEntries
-
-    hist.GetXaxis().SetLimits(hist.GetXaxis().GetXmin() * ADCtoGeV, hist.GetXaxis().GetXmax() * ADCtoGeV)
-    hist.GetXaxis().SetTitle(hist.GetXaxis().GetTitle() + " (GeV)")
-    hist.GetYaxis().SetLimits(hist.GetYaxis().GetXmin() * ADCtoGeV, hist.GetYaxis().GetXmax() * ADCtoGeV)
-    hist.GetYaxis().SetTitle(hist.GetYaxis().GetTitle() + " (GeV)")
-
+def CalculateTriggerSuppression(hlist, type, nevents):
     triggerAna = TriggerAnalysis()
-    triggerAna.AddTrigger(TriggerConfiguration("G1", 10, "y"))
-    triggerAna.AddTrigger(TriggerConfiguration("G2", 5, "y"))
-    triggerAna.AddTrigger(TriggerConfiguration("J1", 20, "x"))
-    triggerAna.AddTrigger(TriggerConfiguration("J2", 16, "x"))
-    triggerAna.AddTrigger(TriggerConfiguration("L0", 0, "x"))
-    triggerAna.DoAnalysis(hist, nevents)
+    triggerAna.AddTrigger(TriggerConfiguration("EG1", 10, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "y", hlist))
+    triggerAna.AddTrigger(TriggerConfiguration("EG2", 5, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "y", hlist))
+    triggerAna.AddTrigger(TriggerConfiguration("EJ1", 20, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x", hlist))
+    triggerAna.AddTrigger(TriggerConfiguration("EJ2", 16, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x", hlist))
+    triggerAna.AddTrigger(TriggerConfiguration("DG1", 10, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "y", hlist))
+    triggerAna.AddTrigger(TriggerConfiguration("DG2", 5, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "y", hlist))
+    triggerAna.AddTrigger(TriggerConfiguration("DJ1", 20, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x", hlist))
+    triggerAna.AddTrigger(TriggerConfiguration("DJ2", 16, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x", hlist))
+    triggerAna.AddTrigger(TriggerConfiguration("EMC7+DMC7", 0, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x", hlist))
+    triggerAna.DoAnalysis(nevents)
     
 def Plot2D(hlist, hname, trigLab1, trigLab2,
            thresholds1, thresholds2, nevents, axis, fname, suffix, maxX, maxY, rebin):
@@ -496,10 +503,10 @@ def main(train, trigger="EMC7", det="EMCal", offline=True, recalc=True,
     
     if triggerSuppression:
         if offline:
-            CalculateTriggerSuppression(hlist, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMaxOffline".format(det), nevents)
+            CalculateTriggerSuppression(hlist, "Offline", nevents)
             
         if recalc:
-            CalculateTriggerSuppression(hlist, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMaxRecalc".format(det), nevents)
+            CalculateTriggerSuppression(hlist, "Recalc", nevents)
     
     if GAvsJEpatch:
         if offline:
