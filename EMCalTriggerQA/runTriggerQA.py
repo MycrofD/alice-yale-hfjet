@@ -20,39 +20,45 @@ class Axis(Enum):
     ADC = 2
     
 class TriggerConfiguration:
-    def __init__(self, _lab, _th, _hname, _axis, _hlist):
+    def __init__(self, _lab, _th, _hlist):
         self.fLabel = _lab
         self.fThreshold = _th
-        self.fAxis = _axis
-        self.fHistogramName = _hname
-        self.RetrieveHistogram(_hlist)
+        self.fHistogramList = _hlist
+        self.fHistogramNameAxis = dict()
+        self.fHistograms = dict()
         self.fSharedEntries = OrderedDict()
         self.fSharedEntriesErr = OrderedDict()
         self.fShares = OrderedDict()
         self.fSharesErr = OrderedDict()
         
-    def RetrieveHistogram(self, hlist):
-        self.fHistogram = hlist.FindObject(self.fHistogramName)
-        if not hist:
-            print "Could not get histogram '" + self.fHistogramName + "' in list '" + hlist.GetName() + "'. Skipping..."
-            hlist.Print()
-            return
+    def AddHistogram(self, _hname, _axis):
+        self.fHistogramNameAxis[_hname] = _axis
         
-        self.fTotalEntries = self.fHistogram.GetEntries()
-        print("Total number of entries in {0} is {1}.".format(self.fHistogramName, self.fTotalEntries))
-    
-        if not "GeV" in self.fHistogram.GetXaxis().GetTitle():
-            self.fHistogram.GetXaxis().SetLimits(self.fHistogram.GetXaxis().GetXmin() * ADCtoGeV, self.fHistogram.GetXaxis().GetXmax() * ADCtoGeV)
-            self.fHistogram.GetXaxis().SetTitle(self.fHistogram.GetXaxis().GetTitle() + " (GeV)")
-            self.fHistogram.GetYaxis().SetLimits(self.fHistogram.GetYaxis().GetXmin() * ADCtoGeV, self.fHistogram.GetYaxis().GetXmax() * ADCtoGeV)
-            self.fHistogram.GetYaxis().SetTitle(self.fHistogram.GetYaxis().GetTitle() + " (GeV)")
-    
+    def RetrieveHistograms(self):
+        for hname in self.fHistogramNameAxis.iterkeys():
+            hist = self.fHistogramList.FindObject(hname)
+            if not hist:
+                print("Could not get histogram '{0}' in list '{1}'. Skipping...".format(hname, self.fHistogramList.GetName()))
+                self.fHistogramList.Print()
+                break
+            
+            print("Total number of entries in {0} is {1}.".format(hname, hist.GetEntries()))
+            if not "GeV" in hist.GetXaxis().GetTitle():
+                hist.GetXaxis().SetLimits(hist.GetXaxis().GetXmin() * ADCtoGeV, hist.GetXaxis().GetXmax() * ADCtoGeV)
+                hist.GetXaxis().SetTitle(hist.GetXaxis().GetTitle() + " (GeV)")
+                hist.GetYaxis().SetLimits(hist.GetYaxis().GetXmin() * ADCtoGeV, hist.GetYaxis().GetXmax() * ADCtoGeV)
+                hist.GetYaxis().SetTitle(hist.GetYaxis().GetTitle() + " (GeV)")
+                
+            self.fHistograms[hname] = hist
+            
     def CalculateSuppression(self, nevents):
+        hist = self.fHistograms.values()[0]
+        
         self.fEvents = nevents
-        if self.fAxis == "x":
-            self.fEntries = self.fHistogram.Integral(hist.GetXaxis().FindBin(self.fThreshold), -1, 0, -1)
-        elif self.fAxis == "y":
-            self.fEntries = self.fHistogram.Integral(0, -1, hist.GetYaxis().FindBin(self.fThreshold), -1)
+        if self.fHistogramNameAxis[hist.GetName()] == "x":
+            self.fEntries = hist.Integral(hist.GetXaxis().FindBin(self.fThreshold), -1, 0, -1)
+        elif self.fHistogramNameAxis[hist.GetName()] == "y":
+            self.fEntries = hist.Integral(0, -1, hist.GetYaxis().FindBin(self.fThreshold), -1)
         else:
             print("Error no axis defined!!!")
 
@@ -60,10 +66,24 @@ class TriggerConfiguration:
         self.fEventsErr = math.sqrt(self.fEvents)
         
         self.fSuppression = self.fEntries / self.fEvents
-        self.fErrSuppression= self.fSuppression * (1. / self.fEntriesErr + 1. / self.fEventsErr)
-        
+        self.fErrSuppression= self.fSuppression * (1. / self.fEntriesErr + 1. / self.fEventsErr) 
+    
+    def FindCommonHistogram(self, other):
+        for key in self.fHistogramNameAxis.iterkeys():
+            if other.fHistogramNameAxis.has_key(key):
+                return key
+        return
+    
     def CalculateShare(self, other):
-        if other.fAxis == self.fAxis:
+        hname = self.FindCommonHistogram(other)
+        
+        if hname:
+            print("Calculating share between {0} and {1} ({2})".format(self.fLabel, other.fLabel, hname))
+        else:
+            print("Skipping {0} with {1}".format(self.fLabel, other.fLabel))
+            return 
+        
+        if other.fHistogramNameAxis[hname] == self.fHistogramNameAxis[hname]:
             #self trigger is a subset of the other
             if other.fThreshold >= self.fThreshold:
                 #the other trigger has a higher threshold than self so other is fully contained in self
@@ -73,29 +93,42 @@ class TriggerConfiguration:
                 other.fSharedEntries[self.fLabel] = self.fEntries
         else:
             #the two triggers are applied to different variables
-            if other.fAxis == "x":
+            if other.fHistogramNameAxis[hname] == "x":
                 thx = other.fThreshold
-            elif other.fAxis == "y":
+            elif other.fHistogramNameAxis[hname] == "y":
                 thy = other.fThreshold
                 
-            if self.fAxis == "x":
+            if self.fHistogramNameAxis[hname] == "x":
                 thx = self.fThreshold
-            elif self.fAxis == "y":
+            elif self.fHistogramNameAxis[hname] == "y":
                 thy = self.fThreshold
         
             print("{0}: applying {1} to the x axis and {2} to the y axis".format(self.fLabel, thx, thy))
         
-            other.fSharedEntries[self.fLabel] = hist.Integral(self.fHistogram.GetXaxis().FindBin(thx), -1, self.fHistogram.GetYaxis().FindBin(thy), -1)
+            other.fSharedEntries[self.fLabel] = self.fHistograms[hname].Integral(self.fHistograms[hname].GetXaxis().FindBin(thx), -1, self.fHistograms[hname].GetYaxis().FindBin(thy), -1)
         
         other.fSharedEntriesErr[self.fLabel] = math.sqrt(other.fSharedEntries[self.fLabel])
         
-        other.fShares[self.fLabel] = other.fSharedEntries[self.fLabel] / other.fEntries
-        other.fSharesErr[self.fLabel] = other.fShares[self.fLabel] * (1. / other.fSharedEntriesErr[self.fLabel] + 1. / other.fEntriesErr)
+        if other.fEntries > 0:
+            other.fShares[self.fLabel] = other.fSharedEntries[self.fLabel] / other.fEntries
         
-    def Print(self):
+            if other.fSharedEntriesErr[self.fLabel] > 0 and other.fEntriesErr > 0:
+                other.fSharesErr[self.fLabel] = other.fShares[self.fLabel] * (1. / other.fSharedEntriesErr[self.fLabel] + 1. / other.fEntriesErr)
+            else:
+                other.fSharesErr[self.fLabel] = 1e9
+        else:
+            other.fShares[self.fLabel] = 0
+        
+        print("The shared entries are {0}. Total entries of {1} are {2}, of {3} are {4}".format(other.fSharedEntries[self.fLabel], self.fLabel, self.fEntries, other.fLabel, other.fEntries))
+        
+    def Print(self, keys):
         res = "|  *{0}*  ".format(self.fLabel)
-        for share in self.fShares.itervalues():
-            res += "|  {0:.2f}  ".format(share)
+        for key in keys:
+            if self.fShares.has_key(key):
+                share = self.fShares[key]
+            else:
+                share = -1
+            res += "|  {0:.3f}  ".format(share)
         res += "|"
         print(res)
         
@@ -104,39 +137,82 @@ class TriggerAnalysis:
     
     def AddTrigger(self, trigger):
         self.fTriggerList[trigger.fLabel] = trigger
+        return trigger
     
     def DoAnalysis(self, nevents):
         for trigger in self.fTriggerList.itervalues():
+            trigger.RetrieveHistograms()
             trigger.CalculateSuppression(nevents)
         
         for trigger1 in self.fTriggerList.itervalues():
             for trigger2 in self.fTriggerList.itervalues():
                 trigger1.CalculateShare(trigger2)
-                trigger2.CalculateShare(trigger1)
-                
+        
+        res = "|  *Triggers*  "
+        for labels in self.fTriggerList.iterkeys():
+            res += "|  *{0}*  ".format(labels)
+        res += "|"
+        print(res)
+            
         for trigger in self.fTriggerList.itervalues():
-            trigger.Print()
+            trigger.Print(self.fTriggerList.keys())
         
         self.PrintTriggerSuppression()
         
     def PrintTriggerSuppression(self):
-        highTrigRate = self.fTriggerList["L0"].fShares["G1"] * (1. - self.fTriggerList["J1"].fShares["G1"]) + self.fTriggerList["L0"].fShares["J1"]
-        lowTrigRate = self.fTriggerList["L0"].fShares["G2"] * (1. - self.fTriggerList["J2"].fShares["G2"]) + self.fTriggerList["L0"].fShares["J2"] - highTrigRate
+        highTrigRate = self.fTriggerList["EMC7+DMC7"].fShares["EG1"] * (1. - self.fTriggerList["EJ1"].fShares["EG1"]) + self.fTriggerList["EMC7+DMC7"].fShares["EJ1"]
+        lowTrigRate = self.fTriggerList["EMC7+DMC7"].fShares["EG2"] * (1. - self.fTriggerList["EJ2"].fShares["EG2"]) + self.fTriggerList["EMC7+DMC7"].fShares["EJ2"] - highTrigRate
         
         print("G1+J1 = {0:.3f}".format(highTrigRate))
         print("G2+J2-(G1+J1) = {0:.3f}".format(lowTrigRate))
         
 def CalculateTriggerSuppression(hlist, type, nevents):
     triggerAna = TriggerAnalysis()
-    triggerAna.AddTrigger(TriggerConfiguration("EG1", 10, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "y", hlist))
-    triggerAna.AddTrigger(TriggerConfiguration("EG2", 5, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "y", hlist))
-    triggerAna.AddTrigger(TriggerConfiguration("EJ1", 20, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x", hlist))
-    triggerAna.AddTrigger(TriggerConfiguration("EJ2", 16, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x", hlist))
-    triggerAna.AddTrigger(TriggerConfiguration("DG1", 10, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "y", hlist))
-    triggerAna.AddTrigger(TriggerConfiguration("DG2", 5, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "y", hlist))
-    triggerAna.AddTrigger(TriggerConfiguration("DJ1", 20, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x", hlist))
-    triggerAna.AddTrigger(TriggerConfiguration("DJ2", 16, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x", hlist))
-    triggerAna.AddTrigger(TriggerConfiguration("EMC7+DMC7", 0, "EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x", hlist))
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EG1", 10, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCGAH{2}".format("EMCal","DCal",type), "x")
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EG2", 5, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCGAH{2}".format("EMCal","DCal",type), "x")
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EJ1", 20, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCJEH{2}".format("EMCal","DCal",type), "x")
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EJ2", 16, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCJEH{2}".format("EMCal","DCal",type), "x")
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DG1", 10, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCGAH{2}".format("EMCal","DCal",type), "y")
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DG2", 5, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCGAH{2}".format("EMCal","DCal",type), "y")
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DJ1", 20, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCJEH{2}".format("EMCal","DCal",type), "y")
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DJ2", 16, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCJEH{2}".format("EMCal","DCal",type), "y")
+    
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EMC7+DMC7", 0, hlist))
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x")
+    
     triggerAna.DoAnalysis(nevents)
     
 def Plot2D(hlist, hname, trigLab1, trigLab2,
