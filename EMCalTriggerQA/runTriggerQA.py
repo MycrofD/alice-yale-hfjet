@@ -103,7 +103,7 @@ class TriggerConfiguration:
             elif self.fHistogramNameAxis[hname] == "y":
                 thy = self.fThreshold
         
-            print("{0}: applying {1} to the x axis and {2} to the y axis".format(self.fLabel, thx, thy))
+            print("{0}: applying {1} to the x axis ({2}) and {3} to the y axis ({4})".format(self.fLabel, thx, self.fHistograms[hname].GetXaxis().GetTitle(), thy, self.fHistograms[hname].GetYaxis().GetTitle()))
         
             other.fSharedEntries[self.fLabel] = self.fHistograms[hname].Integral(self.fHistograms[hname].GetXaxis().FindBin(thx), -1, self.fHistograms[hname].GetYaxis().FindBin(thy), -1)
         
@@ -122,13 +122,13 @@ class TriggerConfiguration:
         print("The shared entries are {0}. Total entries of {1} are {2}, of {3} are {4}".format(other.fSharedEntries[self.fLabel], self.fLabel, self.fEntries, other.fLabel, other.fEntries))
         
     def Print(self, keys):
-        res = "|  *{0}*  ".format(self.fLabel)
+        res = "|  *{0: ^9}*  ".format(self.fLabel)
         for key in keys:
             if self.fShares.has_key(key):
                 share = self.fShares[key]
             else:
                 share = -1
-            res += "|  {0:.3f}  ".format(share)
+            res += "|  {0: ^11.3f}  ".format(share)
         res += "|"
         print(res)
         
@@ -148,72 +148,101 @@ class TriggerAnalysis:
             for trigger2 in self.fTriggerList.itervalues():
                 trigger1.CalculateShare(trigger2)
         
-        res = "|  *Triggers*  "
+        res = "|  *Triggers *  "
         for labels in self.fTriggerList.iterkeys():
-            res += "|  *{0}*  ".format(labels)
+            res += "|  *{0: ^9}*  ".format(labels)
         res += "|"
         print(res)
             
         for trigger in self.fTriggerList.itervalues():
             trigger.Print(self.fTriggerList.keys())
         
-        self.PrintTriggerSuppression()
+    def PrintTriggerSuppression(self, list, baseTrigger, subtract):
+        label = ""    
+        rate = 0
         
-    def PrintTriggerSuppression(self):
-        highTrigRate = self.fTriggerList["EMC7+DMC7"].fShares["EG1"] * (1. - self.fTriggerList["EJ1"].fShares["EG1"]) + self.fTriggerList["EMC7+DMC7"].fShares["EJ1"]
-        lowTrigRate = self.fTriggerList["EMC7+DMC7"].fShares["EG2"] * (1. - self.fTriggerList["EJ2"].fShares["EG2"]) + self.fTriggerList["EMC7+DMC7"].fShares["EJ2"] - highTrigRate
+        for i,trigger in enumerate(list):
+            if label:
+                label += " + "
+            label += trigger
+            #print("Rate for trigger {0} is {1:.3f}".format(trigger, self.fTriggerList[baseTrigger].fShares[trigger]))
+            rate += self.fTriggerList[baseTrigger].fShares[trigger] 
+            for j in range(i+1,len(list)):
+                #print("Subtracting share with {0}: {1:.3f} * {2:.3f} = {3:.3f}".format(list[j], self.fTriggerList[baseTrigger].fShares[trigger], self.fTriggerList[list[j]].fShares[trigger], self.fTriggerList[baseTrigger].fShares[trigger] * self.fTriggerList[list[j]].fShares[trigger]))
+                rate -= self.fTriggerList[baseTrigger].fShares[trigger] * self.fTriggerList[trigger].fShares[list[j]]
         
-        print("G1+J1 = {0:.3f}".format(highTrigRate))
-        print("G2+J2-(G1+J1) = {0:.3f}".format(lowTrigRate))
+        rate -= subtract
+        
+        print("{0} = {1:.3f}".format(label, rate))
+        
+        return rate
         
 def CalculateTriggerSuppression(hlist, type, nevents):
     triggerAna = TriggerAnalysis()
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("EG1", 10, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
-    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCGAH{2}".format("EMCal","DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "y")
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("EG2", 5, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
-    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCGAH{2}".format("EMCal","DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "y")
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("EJ1", 20, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x")
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "y")
-    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCJEH{2}".format("EMCal","DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal","EMCal",type), "x")
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("EJ2", 16, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x")
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "y")
-    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCJEH{2}".format("EMCal","DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal","EMCal",type), "x")
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("DG1", 10, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "y")
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "x")
-    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCGAH{2}".format("EMCal","DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal","EMCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "x")
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("DG2", 5, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "y")
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "x")
-    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCGAH{2}".format("EMCal","DCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal","EMCal",type), "y")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "x")
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("DJ1", 20, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
-    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCJEH{2}".format("EMCal","DCal",type), "y")
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("DJ2", 16, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
-    trgConf.AddHistogram("EMCTRQA_hist{0}MaxVs{1}MaxEMCJEH{2}".format("EMCal","DCal",type), "y")
     
     trgConf = triggerAna.AddTrigger(TriggerConfiguration("EMC7+DMC7", 0, hlist))
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("DCal",type), "x")
-    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVsEMCJEHMax{1}".format("EMCal",type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "x")
+    trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "x")
     
     triggerAna.DoAnalysis(nevents)
+    
+    highTriggers = ["EG1", "EJ1", "DG1", "DJ1"]
+    lowTriggers = ["EG2", "EJ2", "DG2", "DJ2"]
+    
+    EMCalHighTriggers = ["EG1", "EJ1"]
+    EMCalLowTriggers = ["EG2", "EJ2"]
+    
+    DCalHighTriggers = ["DG1", "DJ1"]
+    DCalLowTriggers = ["DG2", "DJ2"]
+    
+    totHigh = triggerAna.PrintTriggerSuppression(highTriggers, "EMC7+DMC7", 0)
+    totLow = triggerAna.PrintTriggerSuppression(lowTriggers, "EMC7+DMC7", totHigh)
+    
+    EMCalTotHigh = triggerAna.PrintTriggerSuppression(EMCalHighTriggers, "EMC7+DMC7", 0)
+    EMCalTotLow = triggerAna.PrintTriggerSuppression(EMCalLowTriggers, "EMC7+DMC7", EMCalTotHigh)
+    
+    DCalTotHigh = triggerAna.PrintTriggerSuppression(DCalHighTriggers, "EMC7+DMC7", 0)
+    DCalTotLow = triggerAna.PrintTriggerSuppression(DCalLowTriggers, "EMC7+DMC7", EMCalTotHigh)
     
 def Plot2D(hlist, hname, trigLab1, trigLab2,
            thresholds1, thresholds2, nevents, axis, fname, suffix, maxX, maxY, rebin):
