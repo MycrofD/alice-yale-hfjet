@@ -8,7 +8,6 @@ from enum import Enum
 import array
 import math
 from collections import OrderedDict
-
 import IPython
 
 globalList = []
@@ -132,6 +131,14 @@ class TriggerConfiguration:
         res += "|"
         print(res)
         
+class TriggerCombination:
+    def __init__(self, label, rate):
+        self.fLabel = label
+        self.fRate = rate
+        
+    def Print(self):
+        print("|  *{0: ^20}*  |  {1:.4f}  |".format(self.fLabel, self.fRate))
+        
 class TriggerAnalysis:
     fTriggerList = OrderedDict()
     
@@ -163,7 +170,7 @@ class TriggerAnalysis:
         
         for i,trigger in enumerate(list):
             if label:
-                label += " + "
+                label += "+"
             label += trigger
             #print("Rate for trigger {0} is {1:.3f}".format(trigger, self.fTriggerList[baseTrigger].fShares[trigger]))
             rate += self.fTriggerList[baseTrigger].fShares[trigger] 
@@ -173,9 +180,9 @@ class TriggerAnalysis:
         
         rate -= subtract
         
-        print("{0} = {1:.3f}".format(label, rate))
+        #print("{0} = {1:.3f}".format(label, rate))
         
-        return rate
+        return TriggerCombination(label, rate)
         
 def CalculateTriggerSuppression(hlist, type, nevents, thresholds):
     triggerAna = TriggerAnalysis()
@@ -241,20 +248,26 @@ def CalculateTriggerSuppression(hlist, type, nevents, thresholds):
     DCalHighTriggers = ["DG1", "DJ1"]
     DCalLowTriggers = ["DG2", "DJ2"]
     
-    totHigh = triggerAna.PrintTriggerSuppression(highTriggers, "EMC7+DMC7", 0)
-    totLow = triggerAna.PrintTriggerSuppression(lowTriggers, "EMC7+DMC7", totHigh)
+    summary = OrderedDict()
     
-    totHighGammaOnly = triggerAna.PrintTriggerSuppression(highTriggersGammaOnly, "EMC7+DMC7", 0)
-    totLowGammaOnly = triggerAna.PrintTriggerSuppression(lowTriggersGammaOnly, "EMC7+DMC7", totHighGammaOnly)
-
-    totHighJetOnly = triggerAna.PrintTriggerSuppression(highTriggersJetOnly, "EMC7+DMC7", 0)
-    totLowJetOnly = triggerAna.PrintTriggerSuppression(lowTriggersJetOnly, "EMC7+DMC7", totHighJetOnly)
-
-    EMCalTotHigh = triggerAna.PrintTriggerSuppression(EMCalHighTriggers, "EMC7+DMC7", 0)
-    EMCalTotLow = triggerAna.PrintTriggerSuppression(EMCalLowTriggers, "EMC7+DMC7", EMCalTotHigh)
+    summary["highTriggers"] = triggerAna.PrintTriggerSuppression(highTriggers, "EMC7+DMC7", 0)
+    summary["lowTriggers"] = triggerAna.PrintTriggerSuppression(lowTriggers, "EMC7+DMC7", summary["highTriggers"].fRate)
     
-    DCalTotHigh = triggerAna.PrintTriggerSuppression(DCalHighTriggers, "EMC7+DMC7", 0)
-    DCalTotLow = triggerAna.PrintTriggerSuppression(DCalLowTriggers, "EMC7+DMC7", EMCalTotHigh)
+    summary["highTriggersGammaOnly"] = triggerAna.PrintTriggerSuppression(highTriggersGammaOnly, "EMC7+DMC7", 0)
+    summary["lowTriggersGammaOnly"] = triggerAna.PrintTriggerSuppression(lowTriggersGammaOnly, "EMC7+DMC7", summary["highTriggersGammaOnly"].fRate)
+
+    summary["highTriggersJetOnly"] = triggerAna.PrintTriggerSuppression(highTriggersJetOnly, "EMC7+DMC7", 0)
+    summary["lowTriggersJetOnly"] = triggerAna.PrintTriggerSuppression(lowTriggersJetOnly, "EMC7+DMC7", summary["highTriggersJetOnly"].fRate)
+
+    summary["EMCalHighTriggers"] = triggerAna.PrintTriggerSuppression(EMCalHighTriggers, "EMC7+DMC7", 0)
+    summary["EMCalLowTriggers"] = triggerAna.PrintTriggerSuppression(EMCalLowTriggers, "EMC7+DMC7", summary["EMCalHighTriggers"].fRate)
+    
+    summary["DCalHighTriggers"] = triggerAna.PrintTriggerSuppression(DCalHighTriggers, "EMC7+DMC7", 0)
+    summary["DCalLowTriggers"] = triggerAna.PrintTriggerSuppression(DCalLowTriggers, "EMC7+DMC7", summary["DCalHighTriggers"].fRate)
+    
+    print("|  *{0: ^20}*  |  *{1}*  |".format("Trigger combination", "Suppression over L0"))
+    for trigger in summary.itervalues():
+        trigger.Print()
     
 def Plot2D(hlist, hname, trigLab1, trigLab2,
            thresholds1, thresholds2, nevents, axis, fname, suffix, maxX, maxY, rebin):
