@@ -177,45 +177,45 @@ class TriggerAnalysis:
         
         return rate
         
-def CalculateTriggerSuppression(hlist, type, nevents):
+def CalculateTriggerSuppression(hlist, type, nevents, thresholds):
     triggerAna = TriggerAnalysis()
     
-    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EG1", 10, hlist))
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EG1", thresholds["G1"], hlist))
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "y")
     
-    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EG2", 5, hlist))
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EG2", thresholds["G2"], hlist))
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "y")
     
-    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EJ1", 20, hlist))
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EJ1", thresholds["J1"], hlist))
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "x")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal","EMCal",type), "x")
     
-    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EJ2", 16, hlist))
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("EJ2", thresholds["J2"], hlist))
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal", "EMCal", type), "x")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal","EMCal",type), "x")
     
-    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DG1", 10, hlist))
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DG1", thresholds["G1"], hlist))
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal","EMCal",type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "x")
     
-    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DG2", 5, hlist))
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DG2", thresholds["G2"], hlist))
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal","EMCal",type), "y")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCGAHMax{2}".format("EMCal","DCal",type), "x")
     
-    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DJ1", 20, hlist))
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DJ1", thresholds["J1"], hlist))
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "x")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
     
-    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DJ2", 16, hlist))
+    trgConf = triggerAna.AddTrigger(TriggerConfiguration("DJ2", thresholds["J2"], hlist))
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("DCal", "DCal", type), "x")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCJEHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
     trgConf.AddHistogram("EMCTRQA_hist{0}EMCGAHMaxVs{1}EMCJEHMax{2}".format("EMCal","DCal",type), "x")
@@ -229,6 +229,12 @@ def CalculateTriggerSuppression(hlist, type, nevents):
     highTriggers = ["EG1", "EJ1", "DG1", "DJ1"]
     lowTriggers = ["EG2", "EJ2", "DG2", "DJ2"]
     
+    highTriggersGammaOnly = ["EG1", "DG1"]
+    lowTriggersGammaOnly = ["EG2", "DG2"]
+    
+    highTriggersJetOnly = ["EJ1", "DJ1"]
+    lowTriggersJetOnly = ["EJ2", "DJ2"]
+    
     EMCalHighTriggers = ["EG1", "EJ1"]
     EMCalLowTriggers = ["EG2", "EJ2"]
     
@@ -238,6 +244,12 @@ def CalculateTriggerSuppression(hlist, type, nevents):
     totHigh = triggerAna.PrintTriggerSuppression(highTriggers, "EMC7+DMC7", 0)
     totLow = triggerAna.PrintTriggerSuppression(lowTriggers, "EMC7+DMC7", totHigh)
     
+    totHighGammaOnly = triggerAna.PrintTriggerSuppression(highTriggersGammaOnly, "EMC7+DMC7", 0)
+    totLowGammaOnly = triggerAna.PrintTriggerSuppression(lowTriggersGammaOnly, "EMC7+DMC7", totHighGammaOnly)
+
+    totHighJetOnly = triggerAna.PrintTriggerSuppression(highTriggersJetOnly, "EMC7+DMC7", 0)
+    totLowJetOnly = triggerAna.PrintTriggerSuppression(lowTriggersJetOnly, "EMC7+DMC7", totHighJetOnly)
+
     EMCalTotHigh = triggerAna.PrintTriggerSuppression(EMCalHighTriggers, "EMC7+DMC7", 0)
     EMCalTotLow = triggerAna.PrintTriggerSuppression(EMCalLowTriggers, "EMC7+DMC7", EMCalTotHigh)
     
@@ -607,11 +619,16 @@ def main(train, trigger="EMC7", det="EMCal", offline=True, recalc=True,
         canvas.SaveAs("{0}{1}".format(canvas.GetName(), suffix))
     
     if triggerSuppression:
+        thresholdsStr = triggerSuppression.split(",")
+        thresholds = dict()
+        for thStr in thresholdsStr:
+            thresholds[thStr.split(":")[0]] = int(thStr.split(":")[1])
+        print(thresholds)
         if offline:
-            CalculateTriggerSuppression(hlist, "Offline", nevents)
+            CalculateTriggerSuppression(hlist, "Offline", nevents, thresholds)
             
         if recalc:
-            CalculateTriggerSuppression(hlist, "Recalc", nevents)
+            CalculateTriggerSuppression(hlist, "Recalc", nevents, thresholds)
     
     if GAvsJEpatch:
         if offline:
@@ -702,9 +719,9 @@ if __name__ == '__main__':
     parser.add_argument('--L0vsGApatch', action='store_const',
                         default=False, const=True,
                         help='L0 vs GA patch')
-    parser.add_argument('--triggerSuppression', action='store_const',
-                        default=False, const=True,
-                        help='Trigger suppression analysis')
+    parser.add_argument('--trigger-suppression', metavar='triggerSuppression',
+                        default="",
+                        help='Trigger suppression analysis: thresholds G1,J1,G2,J2')
     parser.add_argument('--pedestal', action='store_const',
                         default=False, const=True,
                         help='Run pedestal analysis')
@@ -733,7 +750,7 @@ if __name__ == '__main__':
     
     main(args.train, args.trigger, args.detector, args.offline, args.recalc, 
          args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.L0vsGApatch, 
-         args.pedestal, args.badchannels, args.level0, args.level1, args.triggerSuppression,
+         args.pedestal, args.badchannels, args.level0, args.level1, args.trigger_suppression,
          args.axis, args.run, args.size, args.input_path)
     
     IPython.embed()
