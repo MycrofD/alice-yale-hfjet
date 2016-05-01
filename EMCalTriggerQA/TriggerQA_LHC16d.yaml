@@ -1,0 +1,36 @@
+task_name: EMCalTriggerQA
+run_period: LHC16d
+triggers:
+- 
+  label: CEMC7EG1
+  class: [CEMC7EG1-B-NOPF-CENTNOTRD]
+- 
+  label: CEMC7EG2
+  class: [CEMC7EG2-B-NOPF-CENTNOTRD]
+- 
+  label: CEMC7EJ1
+  class: [CEMC7EJ1-B-NOPF-CENTNOTRD]
+- 
+  label: CEMC7EJ2
+  class: [CEMC7EJ2-B-NOPF-CENTNOTRD]
+- 
+  label: CEMC7
+  class: [CEMC7-B-NOPF-CENTNOTRD]
+- 
+  label: CDMC7DG1
+  class: [CDMC7DG1-B-NOPF-CENTNOTRD]
+- 
+  label: CDMC7DG2
+  class: [CDMC7DG2-B-NOPF-CENTNOTRD]
+- 
+  label: CDMC7DJ1
+  class: [CDMC7DJ1-B-NOPF-CENTNOTRD]
+- 
+  label: CDMC7DJ2
+  class: [CDMC7DJ2-B-NOPF-CENTNOTRD]
+- 
+  label: CDMC7
+  class: [CDMC7-B-NOPF-CENTNOTRD]
+- 
+  label: CEMC7CDMC7
+  class: [CEMC7-B-NOPF-CENTNOTRD,CDMC7-B-NOPF-CENTNOTRD]
