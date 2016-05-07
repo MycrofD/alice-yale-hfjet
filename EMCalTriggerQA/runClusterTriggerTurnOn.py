@@ -155,7 +155,7 @@ class TriggerTurnOnAnalysis:
         leg.Draw()
         globalList.append(leg)
         globalList.append(canvas)
-        canvas.SaveAs("{0}.pdf".format(name))
+        canvas.SaveAs("{0}.png".format(name))
         
 def main(train, inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     
