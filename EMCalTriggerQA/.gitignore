@@ -2,5 +2,6 @@
 .pydevproject
 *.pyc
 *.pdf
+*.png
 *.root
 *badchannels*.txt

@@ -175,10 +175,11 @@ class TriggerAnalysis:
             #print("Rate for trigger {0} is {1:.3f}".format(trigger, self.fTriggerList[baseTrigger].fShares[trigger]))
             rate += self.fTriggerList[baseTrigger].fShares[trigger] 
             for j in range(i+1,len(list)):
-                #print("Subtracting share with {0}: {1:.3f} * {2:.3f} = {3:.3f}".format(list[j], self.fTriggerList[baseTrigger].fShares[trigger], self.fTriggerList[list[j]].fShares[trigger], self.fTriggerList[baseTrigger].fShares[trigger] * self.fTriggerList[list[j]].fShares[trigger]))
+                #print("Subtracting share with {0}: {1:.3f} * {2:.3f} = {3:.3f}".format(list[j], self.fTriggerList[baseTrigger].fShares[trigger], self.fTriggerList[trigger].fShares[list[j]], self.fTriggerList[baseTrigger].fShares[trigger] * self.fTriggerList[trigger].fShares[list[j]]))
                 rate -= self.fTriggerList[baseTrigger].fShares[trigger] * self.fTriggerList[trigger].fShares[list[j]]
         
         rate -= subtract
+        #print("Subtracting {0:.3f}".format(subtract))
         
         #print("{0} = {1:.3f}".format(label, rate))
         
