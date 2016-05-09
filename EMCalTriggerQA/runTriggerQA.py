@@ -534,9 +534,94 @@ def GeneratePedestal(hlist, hname, nevents, nhitsTh):
     
     return canvas
 
+def ParseThresholds(strTh):
+    listTh = []
+    listStrTh = strTh.split(",")
+    for th in listStrTh:
+        listTh.append(int(th))
+    return listTh
+
+class TriggerSuppressionCurve:
+    def __init__(self, name, title, det, triggerPatch, patchType, threholds):
+        self.fName = name
+        self.fTitle = title
+        self.fDetector = det
+        self.fTriggerPatch = triggerPatch
+        self.fTriggerPatchType = patchType
+        self.fThresholds = threholds
+    
+    def LoadHistogram(self, file):
+        if self.fDetector == "EMCal":
+            self.fBaseTrigger = "CEMC7"
+            self.fMarkerStyle = ROOT.kFullCircle
+        elif self.fDetector == "DCal":
+            self.fBaseTrigger = "CDMC7"
+            self.fMarkerStyle = ROOT.kOpenCircle
+            
+        if self.fTriggerPatch == "EMCGAH":
+            self.fColor = ROOT.kRed+1
+        elif self.fTriggerPatch == "EMCJEH":
+            self.fColor = ROOT.kBlue+1
+        
+        listName = "AliEmcalTriggerQATask_{0}_histos".format(self.fBaseTrigger)
+        hlistName = "histosAliEmcalTriggerQATask_{0}".format(self.fBaseTrigger)
+        hname = "EMCTRQA_hist{0}MaxPatchAmp{1}{2}".format(self.fDetector, self.fTriggerPatch, self.fTriggerPatchType)
+        
+        list = file.Get(listName)
+        hlist = list.FindObject(hlistName)
+        self.fHistogram = hlist.FindObject(hname)
+        
+    def CalculateSuppression(self):
+        self.fGraph = ROOT.TGraphErrors(len(self.fThresholds))
+        self.fGraph.SetName(self.fName)
+        self.fGraph.SetTitle(self.fTitle)
+        self.fGraph.SetMarkerStyle(self.fMarkerStyle)
+        self.fGraph.SetMarkerSize(1)
+        self.fGraph.SetMarkerColor(self.fColor)
+        self.fGraph.SetLineColor(self.fColor)
+        
+        self.fTotalEvents = self.fHistogram.GetEntries()
+        print("Total events are {0}".format(self.fTotalEvents))
+        
+        for i,th in enumerate(self.fThresholds):
+            events = self.fHistogram.Integral(self.fHistogram.GetXaxis().FindBin(th/ADCtoGeV), -1)
+            sup = events / self.fTotalEvents
+            err = (1. / math.sqrt(events) + 1. / math.sqrt(self.fTotalEvents)) * sup
+            print("Suppression for th {0} is {1} ({2})".format(th, sup, err))
+            self.fGraph.SetPoint(i, th, sup)
+            self.fGraph.SetPointError(i, 0, err)
+            
+def PlotTriggerSuppression(file, triggerList):
+    ROOT.TH1.AddDirectory(False)
+    ROOT.gStyle.SetOptStat(0)
+    ROOT.gStyle.SetOptTitle(0)
+    leg = ROOT.TLegend(0.53,0.58,0.88,0.88)
+    leg.SetFillStyle(0)
+    leg.SetBorderSize(0)
+    canvas = ROOT.TCanvas("TriggerSuppression", "Trigger Suppression")
+    blankHist = ROOT.TH1C("blankHist", "blankHist;Threshold (GeV); Suppression over EMCal/DCal L0", 25, 0, 25)
+    blankHist.SetMinimum(2e-3)
+    blankHist.SetMaximum(6e-1)
+    canvas.SetLogy()
+    blankHist.Draw()
+    globalList.append(blankHist)
+    
+    for trigger in triggerList:
+        trigger.LoadHistogram(file)
+        trigger.CalculateSuppression()
+        trigger.fGraph.Draw("same p")
+        leg.AddEntry(trigger.fGraph, trigger.fTitle, "pe")
+        globalList.append(trigger.fGraph)
+        
+    leg.Draw()
+    globalList.append(leg)
+    globalList.append(canvas)
+        
+
 def main(train, trigger="EMC7", det="EMCal", offline=True, recalc=True, 
          GApatch=True, JEpatch =True, L0vsJEpatch=True, GAvsJEpatch=True, L0vsGApatch=True, 
          pedestal=True, badchannels=True, level0=True, level1=False, triggerSuppression=True,
+         plotTriggerSuppression=False, gammaTh="4,5,6,7,8,9,10", jetTh="14,15,16,17,18,19,20",
          axis="ADC", run="", jetsize="16x16", inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     
     suffix = ""
@@ -581,8 +666,8 @@ def main(train, trigger="EMC7", det="EMCal", offline=True, recalc=True,
         exit(1)
     
     thresholds_L0 = [ 2.5 ]
-    thresholds_GA = [ 4,  5,  6,  8,  9, 10, 11]
-    thresholds_JE = [10, 12, 14, 15, 16, 18, 20]
+    thresholds_GA = ParseThresholds(gammaTh)
+    thresholds_JE = ParseThresholds(jetTh)
     
     hEventsName = "fHistEventCount"
     hevents = list.FindObject(hEventsName)
@@ -643,6 +728,16 @@ def main(train, trigger="EMC7", det="EMCal", offline=True, recalc=True,
             
         if recalc:
             CalculateTriggerSuppression(hlist, "Recalc", nevents, thresholds)
+            
+    if plotTriggerSuppression:
+        if recalc:
+            triggerList = []
+            triggerList.append(TriggerSuppressionCurve("EMCal_GA", "EMCal GA (4x4)", "EMCal", "EMCGAH", "Recalc", thresholds_GA))
+            triggerList.append(TriggerSuppressionCurve("DCal_GA", "DCal GA (4x4)", "DCal", "EMCGAH", "Recalc", thresholds_GA))
+            triggerList.append(TriggerSuppressionCurve("EMCal_JE", "EMCal JE (32x32)", "EMCal", "EMCJEH", "Recalc", thresholds_JE))
+            triggerList.append(TriggerSuppressionCurve("DCal_JE", "DCal JE (32x32)", "DCal", "EMCJEH", "Recalc", thresholds_JE))
+        
+            PlotTriggerSuppression(file, triggerList)
     
     if GAvsJEpatch:
         if offline:
@@ -736,6 +831,15 @@ if __name__ == '__main__':
     parser.add_argument('--trigger-suppression', metavar='triggerSuppression',
                         default="",
                         help='Trigger suppression analysis: thresholds G1,J1,G2,J2')
+    parser.add_argument('--plot-trigger-suppression', action='store_const',
+                        default=False, const=True,
+                        help='Plot Trigger suppression as a funtion of threshold')
+    parser.add_argument('--gamma', metavar='gamma',
+                        default="",
+                        help='Threholds for gamma patches')
+    parser.add_argument('--jet', metavar='jet',
+                        default="",
+                        help='Threholds for jet patches')
     parser.add_argument('--pedestal', action='store_const',
                         default=False, const=True,
                         help='Run pedestal analysis')
@@ -765,6 +869,7 @@ if __name__ == '__main__':
     main(args.train, args.trigger, args.detector, args.offline, args.recalc, 
          args.GApatch, args.JEpatch, args.L0vsJEpatch, args.GAvsJEpatch, args.L0vsGApatch, 
          args.pedestal, args.badchannels, args.level0, args.level1, args.trigger_suppression,
+         args.plot_trigger_suppression, args.gamma, args.jet,
          args.axis, args.run, args.size, args.input_path)
     
     IPython.embed()
