@@ -20,12 +20,16 @@ class TRUvsSTUanalysis:
         
     def LoadHistograms(self):
         self.fHistograms = dict()
+        self.fSlopes = dict()
+        self.fSlopeErrors = dict()
         
         for run in self.fRunList:
             self.LoadHistogramsForRunNumber(run)
             
     def LoadHistogramsForRunNumber(self, run):
         self.fHistograms[run] = dict()
+        self.fSlopes[run] = dict()
+        self.fSlopeErrors[run] = dict()
         
         fileName = "{0}/{1}/{2}/AnalysisResults.root".format(self.fInputPath, self.fTrain, run)
         file = ROOT.TFile.Open(fileName)
@@ -46,6 +50,10 @@ class TRUvsSTUanalysis:
                 file.ls()
                 print "Could not get list '" + listName + "' from file '" + fileName + "'! Aborting..."
                 exit(1)
+                
+            hevents = list.FindObject("fHistEventCount")
+            if hevents:
+                print("Run {0}: number of events ({1}) = {2}".format(run, trigger, hevents.GetBinContent(1)))
             
             hlist = list.FindObject(hlistName)
             if not hlist:
@@ -61,6 +69,8 @@ class TRUvsSTUanalysis:
                 
             outhname = "TRUvsSTU_{0}_{1}_{2}".format(run, trigger, "{0}")
             self.fHistograms[run][trigger] = self.LoadHistogramsFromList(trulist, outhname)
+            self.fSlopes[run][trigger] = dict()
+            self.fSlopeErrors[run][trigger] = dict()
         
         file.Close()
             
@@ -75,43 +85,122 @@ class TRUvsSTUanalysis:
         return res
 
     def RunAnalysis(self):
+        self.fTRUlist = dict()
+        
         for trigger in self.fTriggerList:
             if "EMC" in trigger:
-                trulist = range(0, 32)
+                self.fTRUlist[trigger] = range(0, 32)
             else:
-                trulist = [32, 33, 36, 37, 38, 39, 42, 43, 44, 45, 48, 49, 50, 51]
+                self.fTRUlist[trigger] = [32, 33, 36, 37, 38, 39, 42, 43, 44, 45, 48, 49, 50, 51]
         
-            for tru in trulist:
+            for tru in self.fTRUlist[trigger]:
                 self.PlotTRUvsSTU(trigger, tru)
+                
+        self.PlotSlopes()
+        self.SaveRootFile()
             
     def PlotTRUvsSTU(self, trigger, tru):
         cname = "{0}_TRUvsSTU_TRU{1}".format(trigger, tru)
         ctitle = "{0} TRUvsSTU TRU={1}".format(trigger, tru)
-        canvas = ROOT.TCanvas(cname, ctitle)
+        canvas = ROOT.TCanvas(cname, ctitle, 600, 600)
         canvas.SetLogz()
-        legend = ROOT.TLegend(0.6, 0.7, 0.95, 0.95)
+        legend = ROOT.TLegend(0.1, 0.65, 0.5, 0.90)
         legend.SetFillStyle(0)
         legend.SetBorderSize(0)
         
         first = True;
         for i,run in enumerate(self.fRunList):
+            funct = ROOT.TF1("{0}_{1}_TRU{2}_fit".format(trigger, run, tru), "pol1", 20, 200)
+            funct.SetLineColor(self.fColors[i])
+            globalList.append(funct)
             h = self.fHistograms[run][trigger][tru]
-            h.GetXaxis().SetRangeUser(0,200)
-            h.GetYaxis().SetRangeUser(0,200)
+            h.GetXaxis().SetRangeUser(20,200)
+            h.GetYaxis().SetRangeUser(20,200)
             h.SetMarkerColor(self.fColors[i])
             h.SetFillColor(self.fColors[i])
             h.SetLineColor(self.fColors[i])
+            h.Fit(funct, "0")
             if first:
                 h.Draw()
                 first = False
             else:
                 h.Draw("same")
                 
-            legend.AddEntry(h, "Run {0}".format(run), "f")
+            funct.Draw("same")
+            self.fSlopes[run][trigger][tru] = funct.GetParameter(1)
+            self.fSlopeErrors[run][trigger][tru] = funct.GetParError(1)
+            legend.AddEntry(h, "Run {0}, slope {1:.2f} #pm {2:.2f}".format(run, funct.GetParameter(1), funct.GetParError(1)), "f")
     
         legend.Draw()
-        
+        globalList.append(legend)
         globalList.append(canvas)
+        canvas.SaveAs("{0}/{1}/{2}.pdf".format(self.fInputPath, self.fTrain, canvas.GetName()))
+        
+    def PlotSlopes(self):
+        nTRUs = 0;
+        for trigger in self.fTriggerList:
+            nTRUs += len(self.fTRUlist[trigger])
+            
+        cname = "TRUvsSTU_Slopes"
+        ctitle = "TRUvsSTU slopes"
+        canvas = ROOT.TCanvas(cname, ctitle, 1200, 400)
+        canvas.SetLeftMargin(0.06)
+        canvas.SetRightMargin(0.04)
+        legend = ROOT.TLegend(0.85, 0.25, 0.98, 0.90)
+        legend.SetFillStyle(0)
+        legend.SetBorderSize(0)
+            
+        self.fTRUvsSTUgraphs = dict()
+        
+        first = True
+        for irun,run in enumerate(self.fRunList):
+            g = ROOT.TGraphErrors(nTRUs)
+            g.SetName("SlopeTRUvsSTU_Run{0}".format(run))
+            g.SetMarkerColor(self.fColors[irun])
+            g.SetLineColor(self.fColors[irun])
+            g.SetMarkerStyle(ROOT.kOpenCircle)
+            g.SetMarkerSize(1)
+            globalList.append(g)
+            self.fTRUvsSTUgraphs[run] = g
+            legend.AddEntry(g, "Run {0}".format(run), "pe")
+            totpoints = 0
+            for trigger in self.fTriggerList:
+                for ipoint,tru in enumerate(self.fTRUlist[trigger]):
+                    g.SetPoint(ipoint+totpoints, tru, self.fSlopes[run][trigger][tru])
+                    g.SetPointError(ipoint+totpoints, 0, self.fSlopeErrors[run][trigger][tru])
+                totpoints = len(self.fTRUlist[trigger])
+            
+            if first:
+                g.Draw("ap")
+                first = False
+            else:
+                g.Draw("p")
+            
+            g.GetXaxis().SetTitle("TRU #")
+            g.GetYaxis().SetTitle("TRU vs STU slope")
+            g.GetYaxis().SetTitleOffset(0.6)
+                
+        legend.Draw()
+        globalList.append(legend)
+        globalList.append(canvas)
+        
+        canvas.SaveAs("{0}/{1}/{2}.pdf".format(self.fInputPath, self.fTrain, canvas.GetName()))
+        
+    def SaveRootFile(self):
+        out = ROOT.TFile.Open("{0}/{1}/TRUvsSTU.root".format(self.fInputPath, self.fTrain), "recreate")
+        out.cd()
+        
+        for run in self.fRunList:
+            for trigger in self.fTriggerList:
+                for tru in self.fTRUlist[trigger]:
+                    self.fHistograms[run][trigger][tru].Write()
+                    fname = "{0}_{1}_TRU{2}_fit".format(trigger, run, tru)
+                    f = self.fHistograms[run][trigger][tru].GetFunction(fname)
+                    if f:
+                        f.Write()
+            self.fTRUvsSTUgraphs[run].Write()
+            
+        out.Close()
 
 def main(config):
     
