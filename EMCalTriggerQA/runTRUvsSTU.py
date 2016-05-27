@@ -114,12 +114,16 @@ class TRUvsSTUanalysis:
             funct.SetLineColor(self.fColors[i])
             globalList.append(funct)
             h = self.fHistograms[run][trigger][tru]
-            h.GetXaxis().SetRangeUser(20,200)
-            h.GetYaxis().SetRangeUser(20,200)
             h.SetMarkerColor(self.fColors[i])
             h.SetFillColor(self.fColors[i])
             h.SetLineColor(self.fColors[i])
+            
+            h.GetXaxis().SetRangeUser(20,200)
+            h.GetYaxis().SetRangeUser(20,200)
             h.Fit(funct, "0")
+            
+            h.GetXaxis().SetRangeUser(0,200)
+            h.GetYaxis().SetRangeUser(0,200)
             if first:
                 h.Draw()
                 first = False

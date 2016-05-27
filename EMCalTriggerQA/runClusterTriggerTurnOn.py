@@ -15,11 +15,12 @@ from cProfile import label
 globalList = []
 
 class TriggerTurnOnAnalysis:
-    def __init__(self, detector, file, normalize):
+    def __init__(self, detector, file, normalize, outputPath):
         self.fNormalize = normalize
         self.fDetector = detector
         self.fName = "{0}_Cluster".format(detector)
         self.fTitle = "{0} Cluster".format(detector)
+        self.fOutputPath = outputPath
         self.fColorList = dict()
         if detector == "EMCal":
             self.fTriggerList = ["CEMC7", "CEMC7EG1", "CEMC7EG2"]
@@ -155,7 +156,7 @@ class TriggerTurnOnAnalysis:
         leg.Draw()
         globalList.append(leg)
         globalList.append(canvas)
-        canvas.SaveAs("{0}.png".format(name))
+        canvas.SaveAs("{0}/{1}.pdf".format(self.fOutputPath, name))
         
 def main(train, inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     
@@ -164,6 +165,7 @@ def main(train, inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
     ROOT.gStyle.SetOptStat(0)
     
     fileName = "{0}/{1}/AnalysisResults.root".format(inputPath, train)
+    outputPath = "{0}/{1}".format(inputPath, train)
     
     file = ROOT.TFile.Open(fileName);
     if not file or file.IsZombie():
@@ -172,9 +174,9 @@ def main(train, inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
 
     analysis = []
     
-    analysis.append(TriggerTurnOnAnalysis("EMCal", file, False))
-    analysis.append(TriggerTurnOnAnalysis("DCal", file, False))
-    analysis.append(TriggerTurnOnAnalysis("EMCal+DCal", file, False))
+    analysis.append(TriggerTurnOnAnalysis("EMCal", file, False, outputPath))
+    #analysis.append(TriggerTurnOnAnalysis("DCal", file, False, outputPath))
+    #analysis.append(TriggerTurnOnAnalysis("EMCal+DCal", file, False, outputPath))
     
     for ana in analysis:
         ana.GetHistograms()

@@ -1,4 +1,4 @@
-train: local_TRUvsSTU
+train: local_LHC16e_STUrollback
 runlist: [253480, 253483]
 triggerlist: [CEMC7, CDMC7]
 path: /Users/sa639/Documents/Work/ALICE/TriggerQA

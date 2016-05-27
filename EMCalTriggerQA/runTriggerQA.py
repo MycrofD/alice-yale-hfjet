@@ -828,17 +828,17 @@ if __name__ == '__main__':
     parser.add_argument('--L0vsGApatch', action='store_const',
                         default=False, const=True,
                         help='L0 vs GA patch')
-    parser.add_argument('--trigger-suppression', metavar='triggerSuppression',
+    parser.add_argument('--trigger-suppression', metavar='G1:x,G2:y,J1:z,J2:w',
                         default="",
                         help='Trigger suppression analysis: thresholds G1,J1,G2,J2')
     parser.add_argument('--plot-trigger-suppression', action='store_const',
                         default=False, const=True,
                         help='Plot Trigger suppression as a funtion of threshold')
     parser.add_argument('--gamma', metavar='gamma',
-                        default="",
+                        default="4,5,6,7,8,9,10",
                         help='Threholds for gamma patches')
     parser.add_argument('--jet', metavar='jet',
-                        default="",
+                        default="14,15,16,17,18,19,20",
                         help='Threholds for jet patches')
     parser.add_argument('--pedestal', action='store_const',
                         default=False, const=True,
