@@ -274,8 +274,7 @@ def CompareSpectra(anaList, search, baseLine):
                 ratio.Divide(baseLineHistos[trigger])
                 ratioCanvases[trigger].cd()
                 ratio.Draw("hist")
-                ratio.GetYaxis().SetRangeUser(0,3
-                                              )
+                ratio.GetYaxis().SetRangeUser(0,3)
                 globalList.append(ratio)
                 
             break
