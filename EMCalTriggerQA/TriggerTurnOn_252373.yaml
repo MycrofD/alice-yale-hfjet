@@ -1,0 +1,21 @@
+run: 252373
+train: local_252373_TriggerRatios
+input_path: /Users/sa639/Documents/Work/ALICE/TriggerQA
+clusters: CaloClusters
+cells: EMCALCells
+configs:
+- 
+  active: 1
+  detector: EMCal
+  triggers: [CEMC7, CEMC7EG1, CEMC7EG2]
+  base_trigger: CEMC7
+- 
+  active: 0
+  detector: DCal
+  triggers: [CDMC7, CDMC7ED1, CDMC7ED2]
+  base_trigger: CDMC7
+- 
+  active: 0
+  detector: EMCal+DCal
+  triggers: [CEMC7CDMC7, CEMC7EG1CDMC7DG1, CEMC7EG2CDMC7DG2]
+  base_trigger: CEMC7CDMC7

@@ -15,34 +15,24 @@ from cProfile import label
 globalList = []
 
 class TriggerTurnOnAnalysis:
-    def __init__(self, detector, file, normalize, outputPath):
+    def __init__(self, detector, file, normalize, outputPath, triggerList, baseTrigger, clusters, cells):
         self.fNormalize = normalize
         self.fDetector = detector
         self.fName = "{0}_Cluster".format(detector)
         self.fTitle = "{0} Cluster".format(detector)
         self.fOutputPath = outputPath
         self.fColorList = dict()
-        if detector == "EMCal":
-            self.fTriggerList = ["CEMC7", "CEMC7EG1", "CEMC7EG2"]
-            self.fBaseTrigger = "CEMC7"
-            self.fColorList["CEMC7"] = ROOT.kBlack
-            self.fColorList["CEMC7EG1"] = ROOT.kRed+2
-            self.fColorList["CEMC7EG2"] = ROOT.kBlue+2
-        elif detector == "DCal":
-            self.fTriggerList = ["CDMC7", "CDMC7DG1", "CDMC7DG2"]
-            self.fBaseTrigger = "CDMC7"
-            self.fColorList["CDMC7"] = ROOT.kBlack
-            self.fColorList["CDMC7DG1"] = ROOT.kRed+2
-            self.fColorList["CDMC7DG2"] = ROOT.kBlue+2
-        elif detector == "EMCal+DCal":
-            self.fTriggerList = ["CEMC7CDMC7", "CEMC7EG1CDMC7DG1", "CEMC7EG2CDMC7DG2"]
-            self.fBaseTrigger = "CEMC7CDMC7"
-            self.fColorList["CEMC7CDMC7"] = ROOT.kBlack
-            self.fColorList["CEMC7EG1CDMC7DG1"] = ROOT.kRed+2
-            self.fColorList["CEMC7EG2CDMC7DG2"] = ROOT.kBlue+2
+        self.fTriggerList = triggerList
+        self.fBaseTrigger = baseTrigger
+        self.fColorList[self.fBaseTrigger] = ROOT.kBlack
+        colors = [ROOT.kRed+2, ROOT.kBlue+2, ROOT.kGreen+2, ROOT.kMagenta+2, ROOT.kCyan+2, ROOT.kOrange+2]
+        for i,trigger in enumerate(self.fTriggerList):
+            if trigger == self.fBaseTrigger:
+                continue
+            self.fColorList[trigger] = colors[i]
          
         self.fHistogramName = "fHistClusPhiEtaEnergy_0"
-        self.fListName = "AliAnalysisTaskEmcalJetQA_CaloClusters_EMCALCells_{0}_histos/histosAliAnalysisTaskEmcalJetQA_CaloClusters_EMCALCells_{0}/CaloClusters"
+        self.fListName = "AliAnalysisTaskEmcalJetQA_{clusName}_{cellName}_{triggerName}_histos/histosAliAnalysisTaskEmcalJetQA_{clusName}_{cellName}_{triggerName}/{clusName}".format(clusName=clusters, cellName=cells, triggerName="{0}")
         self.fFile = file
         
     def GetHistogram(self, trigger):
@@ -124,7 +114,7 @@ class TriggerTurnOnAnalysis:
         if not self.fNormalize:
             min *= self.fEvents[self.fBaseTrigger]
             max *= self.fEvents[self.fBaseTrigger]
-            maxR = 1.5
+            maxR = 1.2
         self.DoPlot(self.fProjections, "{0}_Spectra".format(self.fName), "{0} Spectra".format(self.fTitle), True, min, max)
         self.DoPlot(self.fRatios, "{0}_Ratios".format(self.fName), "{0} Ratios".format(self.fTitle),  False, 0, maxR)
         
@@ -144,7 +134,7 @@ class TriggerTurnOnAnalysis:
             hist.SetMarkerColor(self.fColorList[label])
             hist.SetMarkerStyle(ROOT.kOpenCircle)
             hist.SetMarkerSize(1)
-            hist.GetXaxis().SetRangeUser(0,40)
+            hist.GetXaxis().SetRangeUser(0,30)
             leg.AddEntry(hist, label, "pe")
             if i == 0:
                 hist.Draw()
@@ -158,14 +148,14 @@ class TriggerTurnOnAnalysis:
         globalList.append(canvas)
         canvas.SaveAs("{0}/{1}.pdf".format(self.fOutputPath, name))
         
-def main(train, inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
+def main(yamlConfig):
     
     ROOT.TH1.AddDirectory(False)
     ROOT.gStyle.SetOptTitle(False)
     ROOT.gStyle.SetOptStat(0)
     
-    fileName = "{0}/{1}/AnalysisResults.root".format(inputPath, train)
-    outputPath = "{0}/{1}".format(inputPath, train)
+    fileName = "{0}/{1}/AnalysisResults.root".format(yamlConfig["input_path"], yamlConfig["train"])
+    outputPath = "{0}/{1}".format(yamlConfig["input_path"], yamlConfig["train"])
     
     file = ROOT.TFile.Open(fileName);
     if not file or file.IsZombie():
@@ -174,10 +164,11 @@ def main(train, inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
 
     analysis = []
     
-    analysis.append(TriggerTurnOnAnalysis("EMCal", file, False, outputPath))
-    #analysis.append(TriggerTurnOnAnalysis("DCal", file, False, outputPath))
-    #analysis.append(TriggerTurnOnAnalysis("EMCal+DCal", file, False, outputPath))
-    
+    for config in yamlConfig["configs"]:
+        if not config["active"]:
+            continue
+        analysis.append(TriggerTurnOnAnalysis(config["detector"], file, False, outputPath, config["triggers"], config["base_trigger"], yamlConfig["clusters"], yamlConfig["cells"]))
+
     for ana in analysis:
         ana.GetHistograms()
         ana.ProjectHistograms()
@@ -189,14 +180,15 @@ def main(train, inputPath="/Users/sa639/Documents/Work/ALICE/TriggerQA"):
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='EMCal trigger QA.')
-    parser.add_argument('train', metavar='train',
-                        help='Train to be analyzed')
-    parser.add_argument('--input-path', metavar='input-path',
-                        default="/Users/sa639/Documents/Work/ALICE/TriggerQA",
-                        help='Input path')
+    parser.add_argument('yaml', metavar='config.yaml',
+                        help='YAML configuration file')
     args = parser.parse_args()
+    
+    f = open(args.yaml, 'r')
+    config = yaml.load(f)
+    f.close()
 
-    main(args.train, args.input_path)
+    main(config)
     
     IPython.embed()
     
