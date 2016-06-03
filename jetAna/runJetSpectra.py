@@ -162,7 +162,7 @@ class TreeProjector:
                         if skip:
                             continue
                         val = getattr(jet, observable.fName)
-                        #print dir(jet)
+                        print dir(jet)
                         print("Value {0} for observable {1}".format(val, observable.fName))
                         observable.fHistogram.Fill(val)
                         
