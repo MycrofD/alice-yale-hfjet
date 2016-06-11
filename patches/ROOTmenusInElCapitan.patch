@@ -1,0 +1,20 @@
+diff --git a/graf2d/cocoa/src/QuartzWindow.mm b/graf2d/cocoa/src/QuartzWindow.mm
+index 2c4f60e..a034939 100644 (file)
+--- a/graf2d/cocoa/src/QuartzWindow.mm
++++ b/graf2d/cocoa/src/QuartzWindow.mm
+@@ -1769,13 +1769,11 @@ void print_mask_info(ULong_t mask)
+ //______________________________________________________________________________
+ - (void) updateTrackingAreas
+ {
+-   if (!fID)
+-      return;
++   [super updateTrackingAreas];
+ 
+-   if (NSIsEmptyRect([self visibleRect]))
++   if (!fID)
+       return;
+ 
+-   
+    const Util::AutoreleasePool pool;
+ 
+    if (NSArray *trackingArray = [self trackingAreas]) {
