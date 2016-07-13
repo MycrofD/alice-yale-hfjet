@@ -1,0 +1,145 @@
+\include{commands}
+\documentclass[12pt, a4paper, twoside, titlepage]{article}
+% font size could be 10pt (default), 11pt or 12 pt
+% paper size coulde be letterpaper (default), legalpaper, executivepaper,
+% a4paper, a5paper or b5paper
+% side coulde be oneside (default) or twoside 
+% columns coulde be onecolumn (default) or twocolumn
+% graphics coulde be final (default) or draft 
+%
+% titlepage coulde be notitlepage (default) or titlepage which 
+% makes an extra page for title 
+% 
+% paper alignment coulde be portrait (default) or landscape 
+%
+% equations coulde be 
+%   default number of the equation on the rigth and equation centered 
+%   leqno number on the left and equation centered 
+%   fleqn number on the rigth and  equation on the left side
+%
+\usepackage{hyperref}
+\usepackage{graphicx}  % needed for figures
+\usepackage{dcolumn}   % needed for some tables
+\usepackage{bm}        % for math
+\usepackage{amssymb}   % for math
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{grffile}   % to handle dots in graphics file names
+\usepackage{epsfig}
+\usepackage{units}
+\usepackage{comment}
+\usepackage[usenames]{color}
+\usepackage[normalem]{ulem} % for strikethroughs (\sout{})
+\usepackage{color}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{subfigure}
+\title{Measurement of charm jet cross-section and fragmentation function
+with the ALICE detector at the LHC}
+\author{Salvatore Aiola  \\
+	Advisers: John Harris, Helen Caines \\
+	Yale University Physics Department
+	}
+
+\date{\today} 
+% \date{\today} date coulde be today 
+% \date{25.12.00} or be a certain date
+% \date{ } or there is no date 
+\begin{document}
+% Hint: \title{what ever}, \author{who care} and \date{when ever} could stand 
+% before or after the \begin{document} command 
+% BUT the \maketitle command MUST come AFTER the \begin{document} command! 
+\maketitle
+
+
+\begin{abstract}
+Jets are a fundamental feature of high-energy particle interactions. 
+They result from the fragmentation of hard-scattered partons, 
+a key process of Quantum Chromodynamics (QCD). 
+In particular, the production and the internal properties of heavy-flavor jets 
+in pp collisions are not yet satisfactorily described by neither analytical nor 
+phenomenological approaches to QCD. Measurements are needed
+in order to provide important constraints to models inspired by perturbative QCD 
+and Monte-Carlo generators, such as PYTHIA and POWHEG, widely used in high-energy particle physics.
+
+Heavy-flavor jets can also provide important insights into the Quark-Gluon Plasma (QGP)
+produced in ultra-relativistic heavy-ion collisions, as heavy quarks are predicted
+to interact with the QGP differently compared to light quarks and gluons. 
+However, their production mechanisms must first be studied in the vacuum, 
+in order to provide a baseline for the observation of possible modifications induced by the presence of the QGP. 
+
+We present the current status of the measurement of jets that contain a D meson (D-tagged jet) with \mbox{ALICE}.
+The aim of the analysis is to extract both the $p_{\rm T}$ spectrum of the D-tagged jets and the jet-momentum fraction of the D mesons. 
+We identify D-meson candidates via their hadronic decay channels using topological selections and particle identification.
+These D-meson candidates are combined with the other charged tracks reconstructed by the central tracking system, 
+using the anti-$k_{\rm T}$ jet-finding algorithm.
+We extract the yield of D-tagged jets through an invariant mass analysis of the D-meson candidates associated with each jet, 
+in bins of jet $p_{\rm T}$ and momentum fraction carried by the D meson. Finally we use a standard unfolding procedure 
+to correct the jet $p_{\rm T}$ spectrum for detector inefficiencies and momentum resolution. For this analysis we use data collected
+by ALICE with minimum bias triggers in pp collisions at 7 TeV. We will discuss also
+the perspectives for the same measurement in Pb--Pb and p--Pb collisions.
+\end{abstract}
+
+%\tableofcontents % create a table of contens 
+
+\section{Introduction}
+The \emph{charm} quark was discovered in 1974 almost simultaneously by two groups, working at SLAC~\cite{Richter:1974} and at BNL~\cite{Ting:1974}.
+The two groups observed a new resonance with a mass of about 3.1 \GeVcsq\ decaying into a pair of leptons.
+The decay width was measured as being smaller than experimental precision; this feature
+was in itself a strong indication of the existence of a new quantum number, conserved by strong nuclear interactions 
+but violated in electro-weak processes.
+This resonance later became known with the double name \jpsi\ and was identified as one of the possible bound states
+of a new heavier quark, \emph{charm}, and of its corresponding anti-particle. 
+\begin{comment}
+A few years later (1977) an even heavier quark, the \emph{bottom} quark,
+was discovered~\cite{Lederman:1977}; the sixth and last known quark, \emph{top}, took a bit longer (1995), due to its comparatively huge mass of about 173 \GeVcsq~\cite{CDF:1995,D0:1995}.
+\end{comment}
+
+Figure~\ref{} shows an illustration of the Standard Model, which includes
+3 generations of leptons (electron, muon, tau), 3 generations of quarks, 4 interaction bosons, ($\gamma$, Z, $\mathrm{W}^{\pm}$, g) and the Higgs boson
+recently observed by the ATLAS and CMS Collaborations \cite{ATLAS:2012b,CMS:2012d}.
+Each generation of particles (either quarks or leptons) differs from the others for the strength of its coupling to the Higgs boson,
+which result in a different observed mass.
+
+At hadron colliders charm quarks are produced as a result of a parton hard scattering. Likewise lighter quarks or gluons, charm quarks
+fragment into collimated sprays of hadrons called jets. The charm content of the jet is conserved throughout the fragmentation process,
+which is dominated by Quantum Chromo-Dynamics, the theory of strong nuclear interactions.
+The charm content of a jet can be identified looking for the presence of charmed hadrons, i.e. hadrons that have
+a charm quark among their valence quarks. Since all charmed hadrons have short lifetimes ($\tau \lesssim 10^{-12}$~s) their presence is inferred
+using a combination of Particle Identification (PID) techniques and topological and kinematical pattern selections on their decay products.
+
+Charm jets have peculiar properties that result form the heavier mass of the originating parton (a charm quark).
+Their production cross-section is significantly smaller than lighter quarks or gluons. The internal
+properties are also affected, in particular the fragmentation is expected to be harder for charm jets.
+
+An observable of interest is the relative fraction of charm jets with respect to all jets. Another important observable is the fraction of the jet momentum carried by
+the charmed hadron(s). Few measurements have been performed, 
+with large uncertainties and/or in limited kinematical regions~\cite{}. Theoretical descriptions are lacking~\cite{}, whereas commonly used Monte Carlo particle
+generators, such as PYTHIA or POWHEG, fail to reproduce the measurements~\cite{}. 
+This poses problems for the High Energy Physics community since this Monte Carlo generators are widely as input for detector response simulations.
+
+Heavy quarks are also an ideal probe~\cite{} of the hot and dense matter, known as Quark-Gluon Plasma (QGP)~\cite{}, that is created in ultra-relativistic heavy-ion collisions. 
+High energy charm jets behave very much alike light quarks; however at lower energies, comparable to the charm quark mass, the charm quark is expected
+to interact less strongly with the QGP, a phenomenon known as dead-cone effect~\cite{}. The difference between the interaction of a light quark with the QGP and that of
+a charm quark is driven by the mass, and is similar to what is observed in Quantum Electro-Dynamics between muons and electrons interacting with regular matter.
+
+Charm quarks are produced abundantly at the Large Hadron Collider, which provides \pp, \pPb\ and \PbPb\ collisions at unprecedented high collision energies and luminosities.
+At the LHC, the PID and low-momentum tracking capabilities are the strongest points of ALICE~\cite{} with respect to the other three experiments (ATLAS~\cite{}, CMS~\cite{} and LHCb~\cite{}); 
+this advantage is counterbalanced by an overall slower detector which does not allow to probe the full luminosity delivered by the LHC. 
+Especially tracking and PID are crucial to identify decay products of charmed hadrons; tracking and calorimetry are used together to reconstructed the energy flow from which jets can be singled out.
+ALICE is therefore very well endowed to perform a precise measurement of charm jets in a (mostly) unexplored kinematical region. Furthermore ALICE performances
+are optimized for heavy-ion collisions, where charm jet measurements can provide important information about the QGP.
+
+\section{The Large Hadron Collider}
+
+\section{The ALICE Experiment}
+
+\section{D-tagged jets with ALICE}
+\subsection{Physics goals}
+\subsection{Analysis technique}
+\subsection{Preliminary results}
+\subsection{Timeline}
+\bibliography{biblio}{}
+\bibliographystyle{utphys}
+
+\end{document}
