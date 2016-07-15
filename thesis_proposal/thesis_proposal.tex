@@ -23,6 +23,7 @@
 \usepackage{bm}        % for math
 \usepackage{amssymb}   % for math
 \usepackage{amsfonts}
+\usepackage{amsmath}
 \usepackage{graphics}
 \usepackage{grffile}   % to handle dots in graphics file names
 \usepackage{epsfig}
@@ -127,9 +128,17 @@ with large uncertainties and/or limited kinematical reach~\cite{}. Theoretical d
 generators, such as PYTHIA~\cite{Sjostrand:2006} or POWHEG~\cite{}, fail to reproduce the measurements~\cite{}. 
 This poses problems for the High Energy Physics community since these Monte Carlo generators are widely employed as input for detector response simulations.
 
+\begin{figure}[tbh]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/jetquenching}
+ \caption{Hard scattered partons interact with the QGP generated in ultra-relativistic heavy-ion collisions.} 
+ \label{fig:jetquenching}
+\end{center}
+\end{figure}
+
 Heavy quarks are also an ideal probe~\cite{} of the hot and dense matter, known as Quark-Gluon Plasma (QGP)~\cite{}, that is created in ultra-relativistic heavy-ion collisions. 
 Hard scattered partons, including heavy quarks, are produced early in the collision. They interact with the QGP, which increases their virtuality and interferes with the
-parton fragmentation process. This effect, known as \emph{jet quenching}, leads to a broadening and softening of the jet fragmentation~\cite{}. A number of
+parton fragmentation process. This effect, known as \emph{jet quenching}, leads to a broadening and softening of the jet fragmentation~\cite{}, as depicted in Fig.~\ref{fig:jetquenching}. A number of
 experimental evidences of jet quenching have been produced in last decade~\cite{}.
 High-energy charm jets behave very much like jets originated by light quarks~\cite{}; however at lower energies, comparable to the charm quark mass, the charm quark is expected
 to interact less strongly with the QGP, a phenomenon known as dead-cone effect~\cite{}. The difference between the interaction of a light quark with the QGP and that of
@@ -155,9 +164,9 @@ can detect and measure the collisions (\mbox{ATLAS}, \mbox{ALICE}, \mbox{CMS}, \
 are used to keep the particles in their circular trajectories, plus about other 400 superconducting quadrupole and higher multipole
 magnets, which are needed to keep the beams focused and provide other optical corrections.
 
-Protons and lead ions undergo several pre-acceleration steps before being injected into the LHC at the energy of 900 GeV.
+Protons and lead ions undergo several pre-acceleration steps before being injected into the LHC at the energy of 900 GeV (355 GeV per nucleon for lead ions).
 They are injected in bunches, spaced by 25 ns (or multiple of it) for a maximum of 2,808 bunches when operating at full luminosity in \pp\ collision mode.
-Acceleration is provided through radio frequency cavities. At it highest energy (currently 6.5 TeV) the dipole magnets need to generate
+Acceleration is provided through radio frequency cavities. At its highest energy (currently 6.5 TeV for proton beams) the dipole magnets need to generate
 a magnetic field of 7.7 T.
 
 At time of writing (July 2016) the LHC is in its Run-2 phase. The first operational phase of the LHC (Run-1) started in November 2009 and was 
@@ -192,7 +201,7 @@ Collision system	&	Years		&	\s\ (TeV)	\\
 \hline
 \PbPb			&	2015						&	5.02	\\
 \hline
-\pPb				&	2016\tablefootnote{Planned}		&	5.02	\\
+\pPb				&	2016\tablefootnote{Planned for fall 2016}		&	5.02	\\
 \hline
 \end{tabular}
 \caption{LHC Run-1 and Run-2 operations.
@@ -200,8 +209,45 @@ Collision system	&	Years		&	\s\ (TeV)	\\
 \end{table}
 
 \section{The ALICE Experiment}
-ALICE (\emph{A Large Ion Collider Experiment}) is the experiment dedicated to heavy-ion collisions at the LHC.
+ALICE (\emph{A Large Ion Collider Experiment}) is the experiment dedicated to the study of heavy-ion collisions at the LHC.
+Figure~\ref{fig:alice} shows a schematic of the ALICE detector.
+ALICE is a complex experiment made of several independent detector sub-systems that are operated synchronously.
+The main detectors are in the central barrel and cover the mid-rapidity region ($\lvert \eta\rvert \lesssim 1$).
+This is the list of the central-barrel detectors, from the innermost to the outermost:
+\begin{itemize}
+\item Inner Tracking System (ITS);
+\item Time Projection Chamber (TPC);
+\item Transition Radiation Detector (TRD);
+\item Time Of Flight (TOF);
+\item Electromagnetic Calorimeters (EMCal, DCal, PHOS) and High Momentum Particle Identification Detector (HMPID).
+\end{itemize}
+The central-barrel detectors are placed inside a large conventional solenoid magnet provides a magnetic field of 0.5 T,
+used to bend charged tracks in order to reconstruct their momentum.
+Other detectors are placed at forward rapidity and are mainly used for triggering and for event characterization 
+(multiplicity, centrality and event plane):
+\begin{itemize}
+\item Photon Multiplicity Detector (PMD);
+\item Forward Multiplicity Detector (FMD);
+\item V0 and T0 (multiplicity and triggering);
+\item Zero Degree Calorimeter (ZDC).
+\end{itemize}
+A 5-layer muon tracking station is installed at forward rapidity ($-2.5 < \eta < 4$), inside a dipole magnet.
+In the following sections I will describe briefly the detectors that are relevant for my analysis. A full description
+of ALICE and of its performances during LHC Run-1 is available at Ref.~\cite{}.\
 
+\begin{figure}[tbh]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{img/alice}
+ \caption{3D ALICE Schematic; central-barrel detectors are visible inside the red solenoid magnet;
+ the muon tracking station is on the right side; in the upper-right corner there is a zoomed inlay of the ITS.} 
+ \label{fig:alice}
+\end{center}
+\end{figure}
+
+\subsection{Inner Tracking System}
+\subsection{Time Projection Chamber}
+\subsection{Time Of Flight}
+\subsection{Electromagnetic Calorimeter}
 
 \section{D-tagged jets with ALICE}
 \subsection{Physics goals}
