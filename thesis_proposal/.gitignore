@@ -4,4 +4,5 @@
 *.pdf
 *.bbl
 *.blg
+*.toc
 *.synctex.gz

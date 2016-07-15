@@ -82,7 +82,8 @@ by ALICE with minimum bias triggers in pp collisions at 7 TeV. We will discuss a
 the perspectives for the same measurement in Pb--Pb and p--Pb collisions.
 \end{abstract}
 
-%\tableofcontents % create a table of contents 
+\tableofcontents % create a table of contents 
+\newpage
 
 \section{Introduction}
 The \emph{charm} quark was discovered in 1974 almost simultaneously by two groups, working at SLAC~\cite{Richter:1974} and at BNL~\cite{Ting:1974}.
@@ -139,7 +140,7 @@ This poses problems for the High Energy Physics community since these Monte Carl
 Heavy quarks are also an ideal probe~\cite{} of the hot and dense matter, known as Quark-Gluon Plasma (QGP)~\cite{}, that is created in ultra-relativistic heavy-ion collisions. 
 Hard scattered partons, including heavy quarks, are produced early in the collision. They interact with the QGP, which increases their virtuality and interferes with the
 parton fragmentation process. This effect, known as \emph{jet quenching}, leads to a broadening and softening of the jet fragmentation~\cite{}, as depicted in Fig.~\ref{fig:jetquenching}. A number of
-experimental evidences of jet quenching have been produced in last decade~\cite{}.
+experimental evidences of jet quenching has been produced in last decade~\cite{}.
 High-energy charm jets behave very much like jets originated by light quarks~\cite{}; however at lower energies, comparable to the charm quark mass, the charm quark is expected
 to interact less strongly with the QGP, a phenomenon known as dead-cone effect~\cite{}. The difference between the interaction of a light quark with the QGP and that of
 a charm quark is driven by its mass, and is similar to the difference observed in Quantum Electro-Dynamics between muons and electrons interacting with regular matter.
@@ -201,7 +202,7 @@ Collision system	&	Years		&	\s\ (TeV)	\\
 \hline
 \PbPb			&	2015						&	5.02	\\
 \hline
-\pPb				&	2016\tablefootnote{Planned for fall 2016}		&	5.02	\\
+\pPb				&	2016\tablefootnote{Planned for fall 2016}		&	5.02, 8	\\
 \hline
 \end{tabular}
 \caption{LHC Run-1 and Run-2 operations.
@@ -221,8 +222,9 @@ This is the list of the central-barrel detectors, from the innermost to the oute
 \item Time Of Flight (TOF);
 \item Electromagnetic Calorimeters (EMCal, DCal, PHOS) and High Momentum Particle Identification Detector (HMPID).
 \end{itemize}
-The central-barrel detectors are placed inside a large conventional solenoid magnet provides a magnetic field of 0.5 T,
+The central-barrel detectors are placed inside a large conventional solenoid magnet which provides a magnetic field of 0.5 T,
 used to bend charged tracks in order to reconstruct their momentum.
+
 Other detectors are placed at forward rapidity and are mainly used for triggering and for event characterization 
 (multiplicity, centrality and event plane):
 \begin{itemize}
@@ -232,8 +234,9 @@ Other detectors are placed at forward rapidity and are mainly used for triggerin
 \item Zero Degree Calorimeter (ZDC).
 \end{itemize}
 A 5-layer muon tracking station is installed at forward rapidity ($-2.5 < \eta < 4$), inside a dipole magnet.
+
 In the following sections I will describe briefly the detectors that are relevant for my analysis. A full description
-of ALICE and of its performances during LHC Run-1 is available at Ref.~\cite{}.\
+of ALICE and of its performances during LHC Run-1 is available at Refs.~\cite{}.\
 
 \begin{figure}[tbh]
 \begin{center}
@@ -245,15 +248,50 @@ of ALICE and of its performances during LHC Run-1 is available at Ref.~\cite{}.\
 \end{figure}
 
 \subsection{Inner Tracking System}
+The ALICE \emph{Inner Tracking System} (ITS) is a 6-layer silicon detector: two \emph{Silicon Pixel Detectors} (SPD),
+two \emph{Silicon Drift Detectors} (SDD) and two \emph{Silicon Strip Detectors} (SSD).
+
 \subsection{Time Projection Chamber}
+The ALICE \emph{Time Projection Chamber} (TPC) is the biggest detector of its kind ever built, with a $90\,\mathrm{m}^{3}$ drift volume.
+The chamber is filled with Ne--CO$_{2}$ (Run-1) or Ar--CO$_{2}$ (Run-2) and is divided in two parts by the central cathode, which is kept at -100 kV.
+The ionization produced by charged particles transversing the gas is collected at the end plates, which are equipped with multiwire proportional chambers (MWPC).
+
 \subsection{Time Of Flight}
-\subsection{Electromagnetic Calorimeter}
+The ALICE \emph{Time Of Flight} (TOF) detector is based on Multigap Resistive Plate Chamber (MRPC) technology and it is used for
+particle identification at intermediate momenta (combining the time of flight measurement with the momentum information from the TPC and ITS tracking). 
+
+\subsection{Electromagnetic Calorimeters}
+ALICE has three electromagnetic calorimeters that share the azimuthal angle at mid-rapidity. Table~\ref{} summarizes the acceptance
+covered by each calorimeter and other physical parameters.
+
+The \emph{Photon Spectrometer} (PHOS) has small acceptance and high resolution
+and is especially designed to measure photons.
+
+The \emph{Electromagnetic Calorimeter} (EMCal) and \emph{Di-jet Calorimeter} (DCal) are made of 12,288 and 5,376 towers respectively.
+Each tower contains 70 layers that alternate lead plates (to enhance the electromagnetic shower) and scintillator plates. The towers are all identical and have dimensions xx,
+which correspond to a thickness of $\sim 20\, X_{0}$ (radiation lengths) and an acceptance of $\Delta\eta \sim 0.014$, $\Delta\phi \sim 0.014$.
+The light produced by the electromagnetic shower in the scintillator plates is collected by wavelength-shifting optical-fiber cables that runs through the length of each tower 
+in holes carved at the four edges. The four optical fiber cables of each tower are connected optically to an Avalanche Photo-Diode (APD) which converts the optical
+signal into an electrical impulse.
+
+The DCal was installed during LS1 and went through a commissioning phase in the first few weeks of data taking in 2015, before becoming fully operational. It covers
+an azimuthal region opposite to the EMCal and surrounding PHOS. By combining PHOS and DCal acceptances one effectively covers $\lvert \eta\rvert < 0.7$ and 
+$\Delta\phi \sim 67^{\circ}$ in azimuth, thus allowing to perform correlation measurements of back-to-back jets.
+
+\subsubsection{The EMCal-DCal trigger system}
+Both EMCal and DCal can provide triggers for global data taking. ALICE has implemented two trigger levels, L0 and L1, both active for EMCal-DCal.
 
 \section{D-tagged jets with ALICE}
 \subsection{Physics goals}
+
 \subsection{Analysis technique}
 \subsection{Preliminary results}
 \subsection{Timeline}
+
+\section{Service work}
+\subsection{The EMCal-DCal 2016 trigger commissioning}
+\subsection{TPC upgrade for LHC Run-3}
+
 \bibliography{biblio}{}
 \bibliographystyle{utphys}
 
