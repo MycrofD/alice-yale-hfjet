@@ -275,15 +275,15 @@ Most of the charm-related measurements performed at the LHC so far report the pr
 containing heavy quarks~\cite{ALICE:2012d, ALICE:2012e, ATLAS:2012e, LHCb:2013a, ALICE:2014d, ATLAS:2014e, ALICE:2015c, ALICE:2015d, ALICE:2016a, ATLAS:2016a}.
 The kinematic properties of the jets are closer to those of the originating c quark, when compared to the measurement of the charmed hadrons alone.
 Therefore, by measuring the kinematic properties of jets containing heavy-flavor hadrons 
-one reduces the dependence on the details of the fragmentation, which is a highly non-perturbative phenomenon, known only within large uncertainties~\cite{}.
+one reduces the dependence on the details of the fragmentation, which is a highly non-perturbative phenomenon, known only within large uncertainties~\cite{dEnterria:2014}.
 Furthermore, the details of the charm quark fragmentation can be the subject of a more careful study in which the kinematic observables 
 of both the jet and the charmed hadron are available at the same time. In particular the measurement of the fraction of the jet momentum carried 
-by the charmed hadrons can provide important insights on the charm production mechanism~\cite{}.
+by the charmed hadrons can provide important insights on the charm production mechanism~\cite{CDF:1990, UA1:1990, STAR:2009a, ATLAS:2012d}.
 
 \subsection{Analysis technique}
-The analysis relies on the well established D meson reconstruction techniques~\cite{}, as well as
-jet reconstruction methods~\cite{}, both developed by the ALICE Collaboration. In particular I have
-myself contributed significantly to the measurement of jets in \PbPb\ collisions~\cite{} and to the
+The analysis relies on the well established D meson reconstruction techniques~\cite{ALICE:2012d, ALICE:2012e, ALICE:2014d, ALICE:2015c, ALICE:2015d, ALICE:2016a}, as well as
+jet reconstruction methods~\cite{ALICE:2013c, ALICE:2014a, ALICE:2015e, ALICE:2015f}, both developed by the ALICE Collaboration. In particular I have
+myself contributed significantly to the measurement of jets in \PbPb\ collisions~\cite{ALICE:2015a, Aiola:2013, Aiola:2014} and to the
 development and maintenance of the related jet reconstruction software.
 
 Some of the details of the analysis techniques are still under development. In the following section
@@ -321,7 +321,7 @@ Trigger biases need to be understood and corrected for, using a combination of d
 %For the data collected in 2012 and 2016 I plan to use events triggered by EMCal L1 jet algorithm.
 
 \subsubsection{Track selection}
-For more details about the tracking algorithm used by ALICE see Ref.~\cite{}.
+For more details about the tracking algorithm used by ALICE see Ref.~\cite{ALICE:2014b}.
 
 Track quality cuts are applied to ensure good momentum resolution. These cuts
 depend on the requirements set by a specific physics analysis.
@@ -331,18 +331,19 @@ layers of the ITS, closer to the beam pipe) and at least a total of three in the
 match with a track in the TPC, which has to include at least 70 space points and no less than 80\% of the geometrically findable 
 space points in the TPC. Decay products of the D mesons are found among this category of tracks.
 
-Due to the non-uniform SPD response, the reconstruction efficiency of the above defined \emph{global} tracks shows a strong azimuthal dependence,
-as shown in Fig.~\ref{}. This non-uniform acceptance can interfere with the jet finding algorithm. To avoid such effects a second type of tracks is added for jet finding.
+Due to the non-uniform SPD response, the reconstruction efficiency of the above defined \emph{global} tracks shows a strong azimuthal dependence.
+%as shown in Fig.~\ref{}. 
+This non-uniform acceptance can interfere with the jet finding algorithm. To avoid such effects a second type of tracks is added for jet finding.
 For this type of tracks the requirement on the SPD is lifted, while keeping all the other requirements unchanged. To improve momentum resolution,
 these tracks are constrained to the primary vertex, which is reconstructed using \emph{global} tracks. These tracks are called \emph{hybrid} because
 they are a combination of \emph{global} tracks and \emph{constrained} tracks.
 
 \subsubsection{D meson candidate identification}
-ALICE has successfully measured a number of charmed mesons~\cite{}.
+ALICE has successfully measured a number of charmed mesons~\cite{ALICE:2012d, ALICE:2012e}.
 The \Dzero\ meson has the best signal/background ratio down to low momentum and
-is also the most abundant.
+is also the most abundant. The \Dzero\ has a mass $m=1.865$~\GeVcsq\ and a mean lifetime $\tau=4.101 \times 10^{-13}$~s.
 It is identified through its hadronic decay: \Dzero $\rightarrow$ \pip \kam. The branching ratio of this decay
-is relatively small, BR(\Dzero $\rightarrow$ \pip \kam) = xx~\cite{}. Both the \Dzero\ and its
+is relatively small, BR(\Dzero $\rightarrow$ \pip \kam) = 3.88\%~\cite{PDG:2014}. Both the \Dzero\ and its
 anti-particle $\overline{\Dzero}$~are considered.
 
 The first step of the analysis is to select events that contain at least one \Dzero\ meson candidate.
@@ -350,12 +351,7 @@ The first step of the analysis is to select events that contain at least one \Dz
 In order to suppress the background from combinatorial matches, topological and PID cuts are applied.
 The topological cuts select pairs that form a \emph{secondary vertex} displaced from the reconstructed
 primary vertex. 
-\begin{comment}
-Depending on the momentum of the D meson candidate, different cuts are applied on the
-\emph{distance of closest approach} (DCA) between each of the daughters and the primary vertex. These cuts
-varies from DCA $>$ xx for xx to xx for xx.
-\end{comment}
-PID information on the \Dzero candidate daughters is used to reject pairs that do not satisfy the requirement of being a pion-kaon pair.
+PID information on the \Dzero\ candidate daughters is used to reject pairs that do not satisfy the requirement of being a pion-kaon pair.
 
 The pairs that pass the selections are then used in the next steps.
 The four-momentum of the \Dzero\ candidate is calculated summing the four-momenta of the two daughters.
@@ -369,6 +365,8 @@ This set includes the four-momentum of the \Dzero\ candidate and all reconstruct
 excluding the two daughters of the \Dzero. The jet finding algorithm returns a set of jet candidates, with the particle constituents
 assigned to each jet. The jet containing the \Dzero\ candidate can thus be identified and associated with the \Dzero\ candidate for the next steps.
 
+For this analysis I use the \antikt\ algorithm~\cite{Cacciari:2008c}, widely used at the LHC.
+
 \begin{comment}
 Several jet finding algorithms have been developed and used in high energy physics in the last few decades.
 \emph{Cone jet algorithms} were the first to be developed. Although many different versions exists, the basic idea behind them
@@ -380,9 +378,9 @@ replaced by \emph{sequential recombination algorithms}. For these algorithms a \
 
 Initially I will focus on using only tracks of charged particles for jet reconstruction. Since they miss the momentum
 fraction carried by neutral particles, the kinematics of charged jets is less tightly correlated with the kinematics
-of the original parton and depends more strongly on the jet fragmentation; however charged jets have also a a number advantages
-and have been the subject of recent theoretical developments~\cite{}.
-In a second phase I plan to extend the analysis by including the calorimeter data in jet finding (as done in Refs.~\cite{}).
+of the original parton and depends more strongly on the jet fragmentation; however charged jets have also a number advantages
+and have been the subject of recent theoretical developments~\cite{Thaler:2013}.
+In a second phase I plan to extend the analysis by including the calorimeter data in jet finding (as done in Refs.~\cite{ALICE:2013c, ALICE:2015a}).
 
 \subsubsection{Invariant mass analysis}
 \Dzero\ candidates and their associated jets are then sorted according to their kinematic variables in different bins:
@@ -391,18 +389,27 @@ In a second phase I plan to extend the analysis by including the calorimeter dat
 \item for a double-differential spectrum in jet \pt\ and \zpar$=\frac{\bm{p}_{\rm jet}\cdot{\bm{p}}_{\rm D^0}}{\bm{p}_{\rm jet}^2}$ candidates will
 be sorted in bins defined in these two variables.
 \end{enumerate}
-For each bin defined above, a separate invariant mass analysis is performed. An example is shown in Fig.~\ref{} for the single-differential
+For each bin defined above, a separate invariant mass analysis is performed. An example is shown in Fig.~\ref{fig:InvMassSingleDiff} for the single-differential
 jet \pt\ spectrum case. 
 In each bin a fit of the invariant mass spectrum is performed to extract the signal from the background. It is assumed that the background has
 a smooth shape that can be fitted by an exponential function, whereas the signal is fitted by a Gaussian. These assumptions are tested
-through a Monte Carlo simulation that uses PYTHIA6~\cite{} as particle generator and GEANT3~\cite{} to simulate particle interaction
+through a Monte Carlo simulation that uses PYTHIA6~\cite{Sjostrand:2006} as particle generator and GEANT3~\cite{GEANT3-url} to simulate particle interaction
 with the detector material budget and the detector response itself.
+
+\begin{figure}[tb]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{img/InvMassSingleDiff}
+ \caption{Invariant mass plots of \Dzero\ meson candidates found in \pp\ collisions at \s\ = 7 TeV. Each of the six plots shown includes \Dzero\ candidates
+ with an associated jet \pt\ in the range printed above. Jets are reconstructed using the \antikt\ algorithm with resolution paramter $R=0.6$.} 
+ \label{fig:InvMassSingleDiff}
+\end{center}
+\end{figure}
 
 \subsubsection{Final corrections and systematic uncertainties}
 Due to finite detector resolution, the spectrum obtained as outlined above is distorted. In addition reconstruction efficiency is quite low
-and \pt-dependent, especially for the D meson ($\epsilon_{D^0} \sim 10-20\%$, see Ref.~\cite{}) . This is due both to the tracking efficiency ($\sim 80\%$, see Ref.~\cite{}),
+and \pt-dependent, especially for the D meson ($\epsilon_{D^0} \sim 10-20\%$, see Ref.~\cite{ALICE:2012d}) . This is due both to the tracking efficiency ($\sim 80\%$, see Ref.~\cite{ALICE:2014b}),
 which affects the probability of reconstructing the decay products, and to the topological cuts. These effects will be corrected for using a combination of Monte Carlo simulation and data-driven methods, currently being refined.
-The corrections applied to remove or reduce effects due to detector resolution and efficiency are referred to as \emph{unfolding} and make use of modern statistical analysis methods~\cite{}.
+The corrections applied to remove or reduce effects due to detector resolution and efficiency are referred to as \emph{unfolding} and make use of modern statistical analysis methods~\cite{Hocker:1995, Dagostini:1995}.
 A full \emph{closure} test using Monte Carlo simulated events is underway, to validate the ability of the analysis procedures to recover the signal.
 
 Systematic uncertainties will be thoroughly assessed. Systematic uncertainties can arise from a variety of sources.
@@ -417,10 +424,10 @@ The analysis techniques are now quite solid and I have received positive feedbac
 where my analysis is reviewed. The last pieces that need some refinement are the unfolding procedures and corrections and the assessment of the systematic uncertainties.
 I expect that it will take $\sim 6$ months to complete the analysis with the 7 TeV \pp\ collision data (collected in 2010) and write a paper draft for the Collaboration internal review (January 2017). Once approved
 by the Collaboration the paper will be submitted to a peer-reviewed journal.
-In the meantime I have submitted an abstract to the organizers of the \emph{Hot Quarks 2016 Workshop}~\cite{}, which will be held in South Padre Island, TX, September 12-17. 
+In the meantime I have submitted an abstract to the organizers of the \emph{Hot Quarks 2016 Workshop}~\cite{HotQuarks:2016}, which will be held in South Padre Island, TX, September 12-17. 
 The abstract has been accepted and I plan to report on the analysis procedures and show partial results.
 
-The extension of the analysis to the 8 TeV (2012) and 13 TeV (2016 ) \pp\ collision data will take additional $\sim 6-12$ months. The major addition is the inclusion of the calorimeter
+The extension of the analysis to the 8 TeV (2012) and 13 TeV (2016) \pp\ collision data will take additional $\sim 6-12$ months. The major addition is the inclusion of the calorimeter
 which will allow to perform a full jet reconstruction.
 I will prepare another peer-reviewed paper in which these additional results will be reported.
 I expect to graduate in May 2018.
@@ -429,7 +436,7 @@ I expect to graduate in May 2018.
 \label{sect:ServiceWork}
 
 \subsection{TPC upgrade for LHC Run-3}
-The Relativistic Heavy Ion Group (RHIG) at Yale has taken a major role in the upgrades of the ALICE TPC~\cite{} for LHC Run-3 phase (scheduled to start in 2021).
+The Relativistic Heavy Ion Group (RHIG) at Yale has taken a major role in the upgrades of the ALICE TPC~\cite{ALICE:2014c} for LHC Run-3 phase (scheduled to start in 2021).
 A significant increase of the LHC luminosity for heavy ions is expected in Run-3, with collision rates of about 50 kHz. This implies a substantial enhancement
 of the sensitivity to a number of rare probes that are key observables for the characterization of the QGP. In order to fully exploit this scientific potential, ALICE needs to
 upgrades its detector to be able to cope with a much larger collision rate.
@@ -448,8 +455,8 @@ which means that a gating grid is no longer required.
 Throughout 2014, we have performed measurements at Yale on a small prototype of a gas chamber which uses a stack of two GEMs and a Micromegas to amplify the ionization
 produced by a small radioactive source. In November 2014, a larger prototype was also shipped to CERN, where we performed another set of measurements using
 the Proton Synchrotron (PS) and Super-Proton-Synchrotron (SPS) beam facilities.
-The results of these measurements have been included in the addendum to the ALICE TPC upgrade Technical Design Report~\cite{}.
-In addition we have submitted a paper~\cite{} to \emph{Nuclear Instrument and Methods}, which is currently being reviewed by the editor.
+The results of these measurements have been included in the addendum to the ALICE TPC upgrade Technical Design Report~\cite{ALICE:2015b}.
+In addition we have submitted a paper~\cite{Aiola:2016a} to \emph{Nuclear Instrument and Methods}, which is currently being reviewed by the editor.
 
 The ALICE Collaboration and the CERN management have approved the TPC upgrade and we have now moved into the production phase.
 The Yale group is leading the construction and commissioning of the Inner Read-Out Chambers (IROCs) of the TPC using facilities and labs on the Yale campus.
@@ -464,19 +471,36 @@ potentially include rare processes. This allows to sample a larger luminosity, a
 to be able to control and understand the trigger bias and the trigger inefficiencies for each particular process being analyzed. This is usually done
 using a combination of data driven methods (that typically rely on a large enough \emph{minimum bias} sample) as well as Monte Carlo simulations.
 
+\begin{figure}[tb]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/emcaltrigger}
+ \caption{View of a full EMCal super-module. The thick lines divide different TRU. The light lines represent 2x2 towers each, which is the smallest unit
+available for trigger decisions.} 
+ \label{fig:emcaltrigger}
+\end{center}
+\end{figure}
+
 Both EMCal and DCal can provide rare triggers. ALICE has implemented two levels of triggers: the Level-0 (L0) which provides a decision within 
-$0.9\,\rm \mu s$ and the Level-1 (L1) which provides a decision within $6.5\,\rm \mu s$ after L0~\cite{}. The L0 EMCal-DCal trigger algorithm looks for a high energy
+$0.9\,\rm \mu s$ and the Level-1 (L1) which provides a decision within $6.5\,\rm \mu s$ after L0~\cite{ALICE:2014b}. The L0 EMCal-DCal trigger algorithm looks for a high energy
 deposition scanning the acceptance in 4x4 tower windows. This scan is performed separately in each Trigger Region Unit (TRU) which corresponds to 1/3 of a EMCal-DCal super-module.
 A 4x4 window is relatively small and can therefore trigger on contained showers of single electrons, photons or \pizero.
 In order to identify events containing larger showers, such as the ones initiated by a jet, we need to scan the acceptance using a larger window. This is possible using
 L1 triggers that can take decisions based on the information coming from the entire calorimeter acceptance rather than a single TRU. The EMCal-DCal implements two L1 algorithms
 which differ essentially for the size of the trigger window: 4x4 for the L1 \emph{gamma} algorithm, used for electrons, photons and \pizero, and 32x32 (or 16x16) for the L1 \emph{jet} algorithm.
-Figure~\ref{} is visual representation of the L0 and L1 trigger algorithms.
+Figure~\ref{fig:emcaltrigger} is visual representation of the L0 and L1 trigger algorithms.
+
+\begin{figure}[tb]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/EMCalTriggerSuppression}
+ \caption{Suppression of the L1 trigger rate over the L0 rate as a function of thresholds for different trigger algorithms (gamma in red and jet in blue) and different detectors (EMCal in solid symbols and DCal in open symbols).} 
+ \label{fig:EMCalTriggerSuppression}
+\end{center}
+\end{figure}
 
 In the spring 2016 I spent a couple of months at CERN helping with the commissioning of the L1 triggers, as well as with general operations of the EMCal-DCal during data taking.
 In particular my contribution is related to the fine tuning of the trigger thresholds for the L1 gamma and jet algorithms. The thresholds are set according to the physics goals discussed
 and approved by the different working groups of the Collaboration. The triggers need also to provide a suppression compatible the ALICE maximum read-out rate.
-Figure~\ref{} shows the suppression provided by the L1 gamma and jet algorithms over the L0 triggered events (with a L0 threshold set at 2.5~GeV), separately for EMCal and DCal.
+Figure~\ref{fig:EMCalTriggerSuppression} shows the suppression provided by the L1 gamma and jet algorithms over the L0 triggered events (with a L0 threshold set at 2.5~GeV), separately for EMCal and DCal.
 
 \bibliography{biblio}{}
 \bibliographystyle{utphys}

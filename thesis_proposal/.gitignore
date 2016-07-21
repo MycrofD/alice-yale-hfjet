@@ -1,7 +1,7 @@
 *.aux
 *.log
 *.out
-*.pdf
+thesis_proposal.pdf
 *.bbl
 *.blg
 *.toc
