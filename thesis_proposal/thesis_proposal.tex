@@ -38,6 +38,7 @@
 \usepackage{multirow}
 \usepackage{tablefootnote}
 \usepackage{bm}
+\usepackage[numbers,sort&compress]{natbib}
 \title{Measurement of charm jet cross-section and fragmentation function
 with the ALICE detector at the LHC}
 \author{Salvatore Aiola  \\
@@ -56,31 +57,15 @@ with the ALICE detector at the LHC}
 \maketitle
 
 \begin{abstract}
-Jets are a fundamental feature of high-energy particle interactions. 
-They result from the fragmentation of hard-scattered partons, 
-a key process of Quantum Chromodynamics (QCD). 
-In particular, the production and the internal properties of heavy-flavor jets 
-in pp collisions are not yet satisfactorily described by neither analytical nor 
-phenomenological approaches to QCD. Measurements are needed
-in order to provide important constraints to models inspired by perturbative QCD 
-and Monte-Carlo generators, such as PYTHIA and POWHEG, widely used in high-energy particle physics.
+The measurement of the charm production cross section in \pp\ collisions is an important sensitive test of perturbative Quantum Chrom-Dynamics (pQCD) calculations.
+It is also an ideal self-produced probe of the hot and dense medium, known as Quark-Gluon Plasma (QGP), produced in ultra-relativistic heavy-ion collisions.
+The charm production cross section is also relevant for neutrino astrophysics, since neutrinos coming from the decay of charmed hadrons produced
+in cosmic-ray atmospheric showers are one of the largest sources of background when studying high energy neutrinos coming from astrophysical sources.
 
-Heavy-flavor jets can also provide important insights into the Quark-Gluon Plasma (QGP)
-produced in ultra-relativistic heavy-ion collisions, as heavy quarks are predicted
-to interact with the QGP differently compared to light quarks and gluons. 
-However, their production mechanisms must first be studied in the vacuum, 
-in order to provide a baseline for the observation of possible modifications induced by the presence of the QGP. 
-
-We present the current status of the measurement of jets that contain a D meson (D-tagged jet) with \mbox{ALICE}.
-The aim of the analysis is to extract both the $p_{\rm T}$ spectrum of the D-tagged jets and the jet-momentum fraction of the D mesons. 
-We identify D-meson candidates via their hadronic decay channels using topological selections and particle identification.
-These D-meson candidates are combined with the other charged tracks reconstructed by the central tracking system, 
-using the anti-$k_{\rm T}$ jet-finding algorithm.
-We extract the yield of D-tagged jets through an invariant mass analysis of the D-meson candidates associated with each jet, 
-in bins of jet $p_{\rm T}$ and momentum fraction carried by the D meson. Finally we use a standard unfolding procedure 
-to correct the jet $p_{\rm T}$ spectrum for detector inefficiencies and momentum resolution. For this analysis we use data collected
-by ALICE with minimum bias triggers in pp collisions at 7 TeV. We will discuss also
-the perspectives for the same measurement in Pb--Pb and p--Pb collisions.
+Charm quarks are produced abundantly at the CERN Large Hadron Collider (LHC). The ALICE experiment is particularly endowed for measuring
+jets originated by charm quarks in the low momentum region, thanks to its Particle Identification (PID) capabilities and good momentum resolution.
+The measurement of the charm jet cross section and of the internal properties of charm jets, particularly the fragmentation function, will give an important
+contribution to the advancement of the related subfields: perturbative QCD theory and phenomenology, QCD at high temperature (QGP), neutrino astrophysics.
 \end{abstract}
 
 \tableofcontents % create a table of contents 
@@ -114,15 +99,15 @@ Each generation of particles (either quarks or leptons) differs from the others 
 which result in a different observed mass.
 
 At hadron colliders charm quarks are produced as a result of a parton hard scattering. Likewise lighter quarks or gluons, charm quarks
-fragment into collimated sprays of hadrons called jets. The charm content of the jet is conserved throughout the fragmentation process,
+fragment into collimated sprays of hadrons called \emph{jets}. The charm content of the jet is conserved throughout the fragmentation process,
 which is dominated by Quantum Chromo-Dynamics, the theory of strong nuclear interactions.
-The charm content of a jet can be identified looking for the presence of charmed hadrons, i.e. hadrons that have
+The charm content of a jet can be identified by looking for the presence of charmed hadrons, i.e. hadrons that have
 a charm quark among their valence quarks. Since all charmed hadrons have short lifetimes ($\tau \lesssim 10^{-12}$~s) their presence is inferred
 using a combination of Particle Identification (PID) techniques and topological and kinematical pattern selections on their decay products.
 
 Charm jets have peculiar properties that result form the heavier mass of the originating parton (a charm quark).
 Their production cross-section is significantly smaller than lighter quarks or gluons. The internal
-properties of the jets are also affected, in particular the fragmentation is expected to be harder for charm jets compared to inclusive jets.
+properties of the jets are also affected, in particular the fragmentation is expected to be harder for charm jets .
 
 \begin{figure}[tbh]
 \begin{center}
@@ -132,22 +117,26 @@ properties of the jets are also affected, in particular the fragmentation is exp
 \end{center}
 \end{figure}
 
-Heavy quarks are also an ideal probe~\cite{} of the hot and dense matter, known as Quark-Gluon Plasma (QGP)~\cite{}, that is created in ultra-relativistic heavy-ion collisions. 
+Heavy quarks are also an ideal probe of the hot and dense matter, known as Quark-Gluon Plasma (QGP)~\cite{STAR:2005a, PHENIX:2005a, ALICE:2010b, ALICE:2011b, CMS:2013d, ATLAS:2013c}, 
+that is created in ultra-relativistic heavy-ion collisions. 
 Hard scattered partons, including heavy quarks, are produced early in the collision. They interact with the QGP, which increases their virtuality and interferes with the
-parton fragmentation process. This effect, known as \emph{jet quenching}, leads to a broadening and softening of the jet fragmentation~\cite{}, as depicted in Fig.~\ref{fig:jetquenching}. A number of
-experimental evidences of jet quenching has been produced in last decade~\cite{}.
-High-energy charm jets behave very much like jets originated by light quarks~\cite{}; however at lower energies, comparable to the charm quark mass, the charm quark is expected
-to interact less strongly with the QGP, a phenomenon known as dead-cone effect~\cite{}. 
+parton fragmentation process as depicted in Fig.~\ref{fig:jetquenching}. 
+This effect, known as \emph{jet quenching}, can lead to a suppression of the jet yield, disappearance of the back-to-back jet correlation peak,
+broadening and softening of the jet fragmentation. 
+A number of experimental evidences of jet quenching has been produced in last decade~\cite{ALICE:2010d, CMS:2011c, CMS:2012b, ATLAS:2014d, ALICE:2015a}.
+High-energy charm jets behave very much like jets originated by light quarks; however at lower energies, comparable to the charm quark mass, the charm quark is expected
+to interact less strongly with the QGP, a phenomenon known as dead-cone effect~\cite{Dokshitzer:2001}.
 \begin{comment}
 The difference between the interaction of a light quark with the QGP and that of
 a charm quark is driven by its mass, and is similar to the difference observed in Quantum Electro-Dynamics between muons and electrons interacting with regular matter.
 \end{comment}
 
 Charm quarks are produced abundantly at the \emph{Large Hadron Collider}, which provides \pp, \pPb\ and \PbPb\ collisions at unprecedented high collision energies and luminosities.
-At the LHC, the PID and low-momentum tracking capabilities are among the strongest points of ALICE~\cite{} compared to the other LHC experiments; 
-this advantage is counterbalanced by an overall slower detector which does not allow to probe the full luminosity delivered by the LHC. 
+At the LHC, the PID and low-momentum tracking capabilities are among the strongest points of ALICE~\cite{ALICE:2014b}.
+%compared to the other LHC experiments; 
+%this advantage is counterbalanced by an overall slower detector which does not allow to probe the full luminosity delivered by the LHC. 
 Especially vertexing, tracking and PID are crucial to efficiently identify the decay products of charmed hadrons; tracking and calorimetry are used together to reconstructed the energy flow from which jets can be identified.
-ALICE is very well endowed to perform a precise measurement of charm jets in a (mostly) unexplored kinematical region. Furthermore ALICE performances
+ALICE is very well endowed to perform a precise measurement of charm jets in a (mostly) unexplored kinematical region, i.e. low and intermediate momentum charm jets. Furthermore ALICE performances
 are optimized for heavy-ion collisions, where charm jet measurements can provide important insights about the QGP.
 
 \section{The Large Hadron Collider}
@@ -212,30 +201,11 @@ ALICE (\emph{A Large Ion Collider Experiment}) is the experiment dedicated to th
 Figure~\ref{fig:alice} shows a schematic of the ALICE detector.
 ALICE is a complex experiment made of several independent detector sub-systems that are operated synchronously.
 The main detectors are in the central barrel and cover the mid-rapidity region ($\lvert \eta\rvert \lesssim 1$).
-This is the list of the central-barrel detectors, from the innermost to the outermost:
-\begin{itemize}
-\item Inner Tracking System (ITS);
-\item Time Projection Chamber (TPC);
-\item Transition Radiation Detector (TRD);
-\item Time Of Flight (TOF);
-\item Electromagnetic Calorimeters (EMCal, DCal, PHOS) and High Momentum Particle Identification Detector (HMPID).
-\end{itemize}
-The central-barrel detectors are placed inside a large conventional solenoid magnet which provides a magnetic field of 0.5 T,
-used to bend charged tracks in order to reconstruct their momentum.
+Table~\ref{tab:ALICEdetectors} lists the ALICE detector subsystems
+relevant for my dissertation.
+A full description of ALICE and of its performances during LHC Run-1 is available at Ref.~\cite{ALICE:2014b}.\
 
-Other detectors are placed at forward rapidity and are mainly used for triggering and for event characterization 
-(multiplicity, centrality and event plane):
-\begin{itemize}
-\item Photon Multiplicity Detector (PMD);
-\item Forward Multiplicity Detector (FMD);
-\item V0 and T0 (multiplicity and triggering);
-\item Zero Degree Calorimeter (ZDC).
-\end{itemize}
-A 5-layer muon tracking station is installed at forward rapidity ($-2.5 < \eta < 4$), inside a dipole magnet.
-
-A full description of ALICE and of its performances during LHC Run-1 is available at Refs.~\cite{}.\
-
-\begin{figure}[tbh]
+\begin{figure}[tb]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{img/alice}
  \caption{3D ALICE Schematic; central-barrel detectors are visible inside the red solenoid magnet;
@@ -243,42 +213,27 @@ A full description of ALICE and of its performances during LHC Run-1 is availabl
  \label{fig:alice}
 \end{center}
 \end{figure}
-\begin{comment}
-\subsection{Inner Tracking System}
-The ALICE \emph{Inner Tracking System} (ITS) is a 6-layer silicon detector: two \emph{Silicon Pixel Detectors} (SPD),
-two \emph{Silicon Drift Detectors} (SDD) and two \emph{Silicon Strip Detectors} (SSD).
 
-\subsection{Time Projection Chamber}
-The ALICE \emph{Time Projection Chamber} (TPC) is the biggest detector of its kind ever built, with a $90\,\mathrm{m}^{3}$ drift volume.
-The chamber is filled with Ne--CO$_{2}$ (Run-1) or Ar--CO$_{2}$ (Run-2) and is divided in two parts by the central cathode, which is kept at -100 kV.
-The ionization produced by charged particles transversing the gas is collected at the end plates, which are equipped with multiwire proportional chambers (MWPC).
+\begin{table}
+\centering
+\begin{tabular}[bt]{lcccc}
+Detector		& Pseudo-rapidity		& Technology			& Main purpose			\\
+\hline \\
+SPD			& $\lvert \eta\rvert <$2.0	& Si pixel				& tracking, vertex		\\
+SDD			& $\lvert \eta\rvert <$0.9 	& Si drift				& tracking, PID			\\
+SSD			& $\lvert \eta\rvert <$1.0 	& Si strip				& tracking, PID			\\
+TPC 			& $\lvert \eta\rvert <$0.9 	& gas drift+MWPC		& tracking, PID			\\
+TOF			& $\lvert \eta\rvert <$0.9	& MRPC				& PID				\\
+EMCal		& $\lvert \eta\rvert <$0.7 	& Pb+scint. 			& photons and jets		\\
+DCal			& $\lvert \eta\rvert <$0.7 	& Pb+scint. 			& photons and jets		\\
+V0			& $2.8 <\eta< 5.1$		& scint.				& trigger, multiplicity		\\
+T0			& $4.6 <\eta< 4.9$		& quartz				& trigger, time, vertex	\\
+\end{tabular}
+\caption{List of the ALICE detector subsystems relevant for the D-tagged jet analysis. All detectors listed above have full azimuthal acceptance except EMCal and DCal 
+which cover $80^{\circ} <\phi< 187^{\circ}$ and $253^{\circ} <\phi< 320^{\circ}$, respectively.
+\label{tab:ALICEdetectors}}
+\end{table}
 
-\subsection{Time Of Flight}
-The ALICE \emph{Time Of Flight} (TOF) detector is based on Multigap Resistive Plate Chamber (MRPC) technology and it is used for
-particle identification at intermediate momenta (combining the time of flight measurement with the momentum information from the TPC and ITS tracking). 
-
-\subsection{Electromagnetic Calorimeters}
-ALICE has three electromagnetic calorimeters that share the azimuthal angle at mid-rapidity. Table~\ref{} summarizes the acceptance
-covered by each calorimeter and other physical parameters.
-
-The \emph{Photon Spectrometer} (PHOS) has small acceptance and high resolution
-and is especially designed to measure photons.
-
-The \emph{Electromagnetic Calorimeter} (EMCal) and \emph{Di-jet Calorimeter} (DCal) are made of 12,288 and 5,376 towers respectively.
-Each tower contains 70 layers that alternate lead plates (to enhance the electromagnetic shower) and scintillator plates. The towers are all identical and have dimensions xx,
-which correspond to a thickness of $\sim 20\, X_{0}$ (radiation lengths) and an acceptance of $\Delta\eta \sim 0.014$, $\Delta\phi \sim 0.014$.
-The light produced by the electromagnetic shower in the scintillator plates is collected by wavelength-shifting optical-fiber cables that runs through the length of each tower 
-in holes carved at the four edges. The four optical fiber cables of each tower are connected optically to an Avalanche Photo-Diode (APD) which converts the optical
-signal into an electrical impulse.
-
-The DCal was installed during LS1 and went through a commissioning phase in the first few weeks of data taking in 2015, before becoming fully operational. It covers
-an azimuthal region opposite to the EMCal and surrounding PHOS. By combining PHOS and DCal acceptances one effectively covers $\lvert \eta\rvert < 0.7$ and 
-$\Delta\phi \sim 67^{\circ}$ in azimuth, thus allowing to perform correlation measurements of back-to-back jets.
-
-\subsubsection{The EMCal-DCal trigger system}
-\label{sect:EMCalTriggerSystem}
-Both EMCal and DCal can provide triggers for global data taking. ALICE has implemented two trigger levels, L0 and L1, both active for EMCal-DCal.
-\end{comment}
 \section{D-tagged jets with ALICE}
 \subsection{Physics goals}
 The measurement of the charm production cross section in \pp\ collisions is an important sensitive test of perturbative QCD (pQCD) calculations.
@@ -289,18 +244,18 @@ $\pt \sim 2$~\GeVc\ and rapidity $y \sim 0$ probe the parton distribution functi
 $Q^2 \sim (5~\mathrm{GeV})^2$.
 Perturbative QCD calculations have substantial uncertainties at low \pt, owing to both the large effect of the
 choice of the factorization and renormalization scales at low $Q^2$ and to the sizeable uncertainties on the
-gluon PDFs at small $x$~\cite{}. 
+gluon PDFs at small $x$~\cite{Cacciari:2015}. 
 \begin{comment}
-Monte Carlo particle generators, such as PYTHIA~\cite{Sjostrand:2006} or POWHEG~\cite{},
-also show only partial agreement with the measurement~\cite{}. 
+Monte Carlo particle generators, such as PYTHIA~\cite{Sjostrand:2006} or POWHEG~\cite{Alioli:2010},
+also show only partial agreement with the measurement~\cite{ATLAS:2012d}. 
 This poses problems for the High Energy Physics community since these Monte Carlo generators are widely employed as input for detector response simulations.
 \end{comment}
 Furthermore, the measurement of the charm cross section in \pp\ collisions provides the baseline to look for collective effects in ultra-relativistic
 heavy-ion collisions, particularly the ones related to parton energy loss in the QGP. In this context, another crucial aspect is the precise determination of the
-total charm-production cross section, needed to model charmonium regeneration in the QGP~\cite{}.
+total charm-production cross section, needed to model charmonium regeneration in the QGP~\cite{Zhao:2011}.
 Finally, the measurement of the charm differential cross section down to low \pt, is also relevant for cosmic-ray and neutrino
 astrophysics: high-energy neutrinos from the decay of charmed hadrons produced in particle showers in the atmosphere constitute an important
-background for neutrinos from astrophysical sources~\cite{}.
+background for neutrinos from astrophysical sources~\cite{Gauld:2015, Bhattacharya:2015}.
 \begin{comment}
 The inclusive transverse momentum (\pt) and rapidity (\y) differential cross sections can be calculated 
 in the collinear factorization approach as a convolution of three terms: i) the parton distribution functions (PDF) of the incoming protons; 
@@ -317,7 +272,7 @@ for transverse momenta of the initial partons~\cite{}.
 \end{comment}
 
 Most of the charm-related measurements performed at the LHC so far report the production cross section of hadrons
-containing heavy quarks~\cite{}. 
+containing heavy quarks~\cite{ALICE:2012d, ALICE:2012e, ATLAS:2012e, LHCb:2013a, ALICE:2014d, ATLAS:2014e, ALICE:2015c, ALICE:2015d, ALICE:2016a, ATLAS:2016a}.
 The kinematic properties of the jets are closer to those of the originating c quark, when compared to the measurement of the charmed hadrons alone.
 Therefore, by measuring the kinematic properties of jets containing heavy-flavor hadrons 
 one reduces the dependence on the details of the fragmentation, which is a highly non-perturbative phenomenon, known only within large uncertainties~\cite{}.
@@ -491,7 +446,7 @@ such as \emph{Gas Electron Multiplier} (GEM) detectors and \emph{Micromegas} det
 which means that a gating grid is no longer required.
 
 Throughout 2014, we have performed measurements at Yale on a small prototype of a gas chamber which uses a stack of two GEMs and a Micromegas to amplify the ionization
-produced by a small radioactive source. In November 2014, a larger prototype was also shipped to CERN, Switzerland, where we performed another set of measurements using
+produced by a small radioactive source. In November 2014, a larger prototype was also shipped to CERN, where we performed another set of measurements using
 the Proton Synchrotron (PS) and Super-Proton-Synchrotron (SPS) beam facilities.
 The results of these measurements have been included in the addendum to the ALICE TPC upgrade Technical Design Report~\cite{}.
 In addition we have submitted a paper~\cite{} to \emph{Nuclear Instrument and Methods}, which is currently being reviewed by the editor.
@@ -501,6 +456,27 @@ The Yale group is leading the construction and commissioning of the Inner Read-O
 
 \subsection{The EMCal-DCal 2016 trigger commissioning}
 \label{sect:TriggerCommisioning}
+At the LHC, the interaction rate is much higher than the maximum read-out rate supported by the experiments. As a consequence only a fraction of the collisions delivered
+by the LHC can be read-out and recorded by ALICE. The \emph{minimum bias trigger} is typically \emph{downscaled}, i.e. only a fraction of collisions
+that fulfill the trigger condition are actually read-out. In the case of downscaling collisions are skipped randomly. This is however not very efficient
+if one wants to look at rare physics processes, such as a hard scatterings. A \emph{rare trigger} implements more elaborate conditions to select events that 
+potentially include rare processes. This allows to sample a larger luminosity, at the expenses of introducing a bias in the event sample. It is important
+to be able to control and understand the trigger bias and the trigger inefficiencies for each particular process being analyzed. This is usually done
+using a combination of data driven methods (that typically rely on a large enough \emph{minimum bias} sample) as well as Monte Carlo simulations.
+
+Both EMCal and DCal can provide rare triggers. ALICE has implemented two levels of triggers: the Level-0 (L0) which provides a decision within 
+$0.9\,\rm \mu s$ and the Level-1 (L1) which provides a decision within $6.5\,\rm \mu s$ after L0~\cite{}. The L0 EMCal-DCal trigger algorithm looks for a high energy
+deposition scanning the acceptance in 4x4 tower windows. This scan is performed separately in each Trigger Region Unit (TRU) which corresponds to 1/3 of a EMCal-DCal super-module.
+A 4x4 window is relatively small and can therefore trigger on contained showers of single electrons, photons or \pizero.
+In order to identify events containing larger showers, such as the ones initiated by a jet, we need to scan the acceptance using a larger window. This is possible using
+L1 triggers that can take decisions based on the information coming from the entire calorimeter acceptance rather than a single TRU. The EMCal-DCal implements two L1 algorithms
+which differ essentially for the size of the trigger window: 4x4 for the L1 \emph{gamma} algorithm, used for electrons, photons and \pizero, and 32x32 (or 16x16) for the L1 \emph{jet} algorithm.
+Figure~\ref{} is visual representation of the L0 and L1 trigger algorithms.
+
+In the spring 2016 I spent a couple of months at CERN helping with the commissioning of the L1 triggers, as well as with general operations of the EMCal-DCal during data taking.
+In particular my contribution is related to the fine tuning of the trigger thresholds for the L1 gamma and jet algorithms. The thresholds are set according to the physics goals discussed
+and approved by the different working groups of the Collaboration. The triggers need also to provide a suppression compatible the ALICE maximum read-out rate.
+Figure~\ref{} shows the suppression provided by the L1 gamma and jet algorithms over the L0 triggered events (with a L0 threshold set at 2.5~GeV), separately for EMCal and DCal.
 
 \bibliography{biblio}{}
 \bibliographystyle{utphys}
