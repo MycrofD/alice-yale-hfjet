@@ -1,0 +1,43 @@
+\documentclass[ALICE,manyauthors]{ALICE_analysis_notes}
+%
+\input{commands}
+
+\usepackage{rotating}
+\usepackage{listings}
+\usepackage{subcaption}
+%
+\begin{document}%
+%%%%%%%%%%%%% ptdr definitions %%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%  Title page %%%%%%%%%%%%%%%%%%%%%%%%
+%
+\begin{titlepage}
+%
+\PHnumber{ALICE-ANA-2015-xxx} 
+\PHdate{\today}
+%
+%%% Put your own title + short title here:
+\title{D mesons in jets in pp collisions at $\sqrt{s}=7$~TeV: simulation figures for Hot Quarks 2016}
+\ShortTitle{D mesons in jets in pp collisions: simulation figures}   % appears on right page headers
+%
+\author{Salvatore Aiola$^{1}$}
+\author{
+1. Yale University, New Haven, CT, USA\\
+}
+\author{Email: salvatore.aiola@yale.edu}
+%
+\ShortAuthor{ALICE Analysis Note 2012}      % appears on left page headers, do not change
+%
+\begin{abstract}
+D mesons come from the fragmentation of charm quark, thus providing an excellent way to tag charm jets.
+The aim of this analysis is to study the fragmentation function of D mesons in jets produced in pp collisions.
+All the results shown in this document come from a PYTHIA \pp\ simulation at $\sqrt{s}=7$~TeV anchored to
+the \pp\ data collected in 2010.
+This document contains some details about the simulation figures prepared for the Hot Quarks 2016 conference.
+\end{abstract}
+\end{titlepage}
+%
+\tableofcontents
+\newpage
+\input{content.tex}               %%%%%%%%%%% put the body of the article here
+\end{document}
