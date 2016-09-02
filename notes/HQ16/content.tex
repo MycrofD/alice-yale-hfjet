@@ -49,7 +49,7 @@ Jets are further requested to have $|\eta_{\rm jet}| < 0.9 - R$, both at particl
 
 The jet momentum resolution and energy scale shift are estimated calculating the variable:
 \begin{equation}
-(p_{\mathrm{T,jet}}^{\mathrm{ch,reco}} - p_{\mathrm{T,jet}}^{\mathrm{ch,truth}}) / p_{\mathrm{T,jet}}^{\mathrm{ch,truth}}
+(p_{\mathrm{T,ch jet}}^{\mathrm{det}} - p_{\mathrm{T,ch jet}}^{\mathrm{part}}) / p_{\mathrm{T,ch jet}}^{\mathrm{part}}
 \label{eq:detResp}
 \end{equation}
 for each matched pair of a particle-level jet with a detector-level jet.
@@ -78,7 +78,7 @@ of \ptchjetgen, shown in Fig.~\ref{fig:HQ16_Simulation_Resolution}.
   \caption{Resolution}
   \label{fig:HQ16_Simulation_Resolution}
 \end{subfigure}
-\caption{The variable \(\ptchjetdet - \ptchjetgen\) / \ptchjetgen is used to estimate the corrections that need to be applied for the detector effects.}
+\caption{The variable (\ptchjetdet $-$ \ptchjetgen) / \ptchjetgen\ is used to estimate the corrections that need to be applied for the detector effects.}
 \label{fig:DetectorResponse}
 \end{figure}
 %%%%
@@ -89,30 +89,19 @@ In the first method the \Dzero\ meson candidates are divided in bins of jet \pt.
 are fit using a Gaussian for the signal and an exponential function for the background.
 For the second and third methods the \Dzero\ candidates are divided in bins of \ptd. 
 The invariant mass distributions in bins of \ptd\ are fit with the same function as above. The
-peak position and its width are estimated from the fit, as well as the amount of background in the peak region ($|m(\mathrm{K\pi})-m_{\mathrm{fit}}) < 2\sigma_{\mathrm{fit}}$).
+peak position and its width are estimated from the fit, as well as the amount of background in the peak region ($|M_{\mathrm{K\pi}}-M_{\mathrm{fit}}) < 2\sigma_{\mathrm{fit}}$).
 Then for each \ptd\ bin the \ptchjet\ distribution of the \Dzero\ candidates is extracted.
-For the side-band (S-B) method the background is estimated from the \ptchjet\ distribution of the \Dzero\ candidates in the side bands ($4\sigma_{\mathrm{fit}} < |m(\mathrm{K\pi})-m_{\mathrm{fit}}) < 8\sigma_{\mathrm{fit}}$).
+For the side-band (S-B) method the background is estimated from the \ptchjet\ distribution of the \Dzero\ candidates in the side bands ($4\sigma_{\mathrm{fit}} < |M_{\mathrm{K\pi}}-m_{\mathrm{fit}}) < 8\sigma_{\mathrm{fit}}$).
 For the like-sign (L-S) method the background is estimated from the \ptchjet\ distribution of the like-sign pairs in the \Dzero\ peak region.
 In both cases, the background \ptchjet\ distributions are normalized using the total background estimated from the invariant mass fit.
 \begin{figure}[tbh]
-\centering
-\begin{subfigure}{0.49\textwidth}
-  \centering
-  \includegraphics[width=1.0\linewidth]{img/HQ16_Simulation_InvMassSB}
-  \caption{Invariant mass distribution.}
-  \label{fig:HQ16_Simulation_InvMassSB}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-  \centering
-  \includegraphics[width=1.0\linewidth]{img/HQ16_Simulation_Spectra_SB_LS}
-  \caption{\ptchjet distributions.}
-  \label{fig:HQ16_Simulation_Spectra_SB_LS}
-\end{subfigure}
-\caption{Invariant mass distribution for $6 < \ptd < 7$~\GeVc; the plot shows also the signal region, the S-B regions and the L-S invariant mass; the fit curves are show as well.}
-\label{fig:InvMass}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/HQ16_Simulation_InvMassSB}
+ \caption{Invariant mass distribution for $6 < \ptd < 7$~\GeVc; the plot shows also the signal region, the S-B regions and the L-S invariant mass; the fit curves are show as well.} 
+ \label{fig:HQ16_Simulation_InvMassSB}
+\end{center}
 \end{figure}
 Figure~\ref{fig:HQ16_Simulation_InvMassSB} shows the invariant mass distribution for $6 < \ptd < 7$~\GeVc. 
-The \ptchjet distributions for the signal region, S-B regions and L-S pairs are shown in Fig.~\ref{fig:HQ16_Simulation_Spectra_SB_LS}.
 
 The signal extraction is validated by comparing the spectra obtained with the three methods outlined above with the MC truth. 
 \begin{figure}[tbh]
