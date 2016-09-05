@@ -146,31 +146,30 @@ Figure~\ref{fig:HQ16_Simulation_InvMassSB} shows the invariant mass distribution
 
 The signal extraction is validated by comparing the spectra obtained with the three methods outlined above with the MC truth. 
 \begin{figure}[tbh]
-\centering
-\begin{subfigure}{0.49\textwidth}
-  \centering
-  \includegraphics[width=1.0\linewidth]{img/HQ16_Simulation_MethodComparison}
-  \caption{Yields.}
-  \label{fig:HQ16_Simulation_MethodComparison}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-  \centering
-  \includegraphics[width=1.0\linewidth]{img/HQ16_Simulation_UncertaintyComparison}
-  \caption{Statistical uncertainties.}
-  \label{fig:HQ16_Simulation_UncertaintyComparison}
-\end{subfigure}
-\caption{Comparison of the invariant mass fit, L-S and S-B methods.}
-\label{fig:MethComp}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/HQ16_Simulation_MethodComparison}
+ \caption{Comparison of the yields obtained using invariant mass fit, L-S and S-B methods.} 
+ \label{fig:HQ16_Simulation_MethodComparison}
+\end{center}
+\end{figure}
+
+\begin{figure}[tbh]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/HQ16_Simulation_UncertaintyComparison}
+ \caption{Comparison of the statistical precisions obtained using invariant mass fit, L-S and S-B methods.} 
+ \label{fig:HQ16_Simulation_UncertaintyComparison}
+\end{center}
 \end{figure}
 The invariant mass fit, L-S and S-B methods all show good performances in recovering the signal, as shown in Fig.~\ref{fig:HQ16_Simulation_MethodComparison}.
+The statistical uncertainties on the MC truth are ignored, as they are expected to be fully correlated with the signal extracted using any of the three methods.
 The agreement between the signal extracted using the 3 methods and the MC truth has been tested using statistical analysis. The $\chi^2$ values
-of the ratios data points compared to the expectation value of unity are 4.6, 7.8 and 2.4, respectively for the invariant mass fit, S-B and L-S methods.
-These values are not much larger than the number of degrees of freedom ($=6$).
+of the ratios data points compared to the expectation value of unity are 6.33, 11.25 and 3.05, respectively for the invariant mass fit, S-B and L-S methods.
+These values quite close to the number of degrees of freedom ($=6$), except for the S-B method.
 Calculating the $\chi^2$ on the single data points does not take into account correlated systematic shifts in a single direction. So another test that can be
-done is to calculate the average of each ratio curve and compare it with unity. In this case the $\chi^2$ values are: 2.8, 4.0, 0.37, respectively for the invariant mass fit,
-S-B and L-S methods (note that the number of degrees of freedom is now reduced to 5). These $\chi^2$ values correspond to $p$-values: 0.72, 0.55 and 0.996 (null hypothesis is
+done is to calculate the average of each ratio curve and compare it with unity. In this case the $\chi^2$ values are: 3.93, 5.94, 0.46, respectively for the invariant mass fit,
+S-B and L-S methods (note that the number of degrees of freedom is now reduced to 5). These $\chi^2$ values correspond to $p$-values: 0.56, 0.31 and 0.994 (null hypothesis is
 that there is no systematic shift).
-This means that the probability that the data points are all systematically shifted in one direction (upward or downward) is 28\%, 45\% and 0.4\%, respectively.
+This means that the probability that the data points are all systematically shifted in one direction (upward or downward) is 44\%, 69\% and 0.6\%, respectively.
 In summary the possibility that there is a systematic shift cannot be excluded but is also not particularly significant. Comparing the signal extracted using the invariant mass fit
 as a function of \ptd\, shown in Fig.~\ref{fig:YieldPtD}, one observes a upward fluctuation for the last bin ($16 < $~\ptd~$<24$~\GeVc). These yields are obtained from the invariant mass fits
 shown in Fig.~\ref{fig:D0_DPtBins_PtD_20}. This could be the cause of the upward fluctuation observed in the last \ptchjet\ bin
@@ -205,8 +204,9 @@ In Fig.~\ref{fig:HQ16_Simulation_UncertaintyComparison} the statistical precisio
 The statistical uncertainties are also shown for spectra corrected for the reconstruction efficiency. The efficiency correction alters the 
 relative contribution of \Dzero\ mesons with different \pt\ in each \ptchjet\ bin. This is best illustrated in Figs.~\ref{fig:SigSpectra},~\ref{fig:SBSpectra},~\ref{fig:LSSpectra}, where the \ptchjetdet\ distributions
 of D-tagged jet candidates are shown, respectively in the signal window, the S-B windows (both sides summed together) and the signal window of L-S pairs,
-for different bins of \ptd. Low \ptd\ bins that have few counts at high \ptchjetdet\ get a larger efficiency weight, thus contributing more predominantly to both the signal and
-its uncertainty.
+for different bins of \ptd. Low \ptd\ bins, that have few counts at high \ptchjetdet, get a larger efficiency weight compared to high \ptd\ bins, thus contributing more predominantly to both the signal and
+its uncertainty in the high \ptchjetdet bins. On the other hand \ptd~$<$~\ptchjetdet\ (by construction), therefore the low \ptchjetdet\ bins suffer less from this effect because only low \ptd\ bins can contribute,
+resulting in a less prominent remixing of the uncertainties.
 \begin{figure}[tbh]
 \centering
 \begin{subfigure}{0.49\textwidth}
@@ -259,7 +259,7 @@ its uncertainty.
 \section{Work In Progress figure}
 Figure~\ref{fig:HQ16_WorkInProgress_StatisticalUncertainty} is a work-in-progress plot that shows the statistical uncertainty 
 of the D-tagged jets in all the available data for \pp\ collisions at \s~$=7$~TeV collected in 2010.
-This corresponds to about 300 M minimum bias events. The signal is extracted via an invariant mass fit 
+This corresponds to $316.41$ M minimum bias events. The signal is extracted via an invariant mass fit 
 in jet \pt\ bins, as shown in Fig.~\ref{fig:D0_JetPtBins_PtD_20_Data}. 
 Comparing Fig.~\ref{fig:D0_JetPtBins_PtD_20_Data} with Fig.~\ref{fig:HQ16_Simulation_UncertaintyComparison} one can
 deduce some expectations about the statistical precisions of the other methods and/or after applying the efficiency correction.
