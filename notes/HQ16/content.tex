@@ -8,7 +8,7 @@ This production has been used to test the analysis techniques, in particular to 
 The production tagged LHC15i2b, LHC15i2c, LHC15i2d, LHC15i2e is a production binned in $p_{\rm T,hard}$ bins.
 In addition the charm content has been enhanced by requesting a \ccbar\ in 50\% of the events and a \bbbar\ in the remaining half.
 
-Results shown below come from the LEGO train Jets\_EMC\_pp\_MC, run n. 949 (LHC15i2b), 950 (LHC15i2c), 951 (LHC15i2d), 952 (LHC15i2e), 953 (LHC14j4b), 954 (LHC14j4c), 955 (LHC14j4d), 956 (LHC14j4e).
+Results shown below come from the LEGO train Jets\_EMC\_pp\_MC, run numbers: 949 (LHC15i2b), 950 (LHC15i2c), 951 (LHC15i2d), 952 (LHC15i2e), 953 (LHC14j4b), 954 (LHC14j4c), 955 (LHC14j4d), 956 (LHC14j4e).
 \section{Overview of the analysis}
 The \Dzero\ meson candidates are selected using the ``standard 2010 pp'' cuts, which are accessed through the static method AliRDHFCuts::SetStandardCutsPP2010().
 
@@ -34,14 +34,15 @@ text printed inside the canvas are not proposed as official figures to be approv
 %%%%
 \subsection{Jet momentum resolution and reconstruction efficiency}
 %%%%
-Figure~\ref{fig:HQ16_Simulation_EfficiencyVsDPt} shows the jet reconstruction efficiency as a function of \ptd\ in 4 different \ptchjet\ bins.
-It is noteworthy that the efficiency does not show any observable dependence on \ptchjet.
-The efficiency is also shown in logarithmic scale in Fig.~\ref{fig:HQ16_Simulation_EfficiencyVsDPt_LogScale}, so as to resolve possible
-differences at low momentum.
 The efficiency is taken as the ratio of the \ptd\ spectra of the D-tagged particle-level jets for which a matched
 D-tagged detector-level jet was found overall the D-tagged particle-level jets (regardless of whether they are matched to a detector-level jet).
 For the detector-level jets, the D meson is required to be within the standard fiducial rapidity cuts implemented in the AliRDHFCutsD0toKpi class.
 Jets are further requested to have $|\eta_{\rm jet}| < 0.9 - R$, both at particle and detector levels.
+Figure~\ref{fig:HQ16_Simulation_EfficiencyVsDPt} shows the jet reconstruction efficiency as a function of \ptd\ in 4 different \ptchjet\ bins.
+It is noteworthy that the efficiency does not show any observable dependence on \ptchjet.
+The efficiency is also shown in logarithmic scale in Fig.~\ref{fig:HQ16_Simulation_EfficiencyVsDPt_LogScale}, so as to resolve possible
+differences at low momentum. From the ratios of the efficiencies in \ptchjet\ bins over the entire range, shown in Fig.~\ref{fig:D0_Jet_AKTChargedR040_pt_scheme_D_Spectra_PartialEfficiencyRatios}
+one can appreciate a hint of a small deviation, on the order of 10-20\%, for low momentum \Dzero\ (\ptd~$<5$~\GeVc) in high momentum jets. However this deviation is not statistically significant.
 \begin{figure}[tbh]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{img/HQ16_Simulation_EfficiencyVsDPt}
@@ -58,9 +59,17 @@ Jets are further requested to have $|\eta_{\rm jet}| < 0.9 - R$, both at particl
 \end{center}
 \end{figure}
 
+\begin{figure}[tbh]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/D0_Jet_AKTChargedR040_pt_scheme_D_Spectra_PartialEfficiencyRatios}
+ \caption{Ratio of the jet reconstruction efficiencies for some \ptchjet\ bins over the range $5<$~\ptchjet~$<24$~\GeVc.} 
+ \label{fig:D0_Jet_AKTChargedR040_pt_scheme_D_Spectra_PartialEfficiencyRatios}
+\end{center}
+\end{figure}
+
 The jet momentum resolution and energy scale shift are estimated calculating the variable:
 \begin{equation}
-(p_{\mathrm{T,ch jet}}^{\mathrm{det}} - p_{\mathrm{T,ch jet}}^{\mathrm{part}}) / p_{\mathrm{T,ch jet}}^{\mathrm{part}}
+(p_{\mathrm{T,ch\, jet}}^{\mathrm{det}} - p_{\mathrm{T,ch\, jet}}^{\mathrm{part}}) / p_{\mathrm{T,ch\, jet}}^{\mathrm{part}}
 \label{eq:detResp}
 \end{equation}
 for each matched pair of a particle-level jet with a detector-level jet.
@@ -68,7 +77,8 @@ Figure~\ref{fig:HQ16_Simulation_DetectorResponse} shows the probability density 
 The median and the mean of these distributions are shown as a function of \ptchjetgen\ in Fig.~\ref{fig:HQ16_Simulation_EnergyScaleShift}.
 This gives an estimate of the relative energy scale shift that needs to be corrected for.
 The jet momentum resolution is estimated looking at the standard deviation of the distribution of Eq.~\ref{eq:detResp} as a function
-of \ptchjetgen, shown in Fig.~\ref{fig:HQ16_Simulation_Resolution}.
+of \ptchjetgen, shown in Fig.~\ref{fig:HQ16_Simulation_Resolution}. The standard deviation is defined here as 
+the square root of the second central moment of the distribution (also known as root-mean-square).
 \begin{figure}[tbh]
 \centering
 \begin{subfigure}[b]{0.49\textwidth}
@@ -95,20 +105,40 @@ of \ptchjetgen, shown in Fig.~\ref{fig:HQ16_Simulation_Resolution}.
 %%%%
 \subsection{Signal extraction}
 %%%%
+\begin{figure}[tbh]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/D0_JetPtBins_PtD_20}
+ \caption{Invariant mass distribution in bins of \ptchjetdet\ from simulation (LHC14j4b, LHC14j4c, LHC14j4d, LHC14j4e). The fit curves for background only (red) and signal plus background (blue) are superimposed.} 
+ \label{fig:D0_JetPtBins_PtD_20}
+\end{center}
+\end{figure}
+
+\begin{figure}[tbh]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/D0_DPtBins_PtD_20}
+ \caption{Invariant mass distribution for in bins of \ptd\ from simulation (LHC14j4b, LHC14j4c, LHC14j4d, LHC14j4e); the plot shows also the signal region, the S-B regions and the L-S invariant mass; the fit curves are show as well.} 
+ \label{fig:D0_DPtBins_PtD_20}
+\end{center}
+\end{figure}
 Three methods for the signal extraction have been implemented and tested in MC.
 In the first method the \Dzero\ meson candidates are divided in bins of jet \pt. The invariant mass distributions
-are fit using a Gaussian for the signal and an exponential function for the background.
+are fit using a Gaussian for the signal and an exponential function for the background, as shown in Fig.~\ref{fig:D0_JetPtBins_PtD_20}.
 For the second and third methods the \Dzero\ candidates are divided in bins of \ptd. 
-The invariant mass distributions in bins of \ptd\ are fit with the same function as above. The
-peak position and its width are estimated from the fit, as well as the amount of background in the peak region ($|M_{\mathrm{K\pi}}-M_{\mathrm{fit}}| < 2\sigma_{\mathrm{fit}}$).
+The invariant mass distributions in bins of \ptd\ are fit with the same function as above. The 
+invariant mass distributions in bins of \ptd\ are shown in Fig.~\ref{fig:D0_DPtBins_PtD_20}. The
+peak position and its width are estimated from the fit, as well as the amount of background 
+in the peak region ($|M_{\mathrm{K\pi}}-M_{\mathrm{fit}}| < 2\sigma_{\mathrm{fit}}$).
 Then for each \ptd\ bin the \ptchjet\ distribution of the \Dzero\ candidates is extracted.
-For the side-band (S-B) method the background is estimated from the \ptchjet\ distribution of the \Dzero\ candidates in the side bands (\mbox{$4\sigma_{\mathrm{fit}} < |M_{\mathrm{K\pi}}-M_{\mathrm{fit}}| < 8\sigma_{\mathrm{fit}}$}).
+For the side-band (S-B) method the background is estimated from the \ptchjet\ distribution 
+of the \Dzero\ candidates in the side bands (\mbox{$4\sigma_{\mathrm{fit}} < |M_{\mathrm{K\pi}}-M_{\mathrm{fit}}| < 8\sigma_{\mathrm{fit}}$}),
+as shown in Fig.~\ref{fig:D0_DPtBins_PtD_20}.
 For the like-sign (L-S) method the background is estimated from the \ptchjet\ distribution of the like-sign pairs in the \Dzero\ peak region.
 In both cases, the background \ptchjet\ distributions are normalized using the total background estimated from the invariant mass fit.
+The normalized L-S invariant mass distributions are superimposed in Fig.~\ref{fig:D0_DPtBins_PtD_20} as well.
 \begin{figure}[tbh]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{img/HQ16_Simulation_InvMassSB}
- \caption{Invariant mass distribution for $6 < \ptd < 7$~\GeVc; the plot shows also the signal region, the S-B regions and the L-S invariant mass; the fit curves are show as well.} 
+ \caption{Invariant mass distribution for $6 < \ptd < 7$~\GeVc; the plot shows also the signal region, the S-B regions and the L-S invariant mass; the fit curves are shown as well.} 
  \label{fig:HQ16_Simulation_InvMassSB}
 \end{center}
 \end{figure}
@@ -141,8 +171,9 @@ done is to calculate the average of each ratio curve and compare it with unity. 
 S-B and L-S methods (note that the number of degrees of freedom is now reduced to 5). These $\chi^2$ values correspond to $p$-values: 0.72, 0.55 and 0.996 (null hypothesis is
 that there is no systematic shift).
 This means that the probability that the data points are all systematically shifted in one direction (upward or downward) is 28\%, 45\% and 0.4\%, respectively.
-In summary the probability that there is a systematic shift cannot be excluded but is also not particularly significant. Comparing the signal extracted using the invariant mass fit
-as a function of \ptd\, shown in Fig.~\ref{fig:YieldPtD}, one observes a upward fluctuation for the last bin ($16 < $~\ptd~$<24$~\GeVc). This could be the cause of the upward fluctuation observed in the last \ptchjet\ bin
+In summary the possibility that there is a systematic shift cannot be excluded but is also not particularly significant. Comparing the signal extracted using the invariant mass fit
+as a function of \ptd\, shown in Fig.~\ref{fig:YieldPtD}, one observes a upward fluctuation for the last bin ($16 < $~\ptd~$<24$~\GeVc). These yields are obtained from the invariant mass fits
+shown in Fig.~\ref{fig:D0_DPtBins_PtD_20}. This could be the cause of the upward fluctuation observed in the last \ptchjet\ bin
 in Fig.~\ref{fig:HQ16_Simulation_MethodComparison} for both the invariant mass fit and the S-B methods.
 \begin{figure}[tbh]
 \centering
@@ -170,11 +201,11 @@ For comparison, the difference (in counts) between the signal extracted using on
 \end{center}
 \end{figure}
 
-In Fig.~\ref{fig:HQ16_Simulation_UncertaintyComparison} the statistical precisions achieved by each method are compared. The statistical uncertainties are
-also shown for spectra corrected for the reconstruction efficiency. The efficiency correction alters the 
+In Fig.~\ref{fig:HQ16_Simulation_UncertaintyComparison} the statistical precisions achieved by each method are compared. 
+The statistical uncertainties are also shown for spectra corrected for the reconstruction efficiency. The efficiency correction alters the 
 relative contribution of \Dzero\ mesons with different \pt\ in each \ptchjet\ bin. This is best illustrated in Figs.~\ref{fig:SigSpectra},~\ref{fig:SBSpectra},~\ref{fig:LSSpectra}, where the \ptchjetdet\ distributions
 of D-tagged jet candidates are shown, respectively in the signal window, the S-B windows (both sides summed together) and the signal window of L-S pairs,
-for different bins of \ptd. Low \ptd\ bins that have few counts for high \ptchjetdet\ get a larger efficiency weight, thus contributing more predominantly to both the signal and
+for different bins of \ptd. Low \ptd\ bins that have few counts at high \ptchjetdet\ get a larger efficiency weight, thus contributing more predominantly to both the signal and
 its uncertainty.
 \begin{figure}[tbh]
 \centering
@@ -226,13 +257,32 @@ its uncertainty.
 %%%%%%%%%%%%
 %%%%%%%%%%%%
 \section{Work In Progress figure}
-Figure~\ref{fig:HQ16_WorkInProgress_StatisticalUncertainty} is a work-in-progress plot that shows the statistical uncertainty of the D-tagged jets in all the available data for \pp\ collisions at \s~$=7$~TeV collected in 2010.
-This corresponds to about 300 M minimum bias events. The signal is extracted via an invariant mass fit in jet \pt\ bins.
+Figure~\ref{fig:HQ16_WorkInProgress_StatisticalUncertainty} is a work-in-progress plot that shows the statistical uncertainty 
+of the D-tagged jets in all the available data for \pp\ collisions at \s~$=7$~TeV collected in 2010.
+This corresponds to about 300 M minimum bias events. The signal is extracted via an invariant mass fit 
+in jet \pt\ bins, as shown in Fig.~\ref{fig:D0_JetPtBins_PtD_20_Data}. 
+Comparing Fig.~\ref{fig:D0_JetPtBins_PtD_20_Data} with Fig.~\ref{fig:HQ16_Simulation_UncertaintyComparison} one can
+deduce some expectations about the statistical precisions of the other methods and/or after applying the efficiency correction.
+However these expectations should only be considered of a qualitative nature, e.g.\ ``a significant loss of statistical precision
+is expected after applying the efficiency correction'', or ``the L-S method is expected to have larger statistical uncertainty compared
+to the invariant mass fit method''. The precise numbers depend on many aspects that may not be modeled correctly
+in the MC generators, such as fragmentation and signal-over-background ratio.
+
+These results come from the LEGO train Jets\_EMC\_pp run numbers: 764 (LHC10b),
+765 (LHC10c), 766 (LHC10d), 767 (LHC10e). The AOD production pass4 has been used.
 \begin{figure}[tbh]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{img/HQ16_WorkInProgress_StatisticalUncertainty}
  \caption{Relative statistical uncertainty for D-tagged jets in 2010 pp data.} 
  \label{fig:HQ16_WorkInProgress_StatisticalUncertainty}
+\end{center}
+\end{figure}
+
+\begin{figure}[tbh]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/D0_JetPtBins_PtD_20_Data}
+ \caption{Invariant mass distribution in bins of \ptchjetdet\ from data (LHC10b, LHC10c, LHC10d, LHC10e). The fit curves for background only (red) and signal plus background (blue) are superimposed.} 
+ \label{fig:D0_JetPtBins_PtD_20_Data}
 \end{center}
 \end{figure}
 %%%%%%%%%%%%
