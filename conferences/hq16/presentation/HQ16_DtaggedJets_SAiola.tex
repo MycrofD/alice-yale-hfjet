@@ -32,22 +32,6 @@
   % or whatever (possibly just delete it)
   
 \makeatletter
-\setbeamertemplate{footline}
-{
-  \leavevmode%
-  \hbox{%
-  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-    \usebeamerfont{author in head/foot}Salvatore Aiola
-   \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-    \usebeamerfont{title in head/foot}\insertshorttitle
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
-    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
-  \end{beamercolorbox}}%
-  \vskip0pt%
-}
 \setbeamertemplate{headline}{%
 \leavevmode%
   \hbox{%
@@ -61,7 +45,6 @@
 }
 \makeatother
 }
-
 
 \usepackage[english]{babel}
 % or whatever
@@ -78,7 +61,7 @@
 \title[D-tagged jets in pp collisions at 7 TeV] % (optional, use only with long paper titles)
 {D-meson tagged jets in pp collisions at 7 TeV}
 
-\author% (optional, use only with lots of authors)
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
 {Salvatore Aiola (Yale University),\\
 on behalf of the ALICE Collaboration\\
 \bigskip
@@ -148,113 +131,246 @@ on behalf of the ALICE Collaboration\\
 
 \section{Physics Motivations}
 
-\subsection{Heavy-Flavor and pQCD}
-\begin{frame}{Heavy-Flavor and pQCD}
-\centering
-\includegraphics[width=.4\paperwidth]{img/ALICE_D0Meson}
-\quad
-\includegraphics[width=.42\paperwidth]{img/ATLAS_DStarJets}
+\subsection{Charm and pQCD}
+\begin{frame}{D-Meson Cross Sections}
+\begin{columns}
+\column{.5\textwidth}
+\includegraphics[width=\textwidth]{img/ALICE_D0Meson}
+
+\column{.5\textwidth}
+\textbf{\alert{Sensitive test of pQCD}}
+\begin{itemize}
+\item D mesons measured down to \alert{$\ptd=0$~\GeVc}
+\item \alert{$m_{\rm c} \neq 0$}~$\rightarrow$ pQCD is applicable
+\item large theoretical uncertainties at low \ptd $\rightarrow$ \alert{small $x$, $Q^2$}
+\begin{itemize}
+\item renormalization scale
+\item gluon PDFs
+\end{itemize}
+\end{itemize}
+\end{columns}
 \end{frame}
 
-\subsection{Heavy-Flavor and the QGP}
-\begin{frame}{Heavy-Flavor and the QGP}
-\centering
-\includegraphics[width=.4\paperwidth]{img/ALICE_DMesonRAA}
+\begin{frame}{D-Tagged Jets}
+\begin{columns}
+\column{.5\textwidth}
+\includegraphics[width=\textwidth]{img/ATLAS_DStarJets}
+
+\column{.5\textwidth}
+\begin{itemize}
+\item \alert{Few measurements} of D-tagged jets have been published
+\item \alert{Large discrepancy} with pQCD-based Monte Carlo generators
+\item D-tagged jets can help to pin-point weaknesses in our understanding of QCD
+\begin{itemize}
+\item charm production mechanism?
+\item fragmentation functions?
+\end{itemize}
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\subsection{Charm and the QGP}
+\begin{frame}{Probe of the Quark-Gluon Plasma}
+\begin{columns}
+\column{.5\textwidth}
+\textbf{\alert{Self-produced probe}}
+\begin{itemize}
+\item c quarks are \alert{produced early} in the collision
+\item Interact with the medium
+\begin{columns}
+\column{.4\textwidth}
+\includegraphics[width=\textwidth]{img/jetquenching}
+\column{.6\textwidth}
+\begin{itemize}
+\item collisional energy loss
+\item radiative energy loss (\alert{dead-cone effect})
+\end{itemize}
+\end{columns}
+\item Hint of slightly \alert{smaller suppression} compared to pions at low \pt
+\end{itemize}
+
+\column{.5\textwidth}
+\includegraphics[width=\textwidth]{img/ALICE_DMesonRAA}
+\end{columns}
 \end{frame}
 
 \section{Analysis Overview}
 
 \subsection{ALICE at the LHC}
 \begin{frame}{ALICE at the LHC}
-\centering
-\includegraphics[width=.7\paperwidth]{img/ALICE_Schematics}
+\begin{columns}
+
+\column{.55\textwidth}
+\includegraphics[width=\textwidth]{img/ALICE_Schematics}
+
+\column{.45\textwidth}
+\begin{itemize}
+\item Strongest points
+\begin{itemize}
+\item \alert{PID} (e, $\gamma$, $\pi$, K, p, d, ${}^3$He)
+\item \alert{low-momentum tracking} ($\pt > 0.15$~\GeVc)
+\end{itemize}
+\item \alert{D mesons} via hadronic decays (TPC, ITS, TOF)
+\begin{itemize}
+\item PID, topological cuts
+\item invariant mass analysis
+\end{itemize}
+\item \alert{Jet reconstruction} using \antikt\ algorithm
+\begin{itemize}
+\item charged constituents (TPC, ITS)
+\item neutral constituents (EMCal, DCal)
+\end{itemize}
+\end{itemize}
+\end{columns}
 \end{frame}
 
 \subsection{D-meson jet tagging}
 \begin{frame}{D-meson jet tagging}
+
+\begin{columns}
+
+\column{0.6\textwidth}
+\begin{enumerate}
+\item \Dzero\ meson candidates are identified through \alert{PID} and \alert{topological} cuts
+\item For each \Dzero\ candidate run the \alert{jet finding} among all other reconstructed tracks
+\item Combinatorial background from random $\mathrm{K}\pi$ pairs subtracted on a ensemble basis via an \alert{invariant mass analysis}
+\end{enumerate}
+
+\column{0.4\textwidth}
+\includegraphics[width=\textwidth]{img/ALICE_D0InvMass}
+\end{columns}
+\bigskip
+\textbf{\alert{\Dzero(\Dzerobar) meson}}
 \begin{itemize}
-\item \Dzero\ meson
-\begin{itemize}
-\item Mass (PDG): 
-\item Lifetime: 
-\item Decay: \Dzero$\rightarrow\mathrm{K}^+\pi^-$
+\item $M=1.865$~\GeVcsq, $c\tau=312\,\mu\mathrm{m}$ 
+\item Decay: \Dzero$\rightarrow\mathrm{K}^+\pi^-$ and c.c.
 \end{itemize}
-\item \Dzero\-meson candidates are identified through PID and topological cuts
-\item For each D0 candidate we run the jet finding algorithm together with all other reconstructed tracks
-\item Combinatorial background coming from random $\mathrm{K}\pi$ pairs needs to be subtracted on a ensemble basis through an invariant mass analysis
-\end{itemize}
-\includegraphics[width=.3\paperwidth]{img/ALICE_D0InvMass}
+
 \end{frame}
 
 \section{Detector Perfomance}
 
 \subsection{D-tagged jet reconstruction efficiency}
 \begin{frame}{D-tagged jet reconstruction efficiency}
-PYTHIA6 Perugia-2011\\
-GEANT3: detailed description of ALICE
-\newline
-\newline
-Steep dependence on the \pt\ of the D meson used to tag jets
-\newline
-\newline
-$\rightarrow$~Due to topological cuts on the secondary vertex, which are tighter at low \ptd\
-\newline
-\newline
-No significant dependence on the \ptchjet: simplifies corrections and reduces systematic uncertainties 
-due to the assumptions on fragmentation and interplay with the detector effects
-\includegraphics[width=.3\paperwidth]{img/HQ16_Simulation_EfficiencyVsDPt}
+
+\begin{columns}
+\column{.6\textwidth}
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_EfficiencyVsDPt}
+\column{.4\textwidth}
+Monte Carlo simulation
+\begin{itemize}
+\item PYTHIA6 Perugia-2011
+\item GEANT3: detailed description of ALICE
+\end{itemize}
+\bigskip
+\alert{Steep dependence on the \ptd}
+\begin{itemize}
+\item[$\rightarrow$] topological cuts on the secondary vertex, tighter at low \ptd\
+\end{itemize}
+\end{columns}
+\bigskip
+\alert{No dependence on the \ptchjet}: simplifies corrections and reduces systematic uncertainties 
 \end{frame}
 
 \subsection{JES shift and \pt\ resolution}
 \begin{frame}{JES shift and \pt\ resolution}
-\includegraphics[width=.3\paperwidth]{img/ALICE_JetRes}\quad
-\includegraphics[width=.3\paperwidth]{img/HQ16_Simulation_DetectorResponse}\\
-\includegraphics[width=.3\paperwidth]{img/HQ16_Simulation_EnergyScaleShift}\quad
-\includegraphics[width=.3\paperwidth]{img/HQ16_Simulation_Resolution}
-\newline
-Comparable JES shift: $\mu\approx -3\%$
-\newline
-Slightly better resolution: $\sigma(\mathrm{D-tagged})\approx11\%$, $\sigma(\mathrm{inclusive})\approx17\%$
+
+\begin{columns}
+\column{.32\textwidth}
+\includegraphics[width=\textwidth]{img/ALICE_JetRes}
+\column{.32\textwidth}
+\centering
+\textcolor{red}{$\leftarrow$Inclusive Jets: $\mu\approx -3\%$, \textbf{$\sigma\approx17\%$}}
+\textcolor{blue}{D-Tagged Jets: $\mu\approx -3\%$, \textbf{$\sigma\approx11\%$ }$\rightarrow$}
+slightly better \pt\ resolution due to the D-meson requirement
+\column{.36\textwidth}
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_DetectorResponse}
+\end{columns}
+\smallskip
+\centering
+\includegraphics[width=.36\textwidth]{img/HQ16_Simulation_EnergyScaleShift}\quad
+\includegraphics[width=.36\textwidth]{img/HQ16_Simulation_Resolution}
+
+No significant \pt-dependence of the JES shift and resolution in the range $5<\ptchjet<24$~\GeVc
 \end{frame}
 
 \section{Signal Extraction}
 
 \subsection{D-tagged jet signal extraction}
-\begin{frame}{D-tagged jet signal extraction}
-\begin{itemize}
-\item Method 1: invariant mass fit
-\begin{itemize}
-\item Bin D-tagged jet candidates in \ptchjet
-\item Fit invariant mass distributions with a Gaussian (signal) + exponential (background)
+
+\begin{frame}{Signal extraction: invariant mass fit}
+\begin{columns}
+
+\column{.5\textwidth}
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_InvMassSB}
+
+\column{.5\textwidth}
+\textbf{\alert{Method 1: invariant mass fit}}
+\begin{enumerate}
+\item Bin D-tagged jet candidates in \alert{\ptchjet}
+\item \alert{Fit invariant mass distributions} with a Gaussian (signal) + exponential (background)
 \item Extract signal from fit parameters
-\end{itemize}
-The correction for the D-tagged jet reconstruction efficiency must be applied 
-as a weight when filling the invariant mass plots
-\pause
-\item Method 2: Side-Bands (S-B) / Like-Sign (L-S)
+\end{enumerate}
+\end{columns}
 \begin{itemize}
+\item The correction for the D-tagged jet reconstruction efficiency must be applied as a weight when filling the invariant mass plots
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Signal extraction: SB and LS methods}
+\begin{columns}
+
+\column{.5\textwidth}
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_InvMassSB}
+
+\column{.5\textwidth}
+\textbf{\alert{Method 2: Side-Bands (SB) or Like-Sign (LS)}}
+\begin{enumerate}
 \item Bin D-tagged jet candidates in \ptd
-\item Build $N(\ptchjet, \ptd)$ distributions
-\item In the peak area for Opposite-Sign (OS) pairs: $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$\\ $N_{\rm sig+bkg} (\ptchjet, \ptd)$
-\item In the SB: $8\sigma <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma$\\ $N_{\rm bkg, SB} (\ptchjet, \ptd)$
-\item In the peak area for LS \\ $N_{\rm bkg, LS} (\ptchjet, \ptd)$
-\end{itemize}
-\end{itemize}
-Efficiency correction before integrating in \ptd: $N_{\rm signal} (\ptchjet)=\sum_{\ptd} \epsilon(\ptd) \times [N_{\rm sig+bkg}(\ptchjet, \ptd) - N_{\rm bkg}(\ptchjet, \ptd)]$
-\includegraphics[width=.3\paperwidth]{img/HQ16_Simulation_InvMassSB}
+\item Extract signal
+\end{enumerate}
+
+\textcolor{blue}{In the peak area: $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$\\ $N_{\rm sig+bkg} (\ptchjet, \ptd)$}
+
+\textcolor{red}{In the SB: $8\sigma <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma$\\ $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
+
+\textcolor{green}{In the peak area for LS \\ $N_{\rm bkg, LS} (\ptchjet, \ptd)$}
+
+\end{columns}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Apply efficiency correction and integrate in \ptd
+$$N_{\rm signal} (\ptjet)=\sum_{\ptd} \frac{1}{\epsilon(\ptd)} [N_{\rm sig+bkg}(\ptjet, \ptd) - N_{\rm bkg}(\ptjet, \ptd)]$$
+\end{enumerate}
 \end{frame}
 
 \subsection{Method comparison}
 \begin{frame}{Method comparison}
-\includegraphics[width=.6\paperwidth]{img/HQ16_Simulation_MethodComparison}
-D-tagged jet signal yields extracted using the invariant mass fit, Side-Band and Like-Sign methods are compared with the MC truth
-\newline
-All methods agree well with the MC truth within their statistical uncertainty
+\begin{columns}
+\column{.6\textwidth}
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_MethodComparison}
+\column{.4\textwidth}
+\begin{itemize}
+\item D-tagged jet signal yields extracted using the  \textcolor{blue}{invariant mass fit}, \textcolor{red}{Side-Band} and  \textcolor{green}{Like-Sign} methods are compared with the  \textcolor{gray}{MC truth}
+\item All methods \textbf{agree well} with the MC truth within their statistical uncertainty
+\end{itemize}
+\end{columns}
 \end{frame}
 
 \subsection{Statistical precision}
 \begin{frame}{Statistical precision}
-\includegraphics[width=.5\paperwidth]{img/HQ16_Simulation_UncertaintyComparison}
+\begin{columns}
+\column{.6\textwidth}
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_UncertaintyComparison}
+
+\column{.4\textwidth}
+\begin{itemize}
+\item The methods differ also for their \alert{statistical precision}
+\item[$\rightarrow$] larger uncertainties for LS method
+\item The \alert{efficiency correction} alters the relative contribution of D-mesons with different \pt
+\item[$\rightarrow$] the relative statistical uncertainty increases
+\end{itemize}
+\end{columns}
 \end{frame}
 
 \section*{Summary}
@@ -262,15 +378,15 @@ All methods agree well with the MC truth within their statistical uncertainty
 \subsection*{Conclusions}
 \begin{frame}{Conclusions}
 \begin{itemize}
-\item The measurement of the charm cross-section and of the fragmentation function is of interest for different interconnected fields: 
-pQCD, high temperature QCD, high-energy astrophysics
+\item The measurement of the charm cross-section and fragmentation function provides a important tools for
+testing pQCD and probing the QGP
 \item 3 different techniques have been developed to extract the D-tagged jet yield:
 \begin{itemize}
-\item Invariant mass fit in bins of pT,jet
-\item Bin counting in the peak area w/ Like-Sign background
-\item Bin counting in the peak area w/ Side-Band background
+\item Invariant mass fit in bins of \ptjet
+\item Bin counting in the peak area w/ Like-Sign background subtraction
+\item Bin counting in the peak area w/ Side-Band background subtraction
 \end{itemize}
-\item Proved to be feasible and successfully tested using a detailed simulation of pp collisions and of the ALICE detector performance
+\item Proved to be feasible and successfully tested in Monte Carlo
 \item The pros and cons of each technique is being assessed
 \item Now looking forward to finalize the analysis on real data!
 \end{itemize}
@@ -278,12 +394,16 @@ pQCD, high temperature QCD, high-energy astrophysics
 
 \subsection*{Stay Tuned: Work In Progress!}
 \begin{frame}{Stay Tuned: Work In Progress!}
-\includegraphics[width=.5\paperwidth]{img/HQ16_WorkInProgress_StatisticalUncertainty}
+\begin{columns}
+\column{.55\textwidth}
+\includegraphics[width=\textwidth]{img/HQ16_WorkInProgress_StatisticalUncertainty}
+\column{.45\textwidth}
 \begin{itemize}
 \item The analysis is being performed using data collected by ALICE with pp collisions at 7 TeV
 \item A preliminary look at the available statistics in 2010 data has given promising expectation
 \item Look out for new results being made public soon!
 \end{itemize}
+\end{columns}
 \end{frame}
 
 % All of the following is optional and typically not needed. 
