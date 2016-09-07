@@ -1,6 +1,6 @@
 % $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
 
-\documentclass{beamer}
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
 
 % This file is a solution template for:
 
@@ -183,7 +183,7 @@ on behalf of the ALICE Collaboration\\
 \column{.6\textwidth}
 \begin{itemize}
 \item collisional energy loss
-\item radiative energy loss (\alert{dead-cone effect})
+\item radiative energy loss $\rightarrow$ \alert{dead-cone effect}
 \end{itemize}
 \end{columns}
 \item Hint of slightly \alert{smaller suppression} compared to pions at low \pt
@@ -233,7 +233,7 @@ on behalf of the ALICE Collaboration\\
 \begin{enumerate}
 \item \Dzero\ meson candidates are identified through \alert{PID} and \alert{topological} cuts
 \item For each \Dzero\ candidate run the \alert{jet finding} among all other reconstructed tracks
-\item Combinatorial background from random $\mathrm{K}\pi$ pairs subtracted on a ensemble basis via an \alert{invariant mass analysis}
+\item Combinatorial background from random $\mathrm{K}\pi$ pairs $\rightarrow$ \alert{invariant mass analysis} to extract signal
 \end{enumerate}
 
 \column{0.4\textwidth}
@@ -291,7 +291,7 @@ slightly better \pt\ resolution due to the D-meson requirement
 \includegraphics[width=.36\textwidth]{img/HQ16_Simulation_EnergyScaleShift}\quad
 \includegraphics[width=.36\textwidth]{img/HQ16_Simulation_Resolution}
 
-No significant \pt-dependence of the JES shift and resolution in the range $5<\ptchjet<24$~\GeVc
+\alert{No significant \pt-dependence} of the JES shift and resolution in the range $5<\ptchjet<24$~\GeVc
 \end{frame}
 
 \section{Signal Extraction}
@@ -320,27 +320,33 @@ No significant \pt-dependence of the JES shift and resolution in the range $5<\p
 \begin{frame}{Signal extraction: SB and LS methods}
 \begin{columns}
 
-\column{.5\textwidth}
+\column{.50\textwidth}
 \includegraphics[width=\textwidth]{img/HQ16_Simulation_InvMassSB}
 
-\column{.5\textwidth}
+\column{.50\textwidth}
 \textbf{\alert{Method 2: Side-Bands (SB) or Like-Sign (LS)}}
 \begin{enumerate}
 \item Bin D-tagged jet candidates in \ptd
-\item Extract signal
+\item $N(\ptchjet, \ptd)$ distributions in
 \end{enumerate}
+\medskip
 
-\textcolor{blue}{In the peak area: $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$\\ $N_{\rm sig+bkg} (\ptchjet, \ptd)$}
+\textcolor{NavyBlue}{\textbf{US peak area} {\footnotesize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
+{\small $N_{\rm sig+bkg} (\ptchjet, \ptd)$}}
+\medskip
 
-\textcolor{red}{In the SB: $8\sigma <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma$\\ $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
+\textcolor{BrickRed}{\textbf{US side bands} {\footnotesize $8\sigma <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma$}\\ 
+{\small $N_{\rm bkg, SB} (\ptchjet, \ptd)$}}
+\medskip
 
-\textcolor{green}{In the peak area for LS \\ $N_{\rm bkg, LS} (\ptchjet, \ptd)$}
+\textcolor{ForestGreen}{\textbf{LS peak area}\\ 
+{\small $N_{\rm bkg, LS} (\ptchjet, \ptd)$}}
 
 \end{columns}
 \begin{enumerate}
 \setcounter{enumi}{2}
 \item Apply efficiency correction and integrate in \ptd
-$$N_{\rm signal} (\ptjet)=\sum_{\ptd} \frac{1}{\epsilon(\ptd)} [N_{\rm sig+bkg}(\ptjet, \ptd) - N_{\rm bkg}(\ptjet, \ptd)]$$
+{\small $$N_{\rm signal} (\ptjet)=\sum_{\ptd} \frac{1}{\epsilon(\ptd)} [N_{\rm sig+bkg}(\ptjet, \ptd) - N_{\rm bkg}(\ptjet, \ptd)]$$}
 \end{enumerate}
 \end{frame}
 
@@ -351,7 +357,8 @@ $$N_{\rm signal} (\ptjet)=\sum_{\ptd} \frac{1}{\epsilon(\ptd)} [N_{\rm sig+bkg}(
 \includegraphics[width=\textwidth]{img/HQ16_Simulation_MethodComparison}
 \column{.4\textwidth}
 \begin{itemize}
-\item D-tagged jet signal yields extracted using the  \textcolor{blue}{invariant mass fit}, \textcolor{red}{Side-Band} and  \textcolor{green}{Like-Sign} methods are compared with the  \textcolor{gray}{MC truth}
+\item D-tagged jet signal yields extracted using the  \textbf{\textcolor{NavyBlue}{invariant mass fit}}, \textbf{\textcolor{BrickRed}{Side-Band}} 
+and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \textbf{\textcolor{gray}{MC truth}}
 \item All methods \textbf{agree well} with the MC truth within their statistical uncertainty
 \end{itemize}
 \end{columns}
@@ -366,7 +373,7 @@ $$N_{\rm signal} (\ptjet)=\sum_{\ptd} \frac{1}{\epsilon(\ptd)} [N_{\rm sig+bkg}(
 \column{.4\textwidth}
 \begin{itemize}
 \item The methods differ also for their \alert{statistical precision}
-\item[$\rightarrow$] larger uncertainties for LS method
+\item[$\rightarrow$] larger uncertainties for \textbf{\textcolor{ForestGreen}{L-S method}}
 \item The \alert{efficiency correction} alters the relative contribution of D-mesons with different \pt
 \item[$\rightarrow$] the relative statistical uncertainty increases
 \end{itemize}
@@ -378,17 +385,17 @@ $$N_{\rm signal} (\ptjet)=\sum_{\ptd} \frac{1}{\epsilon(\ptd)} [N_{\rm sig+bkg}(
 \subsection*{Conclusions}
 \begin{frame}{Conclusions}
 \begin{itemize}
-\item The measurement of the charm cross-section and fragmentation function provides a important tools for
-testing pQCD and probing the QGP
+\item The measurement of the charm cross-section and fragmentation function provide important tools for
+\textbf{\alert{testing pQCD}} and \textbf{\alert{probing the QGP}}
 \item 3 different techniques have been developed to extract the D-tagged jet yield:
 \begin{itemize}
-\item Invariant mass fit in bins of \ptjet
-\item Bin counting in the peak area w/ Like-Sign background subtraction
-\item Bin counting in the peak area w/ Side-Band background subtraction
+\item \textbf{\textcolor{NavyBlue}{Invariant mass fit}} in bins of \ptjet
+\item Bin counting in the peak area w/ \textbf{\textcolor{ForestGreen}{Like-Sign}} background subtraction
+\item Bin counting in the peak area w/ \textbf{\textcolor{BrickRed}{Side-Band}} background subtraction
 \end{itemize}
-\item Proved to be feasible and successfully tested in Monte Carlo
+\item Proved to be \alert{feasible} and \alert{successfully tested} in Monte Carlo
 \item The pros and cons of each technique is being assessed
-\item Now looking forward to finalize the analysis on real data!
+\item \textbf{\alert{Now looking forward to finalize the analysis on real data!}}
 \end{itemize}
 \end{frame}
 
@@ -400,8 +407,8 @@ testing pQCD and probing the QGP
 \column{.45\textwidth}
 \begin{itemize}
 \item The analysis is being performed using data collected by ALICE with pp collisions at 7 TeV
-\item A preliminary look at the available statistics in 2010 data has given promising expectation
-\item Look out for new results being made public soon!
+\item A preliminary look at the available statistics in 2010 data has given promising expectations
+\item \textbf{\alert{Look out for new results being made public soon!}}
 \end{itemize}
 \end{columns}
 \end{frame}
