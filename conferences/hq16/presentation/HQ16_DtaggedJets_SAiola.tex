@@ -147,67 +147,78 @@ on behalf of the ALICE Collaboration\\
 \begin{itemize}
 \item[$\rightarrow$] pQCD is still applicable even for $\ptd\approx0$~\GeVc
 \end{itemize}
-\item large theoretical uncertainties at low \ptd $\rightarrow$ \alert{small $x$, $Q^2$}
+\item large theoretical uncertainties at low \ptd $\rightarrow$ \alert{small $Q^2$, $x$}
 \begin{itemize}
 \item renormalization scale
 \item gluon PDFs
 \end{itemize}
 \end{itemize}
 \end{columns}
+\medskip
+\alert{\textbf{D-Tagged Jets}: kinematics closer to the originating parton} $\rightarrow$ reduced dependence on the fragmentation function
 \end{frame}
 
 \begin{frame}{D-Tagged Jets}
 \begin{columns}
 \column{.5\textwidth}
 \includegraphics[width=\textwidth]{img/ATLAS_DStarJets}
-
 \column{.5\textwidth}
 \begin{itemize}
-\item \alert{Few measurements} of D-tagged jets in pp collisions have been published in recent years
+\item \alert{Few measurements} of D-tagged jets in recent years
 \begin{itemize}
 \setlength\itemsep{0em}
 \item {\scriptsize \textbf{STAR}: PRD 79 (2009) 112006}
 \item {\scriptsize \textbf{ATLAS}: PRD 85 (2012) 052005}
 \end{itemize}
-\item \alert{Large discrepancy} with pQCD-based Monte Carlo generators
+\item \alert{Large discrepancy} with pQCD-based MC generators
 \item D-tagged jets can help to pin-point weaknesses in our understanding of QCD
 \begin{itemize}
-\item charm production mechanism?
+\item production mechanism?
 \item fragmentation functions?
 \end{itemize}
 \end{itemize}
 \end{columns}
+
+\smallskip
+{\small ALICE expected kinematical reach:}
+\begin{itemize}
+{\small \item $\s=7$~TeV $\rightarrow$ \emph{charged jets} with \alert{$5<\ptchjet<24$~\GeVc} (this analysis)}
+{\small \item $\s=8$,~$13$~TeV $\rightarrow$ \emph{full jets} with \alert{smaller $z$ for $\ptjet \gtrsim 20$~\GeVc}}
+\end{itemize}
 \end{frame}
 
 \subsection{Charm and the QGP}
 \begin{frame}{Probe of the Quark-Gluon Plasma}
 \begin{columns}
-\column{.52\textwidth}
+\column{.56\textwidth}
 \textbf{\alert{Self-produced probe}}
 \begin{itemize}
 \item c quarks are \alert{produced early} in the collision
 \item Energy loss in the medium
-\begin{columns}
+\begin{columns}[T]
 \column{.4\textwidth}
 \includegraphics[width=\textwidth]{img/jetquenching}
 \column{.6\textwidth}
 \begin{itemize}
 \setlength\itemsep{0em}
-\item collisional
+\item elastic collisions
 \item radiative \\
-$\rightarrow$ \alert{dead-cone effect}\footnote[frame,1]{Dokshitzer and Kharzeev, PLB 519 (2001) 199}
+$\rightarrow$ \alert{dead-cone effect}\footnote[frame,1]{Dokshitzer and Kharzeev, PLB 519 (2001) 199} \\
+$m_{\rm c} > 0$ suppresses small angle radiation
 \end{itemize}
 \end{columns}
 \end{itemize}
 
-\column{.48\textwidth}
-\begin{overpic}[width=\textwidth]{img/ALICE_DMesonRAA}
+\column{.44\textwidth}
+\begin{overpic}[width=\textwidth, trim=1 0 13 0, clip]{img/ALICE_DMesonRAA}
  \put (25,40) {{\footnotesize JHEP1603 (2016) 081}}
 \end{overpic}
 \end{columns}
 \begin{itemize}
 \item Hint of slightly \alert{smaller suppression} compared to pions at low \pt
 \end{itemize}
+\smallskip
+\alert{\textbf{D-Tagged Jets}: kinematics closer to the originating parton} $\rightarrow$ can magnify dead cone effect at low \ptjet
 \end{frame}
 
 \section{Analysis Overview}
@@ -216,28 +227,31 @@ $\rightarrow$ \alert{dead-cone effect}\footnote[frame,1]{Dokshitzer and Kharzeev
 \begin{frame}{ALICE at the LHC}
 \begin{columns}
 
-\column{.55\textwidth}
+\column{.58\textwidth}
 \includegraphics[width=\textwidth]{img/ALICE_Schematics}
 
-\column{.45\textwidth}
+\column{.42\textwidth}
 \begin{itemize}
-\item Strongest points
+\item Important features
 \begin{itemize}
-\item \alert{PID} (e, $\mu$, $\pi$, K, p, d, ${}^3$He)
+\item \alert{PID} \\
+(e, $\mu$, $\pi$, K, p, d, ${}^3$He)
 \item \alert{low-momentum tracking} ($\pt > 0.15$~\GeVc)
 \end{itemize}
-\item \alert{D mesons} via hadronic decays (TPC, ITS, TOF)
+\item \alert{D mesons} via hadronic decays (ITS, TPC, TOF)
 \begin{itemize}
 \item PID, topological cuts
 \item invariant mass analysis
 \end{itemize}
-\item \alert{Jet reconstruction} using \antikt\ algorithm
-\begin{itemize}
-\item charged constituents (TPC, ITS)
-\item neutral constituents (EMCal, DCal)
-\end{itemize}
 \end{itemize}
 \end{columns}
+\begin{itemize}
+\item \alert{Jet reconstruction} using \antikt\ algorithm
+\begin{itemize}
+\item \textcolor{ForestGreen}{charged constituents} (ITS, TPC) $\rightarrow$ \emph{charged jets} (this analysis)
+\item add \textcolor{NavyBlue}{neutral constituents} (EMCal, DCal) $\rightarrow$ \emph{full jets} 
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \subsection{D-meson jet tagging}
@@ -247,7 +261,7 @@ $\rightarrow$ \alert{dead-cone effect}\footnote[frame,1]{Dokshitzer and Kharzeev
 
 \column{0.6\textwidth}
 \begin{enumerate}
-\item For each \Dzero\ meson candidate that passes \alert{PID} and \alert{topological} cuts run \antikt\ \alert{jet finding}
+\item For each \Dzero\ meson candidate that passes \alert{PID} and \alert{topological} cuts utilize \antikt\ \alert{jet finding}\\ (\pt\ recombination scheme)
 \begin{itemize}
 \item \Dzero\ candidate 4-momentum
 \item all other reconstructed tracks
@@ -275,22 +289,18 @@ $\rightarrow$ \alert{dead-cone effect}\footnote[frame,1]{Dokshitzer and Kharzeev
 
 \section{Detector Perfomance}
 
-\subsection{D-tagged jet reconstruction efficiency}
-\begin{frame}{D-tagged jet reconstruction efficiency}
-
+\subsection{D-Tagged Jet Reconstruction Efficiency}
+\begin{frame}{D-Tagged Jet Reconstruction Efficiency}
+\alert{PYTHIA6} Perugia-2011 + \alert{GEANT3} with detailed description of ALICE
 \begin{columns}
-\column{.6\textwidth}
-\includegraphics[width=\textwidth]{img/HQ16_Simulation_EfficiencyVsDPt}
-\column{.4\textwidth}
-Monte Carlo simulation
+\column{.60\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 38 0, clip]{img/HQ16_Simulation_EfficiencyVsDPt}
+\end{overpic}
+\column{.40\textwidth}
 \begin{itemize}
-\item PYTHIA6 Perugia-2011
-\item GEANT3: detailed description of ALICE
-\end{itemize}
-\bigskip
-\alert{Strong increase with \ptd\ at low \ptd}
-\begin{itemize}
-\item[$\rightarrow$] topological cuts on the secondary vertex, tighter at low \ptd\
+\item Dominated by \\ \textcolor{NavyBlue}{\Dzero\ reconstruction efficiency}
+\item \alert{Strong increase with \ptd\ at low \ptd} \\
+$\rightarrow$ topological cuts on the secondary vertex, tighter at low \ptd\
 \end{itemize}
 \end{columns}
 \bigskip
@@ -298,82 +308,93 @@ Monte Carlo simulation
 \end{frame}
 
 \subsection[JES shift and \pt\ resolution]{Jet Energy Scale shift and \pt\ resolution}
-\begin{frame}[t]{JES shift and \pt\ resolution}
 
+\begin{frame}[t]{Jet Energy Scale shift and \pt\ resolution}
 \begin{columns}
-\column{.39\textwidth}
-\textcolor{BrickRed}{Inclusive Jets} \\
-\smallskip
+\column{.47\textwidth}
 \begin{overpic}[width=\textwidth]{img/ALICE_JetRes}
 \put (-3,4) {{\tiny PRD 91 (2015) 112012}}
-\put (76,35) {{\tiny  \textcolor{BrickRed}{$\mu\approx -3\%$}}}
-\put (76,30) {{\tiny  \textcolor{BrickRed}{$\sigma\approx17\%$}}}
-\end{overpic}
-\column{.17\textwidth}
-\centering
-{\footnotesize slightly better \ptchjet\ resolution due to the D-meson requirement}
-\column{.44\textwidth}
-\raggedleft
-\textcolor{NavyBlue}{D-Tagged Jets} \\
-\begin{overpic}[width=\textwidth, trim=0 9 30 22, clip]{img/HQ16_Simulation_DetectorResponse}
-\put (20,30) {{\tiny  \textcolor{NavyBlue}{$\mu\approx -3\%$}}}
-\put (20,25) {{\tiny  \textcolor{NavyBlue}{$\sigma\approx11\%$}}}
-\end{overpic}
-\end{columns}
+\end{overpic}\\
+\medskip
+{\small
+\textcolor{BrickRed}{
+\textbf{Inclusive Charged Jets} \\
+\medskip
+$\mu [(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx -3\%$ \\
 \smallskip
-\begin{columns}
-\column{.38\textwidth}
-\includegraphics[width=\textwidth]{img/HQ16_Simulation_EnergyScaleShift}
-\column{.38\textwidth}
-\includegraphics[width=\textwidth]{img/HQ16_Simulation_Resolution}
-\column{.24\textwidth}
-{\footnotesize \alert{No significant \pt-dependence} in the range\\ $5<\ptchjet<24$ \GeVc}
+$\sigma[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx17\%$
+}}
+\column{.53\textwidth}
+\medskip
+\begin{overpic}[width=\textwidth, trim=0 9 30 22, clip]{img/HQ16_Simulation_DetectorResponse}
+\end{overpic}\\
+\raggedleft
+{\small
+\textcolor{NavyBlue}{
+\textbf{D-Tagged Charged Jets}\\
+\medskip
+$\mu[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx -3\%$ \\
+\smallskip
+$\sigma[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx11\%$
+}}
 \end{columns}
+\bigskip
+\centering
+\textbf{slightly better \ptchjet\ resolution due to the D-meson requirement}
+\end{frame}
+
+\begin{frame}{JES shift and \pt\ resolution: \pt-dependence}
+\begin{columns}
+\column{.50\textwidth}
+\centering
+\textbf{JES shift}\\
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_EnergyScaleShift}
+\column{.50\textwidth}
+\centering
+\textbf{\ptchjet\ resolution} \\
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_Resolution}
+\end{columns}
+\medskip
+\begin{itemize}
+\item JES shift and \ptchjet\ resolution dominated by \alert{tracking efficiency}
+\item \alert{No significant \pt-dependence} in the range $5<\ptchjet<24$ \GeVc
+\end{itemize}
 \end{frame}
 
 \section{Signal Extraction}
 
 \subsection{D-tagged jet signal extraction}
 
-\begin{frame}[t]{Signal extraction: invariant mass fit}
+\begin{frame}[t]{Signal extraction}
 \begin{columns}[T]
-
 \column{.5\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMassSB}
 \end{overpic}
-
 \column{.5\textwidth}
-\textbf{\alert{Method 1: invariant mass fit}}
+\textbf{\alert{Three methods}}
 \begin{enumerate}
-\item Fill D-meson invariant mass distributions in bins of \alert{\ptchjet}
-\item \textbf{Fit invariant mass distributions} with a \\ Gaussian (\textcolor{NavyBlue}{signal}) + exponential (\textcolor{BrickRed}{background})
-\item Extract $N_{\rm signal} (\ptchjet)$ from fit parameters
+\item \textcolor{BrickRed}{Side-Band (S-B) background subtraction}
+\item \textcolor{ForestGreen}{Like-Sign (L-S) background subtraction}
+\item \textcolor{NavyBlue}{Invariant Mass Fit in bins of \ptchjet}
 \end{enumerate}
 \end{columns}
-\begin{itemize}
-\item The correction for the D-tagged jet reconstruction efficiency must be applied as a weight when filling the invariant mass plots
-\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{Signal extraction: S-B method}
 \begin{columns}[T]
-
 \column{.50\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMassSB}
 \end{overpic}
-
 \column{.50\textwidth}
-\textbf{\alert{Method 2: Side-Band (S-B)}}
+\textbf{\textcolor{BrickRed}{Method 1: Side-Band (S-B)}}
 \begin{enumerate}
 \item Fill D-meson invariant mass distributions in bins of \alert{\ptd}
 \item $N(\ptchjet, \ptd)$ distributions in
-
 \medskip
 \textcolor{NavyBlue}{\textbf{Peak Area}
 {\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
 \smallskip
 $N_{\rm sig+bkg} (\ptchjet, \ptd)$}
-
 \medskip
 \textcolor{BrickRed}{\textbf{Side Bands}
 {\scriptsize $8\sigma <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma$}\\ 
@@ -381,7 +402,6 @@ $N_{\rm sig+bkg} (\ptchjet, \ptd)$}
 $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
 \end{enumerate}
 \end{columns}
-
 \begin{enumerate}
 \setcounter{enumi}{2}
 \item Apply \textcolor{VioletRed}{efficiency correction} and \textcolor{YellowOrange}{integrate in \ptd}
@@ -391,22 +411,18 @@ $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
 
 \begin{frame}[t]{Signal extraction: L-S method}
 \begin{columns}[T]
-
 \column{.50\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMassSB}
 \end{overpic}
-
 \column{.50\textwidth}
-\textbf{\alert{Method 3: Like-Sign (L-S)}}
+\textbf{\textcolor{ForestGreen}{Method 2: Like-Sign (L-S)}}
 \begin{enumerate}
 \item Fill D-meson invariant mass distributions in bins of \alert{\ptd}
 \item $N(\ptchjet, \ptd)$ distributions in
-
 \medskip
 \textcolor{NavyBlue}{\textbf{U-S peak area} {\footnotesize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
 \smallskip
 {\small $N_{\rm sig+bkg} (\ptchjet, \ptd)$}}
-
 \medskip
 \textcolor{ForestGreen}{\textbf{L-S peak area} {\footnotesize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
 \smallskip
@@ -418,6 +434,24 @@ $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
 \item Apply \textcolor{VioletRed}{efficiency correction} and \textcolor{YellowOrange}{integrate in \ptd}
 {\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \textcolor{ForestGreen}{N_{\rm bkg,LS}(\ptchjet, \ptd)}]$$}
 \end{enumerate}
+\end{frame}
+
+\begin{frame}[t]{Signal extraction: invariant mass fit}
+\begin{columns}[T]
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMassSB}
+\end{overpic}
+\column{.5\textwidth}
+\textbf{\textcolor{NavyBlue}{Method 3: invariant mass fit}}
+\begin{enumerate}
+\item Fill D-meson invariant mass distributions in bins of \alert{\ptchjet}
+\item \textbf{Fit invariant mass distributions} with a \\ Gaussian (\textcolor{NavyBlue}{signal}) + exponential (\textcolor{BrickRed}{background})
+\item Extract $N_{\rm signal} (\ptchjet)$ from fit parameters
+\end{enumerate}
+\end{columns}
+\begin{itemize}
+\item The correction for the D-tagged jet reconstruction efficiency must be applied as a weight when filling the invariant mass plots
+\end{itemize}
 \end{frame}
 
 \subsection{Method comparison}
@@ -444,10 +478,9 @@ and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \t
 \column{.55\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/HQ16_Simulation_UncertaintyComparison}
 \end{overpic}
-
 \column{.45\textwidth}
 \begin{itemize}
-\item The methods differ also for their \alert{statistical precision}
+\item The methods differ also in their \alert{statistical precision}
 \item[$\rightarrow$] \textcolor{ForestGreen}{larger uncertainties for \textbf{L-S}}
 \item The \alert{efficiency correction} alters the relative contribution of D-mesons with different \pt
 \item[$\rightarrow$] the relative statistical uncertainty increases
@@ -462,12 +495,12 @@ and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \t
 \begin{frame}{Conclusions}
 \begin{itemize}
 \item The measurement of the charm cross-section and fragmentation function provide important tools for
-\textbf{\alert{testing pQCD}} and \textbf{\alert{probing the QGP}}
+\textbf{\alert{testing pQCD}} (\pp) and \textbf{\alert{probing the QGP}} (\PbPb)
 \item 3 different techniques have been developed to extract the D-tagged jet yield:
 \begin{itemize}
-\item \textbf{\textcolor{NavyBlue}{Invariant mass fit}} in bins of \ptchjet
-\item Bin counting in the peak area w/ \textbf{\textcolor{ForestGreen}{Like-Sign}} background subtraction
 \item Bin counting in the peak area w/ \textbf{\textcolor{BrickRed}{Side-Band}} background subtraction
+\item Bin counting in the peak area w/ \textbf{\textcolor{ForestGreen}{Like-Sign}} background subtraction
+\item \textbf{\textcolor{NavyBlue}{Invariant mass fit}} in bins of \ptchjet
 \end{itemize}
 \item Proved to be \alert{feasible} and \alert{successfully tested} in Monte Carlo
 \item The pros and cons of each technique is being assessed
@@ -483,7 +516,7 @@ and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \t
 
 \column{.45\textwidth}
 \begin{itemize}
-\item The analysis is being performed using data collected by ALICE with pp collisions at 7 TeV
+\item The analysis is being performed using data collected by ALICE with pp collisions at $\s=7$~TeV
 \item A preliminary look at the available statistics in 2010 data has given promising expectations
 \item \textbf{\alert{Look out for new results being made public soon!}}
 \end{itemize}
