@@ -385,13 +385,13 @@ $\sigma[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx11\%$
 \item Fill D-meson invariant mass distributions in bins of \alert{\ptd}
 \item $N(\ptchjet, \ptd)$ distributions in\\
 \medskip
-\textcolor{NavyBlue}{\textbf{Peak Area}
-{\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
+\textcolor{NavyBlue}{\textbf{Peak Area}\\
+{\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma_{\rm fit}$}\\ 
 \smallskip
 $N_{\rm sig+bkg} (\ptchjet, \ptd)$}\\
 \medskip
-\textcolor{BrickRed}{\textbf{Side Bands}
-{\scriptsize $8\sigma <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma$}\\ 
+\textcolor{BrickRed}{\textbf{Side Bands}\\
+{\scriptsize $8\sigma_{\rm fit} <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma_{\rm fit}$}\\ 
 \smallskip
 $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
 \end{enumerate}
@@ -399,7 +399,7 @@ $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
 \begin{enumerate}
 \setcounter{enumi}{2}
 \item Apply \textcolor{VioletRed}{efficiency correction} and \textcolor{YellowOrange}{integrate in \ptd}
-{\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \textcolor{BrickRed}{N_{\rm bkg,SB}(\ptchjet, \ptd)}]$$}
+{\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \frac{B^{*}}{B}\textcolor{BrickRed}{N_{\rm bkg,SB}(\ptchjet, \ptd)}]$$}
 \end{enumerate}
 \end{frame}
 
@@ -414,11 +414,13 @@ $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
 \item Fill D-meson invariant mass distributions in bins of \alert{\ptd}
 \item $N(\ptchjet, \ptd)$ distributions in\\
 \medskip
-\textcolor{NavyBlue}{\textbf{U-S peak area} {\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
+\textcolor{NavyBlue}{\textbf{U-S peak area}\\
+{\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma_{\rm fit}$}\\ 
 \smallskip
 {\small $N_{\rm sig+bkg} (\ptchjet, \ptd)$}}\\
 \medskip
-\textcolor{ForestGreen}{\textbf{L-S peak area} {\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
+\textcolor{ForestGreen}{\textbf{L-S peak area}\\
+{\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma_{\rm fit}$}\\ 
 \smallskip
 {\small $N_{\rm bkg, LS} (\ptchjet, \ptd)$}}
 \end{enumerate}
@@ -426,7 +428,7 @@ $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
 \begin{enumerate}
 \setcounter{enumi}{2}
 \item Apply \textcolor{VioletRed}{efficiency correction} and \textcolor{YellowOrange}{integrate in \ptd}
-{\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \textcolor{ForestGreen}{N_{\rm bkg,LS}(\ptchjet, \ptd)}]$$}
+{\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \frac{B^{*}}{B}\textcolor{ForestGreen}{N_{\rm bkg,LS}(\ptchjet, \ptd)}]$$}
 \end{enumerate}
 \end{frame}
 
