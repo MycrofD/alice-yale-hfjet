@@ -1,0 +1,588 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\title[D-tagged jets in pp collisions at 7 TeV] % (optional, use only with long paper titles)
+{D-meson tagged jets in pp collisions at 7 TeV}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PWG-JE+HF - Oct. 5th, 2016] % (optional, should be abbreviation of conference name)
+{PWG-JE+HF \\
+October 5th, 2016}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Overview}
+\begin{frame}{Unfolding closure test}
+\begin{itemize}
+\item \textbf{\textcolor{BrickRed}{"Mock" data}}: Minimum Bias (MB) production
+\begin{itemize}
+\item LHC14j4\string{b,c,d,e\string} anchored to LHC10\string{b,c,d,e\string} pass4
+\item Similar statistics as in data $\sim 300$~M events
+\end{itemize}
+\item \textbf{\textcolor{ForestGreen}{Response matrix}}: charm-enhanced, \pthard-binned production
+\begin{itemize}
+\item LHC15i2\string{b,c,d,e\string} anchored to LHC10\string{b,c,d,e\string} pass4
+\item 10 \pthard\ bins
+\item all events required to have a \ccbar\ or \bbbar\ pair and all D mesons decay hadronically
+\end{itemize}
+\item Perform \textbf{\textcolor{Fuchsia}{signal extraction}} in MB production at \textbf{\textcolor{Fuchsia}{detector level}}
+\begin{enumerate}
+\item \textbf{Invariant mass fit}, \textbf{Like-Sign} (LS) or \textbf{Side-Band} (SB) methods
+\item \textbf{MC truth} information
+\end{enumerate}
+\item \textbf{\textcolor{NavyBlue}{Unfold}} using response matrix from charm-enhanced production
+\item Compare with \textbf{\textcolor{NavyBlue}{particle level}} truth
+\end{itemize}
+\end{frame}
+
+\subsection{Input Spectrum}
+\begin{frame}{"Mock" data}
+\begin{columns}
+\column{.55\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/HQ16_Simulation_MethodComparison}
+\end{overpic}
+\column{.45\textwidth}
+\begin{itemize}
+\item All these spectra are at \textbf{\textcolor{Fuchsia}{detector level}} 
+\item \textbf{\textcolor{Gray}{MC truth}} used only to discriminate signal from background
+\item \textbf{\textcolor{BrickRed}{Unfolding closure test}} using MC truth spectrum
+\item \textbf{\textcolor{NavyBlue}{Full closure test}} using signal extracted with one of the three methods
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\subsection{Response Matrix}
+\begin{frame}{Response Matrix and Kinematic Efficiency}
+\begin{overpic}[width=\textwidth, trim=0 240 0 20, clip]{img/ResponseMatrix}
+\end{overpic}
+\begin{itemize}
+\item Reconstruction efficiency already applied during signal extraction (see backup slides for details)
+\item Kinematic efficiency due to limited \pt-range in the input spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Truth / Measured (MC truth signal-only)}
+\center
+\begin{overpic}[width=.7\textwidth, trim=0 0 50 20, clip]{img/Unfolding_TruthOverMeasured_SignalOnly}
+\end{overpic}
+\newline
+Relatively small correction $\sim 10-20$~\%
+\end{frame}
+
+\subsection{Unfolding Closure Test}
+\begin{frame}{Unfolding Methods}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_SignalOnly}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_SignalOnly_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item \textbf{\textcolor{NavyBlue}{Singular Value Decomposition (SVD)}}: Hocker and Kartvelishvili, NIM A372 (1996) 469
+\item \textbf{\textcolor{BrickRed}{Bin-By-Bin}}: "generalized" efficiency correction
+\item \textbf{\textcolor{ForestGreen}{Bayesian}}: D'Agostini, NIM A362 (1995) 487
+\item All 3 unfolding methods work well
+\item Spectrum from the charm-enhanced production used as "prior"
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior Choice: Bin-By-Bin}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_BinByBin}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_BinByBin_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very extreme choice of prior: \textbf{\textcolor{BrickRed}{flat spectrum}}
+\item Strong dependence on prior for the bin-by-bin correction (as expected)
+\item Bin-By-Bin correction is a "generalized" efficiency correction (not technically unfolding)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior Choice: SVD}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_Svd}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_Svd_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very extreme choice of prior: \textbf{\textcolor{BrickRed}{flat spectrum}}
+\item SVD is still able to recover the truth with larger $k$ (regularization parameter)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior Choice: Bayesian}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_Bayes}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_Bayes_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very extreme choice of prior: \textbf{\textcolor{BrickRed}{flat spectrum}}
+\item Bayesian method is still able to recover the truth with a larger number of iterations (6 vs. 3)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: SVD with "reasonable" prior}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Svd_train_truth_SignalOnly}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Svd_train_truth_SignalOnly_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item SVD is regularized through the $k$ parameter, with $0\leq k\leq n$ and $n=$~number of bins
+\item Very stable for $k>1$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: SVD with "extreme" prior}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Svd_flat_SignalOnly}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Svd_flat_SignalOnly_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very unstable, need $k=6$ to get close to the truth
+\item Easy to spot if such an extreme scenario is observed in data
+\item Data will probably exhibit something in between these two extremes
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: SVD $d$-vectors}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SvdDvector_SignalOnly_train_truth}
+\put(30,50){"reasonable" prior}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SvdDvector_SignalOnly_flat}
+\put(50,50){flat prior}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item "Unphysical" modulations in the unfolded result are suppressed using $k<n=$~number of bins
+\item The $d$-vector should show a sudden drop to unity for a certain value of $k$, which corresponds to the "best" choice
+\item Left: "healthy" $d$-vector which suggests $k \approx 2-3$
+\item Right: the $d$-vector values do not show a plateau at unity
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pearsons' Coefficients: SVD with "reasonable" prior }
+\center
+\begin{overpic}[width=.65\textwidth, trim=0 0 0 0, clip]{img/Pearson_SignalOnly_Svd_train_truth}
+\end{overpic}
+\begin{itemize}
+\item Pearsons' coefficients measure bin-bin correlations
+\item $-1=$~max anti-correlation, $0=$~no correlation, $1=$~max correlation
+\item Strong correlation between far-away bins, e.g. $k=1,2$
+\item Strong anti-correlation between close-by bins, e.g. $k=5,6$
+\item Pearsons' coefficients suggest $k=3,4$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pearsons' Coefficients: SVD with "extreme" prior }
+\center
+\begin{overpic}[width=.75\textwidth, trim=0 0 0 0, clip]{img/Pearson_SignalOnly_Svd_flat}
+\end{overpic}
+\begin{itemize}
+\item Pearsons' coefficients would suggest $k=5,6$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: Bayesian}
+\begin{columns}
+\column{.50\textwidth}
+\center
+"Reasonable" prior
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Bayes_train_truth_SignalOnly_Ratio}
+\end{overpic}
+\column{.50\textwidth}
+\center
+Flat prior
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Bayes_flat_SignalOnly_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Bayesian method seems to perform well even with an extreme choice of prior
+\item However maybe a small bias in some "nodes"
+\end{itemize}
+\end{frame}
+
+\subsection{Full Closure Test}
+\begin{frame}{Full Closure Test: Invariant Mass Fit Method}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_InvMassFit}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_InvMassFit_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item All 3 unfolding methods work well
+\item Spectrum from the charm-enhanced production used as "prior"
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Full Closure Test: Like-Sign Method}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_LikeSign}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_LikeSign_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item All 3 unfolding methods work well
+\item Spectrum from the charm-enhanced production used as "prior"
+\end{itemize}
+\end{frame}
+
+\section*{Summary}
+
+\subsection*{Conclusions}
+\begin{frame}{Conclusions}
+\begin{itemize}
+\item \alert{Unfolding closure test} successful
+\begin{itemize}
+\item Minimum Bias production with similar statistics as in data used to generate the "mock" data
+\item Response matrix from charm-enhanced production
+\end{itemize}
+\item \alert{Apply unfolding machinery to data} $\rightarrow$ first corrected D-tagged jet spectrum ($\sim$~next week)
+\item Next: \alert{B feed-down} correction
+\end{itemize}
+\end{frame}
+
+\subsection*{Further Readings}
+\begin{frame}{More...}
+\begin{itemize}
+\item My Hot Quarks 2016 talk: \url{https://aliceinfo.cern.ch/node/27729}
+\bigskip
+\item Brief Analysis Note for the HQ16 simulation figures: \url{https://alice.its.cern.ch/jira/secure/attachment/34159/HQ16_SimulationFigures_v4.pdf}
+\bigskip
+\item JIRA ticket: \url{https://alice.its.cern.ch/jira/browse/PWGHF-108}
+\end{itemize}
+\end{frame}
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Backup}
+
+\begin{frame}{Pearsons: Bayesian with "reasonable" prior }
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Pearson_SignalOnly_Bayes_train_truth}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{Pearsons: Bayesian with "extreme" prior }
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Pearson_SignalOnly_Bayes_flat}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{D-meson jet tagging}
+\begin{enumerate}
+\item For each \Dzero\ meson candidate that passes \alert{PID} and \alert{topological} cuts utilize \antikt\ \alert{jet finding}\\ (\pt\ recombination scheme)
+\begin{itemize}
+\item \Dzero\ candidate 4-momentum
+\item all other reconstructed tracks
+\item exclude candidate daughters
+\end{itemize}
+\item Combinatorial background from random $\mathrm{K}\pi$ pairs 
+\begin{itemize}
+\item[$\rightarrow$] \alert{invariant mass analysis} to extract signal
+\end{itemize}
+\end{enumerate}
+\bigskip
+\textbf{\alert{\Dzero(\Dzerobar) meson}}
+\begin{itemize}
+\item $M=1.865$~\GeVcsq, $c\tau=123\,\mu\mathrm{m}$ 
+\item Decay: \Dzero$\rightarrow\mathrm{K}^+\pi^-$ and c.c. with ${\rm BR}=3.88\%$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Available statistics in data (2010)}
+\begin{columns}
+\column{.60\textwidth}
+\includegraphics[width=\textwidth]{img/HQ16_WorkInProgress_StatisticalUncertainty} 
+\column{.40\textwidth}
+\begin{itemize}
+\item Available statistics in 2010 (invariant mass fit method w/o efficiency correction)
+\item Similar statistics as in MC simulation, but PYTHIA overestimates the signal/background
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Statistical precision in MB production}
+\begin{columns}
+\column{.55\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/HQ16_Simulation_UncertaintyComparison}
+\end{overpic}
+\column{.45\textwidth}
+\begin{itemize}
+\item The methods differ also in their \alert{statistical precision}
+\item[$\rightarrow$] \textcolor{ForestGreen}{larger uncertainties for \textbf{L-S}}
+\item The \alert{efficiency correction} alters the relative contribution of D-mesons with different \pt
+\item[$\rightarrow$] the relative statistical uncertainty increases
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}[t]{Signal extraction: S-B method}
+\begin{columns}[T]
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMassSB}
+\end{overpic}
+\column{.50\textwidth}
+\textbf{\textcolor{BrickRed}{Method 1: Side-Band (S-B)}}
+\begin{enumerate}
+\item Fill D-meson invariant mass distributions in bins of \alert{\ptd}
+\item $N(\ptchjet, \ptd)$ distributions in\\
+\medskip
+\textcolor{NavyBlue}{\textbf{Peak Area}
+{\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
+\smallskip
+$N_{\rm sig+bkg} (\ptchjet, \ptd)$}\\
+\medskip
+\textcolor{BrickRed}{\textbf{Side Bands}
+{\scriptsize $8\sigma <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma$}\\ 
+\smallskip
+$N_{\rm bkg, SB} (\ptchjet, \ptd)$}
+\end{enumerate}
+\end{columns}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Apply \textcolor{VioletRed}{efficiency correction} and \textcolor{YellowOrange}{integrate in \ptd}
+{\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \textcolor{BrickRed}{N_{\rm bkg,SB}(\ptchjet, \ptd)}]$$}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[t]{Signal extraction: L-S method}
+\begin{columns}[T]
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMassLS}
+\end{overpic}
+\column{.50\textwidth}
+\textbf{\textcolor{ForestGreen}{Method 2: Like-Sign (L-S)}}
+\begin{enumerate}
+\item Fill D-meson invariant mass distributions in bins of \alert{\ptd}
+\item $N(\ptchjet, \ptd)$ distributions in\\
+\medskip
+\textcolor{NavyBlue}{\textbf{U-S peak area} {\footnotesize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
+\smallskip
+{\small $N_{\rm sig+bkg} (\ptchjet, \ptd)$}}\\
+\medskip
+\textcolor{ForestGreen}{\textbf{L-S peak area} {\footnotesize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma$}\\ 
+\smallskip
+{\small $N_{\rm bkg, LS} (\ptchjet, \ptd)$}}
+\end{enumerate}
+\end{columns}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Apply \textcolor{VioletRed}{efficiency correction} and \textcolor{YellowOrange}{integrate in \ptd}
+{\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \textcolor{ForestGreen}{N_{\rm bkg,LS}(\ptchjet, \ptd)}]$$}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[t]{Signal extraction: invariant mass fit}
+\begin{columns}[T]
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=190 0 190 175, clip]{img/D0_JetPtBins_PtD_20}
+\end{overpic}
+\column{.5\textwidth}
+\textbf{\textcolor{NavyBlue}{Method 3: invariant mass fit}}
+\begin{enumerate}
+\item Fill D-meson invariant mass distributions in bins of \alert{\ptchjet}
+\item \textbf{Fit invariant mass distributions} with a \\ Gaussian (\textcolor{NavyBlue}{signal}) + exponential (\textcolor{BrickRed}{background})
+\item Extract $N_{\rm signal} (\ptchjet)$ from fit parameters
+\end{enumerate}
+\end{columns}
+\begin{itemize}
+\item The correction for the D-tagged jet reconstruction efficiency must be applied as a weight when filling the invariant mass plots
+\end{itemize}
+\end{frame}
+
+\begin{frame}{D-Tagged Jet Reconstruction Efficiency}
+\begin{columns}
+\column{.60\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 38 0, clip]{img/HQ16_Simulation_EfficiencyVsDPt}
+\end{overpic}
+\column{.40\textwidth}
+\begin{itemize}
+\item Dominated by \\ \textcolor{NavyBlue}{\Dzero\ reconstruction efficiency}
+\item \alert{Strong increase with \ptd\ at low \ptd} \\
+$\rightarrow$ topological cuts on the secondary vertex, tighter at low \ptd\
+\end{itemize}
+\end{columns}
+\bigskip
+\textcolor{ForestGreen}{No dependence on the \ptchjet}: simplifies corrections and reduces systematic uncertainties 
+\end{frame}
+
+\begin{frame}[t]{Jet Energy Scale shift and \pt\ resolution}
+\begin{columns}
+\column{.47\textwidth}
+\begin{overpic}[width=\textwidth]{img/ALICE_JetRes}
+\put (-3,4) {{\tiny PRD 91 (2015) 112012}}
+\end{overpic}\\
+\medskip
+{\small
+\textcolor{BrickRed}{
+\textbf{Inclusive Charged Jets} \\
+\medskip
+$\mu [(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx -3\%$ \\
+\smallskip
+$\sigma[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx17\%$
+}}
+\column{.53\textwidth}
+\medskip
+\begin{overpic}[width=\textwidth, trim=0 9 30 22, clip]{img/HQ16_Simulation_DetectorResponse}
+\end{overpic}\\
+\raggedleft
+{\small
+\textcolor{NavyBlue}{
+\textbf{D-Tagged Charged Jets}\\
+\medskip
+$\mu[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx -3\%$ \\
+\smallskip
+$\sigma[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx11\%$
+}}
+\end{columns}
+\bigskip
+\centering
+\textbf{slightly better \ptchjet\ resolution due to the D-meson requirement}
+\end{frame}
+
+\begin{frame}{JES shift and \pt\ resolution: \pt-dependence}
+\begin{columns}
+\column{.50\textwidth}
+\centering
+\textbf{JES shift}\\
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_EnergyScaleShift}
+\column{.50\textwidth}
+\centering
+\textbf{\ptchjet\ resolution} \\
+\includegraphics[width=\textwidth]{img/HQ16_Simulation_Resolution}
+\end{columns}
+\medskip
+\begin{itemize}
+\item JES shift and \ptchjet\ resolution dominated by \alert{tracking efficiency}
+\item \alert{No significant \pt-dependence} in the range $5<\ptchjet<24$ \GeVc
+\end{itemize}
+\end{frame}
+
+\end{document}
