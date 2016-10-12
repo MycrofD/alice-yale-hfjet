@@ -1,0 +1,559 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\title[D-tagged jets in pp collisions at 7 TeV] % (optional, use only with long paper titles)
+{D-meson tagged jets in pp collisions at 7 TeV}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Oct. 10th, 2016] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+October 10th, 2016}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+  \end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Follow-up from PWG-JE+HF meeting (Oct. 5th)}
+\subsection{Unfolding statistical uncertainties}
+
+\begin{frame}{SVD method}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/SignalOnly_UnfoldingStatisticalUncertaintyStrategy_Svd_Reg3_PriorResponseTruth}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/SignalOnly_UnfoldingStatisticalUncertainty_Svd_PriorResponseTruth}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item \textbf{Left}: 3 options for error propagation provided by RooUnfold
+\begin{itemize}
+\item \textbf{kError} and \textbf{\textcolor{NavyBlue}{kCovariance}} are the same: square root of the diagonal elements of the covariance matrix
+\item \textbf{\textcolor{BrickRed}{kCovToy}:} Guassian smearing of the central points of the input spectrum, repeat unfolding $n$ times ($n=50$)
+\end{itemize}
+\item \textbf{Right}: statistical uncertainty should increase as a function of the regularization parameter
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Bayesian method}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/SignalOnly_UnfoldingStatisticalUncertaintyStrategy_Bayes_Reg3_PriorResponseTruth}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/SignalOnly_UnfoldingStatisticalUncertainty_Bayes_PriorResponseTruth}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item \textbf{Left}: 3 options for error propagation provided by RooUnfold
+\begin{itemize}
+\item \textbf{kError} and \textbf{\textcolor{NavyBlue}{kCovariance}} are the same: square root of the diagonal elements of the covariance matrix
+\item \textbf{\textcolor{BrickRed}{kCovToy}:} Guassian smearing of the central points of the input spectrum, repeat unfolding $n$ times ($n=50$)
+\end{itemize}
+\item \textbf{Right}: statistical uncertainty should increase as a function of the regularization parameter
+\end{itemize}
+\end{frame}
+
+\subsection{Prior choice}
+
+\begin{frame}{Prior \ptchjet\ spectra}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/PriorPowerLaw8vs2SmallBins}
+\put(50,34){\textbf{\textcolor{BrickRed}{$a=2$}}}
+\put(50,40){\textbf{\textcolor{NavyBlue}{$a=8$}}}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/SignalOnly_Priors}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Prior spectra: "modified" power law functions to mimic qualitatively the shape of the spectrum ($\rightarrow 0$ when $\pt \rightarrow 0$):
+$\pt^{-a}e^{\frac{-ab}{\pt}}$
+\begin{itemize}
+\item $a$: power law index
+\item $b=3$~\GeVc\ is the position of the local maximum
+\end{itemize}
+\item ResponseTruth: truth from the charm-enhanced production
+\item MC Truth: truth from the minimum-bias production
+\item Right plot: not divided by the bin width!
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior choice: SVD and Bayesian}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/SignalOnly_UnfoldingPrior_Svd_Ratio}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/SignalOnly_UnfoldingPrior_Bayes_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Good performance with quite extreme choice of priors
+\end{itemize}
+\end{frame}
+
+\subsection{Over-/Under-flow bins}
+\begin{frame}{Overflow bins in SVD unfolded spectrum}
+\begin{columns}
+\column{.53\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/SignalOnlySvdReg3PriorResponseTruthOverflowBins}
+\end{overpic}
+\column{.47\textwidth}
+\begin{itemize}
+\item A concern was raised about leaving enough freedom to the unfolding procedure to move entries outside of defined \pt\ range
+\item In fact the overflow bin option was not enabled
+\end{itemize}
+\end{columns}
+\begin{itemize}
+\item After enabling the overflow option in RooUnfold the overflow bins (\ptchjet~$<5$~\GeVc\ and \ptchjet~$>24$~\GeVc) are populated
+\item Negligible effect for $5>\ptchjet>24$~\GeVc
+\end{itemize}
+\end{frame}
+
+\section{\zpar\ cut vs \ptd\ cut}
+\begin{frame}{\zpar\ cut vs \ptd\ cut}
+\begin{itemize}
+\item Before HQ2016 we discussed whether we should use $\ptd>2$~\GeVc\ or $\zpar>0.1$
+\item It turns out that in the minimum-bias MC there are only 15 real D mesons with $1<\ptd<2$~\GeVc\ and 0 for $\ptd<1$~\GeVc\, for $\ptchjet > 5$~\GeVc\ (after applying all the PID and topological cuts).
+\item We introduce also a bit more background
+\item After signal extraction the spectra with $\ptd>2$~\GeVc or $\zpar>0.1$ are the same within statistical uncertainties (both in data and MC)
+\item For the moment we better stick with $\ptd>2$
+\item Switching to $\zpar>0.1$ only makes sense if we try to do the analysis w/o the topological cuts (might be interesting trying since the cut $\ptchjet>5$~\GeVc\ may reduce the background)
+\end{itemize}
+\end{frame}
+
+\section{Status of the data analysis}
+
+\subsection{Signal extraction}
+\begin{frame}{Signal extraction}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/Data_D0_SpectraComparison}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/Data_D0_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Like-Sign method has largest uncertainties
+\item Inv.Mass Fit and Side-Band agree within uncertainties
+\item $\ptd>2$~\GeVc\ and $\zpar>0.1$ agree within uncertainties
+\end{itemize}
+\end{frame}
+
+\subsection{Unfolding}
+\begin{frame}{Unfolding method}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/Data_InvMassFit_UnfoldingMethod}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/Data_InvMassFit_UnfoldingMethod_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item The 3 methods agree with each other
+\item Large uncertainty in the last bin: it will require some care to extract the systematic uncertainty without "double counting" the statistical uncertainty
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior choice: SVD}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/Data_InvMassFit_UnfoldingPrior_Svd}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/Data_InvMassFit_UnfoldingPrior_Svd_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Reasonably stable with different prior choices
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: SVD}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/Data_InvMassFit_UnfoldingRegularization_Svd_PriorResponseTruth}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=.95\textwidth, trim=0 0 50 0, clip]{img/Data_InvMassFit_UnfoldingRegularization_Svd_PriorResponseTruth_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item $k=4$ used as baseline
+\item $k=3,5$ will be used to assess the systematic uncertainty
+\end{itemize}
+\end{frame}
+
+\section*{Summary}
+
+\subsection*{Conclusions}
+\begin{frame}{Conclusions}
+\begin{itemize}
+\item Unfolding error propagation verified using RooUnfold
+\item Prior spectra with "modified" power law with 2 tunable parameters
+\item Overflow bin option enabled in RooUnfold
+\item Unfolding closure test on MC and data unfolding 
+\item Next: B feed-down correction
+\item In the meantime: reflections in signal extraction
+\end{itemize}
+\end{frame}
+
+\subsection*{Further Readings}
+\begin{frame}{More...}
+\begin{itemize}
+\item My Hot Quarks 2016 talk: \url{https://aliceinfo.cern.ch/node/27729}
+\bigskip
+\item Brief Analysis Note for the HQ16 simulation figures: \url{https://alice.its.cern.ch/jira/secure/attachment/34159/HQ16_SimulationFigures_v4.pdf}
+\bigskip
+\item JIRA ticket: \url{https://alice.its.cern.ch/jira/browse/PWGHF-108}
+\end{itemize}
+\end{frame}
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Backup}
+
+\begin{frame}{Unfolding closure test}
+\begin{itemize}
+\item \textbf{\textcolor{BrickRed}{"Mock" data}}: Minimum Bias (MB) production
+\begin{itemize}
+\item LHC14j4\string{b,c,d,e\string} anchored to LHC10\string{b,c,d,e\string} pass4
+\item Similar statistics as in data $\sim 300$~M events
+\end{itemize}
+\item \textbf{\textcolor{ForestGreen}{Response matrix}}: charm-enhanced, \pthard-binned production
+\begin{itemize}
+\item LHC15i2\string{b,c,d,e\string} anchored to LHC10\string{b,c,d,e\string} pass4
+\item 10 \pthard\ bins
+\item all events required to have a \ccbar\ or \bbbar\ pair and all D mesons decay hadronically
+\end{itemize}
+\item Perform \textbf{\textcolor{Fuchsia}{signal extraction}} in MB production at \textbf{\textcolor{Fuchsia}{detector level}}
+\begin{enumerate}
+\item \textbf{Invariant mass fit}, \textbf{Like-Sign} (LS) or \textbf{Side-Band} (SB) methods
+\item \textbf{MC truth} information
+\end{enumerate}
+\item \textbf{\textcolor{NavyBlue}{Unfold}} using response matrix from charm-enhanced production
+\item Compare with \textbf{\textcolor{NavyBlue}{particle level}} truth
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Response Matrix and Kinematic Efficiency}
+\begin{overpic}[width=\textwidth, trim=0 240 0 20, clip]{img/ResponseMatrix}
+\end{overpic}
+\begin{itemize}
+\item Reconstruction efficiency already applied during signal extraction (see backup slides for details)
+\item Kinematic efficiency due to limited \pt-range in the input spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Truth / Measured (MC truth signal-only)}
+\center
+\begin{overpic}[width=.7\textwidth, trim=0 0 50 20, clip]{img/Unfolding_TruthOverMeasured_SignalOnly}
+\end{overpic}
+\newline
+Relatively small correction $\sim 10-20$~\%
+\end{frame}
+
+\begin{frame}{Unfolding Methods}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_SignalOnly}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_SignalOnly_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item \textbf{\textcolor{NavyBlue}{Singular Value Decomposition (SVD)}}: Hocker and Kartvelishvili, NIM A372 (1996) 469
+\item \textbf{\textcolor{BrickRed}{Bin-By-Bin}}: "generalized" efficiency correction
+\item \textbf{\textcolor{ForestGreen}{Bayesian}}: D'Agostini, NIM A362 (1995) 487
+\item All 3 unfolding methods work well
+\item Spectrum from the charm-enhanced production used as "prior"
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior Choice: Bin-By-Bin}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_BinByBin}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_BinByBin_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very extreme choice of prior: \textbf{\textcolor{BrickRed}{flat spectrum}}
+\item Strong dependence on prior for the bin-by-bin correction (as expected)
+\item Bin-By-Bin correction is a "generalized" efficiency correction (not technically unfolding)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior Choice: SVD}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_Svd}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_Svd_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very extreme choice of prior: \textbf{\textcolor{BrickRed}{flat spectrum}}
+\item SVD is still able to recover the truth with larger $k$ (regularization parameter)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior Choice: Bayesian}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_Bayes}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingPrior_SignalOnly_Bayes_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very extreme choice of prior: \textbf{\textcolor{BrickRed}{flat spectrum}}
+\item Bayesian method is still able to recover the truth with a larger number of iterations (6 vs. 3)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: SVD with "reasonable" prior}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Svd_train_truth_SignalOnly}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Svd_train_truth_SignalOnly_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item SVD is regularized through the $k$ parameter, with $0\leq k\leq n$ and $n=$~number of bins
+\item Very stable for $k>1$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: SVD with "extreme" prior}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Svd_flat_SignalOnly}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Svd_flat_SignalOnly_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very unstable, need $k=6$ to get close to the truth
+\item Easy to spot if such an extreme scenario is observed in data
+\item Data will probably exhibit something in between these two extremes
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: SVD $d$-vectors}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SvdDvector_SignalOnly_train_truth}
+\put(30,50){"reasonable" prior}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SvdDvector_SignalOnly_flat}
+\put(50,50){flat prior}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item "Unphysical" modulations in the unfolded result are suppressed using $k<n=$~number of bins
+\item The $d$-vector should show a sudden drop to unity for a certain value of $k$, which corresponds to the "best" choice
+\item Left: "healthy" $d$-vector which suggests $k \approx 2-3$
+\item Right: the $d$-vector values do not show a plateau at unity
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pearsons' Coefficients: SVD with "reasonable" prior }
+\center
+\begin{overpic}[width=.65\textwidth, trim=0 0 0 0, clip]{img/Pearson_SignalOnly_Svd_train_truth}
+\end{overpic}
+\begin{itemize}
+\item Pearsons' coefficients measure bin-bin correlations
+\item $-1=$~max anti-correlation, $0=$~no correlation, $1=$~max correlation
+\item Strong correlation between far-away bins, e.g. $k=1,2$
+\item Strong anti-correlation between close-by bins, e.g. $k=5,6$
+\item Pearsons' coefficients suggest $k=3,4$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pearsons' Coefficients: SVD with "extreme" prior }
+\center
+\begin{overpic}[width=.75\textwidth, trim=0 0 0 0, clip]{img/Pearson_SignalOnly_Svd_flat}
+\end{overpic}
+\begin{itemize}
+\item Pearsons' coefficients would suggest $k=5,6$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regularization: Bayesian}
+\begin{columns}
+\column{.50\textwidth}
+\center
+"Reasonable" prior
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Bayes_train_truth_SignalOnly_Ratio}
+\end{overpic}
+\column{.50\textwidth}
+\center
+Flat prior
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingRegularization_Bayes_flat_SignalOnly_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Bayesian method seems to perform well even with an extreme choice of prior
+\item However maybe a small bias in some "nodes"
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pearsons: Bayesian with "reasonable" prior }
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Pearson_SignalOnly_Bayes_train_truth}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{Pearsons: Bayesian with "extreme" prior }
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Pearson_SignalOnly_Bayes_flat}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{Full Closure Test: Invariant Mass Fit Method}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_InvMassFit}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_InvMassFit_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item All 3 unfolding methods work well
+\item Spectrum from the charm-enhanced production used as "prior"
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Full Closure Test: Like-Sign Method}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_LikeSign}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/UnfoldingMethod_LikeSign_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item All 3 unfolding methods work well
+\item Spectrum from the charm-enhanced production used as "prior"
+\end{itemize}
+\end{frame}
+
+
+
+
+\end{document}
