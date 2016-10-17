@@ -12,57 +12,44 @@
 %\usepackage[numbers,square,sort&compress]{natbib}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{color}
 
 \include{commands}
 
 \begin{document}
 \title{Measurement of D-meson tagged jets in pp collisions at 7 TeV with ALICE}
 
-\author{Salvatore Aiola, on behalf of the ALICE Collaboration}
+\author{Salvatore Aiola, for the ALICE Collaboration}
 
 \address{Physics Department, Yale University, 266 Whitney Avenue, New Haven, CT 06511}
 
 \ead{salvatore.aiola@cern.ch}
 
 \begin{abstract}
-Jets are a fundamental feature of high-energy particle interactions. 
-They result from the fragmentation of hard-scattered partons, 
-a key process of Quantum Chromodynamics (QCD). 
-In particular, the production and the internal properties of heavy-flavor jets 
-in pp collisions are not yet satisfactorily described by neither analytical nor 
-phenomenological approaches to QCD. Measurements are needed
-in order to provide important constraints to models inspired by perturbative QCD 
-and Monte-Carlo generators, such as PYTHIA and POWHEG, widely used in high-energy particle physics.
-
-Heavy-flavor jets can also provide important insights into the Quark-Gluon Plasma (QGP)
-produced in ultra-relativistic heavy-ion collisions, as heavy quarks are predicted
-to interact with the QGP differently compared to light quarks and gluons. 
-However, their production mechanisms must first be studied in the vacuum, 
-in order to provide a baseline for the observation of possible modifications induced by the presence of the QGP. 
-
-We present the current status of the measurement of jets that contain a D meson (D-tagged jet) with \mbox{ALICE}.
+We present the current status of the measurement of jets that contain a D meson (D-tagged jets) with \mbox{ALICE}.
 The aim of the analysis is to extract both the $p_{\rm T}$ spectrum of the D-tagged jets and the jet-momentum fraction of the D mesons. 
 We identify D-meson candidates via their hadronic decay channels using topological selections and particle identification.
 These D-meson candidates are combined with the other charged tracks reconstructed by the central tracking system, 
 using the anti-$k_{\rm T}$ jet-finding algorithm.
 We extract the yield of D-tagged jets through an invariant mass analysis of the D-meson candidates associated with each jet, 
-in bins of jet $p_{\rm T}$ and momentum fraction carried by the D meson. Finally we use a standard unfolding procedure 
-to correct the jet $p_{\rm T}$ spectrum for detector inefficiencies and momentum resolution. For this analysis we use data collected
-by ALICE with minimum bias triggers in pp collisions at 7 TeV. We will discuss also
-the perspectives for the same measurement in Pb--Pb and p--Pb collisions.
+in bins of jet $p_{\rm T}$.
+A Monte Carlo simulation that uses PYTHIA6 as event generator and GEANT3 as transport code with a detailed description of the ALICE apparatus,
+has been used to extract the detector performance and validate the signal extraction techniques.
 \end{abstract}
 
 \section{Introduction}
-At hadron colliders, charm quarks are produced as a result of a hard scattering of partons. Like lighter quarks or gluons, charm quarks
-fragment into collimated sprays of hadrons called \emph{jets}. The charm content of the jet is conserved throughout the fragmentation process,
-which is dominated by Quantum Chromo-Dynamics (QCD), the theory of strong nuclear interactions.
-The charm content of a jet can be identified by looking for the presence of charmed hadrons, i.e. hadrons that have
-a charm quark among their valence quarks. Since all charmed hadrons have short lifetimes ($\tau \lesssim 10^{-12}$~s) their presence is inferred
-using a combination of Particle Identification (PID) techniques and selection of specific kinematics and topological patterns of their decay products.
-
-The production cross-section of charm jets is significantly smaller than the ones of lighter quarks or gluons. The internal
-properties of the jets are also affected due to the heavier mass of the originating parton, 
-in particular the fragmentation is expected to be harder for charm jets.
+The measurement of the charm production cross section in \pp\ collisions is an important sensitive test of perturbative QCD (pQCD) calculations.
+At the LHC energies, the measurement of charm production at low \pT\ probes the parton distribution functions (PDFs)
+of the proton at small values of parton fractional momentum, $x$, and squared momentum transfer, $Q^2$.
+For illustration, using a simplified $2 \rightarrow 2$ kinematics at leading order, c quarks ($m_{\mathrm{c}} \approx 1.5$~\GeVcsq) with
+$\pT \sim 2$~\GeVc\ and rapidity $y \sim 0$ probe the parton distribution functions at $x \sim 7 \times 10^{-4}$ and
+$Q^2 \sim (5~\mathrm{GeV})^2$.
+Perturbative QCD calculations have substantial uncertainties at low \pT, owing to both the large effect of the
+choice of the factorization and renormalization scales at low $Q^2$ and to the sizeable uncertainties on the
+gluon PDFs at small $x$~\cite{Cacciari:2015}. 
+the measurement of the charm differential cross section down to low \pT\ is relevant for cosmic-ray and neutrino
+astrophysics: high-energy neutrinos from the decay of charmed hadrons produced in particle showers in the atmosphere constitute an important
+background for neutrinos from astrophysical sources~\cite{Gauld:2015, Bhattacharya:2015}.
 
 Heavy quarks are also an ideal probe of the hot and dense matter, known as the Quark-Gluon Plasma (QGP)~\cite{STAR:2005a, PHENIX:2005a, ALICE:2010b, ALICE:2011b, CMS:2013d, ATLAS:2013c}, 
 that is created in ultra-relativistic heavy-ion collisions. 
@@ -73,50 +60,16 @@ and a broadening and softening of the jet fragmentation.
 A number of experimental results consistent with jet quenching have been reported in last decade~\cite{PHENIX:2003a, PHENIX:2008b, STAR:2003b, STAR:2003c, STAR:2006a, ALICE:2010d, CMS:2011c, CMS:2012b, ATLAS:2014d, ALICE:2015a}.
 High-energy charm jets behave very much like jets that originate from light quarks; however at lower energies, comparable to the charm quark mass, the charm quark is expected
 to interact less strongly with the QGP, a phenomenon known as the dead-cone effect~\cite{Dokshitzer:2001}.
-
-Charm quarks are produced abundantly at the Large Hadron Collider, which provides \pp, \pPb\ and \PbPb\ collisions at unprecedented high collision energies and luminosities.
-At the LHC, the PID and low-momentum tracking capabilities are among the strongest points of ALICE~\cite{ALICE:2014b}.
-Especially vertexing, tracking and PID are crucial to efficiently identify the decay products of charmed hadrons; tracking and calorimetry are used together to reconstructed the energy flow from which jets can be identified.
-ALICE is very well suited to perform a precise measurement of charm jets in a (mostly) unexplored kinematical region, i.e. low and intermediate momentum charm jets. Furthermore, the performance of ALICE
-is optimized for heavy-ion collisions, where charm jet measurements can provide important insights about the QGP. 
-\section{Figures and figure captions}
-Figures must be included in the source code of an article at the appropriate place in the text not grouped together at the end. 
-
-Each figure should have a brief caption describing it and, if 
-necessary, interpreting the various lines and symbols on the figure. 
-As much lettering as possible should be removed from the figure itself and 
-included in the caption. If a figure has parts, these should be 
-labelled ($a$), ($b$), ($c$), etc. 
-\Tref{blobs} gives the definitions for describing symbols and lines often
-used within figure captions (more symbols are available
-when using the optional packages loading the AMS extension fonts).
-
-\section{The ALICE Experiment}
-ALICE (\emph{A Large Ion Collider Experiment}) is the experiment dedicated to the study of heavy-ion collisions at the LHC.
-Figure~\ref{fig:alice} shows a schematic of the ALICE detector.
-ALICE is a complex experiment made of several independent detector sub-systems that are operated synchronously.
-The main detectors are in the central barrel and cover the mid-rapidity region ($\lvert \eta\rvert \lesssim 1$).
-A full description of ALICE and of its performance during LHC Run-1 is available at Ref.~\cite{ALICE:2014b}.\
-
-
-\section{D-tagged jets with ALICE}
-\subsection{Physics goals}
-The measurement of the charm production cross section in \pp\ collisions is an important sensitive test of perturbative QCD (pQCD) calculations.
-At the LHC energies, the measurement of charm production at low \pT\ probes the parton distribution functions (PDFs)
-of the proton at small values of parton fractional momentum, $x$, and squared momentum transfer, $Q^2$.
-For illustration, using a simplified $2 \rightarrow 2$ kinematics at leading order, c quarks ($m_{\mathrm{c}} \approx 1.5$~\GeVcsq) with
-$\pT \sim 2$~\GeVc\ and rapidity $y \sim 0$ probe the parton distribution functions at $x \sim 7 \times 10^{-4}$ and
-$Q^2 \sim (5~\mathrm{GeV})^2$.
-Perturbative QCD calculations have substantial uncertainties at low \pT, owing to both the large effect of the
-choice of the factorization and renormalization scales at low $Q^2$ and to the sizeable uncertainties on the
-gluon PDFs at small $x$~\cite{Cacciari:2015}. 
-
-Furthermore, the measurement of the charm cross section in \pp\ collisions provides a baseline to look for collective effects in ultra-relativistic
-heavy-ion collisions, particularly the ones related to parton energy loss in the QGP. In this context, another crucial aspect is the precise determination of the
+The measurement of the charm cross section in \pp\ collisions provides a baseline to look for collective effects in ultra-relativistic
+heavy-ion collisions. In this context, another crucial aspect is the precise determination of the
 total charm-production cross section, needed to model charmonium regeneration in the QGP~\cite{Zhao:2011}.
-Finally, the measurement of the charm differential cross section down to low \pT\ is relevant for cosmic-ray and neutrino
-astrophysics: high-energy neutrinos from the decay of charmed hadrons produced in particle showers in the atmosphere constitute an important
-background for neutrinos from astrophysical sources~\cite{Gauld:2015, Bhattacharya:2015}.
+
+Charm quarks are produced as a result of a hard scattering of partons. Like lighter quarks or gluons, charm quarks
+fragment into collimated sprays of hadrons called \emph{jets}. The charm content of the jet is conserved throughout the fragmentation process,
+which is dominated by Quantum Chromo-Dynamics (QCD), the theory of strong nuclear interactions.
+The charm content of a jet can be identified by looking for the presence of charmed hadrons, i.e. hadrons that have
+a charm quark among their valence quarks. Since all charmed hadrons have short lifetimes ($\tau \lesssim 10^{-12}$~s) their presence is inferred
+using a combination of Particle Identification (PID) techniques and selection of specific kinematics and topological patterns of their decay products.
 
 Most of the charm-related measurements performed at the LHC so far report the production cross section of hadrons
 containing heavy quarks~\cite{ALICE:2012d, ALICE:2012e, ATLAS:2012e, LHCb:2013a, ALICE:2014d, ATLAS:2014e, ALICE:2015c, ALICE:2015d, ALICE:2016a, ATLAS:2016a}.
@@ -127,45 +80,36 @@ Furthermore, the details of the charm quark fragmentation can be the subject of 
 of both the jet and the charmed hadron are available at the same time. In particular the measurement of the fraction of the jet momentum carried 
 by the charmed hadron can provide important insights on the charm production mechanism~\cite{CDF:1990, UA1:1990, STAR:2009a, ATLAS:2012d}.
 
-\subsection{Analysis technique}
+\section{The ALICE Experiment}
+ALICE is the experiment dedicated to the study of heavy-ion collisions at the LHC.
+The main detectors are in the central barrel and cover the mid-rapidity region ($\lvert \eta\rvert \lesssim 1$).
+PID and low-momentum tracking capabilities are among the strongest points of ALICE~\cite{ALICE:2014b}.
+The \emph{Inner Tracking System} (ITS) is a 6-layer silicon detector that allows the precise determination of the primary vertex and the displacement of 
+secondary vertices of weak decays {\color{red} add precision}. It also provides the first few space points used to reconstruct tracks and determine their momentum.
+The main tracking detector is the \emph{Time Projection Chamber} (TPC), which, combined with the ITS, allows reconstruction of tracks down to $\pT=150$~\GeVc\ with a momentum resolution
+of {\color{red} add resolution}. Several detectors contribute to the Particle Identification (PID) capabilities of ALICE. In particular for this measurement we use the \dedx\ measurement from the TPC and
+the \emph{Time of Flight} (TOF) detector. The TOF is a {\color{red} add short description of TOF and time resolution}.
+A full description of ALICE and of its performance during LHC Run-1 is available at Ref.~\cite{ALICE:2014b}.
+
+\section{Analysis procedures}
 The analysis relies on the well established D meson reconstruction techniques~\cite{ALICE:2012d, ALICE:2012e, ALICE:2014d, ALICE:2015c, ALICE:2015d, ALICE:2016a}, as well as
-jet reconstruction methods~\cite{ALICE:2013c, ALICE:2014a, ALICE:2015e, ALICE:2015f}, both developed by the ALICE Collaboration. In particular I have
-contributed significantly to the measurement of jets in \PbPb\ collisions~\cite{ALICE:2015a, Aiola:2013, Aiola:2014} and to the
-development and maintenance of the related jet reconstruction software.
+jet reconstruction methods~\cite{ALICE:2013c, ALICE:2014a, ALICE:2015e, ALICE:2015f}, both developed by the ALICE Collaboration. The analysis procedures are outlined in the following sections.
 
-Some of the details of the analysis techniques are still under development. In the following section
-I will outline the current plan, which may change as the analysis proceeds and more information becomes available.
+\subsection{Monte Carlo simulations}
+ALICE plans to measure D-tagged jets in \pp\ collisions at $\s=$~7, 8 and 13 TeV and in \pPb\ and \PbPb\ collisions at $\snn=$~5 TeV.
+Two Monte Carlo simulations have been used to extract the detector performance and validate the analysis techniques.
 
-\subsubsection{Data and event selection}
-ALICE has collected data in several collision systems and at different center of mass energies.
-Data-taking periods also differ from each other because the conditions of the detector change in time as a result of upgrades,
-or subsystem sectors that become inactive or are repaired. The trigger conditions can change as well, depending on the
-physics goals set by the Collaboration and on the instantaneous luminosity expected to be delivered by the LHC.
-All these factors need to be taken into account when choosing a dataset that best suits a new physics analysis.
+PYTHIA6 (6.4.28)~\ref{} (tune Perugia-{\color{red} check tune}) has been used as event generator in both simulations.
+For the first simulation (minimum-bias production) PYTHIA was configured to provide Minimum Bias (MB) \pp\ events at $\s=7$~TeV.
+The simulated statistics (about 300 M events) is close to the total statistics accumulated by ALICE in MB \pp\ collisions
+in 2010. In the second simulation (charm-enhanced production) PYTHIA was configured to retain only events with a \ccbar\ pair; the production
+was split in 8 \pthard\ bins, imposing a cut on the \pT\ of the hard scatted parton. In addition, all D meson were forced
+to decay hadronically. These settings allowed to gain enough precision in the determination of the detector response with reasonable
+computational costs.
+In both cases, the PYTHIA events were then passed through the GEANT3 transport code with a detailed description of the ALICE apparatus,
+as it was operated during the 2010 data-taking campaign.
 
-I have started to develop my analysis techniques using the data collected by ALICE in 2010 when the LHC was
-delivering \pp\ collisions at \s\ = 7 TeV. At that time only 2 EMCal super-modules out of 12 were installed.
-This means that the EMCal cannot be used to reconstruct the jet momentum carried by neutral constituents; therefore jets are
-reconstructed only using charged particles measured by the central tracking system (TPC and ITS).
-Jets reconstructed using only charged particles are referred to as \emph{charged jets}. This dataset is very
-well understood within ALICE, in terms of detector performance, and therefore it is a perfect work bench
-to test the core analysis techniques without the additional complications coming from using the calorimeter data.
-To reconstruct full jets, i.e. jets reconstructed out of charged particles from the tracking system and neutral particles from their
-electromagnetic showers in the EMCal-DCal, one has to look at more recent datasets taken with the extended calorimeter acceptance.
-The data taken in 2012 with \pp\ collisions at 8 TeV is a very good candidate. Even more interesting could be the data currently (2016)
-being collected with \pp\ collisions at 13 TeV.
-
-For the data collected in 2010, only \emph{minimum bias} (MB) triggers were active. These triggers
-try to keep the bias coming from online event selection to a minimum, i.e. every time detectors
-are exposed to some activity correlated with an LHC bunch crossing, the event is read-out and stored.
-The detector sub-systems that are involved in this type of trigger are the SPD, the V0 and the T0.
-The data collected in 2012 and the data currently being collected also include triggers
-provided by the EMCal-DCal. In particular, a trigger dedicated to jet physics is available for both datasets. 
-I have also contributed to the commissioning phase of the 2016 EMCal-DCal trigger earlier this year (see Section~\ref{sect:TriggerCommisioning}).
-In this case events are read-out only if a large enough shower has been detected by the calorimeters.
-Trigger biases need to be understood and corrected for, using a combination of data-driven methods and simulations.
-
-\subsubsection{Track selection}
+\subsection{Track selection}
 For more details about the tracking algorithm used by ALICE see Ref.~\cite{ALICE:2014b}.
 
 Track quality cuts are applied to ensure good momentum resolution. These cuts
@@ -182,7 +126,7 @@ For this type of tracks the requirement on the SPD is lifted, while keeping all 
 these tracks are constrained to the primary vertex, which is reconstructed using \emph{global} tracks. This track collection is called \emph{hybrid} because
 it includes a combination of \emph{global} tracks and \emph{constrained} tracks.
 
-\subsubsection{D meson candidate identification}
+\subsection{D meson candidate identification}
 ALICE has successfully measured a number of charmed mesons~\cite{ALICE:2012d, ALICE:2012e}.
 The \Dzero\ meson has the best signal/background ratio down to low momentum and
 is also the most abundant. The \Dzero\ has a mass $m=1.865$~\GeVcsq\ and a mean lifetime $\tau=4.101 \times 10^{-13}$~s.
@@ -203,7 +147,7 @@ When available, PID is used to assign mass values to the \Dzero\ candidate daugh
 the pair is used twice with either mass combinations (\pip \kam or \pim \kap). Using the four-momentum of the \Dzero\ candidate
 the \emph{invariant mass} is calculated according to the usual special relativity formula: $m^2 = E^2 - \bm{p}^2$.
 
-\subsubsection{Jet reconstruction}
+\subsection{Jet reconstruction}
 For each \Dzero\ candidate a set of particle four-momenta is prepared and fed as input for the jet-finding algorithm.
 This set includes the four-momentum of the \Dzero\ candidate and all reconstructed \emph{hybrid} tracks,
 excluding the two daughters of the \Dzero. The jet-finding algorithm returns a set of jet candidates, with the particle constituents
@@ -217,7 +161,7 @@ of the original parton and depends more strongly on the jet fragmentation; howev
 and have been the subject of recent theoretical developments~\cite{Thaler:2013}.
 In a second phase I plan to extend the analysis by including the calorimeter data in jet finding (as done in Refs.~\cite{ALICE:2013c, ALICE:2015a}).
 
-\subsubsection{Invariant mass analysis}
+\subsection{Invariant mass analysis}
 \Dzero\ candidates and their associated jets are then sorted according to their kinematic variables in different bins:
 \begin{enumerate}
 \item for a single-differential D-tagged jet \pT\ spectrum, the candidates will be divided in bins according to their associated jet \pT;
@@ -230,7 +174,7 @@ a smooth shape that can be fitted by an exponential function, whereas the signal
 through a Monte Carlo simulation that uses PYTHIA6~\cite{Sjostrand:2006} as particle generator and GEANT3~\cite{GEANT3-url} to simulate particle interaction
 with the detector material budget and the detector response itself.
 
-\subsubsection{Final corrections and systematic uncertainties}
+\subsection{Final corrections and systematic uncertainties}
 Due to finite detector resolution, the spectrum obtained as outlined above is distorted. In addition the reconstruction efficiency is quite low
 and \pT-dependent, especially for the D meson ($\epsilon_{D^0} \sim 10-20\%$, see Ref.~\cite{ALICE:2012d}). This is due both to the tracking efficiency ($\sim 80\%$, see Ref.~\cite{ALICE:2014b}),
 which affects the probability of reconstructing the decay products, and to the topological cuts. These effects will be corrected for using a combination of Monte Carlo simulation and data-driven methods, currently being refined.
@@ -241,6 +185,30 @@ Systematic uncertainties will be thoroughly assessed. Systematic uncertainties c
 Some of the major sources come from irreducible inaccuracies in the assessment of the detector performance, in particular tracking efficiency, 
 momentum resolution, primary/secondary vertex resolution, PID.
 Other sources are more specific to the analysis procedures and are related to the invariant mass fits and to the unfolding techniques.
+
+\section{Results}
+
+\subsection{Detector performance}
+The detector performance has been assessed using the charm-enhanced production. The D-tagged jets are identified at detector-level (i.e. after the GEANT3 detector response simulation)
+in an way equivalent to real data processing, except for the invariant mass analysis step. The real D mesons are selected among the candidates using the MC truth.
+The D-tagged jets are also identified at generator-level (i.e. PYTHIA events). Even-by-event, detector-level D-tagged jets are matched with their corresponding counter-parts at generator-level.
+This matched pairs are used to build response matrices that relates detector-level observables with their corresponding particle-level observables. These matrices can be used
+to correct detector-response distortions of the final distributions on an ensemble basis (\emph{unfolding}).
+
+The jet momentum resolution and Jet Energy Scale (JES) shift have been quantified using the variable: 
+\begin{equation}
+\left( \ptchjetdet - \ptchjetgen \right) / \ptchjetgen, 
+\end{equation}
+where \ptchjetdet\ and \ptchjetgen are the transverse momenta of the D-tagged jet at detector-level and at generator-level, respectively.
+Its probability density distribution is shown in Fig.~\ref{} for three different bins of \ptchjetgen. No significant dependence on \ptchjetgen\ is observed.
+The shape of the distribution features a sharp peak at zero and is skewed towards negative values, due to tracking inefficiency (higher probability of
+reconstructing jet momenta smaller than the generated ones). The relative jet momentum resolution is quantified with the standard deviation
+of the probability density distribution in Fig.~\ref{}: $\sigma\approx$~\%. The relative JES shift can be quantified with the mean and the median of the same distribution:
+mean~$\approx$~\% and median~$\approx$~\%. This values are comaprable to the ones obtained for inclusive jet~\cite{} for the same data-taking period, with a slightly better jet momentum resolution.
+
+The reconstruction efficiency is calculated as the ratio of the yield of reconstructed D-tagged jets over all generated D-tagged jets, as a function of generator-level observables.
+The reconstruction efficiency is shown in Fig.~\ref{} as a function of \ptd\ for different bins of \ptchjet. The reconstruction efficiency shows a stark dependence on \ptd\ mainly due to
+tighter topological cuts applied at low momentum to suppress the D-meson combinatorial background. No significant dependence on \ptchjet\ is observed in the range $5<\ptchjet<24$~\GeVc.
 
 \begin{figure}[h]
 \centering
@@ -254,11 +222,22 @@ Other sources are more specific to the analysis procedures and are related to th
 \end{minipage} 
 \end{figure}
 
+\subsection{Invariant mass analysis}
+The minimum-bias production has been used to validate the invariant mass analysis. 
+%Since this production has a similar statistics as the real data accumulated by ALICE in 2010 \pp\ data-taking, it provides a good guide to assess possible biases in the signal yield extraction. 
+The D-tagged jets are identified at detector-level in an way equivalent to real data processing, including for the invariant mass analysis step.
+
+Figure~\ref{} shows the D-tagged jet yields as a function of \ptchjetdet\ obtained using the invariant mass fit, side-band and like-sign background subtraction methods, compared to the yield obtained by selecting real D-tagged jets out of the 
+combinatorial background using the MC truth. All methods seem to perform well and do not show any significant bias, beyond the statistical uncertainties connected to each of the signal extraction methods.
+
 \begin{figure}[h]
 \includegraphics[width=.57\textwidth]{img/HQ16_Simulation_MethodComparison}\hspace{1pc}%
 \begin{minipage}[b]{.39\textwidth}\caption{\label{label}Figure caption for a narrow figure where the caption is put at the side of the figure.}
 \end{minipage}
 \end{figure}
+
+\section{Conclusions}
+
 
 \section*{References}
 \bibliography{biblio}{}
