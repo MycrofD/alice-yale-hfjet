@@ -78,6 +78,7 @@
 ENTRY
   { address
     archive
+    archiveprefix
     author
     booktitle
     chapter
@@ -574,7 +575,7 @@ FUNCTION {format.eprint}
 { eprint duplicate$ empty$
     'skip$
     { 
-      "(\textit{Preprint} " 
+      "(" 
       swap$
        "\eprint"
       archive empty$
@@ -1319,7 +1320,7 @@ FUNCTION {article}
       format.pages output
     }
   if$
-  format.issn output
+%% format.issn output
   format.note output
   format.eprint output
   format.url output
@@ -1351,7 +1352,7 @@ FUNCTION {book}
     }
   if$
   %% format.edition output
-  format.isbn output
+  %% format.isbn output
   format.note output
   format.eprint output
   format.url output
@@ -1365,7 +1366,7 @@ FUNCTION {booklet}
   format.title "title" output.check
   howpublished "howpublished" bibinfo.check output
   address "address" bibinfo.check output
-  format.isbn output
+  %% format.isbn output
   format.note output
   format.eprint output
   format.url output
@@ -1430,7 +1431,7 @@ FUNCTION {incollection}
       %% format.number.series output
       format.chapter.pages output
       format.edition output
-      format.isbn output
+      %% format.isbn output
     }
     { format.incoll.inproc.crossref output.nonnull
       format.chapter.pages output
@@ -1449,7 +1450,7 @@ FUNCTION {inproceedings}
   crossref missing$
     { 
 
-      %%format.in.ed.booktitle "booktitle" output.check
+      %%% format.in.ed.booktitle "booktitle" output.check
 %mc   
       format.booktitle "booktitle" output.check
       format.bvolume output
@@ -1465,8 +1466,8 @@ FUNCTION {inproceedings}
       %% format.bvolume output
       %% format.number.series output
       format.pages output
-      format.isbn output
-      format.issn output
+      %% format.isbn output
+      %% format.issn output
     }
     { format.incoll.inproc.crossref output.nonnull
       format.pages output
@@ -1587,8 +1588,8 @@ FUNCTION {proceedings}
       if$
      }
   if$
-  format.isbn output
-  format.issn output
+  %% format.isbn output
+  %% format.issn output
   format.note output
   format.eprint output
   format.url output
@@ -1659,7 +1660,7 @@ FUNCTION {begin.bib}
   write$ newline$
   "\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi"
   write$ newline$
-  "\providecommand{\eprint}[2][]{\url{#2}}"
+  "\providecommand{\eprint}[2][]{\href{https://arxiv.org/abs/#2}{arXiv:#2}}"
   write$ newline$
   "% Bibliography created with iopart-num v2.0"
   write$ newline$

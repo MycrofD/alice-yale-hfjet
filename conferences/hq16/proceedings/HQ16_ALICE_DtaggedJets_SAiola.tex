@@ -1,6 +1,5 @@
 \documentclass[a4paper]{jpconf}
 
-\usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{bm}        % for math
 \usepackage{amssymb}   % for math
@@ -13,6 +12,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{color}
+\usepackage{hyperref}
 
 \include{commands}
 
@@ -38,44 +38,48 @@ has been used to extract the detector performance and validate the signal extrac
 \end{abstract}
 
 \section{Introduction}
-The measurement of the charm production cross section in \pp\ collisions is an important sensitive test of perturbative QCD (pQCD) calculations.
-At the LHC energies, the measurement of charm production at low \pT\ probes the parton distribution functions (PDFs)
-of the proton at small values of parton fractional momentum, $x$, and squared momentum transfer, $Q^2$.
-For illustration, using a simplified $2 \rightarrow 2$ kinematics at leading order, c quarks ($m_{\mathrm{c}} \approx 1.5$~\GeVcsq) with
-$\pT \sim 2$~\GeVc\ and rapidity $y \sim 0$ probe the parton distribution functions at $x \sim 7 \times 10^{-4}$ and
-$Q^2 \sim (5~\mathrm{GeV})^2$.
-Perturbative QCD calculations have substantial uncertainties at low \pT, owing to both the large effect of the
-choice of the factorization and renormalization scales at low $Q^2$ and to the sizeable uncertainties on the
-gluon PDFs at small $x$~\cite{Cacciari:2015}. 
-the measurement of the charm differential cross section down to low \pT\ is relevant for cosmic-ray and neutrino
-astrophysics: high-energy neutrinos from the decay of charmed hadrons produced in particle showers in the atmosphere constitute an important
-background for neutrinos from astrophysical sources~\cite{Gauld:2015, Bhattacharya:2015}.
+At hadron colliders, charm quarks are produced as a result of a hard scattering of partons. Like lighter quarks or gluons, charm quarks
+fragment into collimated sprays of hadrons called \emph{jets}. The charm content of the jet is conserved throughout the fragmentation process,
+which is dominated by Quantum Chromo-Dynamics (QCD).
+%the theory of strong nuclear interactions;
+In the final state, the charm content can be identified by looking for the presence of charmed hadrons.
+%i.e. hadrons that have a charm quark among their valence quarks. Since all charmed hadrons have short lifetimes ($\tau \lesssim 10^{-12}$~s) their presence is inferred
+%using a combination of Particle Identification (PID) techniques and selection of specific kinematics and topological patterns of their decay products.
 
-Heavy quarks are also an ideal probe of the hot and dense matter, known as the Quark-Gluon Plasma (QGP)~\cite{STAR:2005a, PHENIX:2005a, ALICE:2010b, ALICE:2011b, CMS:2013d, ATLAS:2013c}, 
+The measurement of the charm jet production cross section in \pp\ collisions is an important, sensitive test of perturbative QCD (pQCD) calculations.
+In particular, at the LHC energies, the measurement of charm production at low \pT\ probes the parton distribution functions (PDFs)
+of the proton at small values of parton fractional momentum, $x$, and squared momentum transfer, $Q^2$, 
+a kinematical region where pQCD calculations suffer from large uncertainties.
+%For illustration, using a simplified $2 \rightarrow 2$ kinematics at leading order, c quarks ($m_{\mathrm{c}} \approx 1.5$~\GeVcsq) with
+%$\pT \sim 2$~\GeVc\ and rapidity $y \sim 0$ probe the parton distribution functions at $x \sim 7 \times 10^{-4}$ and
+%$Q^2 \sim (5~\mathrm{GeV})^2$.
+%Perturbative QCD calculations have substantial uncertainties at low \pT, owing to both the large effect of the
+%choice of the factorization and renormalization scales at low $Q^2$ and to the sizeable uncertainties on the
+%gluon PDFs at small $x$~\cite{Cacciari:2015}. 
+%The measurement of the charm differential cross section down to low \pT\ is relevant also for cosmic-ray and neutrino
+%astrophysics: high-energy neutrinos from the decay of charmed hadrons produced in particle showers in the atmosphere constitute an important
+%background for neutrinos from astrophysical sources~\cite{Gauld:2015, Bhattacharya:2015}.
+
+Heavy quarks are also an ideal probe of the hot and dense matter, 
+known as the Quark-Gluon Plasma (QGP)~\cite{STAR:2005a, PHENIX:2005a, ALICE:2010b, ALICE:2011b, CMS:2013d, ATLAS:2013c}, 
 that is created in ultra-relativistic heavy-ion collisions. 
 Hard scattered partons, including heavy quarks, are produced early in the collision. They interact with the QGP, which increases their virtuality and interferes with the
-parton fragmentation process.
-This effect, known as \emph{jet quenching}, can lead to a suppression of the jet yield, the disappearance of the back-to-back jet correlation peak,
-and a broadening and softening of the jet fragmentation. 
-A number of experimental results consistent with jet quenching have been reported in last decade~\cite{PHENIX:2003a, PHENIX:2008b, STAR:2003b, STAR:2003c, STAR:2006a, ALICE:2010d, CMS:2011c, CMS:2012b, ATLAS:2014d, ALICE:2015a}.
+parton shower (\emph{jet quenching})~\cite{PHENIX:2003a, PHENIX:2008b, STAR:2003b, STAR:2003c, STAR:2006a, ALICE:2010d, CMS:2011c, CMS:2012b, ATLAS:2014d, ALICE:2015a}.
+%can lead to a suppression of the jet yield, the disappearance of the back-to-back jet correlation peak,
+%and a broadening and softening of the jet fragmentation. 
+%A number of experimental results consistent with jet quenching have been reported in last decade
 High-energy charm jets behave very much like jets that originate from light quarks; however at lower energies, comparable to the charm quark mass, the charm quark is expected
 to interact less strongly with the QGP, a phenomenon known as the dead-cone effect~\cite{Dokshitzer:2001}.
-The measurement of the charm cross section in \pp\ collisions provides a baseline to look for collective effects in ultra-relativistic
-heavy-ion collisions. In this context, another crucial aspect is the precise determination of the
-total charm-production cross section, needed to model charmonium regeneration in the QGP~\cite{Zhao:2011}.
-
-Charm quarks are produced as a result of a hard scattering of partons. Like lighter quarks or gluons, charm quarks
-fragment into collimated sprays of hadrons called \emph{jets}. The charm content of the jet is conserved throughout the fragmentation process,
-which is dominated by Quantum Chromo-Dynamics (QCD), the theory of strong nuclear interactions.
-The charm content of a jet can be identified by looking for the presence of charmed hadrons, i.e. hadrons that have
-a charm quark among their valence quarks. Since all charmed hadrons have short lifetimes ($\tau \lesssim 10^{-12}$~s) their presence is inferred
-using a combination of Particle Identification (PID) techniques and selection of specific kinematics and topological patterns of their decay products.
+%The measurement of the charm jet cross section in \pp\ collisions provides a baseline to look for collective effects in ultra-relativistic
+%heavy-ion collisions. 
+%In this context, another crucial aspect is the precise determination of the
+%total charm-production cross section, needed to model charmonium regeneration in the QGP~\cite{Zhao:2011}.
 
 Most of the charm-related measurements performed at the LHC so far report the production cross section of hadrons
 containing heavy quarks~\cite{ALICE:2012d, ALICE:2012e, ATLAS:2012e, LHCb:2013a, ALICE:2014d, ATLAS:2014e, ALICE:2015c, ALICE:2015d, ALICE:2016a, ATLAS:2016a}.
-The kinematic properties of jets are closer to those of the originating c quark, when compared to the measurement of the charmed hadrons alone.
-Therefore, by measuring the kinematic properties of jets containing heavy-flavor hadrons 
-one reduces the dependence on the details of the fragmentation, which is a highly non-perturbative phenomenon, known only with large uncertainties~\cite{dEnterria:2014}.
+Measuring the kinematic observables of jets implies integrating out some of the hadronization degrees of freedom. 
+Since hadronization is a highly non-perturbative process, known only with large uncertainties~\cite{dEnterria:2014}, 
+reducing its influence in the measurement may improve comparisons with pQCD calculations.
 Furthermore, the details of the charm quark fragmentation can be the subject of a more careful study in which the kinematic observables 
 of both the jet and the charmed hadron are available at the same time. In particular the measurement of the fraction of the jet momentum carried 
 by the charmed hadron can provide important insights on the charm production mechanism~\cite{CDF:1990, UA1:1990, STAR:2009a, ATLAS:2012d}.
