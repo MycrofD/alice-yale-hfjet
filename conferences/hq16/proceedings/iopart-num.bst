@@ -1601,8 +1601,8 @@ FUNCTION {techreport}
   format.authors "author" output.check
   format.date "year" output.check
   date.block
-  format.title
-  "title" output.check
+  %format.title
+  %"title" output.check
   format.tr.number output.nonnull
   institution "institution" bibinfo.warn output
   address "address" bibinfo.check output
