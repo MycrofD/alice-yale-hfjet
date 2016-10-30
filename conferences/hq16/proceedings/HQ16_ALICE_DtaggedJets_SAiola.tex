@@ -39,7 +39,7 @@ A Monte Carlo simulation has been used to extract the detector performance and v
 At hadron colliders, charm quarks are produced as a result of a hard scattering of partons. Like lighter quarks or gluons, charm quarks
 fragment into collimated sprays of hadrons called \emph{jets}. The charm content of the jet is conserved throughout the fragmentation process,
 which is dominated by Quantum Chromo-Dynamics (QCD).
-In the final state, the charm content can be identified by looking for the presence of charmed hadrons.
+In the final state, the charm content can be identified by looking for the presence of charmed hadrons among the jet constituents.
 
 The measurement of the charm jet production cross section in \pp\ collisions is an important, sensitive test of perturbative QCD (pQCD) calculations.
 %In particular, at the LHC energies, the measurement of charm production at low \pT\ probes the parton distribution functions (PDFs)
@@ -55,7 +55,7 @@ to interact less strongly with the QGP, a phenomenon known as the dead-cone effe
 
 Most of the charm measurements performed at the LHC so far report the production cross section of hadrons
 containing heavy quarks~\cite{ALICE:2012d, LHCb:2013a, ATLAS:2016a, ALICE:2016b}.
-Measuring the kinematic observables of jets implies integrating out some of the hadronization degrees of freedom. 
+Measuring the kinematic observables of jets with charm content implies integrating out some of the hadronization degrees of freedom. 
 Since hadronization is a highly non-perturbative process, known only with large uncertainties~\cite{dEnterria:2014}, 
 reducing its influence in the measurement may improve comparisons with pQCD calculations.
 Furthermore, 
@@ -81,7 +81,7 @@ Several detectors contribute to the Particle Identification (PID) capabilities o
 In particular in this analysis we use the \dedx\ measurement from the TPC and
 the \emph{Time Of Flight} (TOF) detector,
 %The TOF detector is a large area 
-an array of Multigap Resistive Plate Chambers (MRPC).
+an array of Multigap Resistive Plate Chambers (MRPC) that cover the full azimuth.
 %, covering the full azimuth and the pseudorapidity range $\lvert \eta\rvert \lesssim 0.9$.
 %The TPC \dedx\ measurement provides good hadron identification at low momentum ($\pT\lesssim0.7$~\GeVc) and 
 %in the relativistic rise region ($\pT\gtrsim2$~\GeVc);
@@ -103,11 +103,11 @@ PYTHIA6 (6.4.25)\cite{Sjostrand:2006} (tune Perugia-2011) has been used as event
 For the first simulation (minimum-bias production) PYTHIA was configured to provide Minimum Bias (MB) \pp\ events at $\s=7$~TeV.
 %The simulated statistics (about 300 M events) is close to the total statistics accumulated by ALICE in MB \pp\ collisions in 2010. 
 In the second simulation (charm-enhanced production) PYTHIA was configured to retain only events with a \ccbar\ pair; the production
-was split in eigth \pthard\ bins (\pT\ of the hard scatted parton). In addition, all D meson were forced
+was split in eigth \pthard\ bins (\pT\ of the hard scatted parton). In addition, all D mesons were forced
 to decay hadronically. These settings allowed to gain enough statistical precision in the determination of the detector response with reasonable
 computational costs.
 In both cases, the PYTHIA events were then passed through the GEANT3~\cite{GEANT3-url} transport code with a detailed description of the ALICE apparatus,
-as it was operated during the 2010 data-taking campaign.
+as it was operated in 2010.
 
 \subsection{\Dzero-jet reconstruction}
 %For more details about the tracking algorithm used by ALICE see Ref.~\cite{ALICE:2014b}.
@@ -238,11 +238,12 @@ Figure~\ref{fig:HQ16_Simulation_MethodComparison} shows the D-tagged jet yields 
 side-band and like-sign methods, compared to the MC truth. All methods perform well and do not show any significant bias, beyond the statistical uncertainties assigned to each signal extraction method.
 
 \section{Conclusions}
-ALICE has a great potential for measuring jets with charm content tagged using fully reconstructed D mesons in pp collisions at $\s=7$~TeV, especially at low momentum ($\ptchjet \lesssim 30$~\GeVc),
-as well as the intermediate momentum ($\ptjet\approx100$~\GeVc) and
-low \ptd\ by exploiting the data collected at $\s=8,\,13$~TeV with the calorimeter triggers.
+ALICE has a great potential for measuring jets with charm content tagged using fully reconstructed D mesons in pp collisions, 
+especially at low momentum ($\ptchjet \lesssim 30$~\GeVc) with the data collected at $\s=7$~TeV,
+as well as the intermediate jet momentum ($\ptjet\approx100$~\GeVc) and
+low D-meson momentum by exploiting the data collected at $\s=8,\,13$~TeV with the calorimeter triggers.
 In \PbPb\ and \pPb\ collisions ALICE will study cold and hot nuclear matter effects
-looking at the yields and fragmentation functions of low- and intermediate-momentum \Dzero-tagged jets.
+looking at the yields and fragmentation functions of \Dzero-tagged jets.
 
 The ALICE detector performance for \Dzero-tagged jets has been assessed using MC simulations
 for pp collisions at $\s=7$~TeV. The \Dzero-jet momentum resolution has been measured to be about 11\%; the reconstruction efficiency, independent of \ptchjet, ranges from 5\% to 25\% as a function of \ptd.
