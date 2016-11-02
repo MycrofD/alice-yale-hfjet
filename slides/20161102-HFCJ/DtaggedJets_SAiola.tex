@@ -1,0 +1,183 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\title[B feed-down: POWHEG simulation] % (optional, use only with long paper titles)
+{B feed-down: POWHEG simulation}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Nov. 2nd, 2016] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+November 2nd, 2016}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+  %  \tableofcontents
+  %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{POWHEG simulation}
+
+\begin{frame}{Yields vs \ptd\ for $\ptchjet>0$, $\lvert\eta_{\rm jet}\rvert>0.5$}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FastSimAnalysis_local_BFeedDown_powheg_D0_MCTruth_D_Pt_Spectrum}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FastSimAnalysis_local_BFeedDown_powheg_D0_MCTruth_D_Pt_Spectrum_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Yields vs \ptchjet\ for $\ptd>0$, $\lvert\eta_{\rm jet}\rvert>0.5$}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FastSimAnalysis_local_BFeedDown_powheg_D0_MCTruth_D_Tagged_Jet_Pt_Spectrum}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FastSimAnalysis_local_BFeedDown_powheg_D0_MCTruth_D_Tagged_Jet_Pt_Spectrum_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Yields vs \ptd\ for $\ptchjet>5$~\GeVc, $\lvert\eta_{\rm jet}\rvert>0.5$}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FastSimAnalysis_local_BFeedDown_powheg_D0_MCTruth_D_Pt_Spectrum_JetPt_5}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FastSimAnalysis_local_BFeedDown_powheg_D0_MCTruth_D_Pt_Spectrum_JetPt_5_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Yields vs \ptchjet\ for $\ptd>2$~\GeVc, $\lvert\eta_{\rm jet}\rvert>0.5$}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FastSimAnalysis_local_BFeedDown_powheg_D0_MCTruth_D_Tagged_Jet_Pt_Spectrum_PtD_2}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FastSimAnalysis_local_BFeedDown_powheg_D0_MCTruth_D_Tagged_Jet_Pt_Spectrum_PtD_2_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\section*{Summary}
+
+\begin{frame}{Conclusions}
+\begin{itemize}
+\item POWHEG+PYTHIA6 simulation framework in place to generate and analyze D-tagged jets
+\item On-the-fly simulation with my D-meson jet task and Andrea's task (AliAnalysisTaskSEhfcjMCanalysis)
+\item Fully functional on the grid
+\begin{itemize}
+\item Automatic generation of JDL
+\item Automatic grid merging in stages
+\end{itemize}
+\item This analysis: partial results from the grid (need to fine tune the number of files in the merging stages...)
+\item Should be easy to implement other generators, shower codes, decayers (PYTHIA8, EvtGen, etc.)
+\item Next steps 
+\begin{itemize}
+\item Generate 2D matrix(\ptchjet, \ptd) with B feed-down correction factors
+\item Class to apply correction factors (Barbara?)
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}
