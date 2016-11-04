@@ -1,0 +1,211 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\title[B feed-down: POWHEG simulation] % (optional, use only with long paper titles)
+{B feed-down: POWHEG simulation}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Nov. 4th, 2016] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+November 4th, 2016}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+  %  \tableofcontents
+  %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+\begin{itemize}
+\item POWHEG+PYTHIA6 simulation framework in place to generate and analyze D-tagged jets
+\item The code is available in the "fastSimulation" directory of my gitlab repository (linked in the \href{https://alice.its.cern.ch/jira/browse/PWGHF-108}{JIRA ticket})
+\item Not fully documented, but working on it
+\item On-the-fly simulation with my D-meson jet task (PWGJE/FlavorJetTasks/AliAnalysisTaskDmesonJets)
+\item Fully functional on the grid
+\begin{itemize}
+\item Automatic generation of JDL
+\item Automatic grid merging in stages
+\end{itemize}
+\item This analysis: grid analysis with 5 M \ccbar\ and 5 M \bbbar\ events
+\item POWHEG configured using default input files
+\item PYTHIA6 with Perugia-2011 tune for shower and hadronization
+\end{itemize}
+\end{frame}
+
+\section{$R=0.6$}
+
+\begin{frame}{$R=0.6$: Yields vs \ptd\ ($\lvert\eta_{\rm jet}\rvert>0.5$)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/R060/BFeedDown_powheg_BFeedDownVsPtD_powheg_1478104073_1478104389}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/R060/BFeedDown_powheg_BFeedDownVsPtD_powheg_1478104073_1478104389_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Enhancement of b-fraction at low \ptd\ with a cut on the min \ptchjet
+\item The \Dzero-jets from c are more strongly suppressed at low \ptd\
+\item Probably because in the case of b-jets there are the other fragments of the B-meson decay that contribute to the jet \pt
+\item The effect should vanish at high \ptchjet\ where the remaining fragments of the B-meson decay should play a negligible role
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$R=0.6$: Yields vs \ptchjet\ ($\lvert\eta_{\rm jet}\rvert>0.5$)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/R060/BFeedDown_powheg_BFeedDownVsPtJet_powheg_1478104073_1478104389}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/R060/BFeedDown_powheg_BFeedDownVsPtJet_powheg_1478104073_1478104389_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Monotonic increase of the b-fraction as a function of \ptchjet, with flattening at higher momentum
+\end{itemize}
+\end{frame}
+
+\section{$R=0.4$}
+
+\begin{frame}{$R=0.4$: Yields vs \ptd\ ($\lvert\eta_{\rm jet}\rvert>0.5$)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/R040/BFeedDown_powheg_BFeedDownVsPtD_powheg_1478104073_1478104389}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/R040/BFeedDown_powheg_BFeedDownVsPtD_powheg_1478104073_1478104389_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item $R=0.4$: similar picture as $R=0.6$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$R=0.4$: Yields vs \ptchjet\ ($\lvert\eta_{\rm jet}\rvert>0.5$)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/R040/BFeedDown_powheg_BFeedDownVsPtJet_powheg_1478104073_1478104389}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/R040/BFeedDown_powheg_BFeedDownVsPtJet_powheg_1478104073_1478104389_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item $R=0.4$: similar picture as $R=0.6$
+\end{itemize}
+\end{frame}
+
+\section*{Summary}
+
+\begin{frame}{Conclusions}
+Next steps 
+\begin{itemize}
+\item Run larger statistics ($\times5$)
+\item Implement EvtGen and PYTHIA8
+\item Compare with FONLL
+\item Fold the b and c spectra using the detector response matrices
+\item Generate 2D matrix(\ptchjet, \ptd) with B feed-down correction factors
+\end{itemize}
+\end{frame}
+
+\end{document}
