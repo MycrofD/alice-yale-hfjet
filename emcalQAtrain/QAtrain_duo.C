@@ -26,35 +26,6 @@
 //    aliroot -b -q QAtrain_duo.C\(\"_outer\"\,158285\,\"Stage_5.xml\"\,5\)
 //      -> event_stat_outer.root trending_outer.root 145230_145230_0_132897.stat
 #include "Riostream.h"
-
-/*****************************************
-When running in local mode, you need
-to write a file containing, for example
-
-export ALIEN_JDL_LPMInteractionType=pp
-export ALIEN_JDL_LPMAnchorYear=2015
-export ALIEN_JDL_LPMProductionTag=LHC15n
-export ALIEN_JDL_LPMRunNumber=244628
-export ALIEN_JDL_LPMRAWPassID=2
-
-then source it
-******************************************/
-
-enum ECOLLISIONSYSTEM_t
-{
-    kpp,
-    kPbPb,
-    kpA,
-    kNSystem
-};
-
-const Char_t* CollisionSystem[kNSystem] =
-{
-    "pp",
-    "PbPb",
-    "pA",
-};
-
 void AddAnalysisTasks(const char *, const char *);
 void QAmerge(const char *,const char *, Int_t);
 void ProcessEnvironmentVars();
@@ -64,54 +35,55 @@ Bool_t CheckEnvS(const char* var,TString& envString);
 Int_t iCollisionType = 0; // 0=pp, 1=PbPb
 // Trigger mask.
 
+//UInt_t kTriggerInt = AliVEvent::kAnyINT;
+UInt_t kTriggerInt=  AliVEvent::kINT7 | AliVEvent::kINT8;
 
-UInt_t kTriggerInt = AliVEvent::kINT7 | AliVEvent::kINT8;
 UInt_t kTriggerMuonBarrel = AliVEvent::kMUU7 | AliVEvent::kMuonUnlikeLowPt8 | AliVEvent::kMuonUnlikeLowPt0;
 UInt_t kTriggerEMC   = AliVEvent::kEMC7 | AliVEvent::kEMC8 | AliVEvent::kEMCEJE | AliVEvent::kEMCEGA;
 UInt_t kTriggerHM   = AliVEvent::kHighMult;
+
 // Main trigger mask used:
 UInt_t kTriggerMask = kTriggerInt;
 //UInt_t kTriggerMask = 0;
 
-Bool_t localRunning = kFALSE; // Missing environment vars will cause a crash; change it to kTRUE if running locally w/o env vars
-
+Int_t runNumbers[5] = {225106};
 
 Bool_t doStatistics   = 1;
 Bool_t doCDBconnect   = 1;
 Bool_t doEventStat    = 1;
 Bool_t doCentrality   = 0;
 Bool_t doQAsym        = 0;
-Bool_t doVZERO        = 1;   // there is a 2nd file
+Bool_t doVZERO        = 0;   // there is a 2nd file
 Bool_t doVZEROPbPb    = 0;
-Bool_t doVertex       = 1;
-Bool_t doSPD          = 1;   // needs RP
-Bool_t doTPC          = 1;
-Bool_t doHLT          = 1;
-Bool_t doSDD          = 1;   // needs RP
-Bool_t doPileup       = 1;
-Bool_t doSSDdEdx      = 1;
+Bool_t doVertex       = 0;
+Bool_t doSPD          = 0;   // needs RP
+Bool_t doTPC          = 0;
+Bool_t doHLT          = 0;
+Bool_t doSDD          = 0;   // needs RP
+Bool_t doPileup       = 0;
+Bool_t doSSDdEdx      = 0;
 
-Bool_t doTRD          = 1;
-Bool_t doITS          = 1;
-Bool_t doITSsaTracks  = 1;
-Bool_t doITSalign     = 1;
+Bool_t doTRD          = 0;
+Bool_t doITS          = 0;
+Bool_t doITSsaTracks  = 0;
+Bool_t doITSalign     = 0;
 Bool_t doCALO         = 1;
-Bool_t doMUONTrig     = 1;
-Bool_t doMUONEff      = 1;
-Bool_t doImpParRes    = 1;
-Bool_t doMUON         = 1;
-Bool_t doTOF          = 1;
-Bool_t doHMPID        = 1;
-Bool_t doT0           = 1;
-Bool_t doZDC          = 1;
+Bool_t doMUONTrig     = 0;
+Bool_t doMUONEff      = 0;
+Bool_t doImpParRes    = 0;
+Bool_t doMUON         = 0;
+Bool_t doTOF          = 0;
+Bool_t doHMPID        = 0;
+Bool_t doT0           = 0;
+Bool_t doZDC          = 0;
 Bool_t doPIDResponse  = 1;
-Bool_t doPIDqa        = 1; //new
-Bool_t doFMD          = 1; // new
-Bool_t doPHOS         = 1; // new
-Bool_t doPHOSTrig     = 1; // new
-Bool_t doEMCAL        = 0;
-Bool_t doFBFqa        = 1; // new - not ported yet to revision
-Bool_t doAD           = 1; // new AD detector
+Bool_t doPIDqa        = 0; //new
+Bool_t doFMD          = 0; // new
+Bool_t doPHOS         = 0; // new
+Bool_t doPHOSTrig     = 0; // new
+Bool_t doEMCAL        = 1;
+Bool_t doFBFqa        = 0; // new - not ported yet to revision
+Bool_t doAD           = 0; // new AD detector
 
 Bool_t doTaskFilteredTree        = 0;      // high pt filter task
 
@@ -132,8 +104,6 @@ void QAtrain_duo(const char *suffix="", Int_t run = 0,
   Bool_t ibarrel = (ss.Contains("barrel"))?kTRUE:kFALSE;
 
   ProcessEnvironmentVars();
-
-  PrintSettings();
 
   TString cdbString(cdb);
   if (cdbString.Contains("raw://"))
@@ -492,13 +462,16 @@ void AddAnalysisTasks(const char *suffix, const char *cdb_location)
   if (doMUON) {
   // trigger analysis internal
     gROOT->LoadMacro("$ALICE_PHYSICS/PWGPP/PilotTrain/AddTaskMuonQA.C");
+
+    //AliAnalysisTaskMuonQA* taskmuonqa= AddTaskMuonQA(kTRUE);
+
     AliAnalysisTaskMuonQA* taskmuonqa= 0;
     if (kTriggerMask)
       taskmuonqa = AddTaskMuonQA(kTRUE);
     else
       taskmuonqa = AddTaskMuonQA(kFALSE);
 
-//    taskmuonqa->GetTrackCuts()->SetCustomParamFromRun(160000,2);
+    //    taskmuonqa->GetTrackCuts()->SetCustomParamFromRun(160000,2);
   }
   //
   // TOF (Francesca Bellini)
@@ -586,36 +559,35 @@ void AddAnalysisTasks(const char *suffix, const char *cdb_location)
   // EMCAL QA (Gustavo Conesa)
   //
   if (doEMCAL) {
-     gROOT->LoadMacro("$ALICE_PHYSICS/PWGGA/EMCALTasks/macros/AddTaskEMCALTriggerQA.C");
-     AliAnalysisTaskEMCALTriggerQA *emctrig = AddTaskEMCALTriggerQA();
+//     gROOT->LoadMacro("$ALICE_PHYSICS/PWGGA/EMCALTasks/macros/AddTaskEMCALTriggerQA.C");
+//     AliAnalysisTaskEMCALTriggerQA *emctrig = AddTaskEMCALTriggerQA();
 //     emctrig->GetRecoUtils()->SwitchOffBadChannelsRemoval();
 
     // Adding new trigger QA (Salvatore Aiola, Markus Fasel)
     // The new trigger QA performs basic checks on fastor, cluster and
     // trigg patch level. Therefor several producer wagons need to be added:
     // - EMCAL correction tasks
-    // - EMCAL clusterizer
-    // - EMCAL cluster maker
     // - Trigger Maker (new version, no QA enabled)
 
     // EMCAL correction task
     gROOT->LoadMacro("$ALICE_PHYSICS/PWG/EMCAL/macros/AddTaskEmcalCorrectionTask.C");
     AliEmcalCorrectionTask * correctionTask = AddTaskEmcalCorrectionTask();
     correctionTask->SetUserConfigurationFilename("userQAconfiguration.yaml");
-    //correctionTask->SelectCollisionCandidates(kPhysSel);
     correctionTask->SetRunPeriod("noPeriod");
+    correctionTask->SetForceBeamType(AliEmcalCorrectionTask::kpp);
     correctionTask->Initialize();
 
     // Trigger maker (EMCAL trigger patch reconstruction)
     gROOT->LoadMacro("$ALICE_PHYSICS/PWG/EMCAL/macros/AddTaskEmcalTriggerMakerNew.C");
     AliEmcalTriggerMakerTask *emctm = AddTaskEmcalTriggerMakerNew();
-    emctm->SelectCollisionCandidates(kTriggerInt | kTriggerEMC);
+    emctm->SetForceBeamType(AliEmcalTriggerMakerTask::kpp);
+    //emctm->SelectCollisionCandidates(kTriggerInt | kTriggerEMC);
 
     // EMCAL trigger QA task
     AliEmcalTriggerQATask::AddTaskEmcalTriggerQA_QAtrain(run_number);
 
     // EMCAL cluster spectra
-    AliAnalysisTaskEmcalJetQA::AddTaskEmcalJetQA("", "usedefault", "usedefault", "CaloQA_default");
+    AliAnalysisTaskEmcalJetQA::AddTaskEmcalJetQA_QAtrain(run_number);
   }
   //
   // FLOW and BF QA (C.Perez && A.Rodriguez)
@@ -650,8 +622,8 @@ void QAmerge(const char *suffix, const char *dir, Int_t stage)
   timer.Start();
   TString outputDir = dir;
   TString outputFiles = Form("QAresults%s.root,EventStat_temp%s.root,RecoQAresults%s.root,FilterEvents_trees%s.root",suffix,suffix,suffix,suffix);
-  //TString mergeExcludes = "EventStat_temp.root"; // created by AODtrain? crash in QAmerging if AOD missing?
-  TString mergeExcludes = "";
+  //TString mergeExcludes = "";
+  TString mergeExcludes = "EventStat_temp.root";
   TObjArray *list = outputFiles.Tokenize(",");
   TIter *iter = new TIter(list);
   TObjString *str;
@@ -703,49 +675,6 @@ void QAmerge(const char *suffix, const char *dir, Int_t stage)
 
 void ProcessEnvironmentVars()
 {
-  //
-  // Collision system configuration
-  //
-  if(gSystem->Getenv("ALIEN_JDL_LPMInteractionType"))
-  {
-    for (Int_t icoll = 0; icoll < kNSystem; icoll++)
-      if (strcmp(gSystem->Getenv("ALIEN_JDL_LPMInteractionType"), CollisionSystem[icoll]) == 0)
-      {
-        iCollisionType = icoll;
-
-        if(icoll == kpA)
-            iCollisionType =kpp;
-
-        break;
-      }
-      if(iCollisionType == kPbPb)
-      {
-        doCentrality =kTRUE;
-        doVZEROPbPb =kTRUE;
-      }
-  }
-  else
-    if(!localRunning)
-    {
-      printf(">>>>> Unknown collision system configuration ALIEN_JDL_LPMInteractionType \n");
-      abort();
-    }
-
-  //
-  // Run number
-  //
-  if (gSystem->Getenv("ALIEN_JDL_LPMRunNumber"))
-    run_number = atoi(gSystem->Getenv("ALIEN_JDL_LPMRunNumber"));
-  else
-    if(!localRunning)
-    {
-      printf(">>>>> Unknown run number configuration ALIEN_JDL_LPMRunNumber \n");
-      abort();
-    }
-  if (run_number <= 0)
-    printf(">>>>> Invalid run number: %d \n", run_number);
-
-
   int var=0;
   TString envS;
   //
@@ -1116,16 +1045,4 @@ void mergeQAgroups(const char* lst, const char* out="QAresults.root")
   AliFileMerger fm;
   fm.IterTXT(lstS.Data(),outS.Data());
   //
-}
-
-//________________________________________________________
-void PrintSettings()
-{
-  printf("\n   **********************************\n");
-  printf("   * \n");
-  printf("   * System:         %d\n", iCollisionType);
-  printf("   * Run number:     %d\n", run_number);
-  printf("   * Centrality:     %d\n", doCentrality);
-  printf("   * \n");
-  printf("   **********************************\n\n");
 }

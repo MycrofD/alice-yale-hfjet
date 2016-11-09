@@ -1,5 +1,5 @@
-period: "LHC11h"
-pass: ""
+period: "noperiod"
+pass: "nopass"
 CellEnergy:
     enabled: false
     createHistos: false
