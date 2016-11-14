@@ -1,0 +1,116 @@
+% $Id: commands.tex 332 2011-12-01 15:01:46Z aadare $
+ 
+%===========================================================
+% Andrew's commands May 9
+
+\newcommand{\vn}           {\ensuremath{v_{n}}}
+\newcommand{\vngf}         {\ensuremath{v_{n} \{ GF \} }}
+\newcommand{\vnd}          {\ensuremath{V_{n\Delta}}}
+\newcommand{\voned}          {\ensuremath{V_{1\Delta}}}
+\newcommand{\ptt}          {\ensuremath{p_{T}^{t}}}
+\newcommand{\pta}          {\ensuremath{p_{T}^{a}}}
+\newcommand{\df}           {\ensuremath{\Delta\phi}}
+\newcommand{\de}           {\ensuremath{\Delta\eta}}
+\newcommand{\CF}           {\ensuremath{C \left(\Delta \phi \right)}}
+\newcommand{\same}         {\ensuremath{frac{d\langle n_{\rm same}^{AB} \rangle}{d\Delta\phi}}}
+\newcommand{\mix}          {\ensuremath{frac{d\langle n_{\rm mix}^{AB} \rangle}{d\Delta\phi}}}
+\newcommand{\ITS}          {\rm{ITS}}
+\newcommand{\TOF}          {\rm{TOF}}
+\newcommand{\ZDC}          {\rm{ZDC}}
+\newcommand{\ZDCs}         {\rm{ZDCs}}
+\newcommand{\SPD}          {\rm{SPD}}
+\newcommand{\SDD}          {\rm{SDD}}
+\newcommand{\SSD}          {\rm{SSD}}
+\newcommand{\TPC}          {\rm{TPC}}
+\newcommand{\VZERO}        {\rm{VZERO}}
+\newcommand{\VZEROA}       {\rm{VZERO-A}}
+\newcommand{\VZEROC}       {\rm{VZERO-C}}
+\newcommand{\pip}          {$\pi^{+}$}
+\newcommand{\pim}          {$\pi^{-}$}
+\newcommand{\kap}          {K$^{+}$}
+\newcommand{\kam}          {K$^{-}$}
+\newcommand{\pbar}         {$\rm\overline{p}$}
+\newcommand{\degree}       {\ensuremath{^{\rm o}}}
+\newcommand{\dg}           {\mbox{$^\circ$}}
+\newcommand{\dedx}         {d$E$/d$x$}
+\newcommand{\dndy}         {d$N$/d$y$}
+\newcommand{\pp}           {pp}
+\newcommand{\ppbar}        {\mbox{$\mathrm {p\overline{p}}$}}
+\newcommand{\PbPb}         {\mbox{Pb--Pb}}
+\newcommand{\AuAu}         {\mbox{Au--Au}}
+\newcommand{\pseudorap}    {\mbox{$\left | \eta \right | $}}
+\newcommand{\dNdeta}       {\mathrm{d}N_\mathrm{ch}/\mathrm{d}\eta}
+\newcommand{\dNdetatr}     {\mathrm{d}N_\mathrm{tracklets}/\mathrm{d}\eta}
+\newcommand{\dNdetar}[1]   {\mathrm{d}N_\mathrm{ch}/\mathrm{d}\eta\left.\right|_{|\eta|<#1}}
+\newcommand{\lum}          {\, \mbox{${\rm cm}^{-2} {\rm s}^{-1}$}}
+\newcommand{\barn}         {\, \mbox{${\rm barn}$}}
+\newcommand{\m}            {\, \mbox{${\rm m}$}}
+\newcommand{\s}            {\ensuremath{\sqrt{s}}}
+\newcommand{\mt}           {\ensuremath{m_{\rm t}}}
+\newcommand{\snn}          {\ensuremath{\sqrt{s_{\rm NN}}}}
+\newcommand{\snnbf}        {\ensuremath{\mathbf{{\sqrt{s_{\mathbf NN}}}}}}
+\newcommand{\sonly}        {\ensuremath{\sqrt{s}}}
+\newcommand{\Npart}        {\ensuremath{N_\mathrm{part}}}
+\newcommand{\avNpart}      {\ensuremath{\langle N_\mathrm{part} \rangle}}
+\newcommand{\avNpartdata}  {\ensuremath{\langle N_\mathrm{part}^{\rm data} \rangle}}
+\newcommand{\Ncoll}        {\ensuremath{N_\mathrm{coll}}}
+\newcommand{\Dnpart}       {\ensuremath{D\left(\Npart\right)}}
+\newcommand{\DnpartExp}    {\ensuremath{D_{\rm exp}\left(\Npart\right)}}
+\newcommand{\dNdetapt}     {\ensuremath{\dNdeta\,/\left(0.5\Npart\right)}}
+\newcommand{\dNdetaptr}[1] {\ensuremath{\dNdetar{#1}\,/\left(0.5\Npart\right)}}
+\newcommand{\dNdetape}     {\left(\ensuremath{\dNdeta\right)/\left(\avNpart/2\right)}}
+\newcommand{\dNdetaper}[1] {\ensuremath{\dNdetar{#1}\,/\left(\avNpart/2\right)}}
+\newcommand{\dndydpt}      {\ensuremath{{\rm d}^2N/({\rm d}y {\rm d}p_{\rm t})}}
+\newcommand{\abs}[1]       {\ensuremath{\left|#1\right|}}
+\newcommand{\avg}[1]       {\ensuremath{\left\langle#1\right\rangle}}
+\newcommand{\signn}        {\ensuremath{\sigma^{\rm inel.}_{\rm NN}}}
+\newcommand{\vz}           {\ensuremath{V_{z}}}
+\newcommand{\dd}           {\ensuremath{\rm{d}}}
+\newcommand{\ade}          {\ensuremath{\abs{\Delta\eta}}}
+\newcommand{\stat}         {({\it stat.})}
+\newcommand{\syst}         {({\it sys.})}
+\newcommand{\green}[1]     {\textcolor{green}{#1}}
+\newcommand{\blue}[1]      {\textcolor{blue}{#1}}
+\newcommand{\red}[1]       {\textcolor{red}{#1}}
+\newcommand{\white}[1]     {\textcolor{white}{#1}}
+\renewcommand{\labelitemi} {$-$}
+\newcommand{\warn}[1]      {{\small\textbf{(!\footnote{\textbf{(!)}~#1})}}\marginpar{\textbf{---}}}
+\newcommand{\todo}[1]      {\textbf{\textcolor{red}{TODO: #1}}}
+\newcommand{\high}[1]      {\textbf{\textcolor{blue}{#1}}}
+\newcommand{\fake}[1]      {\textbf{\textcolor{red}{#1}}}
+\newcommand{\final}[1]     {\textbf{\textcolor{blue}{#1}}}
+\newcommand{\prelim}[1]    {\textbf{\textcolor{magenta}{#1}}}
+%\renewcommand{\mod}[1]     {\textbf{\textcolor{red}{#1}}}
+\newcommand{\orig}[1]      {\textcolor{red}{\sout{#1}}}
+\newcommand{\repl}[1]      {\textbf{\textcolor{blue}{#1}}}
+\newcommand*{\doi}[1]{\href{http://dx.doi.org/#1}{doi: #1}}
+\newcommand {\arxiv}[1]    {\href{http://www.arxiv.org/abs/#1}{\mbox{arXiv:#1}}}
+
+ 
+%===========================================================
+% Peter's commands May 9
+
+\newcommand{\sqrtsNN}{\ensuremath{\sqrt{s_{\rm NN}}}}
+\newcommand{\pT}{\ensuremath{p_{\rm T}}}
+\newcommand{\dpT}{\ensuremath{\delta\pT}}
+%\newcommand{\pt}           {\pT}
+
+% Rosi's commands
+\newcommand{\rhochem}{\ensuremath{{\rho}_{ch+em}}}
+\newcommand{\rhoch}{\ensuremath{{\rho}_{ch}}}
+\newcommand{\RAA}{\ensuremath{{R}_{AA}}}
+
+% Tim's commands
+\newcommand{\gev}{\ensuremath{\mathrm{GeV}}}
+\newcommand{\gevc}{\ensuremath{\mathrm{GeV}/c}}
+\newcommand{\mev}{\ensuremath{\mathrm{MeV}}}
+
+% Salvatore's commands
+\newcommand{\nbarn}         {\, \mbox{${\rm nb}$}}
+\newcommand{\cm}         {\, \mbox{${\rm cm}$}}
+\newcommand{\fastjet}  {\mbox{\texttt{FastJet}}}
+\newcommand{\roounfold}  {\mbox{\texttt{RooUnfold}}}
+\newcommand{\cpp}  {\mbox{\texttt{C++}}}
+\newcommand{\kt}          {\mbox{$k_{\rm T}$}}
+\newcommand{\antikt} {\mbox{anti-$k_{\rm T}$}}
+\renewcommand{\phi}          {\varphi}

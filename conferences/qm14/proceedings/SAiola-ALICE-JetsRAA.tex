@@ -1,0 +1,421 @@
+%%
+%%  Manuscript for Quark Matter 2014 Proceedings
+%% ====================================
+%% Author: 
+%% Collaboration:
+%% Last updated:
+%%
+%% This is a basic template. For more detailed options
+%% see http://www.elsevier.com/wps/find/authorsview.authors/latex
+
+%-----------------------------------------------------------------------------------
+
+%% This template uses the elsarticle.cls document class and the extension package ecrc.sty
+%% as well as the logo files elsevier-logo-3p.pdf, SDlogo-3p.pdf. 
+%% For full documentation on usage of elsarticle.cls, consult the documentation "elsdoc.pdf"
+%% Further resources available at http://www.elsevier.com/latex
+
+%-----------------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Important note on usage                  %%
+%% -----------------------                  %%
+%% This file must be compiled with PDFLaTeX %%
+%% Using standard LaTeX will not work!      %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifarxiv
+\arxivtrue
+
+\ifarxiv
+
+\documentclass[3p,times]{simplearticle}
+
+\else
+
+%% The '3p' and 'times' class options of elsarticle are used for Elsevier CRC
+\documentclass[3p,times]{elsarticle}
+%% The `ecrc' package must be called to make the CRC functionality available
+\usepackage{ecrc}
+
+%% The ecrc package defines commands needed for running heads and logos.
+%% For running heads, you can set the journal name, the volume, the starting page and the authors
+
+\fi
+
+%% If you have eps figures, use the epstopdf package
+\usepackage{epstopdf}
+
+\ifarxiv
+\else
+%% set the volume if you know. Otherwise `00'
+\volume{00}
+
+%% set the starting page if not 1
+\firstpage{1}
+
+%% Give the name of the journal
+\journalname{Nuclear Physics A}
+
+%% Give the author list to appear in the running head
+%% Example \runauth{C.V. Radhakrishnan et al.}
+\runauth{S. Aiola for the ALICE Coll.}
+
+%% The choice of journal logo is determined by the \jid and \jnltitlelogo commands.
+%% A user-supplied logo with the name <\jid>logo.pdf will be inserted if present.
+%% e.g. if \jid{yspmi} the system will look for a file yspmilogo.pdf
+%% Otherwise the content of \jnltitlelogo will be set between horizontal lines as a default logo
+
+%% Give the abbreviation of the Journal.
+\jid{nupha}
+
+%% Give a short journal name for the dummy logo (if needed)
+\jnltitlelogo{Nuclear Physics A}
+
+%% Hereafter the template follows `elsarticle'.
+%% For more details see the existing template files elsarticle-template-harv.tex and elsarticle-template-num.tex.
+
+%% Elsevier CRC generally uses a numbered reference style
+%% For this, the conventions of elsarticle-template-num.tex should be followed (included below)
+%% If using BibTeX, use the style file elsarticle-num.bst
+
+%% End of ecrc-specific commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
+
+%% Useful packages
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{comment}
+\usepackage{subfig}
+\usepackage[usenames]{color}
+\usepackage{color}
+\usepackage{float}
+\newcommand{\minipagerestore}{\setlength{\parindent}{15pt}}
+%% The amssymb package provides various useful mathematical symbols
+%% \usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers after \end{frontmatter}.
+\usepackage{lineno}
+
+\usepackage{hyperref}
+
+%% natbib.sty is loaded by default. However, natbib options can be
+%% provided with \biboptions{...} command. Following options are
+%% valid:
+
+%%   round  -  round parentheses are used (default)
+%%   square -  square brackets are used   [option]
+%%   curly  -  curly braces are used      {option}
+%%   angle  -  angle brackets are used    <option>
+%%   semicolon  -  multiple citations separated by semi-colon
+%%   colon  - same as semicolon, an earlier confusion
+%%   comma  -  separated by comma
+%%   numbers-  selects numerical citations
+%%   super  -  numerical citations as superscripts
+%%   sort   -  sorts multiple citations according to order in ref. list
+%%   sort&compress   -  like sort, but also compresses numerical citations
+%%   compress - compresses without sorting
+%%
+%% \biboptions{comma,round}
+
+\ifarxiv
+\else
+\biboptions{compress}
+\fi
+
+% if you have landscape tables
+%\usepackage[figuresright]{rotating}
+
+% put your own definitions here:
+%   \newcommand{\cZ}{\cal{Z}}
+%   \newtheorem{def}{Definition}[section]
+%   ...
+
+\include{commands}
+
+% add words to TeX's hyphenation exception list
+%\hyphenation{author another created financial paper re-commend-ed Post-Script}
+
+% declarations for front matter
+
+\begin{document}
+
+\ifarxiv
+\else
+\begin{frontmatter}
+\fi
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for the associated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for the associated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for the associated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%%
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+\title{Measurement of jet $p_{\rm T}$ spectra and $R_{\rm AA}$ in pp and Pb--Pb collisions at $\sqrt{s_{\rm NN}}$ = 2.76 TeV with the ALICE detector}
+
+%% Single author (and collaboration) - please insert
+\ifarxiv
+\author{Salvatore Aiola (for the ALICE Collaboration)}
+\else
+\author{Salvatore Aiola (for the ALICE\fnref{col1} Collaboration)}
+\fi
+\ead{salvatore.aiola@yale.edu}
+\ifarxiv
+\else
+\fntext[col1] {A list of members of the ALICE Collaboration and acknowledgements can be found at the end of this issue.}
+\fi
+\address{Yale University, New Haven, CT 06520, USA}
+
+\begin{abstract}
+%% Text of abstract
+Hard-scattered partons provide an ideal probe for the study of the Quark-Gluon Plasma because they are produced prior to the formation 
+of the QCD medium in heavy-ion collisions. 
+Jet production is therefore susceptible to modifications induced by the presence of the medium (``jet quenching'').
+Both RHIC and LHC experiments have provided compelling evidence of jet quenching. 
+Jets are reconstructed in ALICE utilizing the central tracking system for the charged constituents 
+and the Electromagnetic Calorimeter for the neutral constituents. Jet spectra are reported for central (0-10\%) and semi-central (10-30\%)
+Pb--Pb events at $\snn=2.76$ TeV. The nuclear modification factor, determined using a pp baseline measured at the same collisional energy,
+shows a strong suppression of jet production in central Pb--Pb collisions with the expected centrality ordering. Observations are in qualitative
+agreement with medium-induced energy loss models. Furthermore, indication of a path-length dependence of 
+jet suppression is inferred from measurements
+of the yields relative to the orientation of the event plane.
+\end{abstract}
+
+\ifarxiv
+\else
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+QGP \sep jets \sep heavy-ion
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+
+\end{keyword}
+
+\end{frontmatter}
+\fi
+%%
+%% Start line numbering here if you want
+%%
+%\linenumbers
+
+%% main text
+
+\section{Introduction}
+\label{intro}
+%
+The study of jets in ultra-relativistic heavy-ion collisions is intimately connected 
+to the investigation of the properties of the Quark-Gluon Plasma (QGP).
+The QGP is a deconfined state of matter, in which the relevant degrees of freedom are those of strongly-interacting quarks and gluons.
+Simple quantum-mechanical considerations, based on the Heisenberg principle of indetermination, 
+imply that hard-scattering processes, with a large
+momentum transfer, happen at a much smaller time scale as compared to that of the QGP formation, which is driven by many low momentum scatterings.
+The subsequent transport of the hard scattered parton through the medium and its fragmentation are expected to be considerably modified through 
+elastic collisions and medium-induced radiation~\cite{Baier:1995}. These phenomena are usually referred to as ``jet quenching''.
+Measurements at both RHIC~\cite{STAR:2003c, PHENIX:2004a} 
+and the LHC~\cite{CMS:2011c, ALICE:2014a, ATLAS:2013b}
+have confirmed these predictions using a variety of observables.
+Jet reconstruction can take advantage of the more accurate estimate of the energy of the parton compared
+to high transverse momentum (\pT) single hadron measurements, which are often used as proxies for jets.
+
+In these proceedings we report measurements of the jet nuclear modification factor and charged jet $v_2$ performed by the ALICE experiment
+for \PbPb\ collisions at $\snn=2.76$~TeV. 
+These results are based on data collected by ALICE in 2011 and extend previous measurements reported in Refs.~\cite{Aiola:2013, Reed:2013}.
+%
+\begin{figure}[t]
+\centering
+\subfloat[][Jet \pT{} spectra (0-10\% centrality class).]
+{\includegraphics[width=.45\columnwidth]{fig_RawSpectraCent0}\label{fig:RawJetSpectraPt0}} \quad
+\subfloat[][Jet \pT{} spectra (10-30\% centrality class).]
+{\includegraphics[width=.45\columnwidth]{fig_RawSpectraCent1}\label{fig:RawJetSpectraPt1}} \\
+\subfloat[][\dpT{} distributions.]
+{\includegraphics[width=0.45\columnwidth]{fig_DeltaPt}\label{fig:DeltaPt}}
+\caption{Jet \pT{} spectra at detector level and \dpT{} distributions
+in \mbox{Pb--Pb} collisions at $\snn=2.76$~TeV at mid-rapidity.
+Jets are reconstructed using the anti-\kt{} algorithm 
+with a resolution parameter $R=0.2$ in two centrality ranges: 0-10\% (top left) and 10-30\% (top right).
+Spectra are normalized by the number of events and the number of binary collisions obtained in a Glauber MC calculation~\cite{ALICE:2013b}.
+Both the inclusive spectra and the spectra biased by requiring a leading hadron with $\pT>5$~\GeVc\ are shown.
+The bottom panels show the ratios of the biased over the inclusive spectra. The \dpT{} distributions (bottom) 
+are obtained using the random cone technique.}
+\label{fig:RawJetSpectraDeltaPt}
+\end{figure}
+%
+\section{Experimental setup and analysis techniques}
+\label{sec:analysis}
+For a complete description of the ALICE detector and its performance see Refs.~\cite{ALICE:2008} and \cite{ALICE:2014b}, respectively.
+%
+The main sub-detectors used in the present measurement are the \VZERO, the central tracking system and the Electromagnetic Calorimeter (EMCal).
+%
+The \VZERO\ detector consists of segmented scintillators covering the full azimuth at forward rapidity.
+%($2.8<\eta<5.1$ and $-3.7<\eta<-1.7$).
+It is used to measure the centrality of the \PbPb\ events and also provides the set of minimum bias and centrality
+triggers used to collect the presented data.
+%
+The ALICE tracking system consists of the Inner Tracking System (ITS), a six-layer silicon detector, and a large Time Projection Chamber (TPC).
+The ITS provides a precise measurement of the first points of the tracks
+and a precise determination of the primary vertex. The tracking system allows reconstruction of charged tracks ranging from very low momentum 
+($\pT\approx 0.15$~GeV/$c$) to high momentum ($\pT\approx 100$~GeV/$c$), with good momentum resolution and tracking efficiency.
+Tracks are reconstructed at mid-rapidity ($|\eta|<0.9$) and in full azimuth.
+The EMCal is a Pb-scintillator sampling calorimeter, which covers mid-rapidity
+($|\eta|<0.7$) and partial azimuth ($\Delta\phi=100^{\circ}$). In this analysis it is used
+to measure the decay photons of the neutral mesons, that are not detected by the tracking system. Energy deposition
+from charged particles, measured by the tracking system, is subtracted to avoid double counting their energy
+in the jet reconstruction. The details of this correction are outlined in Ref.~\cite{ALICE:2014b}.
+
+The methods utilized in this analysis follow closely those used for the charged jet suppression measurement reported in Ref.~\cite{ALICE:2014a} 
+and for the pp jet cross section reported in Ref.~\cite{ALICE:2013c}.
+The anti-\kt{} jet finding algorithm~\cite{Cacciari:2008c} with a resolution parameter $R=0.2$ has been employed in 
+its FastJet~\cite{Cacciari:2012} implementation. Jets are required to be fully contained within the EMCal acceptance.
+Following the proposal in Ref.~\cite{Cacciari:2008b}, the average background, $\rho$, is calculated, event-by-event, as the median of the \pT{}
+density (jet \pT{} over jet area) of the jets reconstructed by the \kt{} algorithm.
+The average background is subtracted jet-by-jet: $p_{\rm T,jet}^{\rm reco}=p_{\rm T,jet}^{\rm raw}-\rho \times A_{\rm jet}$,
+where $p_{\rm T,jet}^{\rm raw}$ and $A_{\rm jet}$ are respectively the transverse momentum and the area of the anti-\kt\ jet candidate. 
+Figures~\ref{fig:RawJetSpectraPt0} and \ref{fig:RawJetSpectraPt1} show the jet \pT{} spectra at detector level, 
+after the subtraction of the average background.
+Both the inclusive spectra and the spectra biased by requiring a leading hadron $\pT>5$ \GeVc\ are shown.
+The bias is applied in order to suppress the combinatorial background.
+%
+\begin{figure}[tb]
+\centering
+\subfloat[][Jet \pT\ spectra.]
+{
+\includegraphics[width=.35\columnwidth]{fig_Spectra}
+\label{fig:Spectra}
+} \quad
+\subfloat[][Nuclear modification factor.]
+{
+\includegraphics[width=.35\columnwidth]{fig_RAAtheory}
+\label{fig:Raa}
+} 
+\caption{Jet \pT\ spectra (left) and nuclear modification factor (right) at mid-rapidity for 0-10\% and 10-30\% centrality class \PbPb\ events 
+at \snn$=2.76$ TeV (color online). The measured \RAA\ is compared with two model predictions, YaJEM~\cite{Renk:2013} 
+and JEWEL~\cite{Zapp:2014}, see text for details.}
+\label{fig:SpectraRaa}
+\end{figure}
+%
+Background fluctuations are estimated using the random cone technique~\cite{ALICE:2012a}.  
+%the event-wise average background 
+%is subtracted from the sum of the transverse momenta of
+%all the measured particles contained in a cone randomly placed
+%in the $\eta,\phi$ plane (\dpT). 
+The root-mean-square widths of the \dpT\ distributions, shown in Fig.~\ref{fig:DeltaPt},
+are $5.8$ \GeVc\ for the 0-10\% centrality class and $4.5$ \GeVc\ for the 10-30\%. 
+The response of the detector to jets has been quantified through a simulation which makes use of the PYTHIA6 event generator~\cite{Sjostrand:2006} 
+and the GEANT3 transport code~\cite{Brun:1994}. 
+The results reported in Section~\ref{sec:results} are obtained after correcting for both detector response and background fluctuations using 
+standard regularized unfolding methods~\cite{Hocker:1995, Dagostini:1995}.
+%
+\section{Results}
+\label{sec:results}
+%
+Figure~\ref{fig:Spectra} shows the anti-\kt\ $R=0.2$ jet \pT\ spectra at mid-rapidity for the 0-10\% and the 10-30\% centrality classes. 
+In order to compare with the same measurement performed in pp
+collisions at the same \snn~\cite{ALICE:2013c}, the jet yield in \PbPb\ has been divided by the number of binary collisions
+calculated in a Monte Carlo Glauber model~\cite{ALICE:2013b} that assumes independent binary nucleon-nucleon collisions.
+The systematic uncertainty is dominated by the tracking efficiency uncertainty and the unfolding regularization and is \pT\ dependent, 
+with a value of
+about 18\% at $p_{\rm T,jet}=60$ \GeVc\ for the central events and only slightly smaller for the semi-central events. 
+
+The nuclear modification factor \RAA\ is defined as the ratio of the \PbPb\ per-event yield over the pp cross section~\cite{ALICE:2013c} 
+multiplied by $T_{\mathrm{AA}}=N_{\mathrm{coll}} / \sigma^{\mathrm{inel}}_{\mathrm{pp}}$, obtained in the same
+Glauber calculation mentioned above. The measured \RAA\ is shown in Fig.~\ref{fig:Raa}. A strong suppression, with the expected centrality
+ordering, is observed and is in qualitative agreement with two 
+energy loss model predictions, superimposed on the data. 
+Both models use a combination of Glauber MC, perturbative QCD (pQCD) Leading Order (LO) calculations and PYTHIA,
+to describe the initial state, the hard scattering and the hadronization into final-state colorless particles. 
+They both implement a hydrodynamic description of the medium.
+They differ in the specific way in which the interaction between the shower parton and the medium is modeled.
+In YaJEM~\cite{Renk:2013} the energy loss mechanism is implemented through a pair of transport coefficients, 
+one representing the increase of the parton's virtuality in the medium (radiative energy loss), and 
+the other accounting for the collisional energy loss; in JEWEL~\cite{Zapp:2014} an average over a microscopic description
+of the single parton-parton scatterings is implemented, using a MC model for the LPM interference.
+%
+\begin{figure}[t]
+\centering
+\subfloat[][0-5\% centrality class.]
+{\includegraphics[width=.4\columnwidth]{fig_v2_Cent05}} \quad
+\subfloat[][30-50\% centrality class.]
+{\includegraphics[width=.4\columnwidth]{fig_v2_Cent3050}} 
+\caption{Charged jet $v_2$ in \mbox{Pb--Pb} collisions at $\snn=2.76$~TeV at mid-rapidity. Jets are required to have a leading
+hadron with $\pT>3$ \GeVc.}
+\label{fig:Jetv2}
+\end{figure}
+%
+
+The path-length dependence of the jet energy loss has been investigated by studying the charged jet yield with respect to the 
+event plane orientation. The QGP formed in semi-central collisions is expected to take an ellipsoidal shape elongated in the direction
+perpendicular to the reaction plane, 
+which has been confirmed by the measurement
+of the azimuthal anisotropy of low-momentum particle production~\cite{ALICE:2010b}. 
+High $Q^2$ partons produced out-of-plane are expected to be more heavily modified because
+they travel a longer path in the medium. The jet $v_2$ is defined as the second coefficient 
+of the Fourier expansion of the jet yield with respect
+to the azimuthal angle between the jet axis and the event plane.
+For this measurement,
+the average background and the background fluctuations have been measured and subtracted differentially with respect to 
+the angle with the event plane. The observed $v_2$ has been corrected for the finite event plane resolution
+by using a three sub-event technique~\cite{Poskanzer:1998}. Fig.~\ref{fig:Jetv2} shows the charged jet $v_2$
+for central (0-5\%) and semi-central (30-50\%) \PbPb\ events. 
+In estimating the systematic uncertainties, the correlations between the in-plane and out-of-plane measurements have been taken into account.
+While we do not observe a significant indication for a non-zero jet $v_2$ in central events, the semi-central events show 
+a hint of a difference between the in- and out-of-plane nuclear modification factor, 
+although the result is also still compatible with $v_2=0$ for jets.
+%
+\section{Conclusions}
+%
+In these proceedings we have reported new measurements of jet suppression performed by the ALICE experiment.
+The measured suppression for both central and semi-central events is in qualitative agreement with both the YaJEM and JEWEL models.
+In order to obtain a tighter constraint on the models the path-length dependence of the parton energy loss has been
+explored by measuring the charged jet $v_2$, which shows hints of such an effect for semi-central events.
+ALICE has also measured jet yields in p--Pb collisions~\cite{Haake:2013, Connors:2014}, which show that cold nuclear matter effects in
+the initial state cannot account for the observed suppression in \PbPb\ collisions. These observations support the
+interpretation of the observed suppression as a medium-induced modification of the final state parton shower.
+%%
+%% References
+%%
+%% Following citation commands can be used in the body text:
+%% Usage of \cite is as follows:
+%%   \cite{key}         ==>>  [#]
+%%   \cite[chap. 2]{key} ==>> [#, chap. 2]
+%%
+%%
+%% References with BibTeX database:
+%%
+\ifarxiv
+\bibliographystyle{elsarticle-num}
+\section*{References}
+\bibliography{biblio}
+\else
+\bibliographystyle{elsarticle-num}
+\bibliography{biblio}
+\fi
+
+
+%
+\end{document}
+%%
+%%
+%% End of file `ecrc-template.tex'. 
