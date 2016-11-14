@@ -1,4 +1,14 @@
+\newif\ifarxiv
+%\arxivtrue
+
+\ifarxiv
+\documentclass[a4paper]{article}
+\usepackage[top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
+
+\else
 \documentclass[a4paper]{jpconf}
+
+\fi
 
 \usepackage{graphicx}
 \usepackage{bm}        % for math
@@ -13,19 +23,35 @@
 \usepackage[T1]{fontenc}
 \usepackage{color}
 \usepackage{hyperref}
-\usepackage{lineno}
-\linenumbers
+%\usepackage{lineno}
+%\linenumbers
 
 \include{commands}
 
+
+
+\ifarxiv
+
+\title{Measurement of D-meson tagged jets in pp collisions at $\s=7$~TeV with ALICE}
+\date{}
+\author{Salvatore Aiola, for the ALICE Collaboration \\
+Physics Department, Yale University, New Haven, CT 06511\\
+\href{mailto:salvatore.aiola@yale.edu}{salvatore.aiola@yale.edu}}
+\begin{document}
+\maketitle
+
+\else
+
 \begin{document}
 \title{Measurement of D-meson tagged jets in pp collisions at $\s=7$~TeV with ALICE}
-
 \author{Salvatore Aiola, for the ALICE Collaboration}
+\address{Physics Department, Yale University, New Haven, CT 06511}
+\ead{\href{mailto:salvatore.aiola@yale.edu}{salvatore.aiola@yale.edu}}
 
-\address{Physics Department, Yale University, 266 Whitney Avenue, New Haven, CT 06511}
+\fi
 
-\ead{salvatore.aiola@cern.ch}
+
+
 
 \begin{abstract}
 We present the current status of the measurement of jets that contain a D meson (D-tagged jets) with \mbox{ALICE}.
@@ -126,6 +152,7 @@ N_{\rm SB}^{\rm \Dzero\hbox{-}jet}(\ptchjet,\ptd)\right],
 where $B_{\rm peak}^{\rm fit}$ and $B_{\rm SB}$ are respectively the total background
 in the peak area estimated by fitting the invariant mass distribution and the total
 background in the side bands.
+
 %\subsubsection*{Like-sign subtraction}
 \item[Like-sign subtraction]
 This method is analogous to the side-band method. In this case the background \ptchjet\ distribution was provided by the like-sign (LS) $\pi$K pairs and
@@ -162,12 +189,19 @@ Particles produced by PYTHIA were propagated through the detector using the GEAN
 \caption{\label{fig:HQ16_Simulation_EfficiencyVsDPt}Efficiency~$\times$~Acceptance of \Dzero\ mesons vs. \ptd\ in \ptchjet\ inetrvals.}
 \end{minipage} 
 \end{figure}
-
+\ifarxiv
+\begin{figure}[tb]
+\centering
+\includegraphics[width=.50\textwidth]{img/HQ16_Simulation_MethodComparison}\hspace{1pc}%
+\caption{\label{fig:HQ16_Simulation_MethodComparison}\Dzero-jet signal yield extracted using the invariant mass fit (blue squares), side-band method (red circles) and like-sign method (green triangles)
+compared with the MC truth (gray filled area). The bottom panel shows the ratio to the MC truth. The yields are corrected for the reconstruction efficiency but not for distortions due to detector jet-momentum resolution.}
+\end{figure}
+\fi
 %The detector performance was assessed using the charm-enhanced MC production. 
 In order to determine the detector performance, reconstructed detector-level D-tagged jets were matched with their corresponding counterparts at generator-level.
 The variable
 %\begin{equation}
-\mbox{$\delta_{\ptchjet}=\left( \ptchjetdet - \ptchjetgen \right) / \ptchjetgen$},
+$\delta_{\ptchjet}=\left( \ptchjetdet - \ptchjetgen \right) / \ptchjetgen$,
 %\label{eq:energyshift}
 %\end{equation}
 was computed for each matched pair,
@@ -179,16 +213,18 @@ slightly smaller with respect to its value for inclusive jets~\cite{ALICE:2015e}
 The reconstruction efficiency is calculated as the ratio of the yield of reconstructed D-tagged jets over all generated D-tagged jets, as a function of generator-level observables.
 It is shown in Fig.~\ref{fig:HQ16_Simulation_EfficiencyVsDPt} as a function of \ptd\ for different \ptchjet\ intervals; it shows a strong dependence on \ptd, mainly due to
 varying topological cuts. No significant dependence on \ptchjet\ is observed in the interval $5<\ptchjet<24$~\GeVc.
+%The minimum-bias production was used to validate the invariant mass analysis. 
+Figure~\ref{fig:HQ16_Simulation_MethodComparison} shows the D-tagged jet yields as a function of \ptchjetdet\ obtained using the invariant mass fit, 
+side-band and like-sign methods, compared to the MC truth. All signal extraction methods perform well and do not show significant biases, beyond the statistical uncertainties assigned to each.
+\ifarxiv
+\else
 \begin{figure}[tb]
 \includegraphics[width=.50\textwidth]{img/HQ16_Simulation_MethodComparison}\hspace{1pc}%
 \begin{minipage}[b]{.50\textwidth}\caption{\label{fig:HQ16_Simulation_MethodComparison}\Dzero-jet signal yield extracted using the invariant mass fit (blue squares), side-band method (red circles) and like-sign method (green triangles)
 compared with the MC truth (gray filled area). The bottom panel shows the ratio to the MC truth. The yields are corrected for the reconstruction efficiency but not for distortions due to detector jet-momentum resolution.}
 \end{minipage}
 \end{figure}
-%The minimum-bias production was used to validate the invariant mass analysis. 
-Figure~\ref{fig:HQ16_Simulation_MethodComparison} shows the D-tagged jet yields as a function of \ptchjetdet\ obtained using the invariant mass fit, 
-side-band and like-sign methods, compared to the MC truth. All signal extraction methods perform well and do not show significant biases, beyond the statistical uncertainties assigned to each.
-
+\fi
 \section{Conclusions}
 ALICE has the potential for measuring jets with charm content tagged using reconstructed D mesons.
 %in pp collisions, especially at low momentum ($\ptchjet \lesssim 30$~\GeVc) with the data collected at $\s=7$~TeV,
@@ -201,7 +237,10 @@ for pp collisions at $\s=7$~TeV. The \Dzero-jet momentum resolution was determin
 Three methods were implemented to extract the signal: invariant mass fit, side-band and like-sign subtraction.
 The three methods were validated using a MC simulation and do not show biases larger than the statistical uncertainties.
 
+\ifarxiv
+\else
 \section*{References}
+\fi
 \bibliography{biblio}{}
 \bibliographystyle{iopart-num}
 
