@@ -695,7 +695,7 @@ FUNCTION {format.authors}
     duplicate$ empty$ 'skip$
     { collaboration "collaboration" bibinfo.check
       duplicate$ empty$ 'skip$
-        { " (" swap$ * ")" * }
+        { " (" swap$ * " Collaboration)" * }
       if$
       *
     }
