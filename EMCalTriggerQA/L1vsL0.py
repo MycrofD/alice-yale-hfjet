@@ -12,18 +12,25 @@ ADCtoGeV = 0.018970588 * 4
 
 def MakeL1vsL0(title, hist, L0thresholds):
     baseline = hist.ProjectionX("{0}_nocut".format(title))
-    baseline.Rebin(3)
+    baseline.SetTitle("L0 patch > 0 GeV")
+    baseline.GetYaxis().SetTitle("counts")
+    baseline.GetXaxis().SetRangeUser(0,100)
+    #baseline.Rebin(3)
     baseline.Sumw2()
     histograms = []
     for th in L0thresholds:
         h = hist.ProjectionX("{0}_{1}".format(title, int(th*10)), hist.GetYaxis().FindBin(th), hist.GetYaxis().GetNbins())
-        h.Rebin(3)
+        #h.Rebin(3)
         h.Sumw2()
+        h.GetXaxis().SetRangeUser(0,100)
         h.SetTitle("L0 patch > {0:.2f} GeV".format(th))
+        h.GetYaxis().SetTitle("counts")
         histograms.append(h)
     result = CompareSpectra(baseline, histograms, title, "hist", "hist", "L0 threshold X / no L0 threshold")
     for obj in result:
         globalList.append(obj)
+        if isinstance(obj, ROOT.TCanvas):
+            obj.SaveAs("~/{0}.pdf".format(obj.GetName()))
 
 def main(filename):
     ROOT.TH1.AddDirectory(False)
@@ -34,7 +41,7 @@ def main(filename):
     triggerClassName = "INT7"
     histogramNames = {"FEE_L0vsJE": "EMCTRQA_histEMCalEMCL0MaxVsEMCalEMCJEHMaxOffline", 
                       "FOR_GAvsJE": "EMCTRQA_histEMCalEMCGAHMaxVsEMCalEMCJEHMaxRecalc"}
-    L0thresholds = [0, 2.5, 3.5, 4.0, 4.5, 5.0]
+    L0thresholds = [2.5, 3.5, 4.0, 4.5, 5.0]
 
     file = ROOT.TFile(filename)
     if not file or file.IsZombie():
@@ -233,7 +240,7 @@ def CompareSpectra(baseline, spectra, comparisonName, opt="", optRatio="", yaxis
             maxRatio *= 10
             minRatio /= 5
         else:
-            maxRatio *= 1.5
+            maxRatio *= 1.8
             if minRatio < 0.2:
                 minRatio = 0
             else:
