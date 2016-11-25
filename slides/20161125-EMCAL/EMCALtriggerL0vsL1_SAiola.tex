@@ -1,0 +1,248 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\title[EMCal trigger: L0 vs. L1] % (optional, use only with long paper titles)
+{EMCal trigger: L0 vs. L1}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[EMCal trigger - Nov. 25th, 2016] % (optional, should be abbreviation of conference name)
+{EMCal trigger weekly meeting \\
+November 25th, 2016}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+  %  \tableofcontents
+  %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+\begin{itemize}
+\item Request from trigger coordination to increase L0 threshold to reduce ALICE dead time
+\item Study impact of the L0 threshold on jet trigger
+\item Use LHC16q data (p--Pb @ 5 TeV)
+\end{itemize}
+\end{frame}
+
+\section{L0 vs. L1 (FEE data)}
+
+\begin{frame}{L0 vs. JE 16x16 (FEE data)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FEE_L0vsJE}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FEE_L0vsJE_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item EMCal only
+\item J1 threshold is 23 GeV, J2 threshold is 18 GeV
+\item Tabulated values in the next slide
+\end{itemize}
+\end{frame}
+
+\begin{frame}{L0 vs. JE 16x16 (FEE data): table}
+\begin{itemize}
+\item L0 patch > 2.5, 3.5 GeV
+\begin{itemize}
+\item JE patch = $16.85$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0004$
+\item JE patch = $18.36$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0007$
+\item JE patch = $19.88$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0008$
+\item JE patch = $21.40$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0012$
+\item JE patch = $22.92$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0016$
+\item JE patch = $24.43$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0020$
+\item JE patch = $25.95$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0024$
+\end{itemize}
+\item L0 patch > 4.0 GeV
+\begin{itemize}
+\item JE patch = $16.85$ GeV $\rightarrow$ ratio = $0.998 + 0.0007 - 0.0009$
+\item JE patch = $18.36$ GeV $\rightarrow$ ratio = $0.999 + 0.0004 - 0.0009$
+\item JE patch = $19.88$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0008$
+\item JE patch = $21.40$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0012$
+\item JE patch = $22.92$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0016$
+\item JE patch = $24.43$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0020$
+\item JE patch = $25.95$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0024$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{L0 vs. JE 16x16 (FEE data): table (cont'd)}
+\begin{itemize}
+\item L0 patch > 4.5 GeV
+\begin{itemize}
+\item JE patch = $16.85$ GeV $\rightarrow$ ratio = $0.997 + 0.0010 - 0.0012$
+\item JE patch = $18.36$ GeV $\rightarrow$ ratio = $0.999 + 0.0007 - 0.0011$
+\item JE patch = $19.88$ GeV $\rightarrow$ ratio = $0.999 + 0.0005 - 0.0011$
+\item JE patch = $21.40$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0012$
+\item JE patch = $22.92$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0016$
+\item JE patch = $24.43$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0020$
+\item JE patch = $25.95$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0024$
+\end{itemize}
+\item L0 patch > 5.0 GeV
+\begin{itemize}
+\item JE patch = $16.85$ GeV $\rightarrow$ ratio = $0.991 + 0.0017 - 0.0020$
+\item JE patch = $18.36$ GeV $\rightarrow$ ratio = $0.995 + 0.0016 - 0.0020$
+\item JE patch = $19.88$ GeV $\rightarrow$ ratio = $0.998 + 0.0011 - 0.0016$
+\item JE patch = $21.40$ GeV $\rightarrow$ ratio = $0.999 + 0.0007 - 0.0015$
+\item JE patch = $22.92$ GeV $\rightarrow$ ratio = $0.997 + 0.0016 - 0.0025$
+\item JE patch = $24.43$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0020$
+\item JE patch = $25.95$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0024$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{L0 vs. L1 (STU data)}
+
+\begin{frame}{GA vs. JE 16x16 (STU data)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FOR_GAvsJE}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 30, clip]{img/FOR_GAvsJE_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item EMCal only
+\item J1 threshold is 25 GeV, J2 threshold is 18 GeV
+\end{itemize}
+\end{frame}
+
+\begin{frame}{GA vs. JE 16x16 (STU data): table}
+\begin{itemize}
+\item L0 patch > 2.5, 3.5, 4.0 GeV
+\begin{itemize}
+\item JE patch = $17.45$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0005$
+\item JE patch = $18.97$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0007$
+\item JE patch = $20.49$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0009$
+\item JE patch = $22.01$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0002$
+\item JE patch = $23.52$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0006$
+\item JE patch = $25.04$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0016$
+\end{itemize}
+\item L0 patch > 4.5 GeV
+\begin{itemize}
+\item JE patch = $17.45$ GeV $\rightarrow$ ratio = $0.998 + 0.0007 - 0.0010$
+\item JE patch = $18.97$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0007$
+\item JE patch = $20.49$ GeV $\rightarrow$ ratio = $0.999 + 0.0006 - 0.0012$
+\item JE patch = $22.01$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0002$
+\item JE patch = $23.52$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0006$
+\item JE patch = $25.04$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0016$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{GA vs. JE 16x16 (STU data): table (cont'd)}
+\begin{itemize}
+\item L0 patch > 5.0 GeV
+\begin{itemize}
+\item JE patch = $17.45$ GeV $\rightarrow$ ratio = $0.992 + 0.0016 - 0.0019$
+\item JE patch = $18.97$ GeV $\rightarrow$ ratio = $0.999 + 0.0007 - 0.0011$
+\item JE patch = $20.49$ GeV $\rightarrow$ ratio = $0.998 + 0.0011 - 0.0017$
+\item JE patch = $22.01$ GeV $\rightarrow$ ratio = $1.000 + 0.0001 - 0.0002$
+\item JE patch = $23.52$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0006$
+\item JE patch = $25.04$ GeV $\rightarrow$ ratio = $1.000 + 0.0000 - 0.0016$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}
