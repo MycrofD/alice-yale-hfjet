@@ -14,7 +14,7 @@ def MakeL1vsL0(title, hist, L0thresholds):
     baseline = hist.ProjectionX("{0}_nocut".format(title))
     baseline.SetTitle("L0 patch > 0 GeV")
     baseline.GetYaxis().SetTitle("counts")
-    baseline.GetXaxis().SetRangeUser(0,100)
+    baseline.GetXaxis().SetRangeUser(0,30)
     #baseline.Rebin(3)
     baseline.Sumw2()
     histograms = []
@@ -22,11 +22,11 @@ def MakeL1vsL0(title, hist, L0thresholds):
         h = hist.ProjectionX("{0}_{1}".format(title, int(th*10)), hist.GetYaxis().FindBin(th), hist.GetYaxis().GetNbins())
         #h.Rebin(3)
         h.Sumw2()
-        h.GetXaxis().SetRangeUser(0,100)
+        h.GetXaxis().SetRangeUser(0,30)
         h.SetTitle("L0 patch > {0:.2f} GeV".format(th))
         h.GetYaxis().SetTitle("counts")
         histograms.append(h)
-    result = CompareSpectra(baseline, histograms, title, "hist", "hist", "L0 threshold X / no L0 threshold")
+    result = CompareSpectra(baseline, histograms, title, "", "P", "L0 threshold X / no L0 threshold")
     for obj in result:
         globalList.append(obj)
         if isinstance(obj, ROOT.TCanvas):
@@ -87,8 +87,6 @@ def CompareSpectra(baseline, spectra, comparisonName, opt="", optRatio="", yaxis
     results = []
     baselineRatio = None
     mainRatioHist = None
-    maxRatio = 0
-    minRatio = 999
     mainHist = None
     
     print("CompareSpectra: {0}".format(comparisonName))
@@ -159,6 +157,8 @@ def CompareSpectra(baseline, spectra, comparisonName, opt="", optRatio="", yaxis
         cname = "{0}_Ratio".format(comparisonName)
         if not cRatio:
             cRatio = ROOT.TCanvas(cname, cname)
+            cRatio.SetGridx()
+            cRatio.SetGridy()
         results.append(cRatio)
         cRatio.cd()
         if doRatio == "logy":
@@ -175,7 +175,7 @@ def CompareSpectra(baseline, spectra, comparisonName, opt="", optRatio="", yaxis
             legRatio.SetTextSize(16)
 
         results.append(legRatio)
-
+    first = True
     for color, marker, line, h in zip(colors[1:], markers[1:], lines[1:], spectra):
         if doSpectra:
             c.cd()
@@ -198,8 +198,21 @@ def CompareSpectra(baseline, spectra, comparisonName, opt="", optRatio="", yaxis
 
         if doRatio:
             cRatio.cd()
-            hRatio = h.Clone("{0}_Ratio".format(h.GetName()))
-            hRatio.GetYaxis().SetTitle(yaxisRatio)
+            #hRatio = h.Clone("{0}_Ratio".format(h.GetName()))
+            #hRatio.Divide(baseline)
+            hRatio = ROOT.TGraphAsymmErrors(h, baseline, "cl=0.683 b(1,1) mode")
+            hRatio.SetName("{0}_Ratio".format(h.GetName()))
+            hRatio.SetTitle("{0} Ratio".format(h.GetTitle()))
+            if first: hRatio.Draw(optRatio+"A")
+            else: hRatio.Draw(optRatio)
+            first = False
+            print(hRatio.GetName())
+            for ibin in range(0,hRatio.GetN(),5):
+                if hRatio.GetX()[ibin] < 10:
+                    continue
+                if hRatio.GetX()[ibin] > 30:
+                    break
+                print("\\item JE patch = ${0:.2f}$ GeV $\\rightarrow$ ratio = ${1:.3f} + {2:.4f} - {3:.4f}$".format(hRatio.GetX()[ibin], hRatio.GetY()[ibin], hRatio.GetErrorYhigh(ibin), hRatio.GetErrorYlow(ibin)))
             if not baselineRatio:
                 baselineRatio = hRatio
             if "hist" in optRatio:
@@ -214,39 +227,16 @@ def CompareSpectra(baseline, spectra, comparisonName, opt="", optRatio="", yaxis
                 hRatio.SetMarkerSize(1.2)
                 legRatio.AddEntry(hRatio, h.GetTitle(), "pe")
             results.append(hRatio)
-            hRatio.SetTitle("{0} Ratio".format(h.GetTitle()))
-            hRatio.Divide(baseline)
-            hRatio.Draw(optRatio)
+            hRatio.GetYaxis().SetTitle(yaxisRatio)
             if not mainRatioHist:
-                for obj in cRatio.GetListOfPrimitives():
-                    if isinstance(obj, ROOT.TH1):
-                        mainRatioHist = obj
-                        print("Main ratio histogram is: {0}".format(mainRatioHist.GetName()))
-                        mainRatioHist.SetMinimum(-1111)
-                        mainRatioHist.SetMaximum(-1111)
-                        minRatio = mainRatioHist.GetMinimum(0)
-                        maxRatio = mainRatioHist.GetMaximum()
-                        break
-            if minRatio > hRatio.GetMinimum(0):
-                minRatio = hRatio.GetMinimum(0)
-            if maxRatio < hRatio.GetMaximum():
-                maxRatio = hRatio.GetMaximum()
+                mainRatioHist = hRatio
 
             if not "same" in optRatio:
                 optRatio += "same"
 
     if doRatio:
-        if doRatio == "logy":
-            maxRatio *= 10
-            minRatio /= 5
-        else:
-            maxRatio *= 1.8
-            if minRatio < 0.2:
-                minRatio = 0
-            else:
-                minRatio *= 0.6
-        mainRatioHist.SetMinimum(minRatio)
-        mainRatioHist.SetMaximum(maxRatio)
+        mainRatioHist.GetXaxis().SetRangeUser(0,30)
+        mainRatioHist.GetYaxis().SetRangeUser(0,1.8)
         cRatio.cd()
         legRatio.Draw()
 

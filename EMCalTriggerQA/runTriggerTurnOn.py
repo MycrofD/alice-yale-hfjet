@@ -3,21 +3,21 @@
 
 import ROOT
 import argparse
-from ROOT import gROOT
-from enum import Enum
 import array
 import math
-from collections import OrderedDict
 import yaml
 import IPython
-from cProfile import label
 
 globalList = []
 
+ADCtoGeV = 0.018970588 * 4 
+
 class TriggerTurnOnAnalysis:
-    def __init__(self, detector, file, normalize, outputPath, triggerList, baseTrigger):
+    def __init__(self, name, detector, file, outputPath, triggerList, baseTrigger):
+        self.fBaseName = name
         self.fFile = file
-        self.fNormalize = normalize
+        self.fMaxObservableValue = 40
+        self.fNormalize = False
         self.fDetector = detector
         self.fOutputPath = outputPath
         self.fColorList = dict()
@@ -27,12 +27,12 @@ class TriggerTurnOnAnalysis:
         self.fColorList[self.fBaseTrigger] = ROOT.kBlack
         self.fMarkerList[self.fBaseTrigger] = ROOT.kFullCircle
         colors = [ROOT.kRed+2, ROOT.kBlue+2, ROOT.kGreen+2, ROOT.kMagenta+2, ROOT.kCyan+2, ROOT.kOrange+2]
-        markers = [ROOT.kOpenSquare, ROOT.kOpenTriangleUp, ROOT.kOpenTriangleDown, ROOT.kOpenDiamond, ROOT.kOpenCross]
-        for i,trigger in enumerate(self.fTriggerList):
+        markers = [ROOT.kOpenSquare, ROOT.kOpenTriangleUp, ROOT.kOpenTriangleDown, ROOT.kOpenDiamond, ROOT.kOpenCross, ROOT.kOpenStar]
+        for color,marker,trigger in zip(colors, markers, self.fTriggerList):
             if trigger == self.fBaseTrigger:
                 continue
-            self.fColorList[trigger] = colors[i]
-            self.fMarkerList[trigger] = markers[i]
+            self.fColorList[trigger] = color
+            self.fMarkerList[trigger] = marker
 
     def GetHistograms(self):
         self.fHistograms = dict()
@@ -50,13 +50,13 @@ class TriggerTurnOnAnalysis:
             if self.fNormalize:
                 ratio.GetYaxis().SetTitle("#frac{#it{N}_{evt, {" + self.fBaseTrigger + "}}{#it{N}_{evt, rare} #frac{d#it{N}_{rare}}{d" + self.fObservableName + "} / #frac{d#it{N}_{" + self.fBaseTrigger + "}}{d" + self.fObservableName + "}")
             else:
-                ratio.GetYaxis().SetTitle("#frac{d#it{N}_{L1}}{d" + self.fObservableName + "} / #frac{d#it{N}_{" + self.fBaseTrigger + "}}{d" + self.fObservableName + "}")
+                ratio.GetYaxis().SetTitle("#it{N}_{trigger} / #it{N}_{" + self.fBaseTrigger + "}")
             self.fRatios[trigger] = ratio
             globalList.append(ratio)
     
     def Plot(self):
         min = 1e-6
-        max = 50
+        max = 1e3
         maxR = 100
         if not self.fNormalize:
             min *= self.fEvents[self.fBaseTrigger]
@@ -96,14 +96,13 @@ class TriggerTurnOnAnalysis:
         canvas.SaveAs("{0}/{1}.pdf".format(self.fOutputPath, name))
 
 class ClusterTriggerTurnOnAnalysis(TriggerTurnOnAnalysis):
-    def __init__(self, detector, file, normalize, outputPath, triggerList, baseTrigger, clusters, cells):
-        TriggerTurnOnAnalysis.__init__(self, detector, file, normalize, outputPath, triggerList, baseTrigger)
-        
-        self.fMaxObservableValue = 30
-        self.fName = "{0}_Cluster".format(detector)
-        self.fTitle = "{0} Cluster".format(detector)
+    def __init__(self, name, detector, file, outputPath, triggerList, baseTrigger, clusters, cells):
+        TriggerTurnOnAnalysis.__init__(self, name, detector, file, outputPath, triggerList, baseTrigger)
+
+        self.fName = "{0}_Cluster".format(self.fBaseName)
+        self.fTitle = "{0} Cluster".format(self.fBaseName)
         self.fObservableName = "#it{E}_{cluster}"
-        self.fListName = "AliAnalysisTaskEmcalJetQA_{clusName}_{cellName}_{triggerName}_histos/histosAliAnalysisTaskEmcalJetQA_{clusName}_{cellName}_{triggerName}/{clusName}".format(clusName=clusters, cellName=cells, triggerName="{0}")
+        self.fListName = "AliAnalysisTaskEmcalJetQA_{clusName}_{cellName}_{triggerName}_histos/histosAliAnalysisTaskEmcalJetQA/{clusName}".format(clusName=clusters, cellName=cells, triggerName="{0}")
         if "SM" in detector:
             self.fListName += "/BySM"
             self.fHistogramName = "fHistClusEnergy_{0}_0".format(detector)
@@ -115,6 +114,7 @@ class ClusterTriggerTurnOnAnalysis(TriggerTurnOnAnalysis):
         
         chain = listName.split("/")
         list = None
+        scaleFactor = 1
         for name in chain:
             if list:
                 list = list.FindObject(name)
@@ -156,21 +156,20 @@ class ClusterTriggerTurnOnAnalysis(TriggerTurnOnAnalysis):
                 self.fProjections[trigger] = hist.ProjectionZ("ClusterEnergy_{0}".format(trigger), 0, -1, 0, -1, "e")
             else: #by SM
                 self.fProjections[trigger] = hist.Clone("ClusterEnergy_{0}".format(trigger))
+            self.fProjections[trigger].GetXaxis().SetTitle(self.fObservableName + " (GeV)")
             if self.fNormalize:
                 self.fProjections[trigger].Scale(1. / self.fEvents[trigger], "width")
-                self.fProjections[trigger].GetYaxis().SetTitle("#frac{1}{#it{N}_{evt}} #frac{d#it{N}}{d" + self.fObservableName + "}")
+                self.fProjections[trigger].GetYaxis().SetTitle("#frac{1}{#it{N}_{evt}} #frac{d#it{N}}{d" + self.fObservableName + "} (GeV)^{-1}")
             else:
-                self.fProjections[trigger].Scale(1, "width")
-                self.fProjections[trigger].GetYaxis().SetTitle("#frac{d#it{N}}{d" + self.fObservableName + "}")
+                self.fProjections[trigger].GetYaxis().SetTitle("counts")
                 
 class PatchTriggerTurnOnAnalysis(TriggerTurnOnAnalysis):
-    def __init__(self, detector, file, normalize, outputPath, triggerList, baseTrigger, triggerPatchName, patchType):
-        TriggerTurnOnAnalysis.__init__(self, detector, file, normalize, outputPath, triggerList, baseTrigger)
-        
-        self.fMaxObservableValue = 400
-        self.fName = "{0}_{1}_{2}_Patch".format(detector, triggerPatchName, patchType)
-        self.fTitle = "{0} {1} {2} _Patch".format(detector, triggerPatchName, patchType)
-        self.fObservableName = "#it{Amp}_{patch}"
+    def __init__(self, name, detector, file, outputPath, triggerList, baseTrigger, triggerPatchName, patchType):
+        TriggerTurnOnAnalysis.__init__(self, name, detector, file, outputPath, triggerList, baseTrigger)
+
+        self.fName = "{0}_{1}_{2}_Patch".format(self.fBaseName, triggerPatchName, patchType)
+        self.fTitle = "{0} {1} {2} Patch".format(self.fBaseName, triggerPatchName, patchType)
+        self.fObservableName = "#it{E}_{patch}"
         self.fTriggerPatchName = triggerPatchName
         self.fTriggerPatchType = patchType
         self.fListName = "AliEmcalTriggerQATask_{0}_histos/histosAliEmcalTriggerQATask_{0}"
@@ -238,14 +237,16 @@ class PatchTriggerTurnOnAnalysis(TriggerTurnOnAnalysis):
     def ProjectHistograms(self):
         self.fProjections = dict()
         for trigger,hist in self.fHistograms.iteritems():
+            hist.GetXaxis().SetLimits(hist.GetXaxis().GetXmin() * ADCtoGeV, hist.GetXaxis().GetXmax() * ADCtoGeV)
+            hist.GetXaxis().SetTitle(self.fObservableName + " (GeV)")
             self.fProjections[trigger] = hist
             globalList.append(self.fProjections[trigger])
             if self.fNormalize:
                 self.fProjections[trigger].Scale(1. / self.fEvents[trigger], "width")
-                self.fProjections[trigger].GetYaxis().SetTitle("#frac{1}{#it{N}_{evt}} #frac{d#it{N}}{d" + self.fObservableName + "}")
+                self.fProjections[trigger].GetYaxis().SetTitle("#frac{1}{#it{N}_{evt}} #frac{d#it{N}}{d" + self.fObservableName + "} (GeV)^{-1}")
             else:
-                self.fProjections[trigger].Scale(1, "width")
-                self.fProjections[trigger].GetYaxis().SetTitle("#frac{d#it{N}}{d" + self.fObservableName + "}")
+                self.fProjections[trigger].GetYaxis().SetTitle("counts")
+
 
 def CompareSpectra(anaList, search, baseLine):
     canvases = dict()
@@ -260,7 +261,7 @@ def CompareSpectra(anaList, search, baseLine):
                 baseLineHistos[trigger] = ana.fProjections[trigger].Clone()
                 baseLineHistos[trigger].SetLineColor(ROOT.kBlack)
                 baseLineHistos[trigger].SetMarkerColor(ROOT.kBlack)
-                baseLineHistos[trigger].Rebin(3)
+                #baseLineHistos[trigger].Rebin(3)
                 baseLineHistos[trigger].Scale(1. / baseLineHistos[trigger].Integral())
                 baseLineHistos[trigger].GetXaxis().SetRangeUser(0,20)
                 globalList.append(baseLineHistos[trigger])
@@ -279,7 +280,6 @@ def CompareSpectra(anaList, search, baseLine):
                 
             break
 
-    
     colors = [ROOT.kRed+2, ROOT.kBlue+2, ROOT.kGreen+2, ROOT.kMagenta+2, ROOT.kCyan+2, ROOT.kOrange+2, ROOT.kTeal+2, ROOT.kYellow+2, ROOT.kPink+1, ROOT.kSpring, ROOT.kViolet+7, ROOT.kAzure+1]
     iSM = 0
     for ana in anaList:
@@ -290,7 +290,7 @@ def CompareSpectra(anaList, search, baseLine):
             hist = ana.fProjections[trigger].Clone()
             hist.SetLineColor(colors[iSM])
             hist.SetMarkerColor(colors[iSM])
-            hist.Rebin(3)
+            #hist.Rebin(3)
             hist.Scale(1. / hist.Integral())
             hist.Draw("same")
             
@@ -308,7 +308,7 @@ def CompareSpectra(anaList, search, baseLine):
     globalList.append(canvases)
     globalList.append(ratioCanvases)
 
-def main(yamlConfig):
+def main(yamlConfig, sm):
     
     ROOT.TH1.AddDirectory(False)
     ROOT.gStyle.SetOptTitle(False)
@@ -327,26 +327,37 @@ def main(yamlConfig):
     for config in yamlConfig["configs"]:
         if not config["active"]:
             continue
-        analysis.append(ClusterTriggerTurnOnAnalysis(config["detector"], file, False, outputPath, config["triggers"], config["base_trigger"], yamlConfig["clusters"], yamlConfig["cells"]))
-        
-        analysis.append(PatchTriggerTurnOnAnalysis(config["detector"], file, False, outputPath, config["triggers"], config["base_trigger"], "EMCGAH", "Recalc"))
-        
-        if config["detector"] == "EMCal":
-            SMlist = range(0,12)
-        elif config["detector"] == "DCal":
-            SMlist = range(12,18)
+        if "name" in config:
+            name = config["name"]
         else:
-            SMlist = []
-        for iSM in SMlist:
-            analysis.append(ClusterTriggerTurnOnAnalysis("SM{0}".format(iSM), file, False, outputPath, config["triggers"], config["base_trigger"], yamlConfig["clusters"], yamlConfig["cells"]))
+            name = config["detector"]
+
+        ana = ClusterTriggerTurnOnAnalysis(name, config["detector"], file, outputPath, config["triggers"], config["base_trigger"], yamlConfig["clusters"], yamlConfig["cells"])
+        if "max_cluster_e" in config: ana.fMaxObservableValue = config["max_cluster_e"]
+        analysis.append(ana)
+        if "patches" in config:
+            for patch_config in config["patches"]:
+                ana = PatchTriggerTurnOnAnalysis(name, config["detector"], file, outputPath, config["triggers"], config["base_trigger"], patch_config["trigger"], patch_config["type"])
+                if "max_patch_e" in patch_config: ana.fMaxObservableValue = patch_config["max_patch_e"]
+                analysis.append(ana)
+
+        if sm:
+            if config["detector"] == "EMCal":
+                SMlist = range(0,12)
+            elif config["detector"] == "DCal":
+                SMlist = range(12,18)
+            else:
+                SMlist = []
+            for iSM in SMlist:
+                analysis.append(ClusterTriggerTurnOnAnalysis("SM{0}".format(iSM), file, outputPath, config["triggers"], config["base_trigger"], yamlConfig["clusters"], yamlConfig["cells"]))
 
     for ana in analysis:
         ana.GetHistograms()
         ana.ProjectHistograms()
         ana.Ratios()
         ana.Plot()
-        
-    CompareSpectra(analysis, "SM", "SM1_Cluster")
+
+    if sm: CompareSpectra(analysis, "SM", "SM1_Cluster")
     
     globalList.append(analysis)
         
@@ -355,13 +366,15 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='EMCal trigger QA.')
     parser.add_argument('yaml', metavar='config.yaml',
                         help='YAML configuration file')
+    parser.add_argument("--sm", action='store_const',
+                        default=False, const = True,
+                        help='Plot trigger turn-on curves SM by SM.')
     args = parser.parse_args()
     
     f = open(args.yaml, 'r')
     config = yaml.load(f)
     f.close()
 
-    main(config)
+    main(config, args.sm)
     
     IPython.embed()
-    

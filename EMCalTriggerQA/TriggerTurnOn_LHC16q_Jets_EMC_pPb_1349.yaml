@@ -1,0 +1,103 @@
+run: ""
+train: Jets_EMC_pPb_1349
+input_path: /Volumes/DATA/ALICE/pPb2016
+clusters: caloClusters
+cells: emcalCells
+configs:
+- 
+  name: EMCal_MB
+  active: no
+  detector: EMCal
+  triggers: [INT7, EMC7, EG1, EG2, EJ1, EJ2]
+  base_trigger: INT7
+  max_cluster_e: 40
+  patches:
+  -
+    type: Recalc
+    trigger: EMCL0
+    max_patch_e: 40
+  -
+    type: Recalc
+    trigger: EMCGAH
+    max_patch_e: 40
+  -
+    type: Recalc
+    trigger: EMCJEH
+    max_patch_e: 100
+  -
+    type: Offline
+    trigger: EMCL0
+    max_patch_e: 40
+  -
+    type: Offline
+    trigger: EMCGAH
+    max_patch_e: 40
+  -
+    type: Offline
+    trigger: EMCJEH
+    max_patch_e: 100
+- 
+  name: EMCal_L0_JE
+  active: yes
+  detector: EMCal
+  triggers: [EMC7, EJ1, EJ2]
+  base_trigger: EMC7
+  max_cluster_e: 40
+  patches:
+  -
+    type: Recalc
+    trigger: EMCJEH
+    max_patch_e: 100
+  -
+    type: Offline
+    trigger: EMCJEH
+    max_patch_e: 100
+- 
+  name: EMCal_L0_GA
+  active: yes
+  detector: EMCal
+  triggers: [EMC7, EG1, EG2]
+  base_trigger: EMC7
+  max_cluster_e: 40
+  patches:
+  -
+    type: Recalc
+    trigger: EMCGAH
+    max_patch_e: 40
+  -
+    type: Offline
+    trigger: EMCGAH
+    max_patch_e: 40
+- 
+  name: DCal_L0_JE
+  active: yes
+  detector: DCal
+  triggers: [DMC7, DJ1, DJ2]
+  base_trigger: DMC7
+  max_cluster_e: 40
+  patches:
+  -
+    type: Recalc
+    trigger: EMCJEH
+    max_patch_e: 100
+  -
+    type: Offline
+    trigger: EMCJEH
+    max_patch_e: 100
+- 
+  name: DCal_L0_GA
+  active: yes
+  detector: DCal
+  triggers: [DMC7, DG1, DG2]
+  base_trigger: DMC7
+  max_cluster_e: 40
+  patches:
+  -
+    type: Recalc
+    trigger: EMCGAH
+    max_patch_e: 40
+  -
+    type: Offline
+    trigger: EMCGAH
+    max_patch_e: 40
+    
