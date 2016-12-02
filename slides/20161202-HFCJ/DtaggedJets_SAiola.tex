@@ -1,0 +1,177 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\title[B feed-down correction] % (optional, use only with long paper titles)
+{Some thoughts on the B feed-down correction}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Dec. 2nd, 2016] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+December 2nd, 2016}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+  %  \tableofcontents
+  %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+\begin{itemize}
+\item Method 1: apply a weight $\omega(\ptchjet,\ptd)=\frac{N^{\rm c\rightarrow\Dzero}_{\rm POWHEG}(\ptchjet,\ptd)}{N^{\rm c,b\rightarrow\Dzero}_{\rm POWHEG}(\ptchjet,\ptd)}$
+\item Method 2: subtract $N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptchjet)$ from the measured spectrum (before or after unfolding)
+\end{itemize}
+\end{frame}
+
+\section{Method 1}
+
+\begin{frame}{Method 1}
+\begin{center}
+Apply a weight $\omega(\ptchjet,\ptd)=\frac{N^{\rm c\rightarrow\Dzero}_{\rm POWHEG}(\ptchjet,\ptd)}{N^{\rm c,b\rightarrow\Dzero}_{\rm POWHEG}(\ptchjet,\ptd)}$
+\end{center}
+\begin{itemize}
+\item More precisely: \\
+$\omega(\ptjet,\ptd)=\frac{R_{\rm det}^{\rm c\rightarrow\Dzero}(\ptjet) \otimes N^{\rm c\rightarrow\Dzero}_{\rm POWHEG}(\ptjet,\ptd)}
+{\frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptjet) \otimes N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptjet,\ptd) + 
+R_{\rm det}^{\rm c\rightarrow\Dzero}(\ptjet) \otimes N^{\rm c\rightarrow\Dzero}_{\rm POWHEG}(\ptjet,\ptd)}$,
+where $\epsilon^{\rm b\rightarrow\Dzero}(\ptd)$ and $\epsilon^{\rm c\rightarrow\Dzero}(\ptd)$ are reconstruction efficiencies
+\item Applied as a weight before the signal extraction (same as done for the efficiency correction)
+\item Pros: small(er) dependence on the jet fragmentation
+\item Cons: depends both on the charm and beauty simulations
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Method 2}
+\begin{center}
+Subtract $N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptchjet)$ from the measured spectrum
+\end{center}
+\footnotesize
+\begin{itemize}
+\item More precisely:
+\begin{itemize}
+\item Before unfolding: \\
+$N^{\rm c\rightarrow\Dzero}_{\rm corr}(\ptchjet) = R_{\rm det}^{\rm c\rightarrow\Dzero}(\ptchjet)^{-1} \otimes \Big[N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet) - $\\
+$R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptchjet) \otimes \sum_{\ptd} \frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptd,\ptchjet)\Big]$
+\item After unfolding: \\
+$N^{\rm c\rightarrow\Dzero}_{\rm corr}(\ptchjet) = R_{\rm det}^{\rm c\rightarrow\Dzero}(\ptchjet)^{-1} \otimes N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet) - $ \\ 
+$R_{\rm det}^{\rm c\rightarrow\Dzero}(\ptchjet)^{-1} \otimes R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptchjet) \otimes \sum_{\ptd} \frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptd,\ptchjet)$, \\
+where $N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet)$ is the (efficiency-corrected) raw yield extracted using the inv. mass fit or the SB method.
+\end{itemize}
+\item Pros: depends only on the beauty simulation
+\item Cons: we need to integrate out the \ptd\ dependence of the B feed-down
+\end{itemize}
+\end{frame}
+
+\section*{Summary}
+
+\begin{frame}{Conclusions}
+\begin{itemize}
+\item We may want to explore both methods, unless there is something wrong that I overlooked in one of them
+\item Do we have an \emph{a priori} preference for one of the two methods?
+\item For method 2 (which was discussed in the last PAG meeting by Andrea): in principle unfolding should be a linear operator, 
+however the regularization may indeed bring some "non-linear" effects so better to apply the correction before unfolding
+\item However the most compelling reason against method 2 is that it requires to unfold separately also the POWHEG jet spectrum
+(as seen from the last piece of the equation in the previous slide)
+\end{itemize}
+\end{frame}
+
+\end{document}
