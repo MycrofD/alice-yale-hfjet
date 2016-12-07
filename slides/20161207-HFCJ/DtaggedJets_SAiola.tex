@@ -1,0 +1,207 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\title[D-tagged jets in pp collisions] % (optional, use only with long paper titles)
+{D-tagged jets in pp collisions}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Dec. 12th, 2016] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+December 12th, 2016}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+  %  \tableofcontents
+  %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+\begin{itemize}
+\item B feed-down correction implemented (central-points only)
+\item First fully corrected \Dzero-tagged jet \pt\ spectrum
+\item Unfolding
+\end{itemize}
+\end{frame}
+
+\section{B feed-down}
+
+\begin{frame}{B feed-down correction}
+\centering
+\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/FD_D0_jet_R040_InvMassFit}
+\end{overpic}
+{\tiny
+$\textcolor{ForestGreen}{N^{\rm c\rightarrow\Dzero}_{\rm det}(\ptchjet)} = \textcolor{blue}{N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet)} - 
+\textcolor{red}{R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptchjet) \otimes \sum_{\ptd} \frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptd,\ptchjet)}$
+}
+\begin{itemize}
+\item Statistical precision of B feed-down sufficient
+\item Next: systematics
+\item $\rightarrow$ We need to discuss a clear strategy + implement it
+\end{itemize}
+\end{frame}
+
+\section{Unfolding}
+
+\begin{frame}{Statistical uncertainty}
+\centering
+\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_PtD_20_UnfoldingStatisticalUncertaintyCompareMethods}
+\end{overpic}
+\begin{itemize}
+\item The bin 14-18 has larger statistical uncertainty (black, input spectrum)
+\item The statistical uncertainty is magnified by unfolding (colors, any method)
+\item Rebin to gain statistical precision
+\end{itemize}
+\end{frame}
+
+\begin{frame}{SVD: d-vector}
+\centering
+\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_PtD_20_SvdDvector_PriorResponseTruth}
+\end{overpic}
+\begin{itemize}
+\item Also seen in the behaviour of the d-vector...
+\end{itemize}
+\end{frame}
+
+\begin{frame}{SVD: Pearson's coefficients}
+\centering
+\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_PtD_20_Pearson_Svd_PriorResponseTruth}
+\end{overpic}
+\begin{itemize}
+\item ...and the Pearson's coefficients
+\end{itemize}
+\end{frame}
+
+\section{Fully corrected spectrum}
+
+\begin{frame}{First fully corrected spectrum}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/TheoryComparison_powheg_Charged_R040_1478868679_LHC10_Train823_LHC15i2_Train961_efficiency}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/TheoryComparison_powheg_Charged_R040_1478868679_LHC10_Train823_LHC15i2_Train961_efficiency_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Data points are systematically higher than POWHEG+PYTHIA by about 10-20\%
+\item The shape seems similar
+\item Difficult to say whether the last point indicates a hardening of the spectrum from data w.r.t. MC or simply a statistical fluctuation
+\end{itemize}
+\end{frame}
+
+\section*{Summary}
+
+\begin{frame}{Conclusions}
+\begin{itemize}
+\item Central points of the final spectrum have been presented and compared with a POWHEG+PYTHIA6 simulation
+\item Systematics:
+\begin{itemize}
+\item Unfolding: in progress, mostly done (apart from 14-18 bin issue)
+\item B feed-down: in progress
+\item Raw yield extraction: in progress (F. Colamaria)
+\item More?
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}
