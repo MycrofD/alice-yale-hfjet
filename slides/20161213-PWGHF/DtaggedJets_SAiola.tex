@@ -45,6 +45,17 @@
 % does not look nice, try deleting the line with the fontenc.
 \include{commands}
 
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
 \title[D-tagged jets in \pp\ and \pPb\ collisions] % (optional, use only with long paper titles)
 {D-tagged jets in \pp\ and \pPb\ collisions}
 
@@ -96,9 +107,9 @@ December 13th, 2016}
   \titlepage
 \end{frame}
 
-%\begin{frame}{Outline}
-  %  \tableofcontents
-  %\end{frame}
+\begin{frame}{Outline}
+    \tableofcontents
+ \end{frame}
 
 
 % Structuring a talk is a difficult task and the following structure
@@ -120,7 +131,7 @@ December 13th, 2016}
 
 \section{Introduction}
 
-\begin{frame}{Analysis Strategy}
+\begin{frame}{Analysis Overview}
 \begin{itemize}
 \item Select D meson candidates using PID and topological cuts
 \begin{itemize}
@@ -133,9 +144,12 @@ December 13th, 2016}
 \end{itemize}
 \item Invariant mass analysis to extract the signal
 \begin{itemize}
-\item invariant mass fits in bins of \ptjet
-\item Side-Band (SB) \ptjet-spectra subtraction
+\item invariant mass fits in bins of \ptjet, or
+\item Side-Band (SB) \ptjet-spectra subtraction (in bins of \ptd)
+\item  efficiency correction applied at this step as a \ptd-dependent weight
 \end{itemize}
+\item B feed-down subtraction using a POWHEG+PYTHIA simulation
+\item Unfolding using detector response matrix from PYTHIA6+GEANT3 simulation
 \item Datasets:
 \begin{itemize}
 \item \pp\ at $\s=7$~TeV: LHC10b,c,d,e pass4 (312 M events)
@@ -149,11 +163,13 @@ December 13th, 2016}
 
 \begin{frame}{Invariant Mass Fits in \ptjet\ bins}
 \begin{center}
-\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtBins_DPt_20}
+\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtBins_DPt_20}
 \end{overpic}
 \end{center}
+\vspace{-20pt}
+\small
 \begin{itemize}
-\item Efficiency correction applied as a \ptd-dependent weight when filling the invariant mass plot
+\item Efficiency correction applied as a \ptd-dependent weight when filling the invariant mass plots
 \end{itemize}
 \end{frame}
 
@@ -162,6 +178,7 @@ December 13th, 2016}
 \begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_DPtBins_JetPt_5_30_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_20_SideBand}
 \end{overpic}
 \end{center}
+\vspace{-20pt}
 \footnotesize
 \begin{itemize}
 \item Invariant mass fits (in bins of \ptd) determine position and width of the mass peak
@@ -171,26 +188,32 @@ $B_{\rm SB}$ = integral of the SB ($4\sigma_{\rm fit}<|m-m_{\rm fit}|<8\sigma_{\
 \end{frame}
 
 \begin{frame}{Side-Band Spectra}
+\begin{columns}
+\column{.28\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 380 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_20_SideBand_BkgVsSig}
+\end{overpic}
+\column{.28\textwidth}
+\begin{overpic}[width=\textwidth, trim=380 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_20_SideBand_BkgVsSig}
+\end{overpic}
+\column{.44\textwidth}
 \begin{center}
-\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_20_SideBand_BkgVsSig}
+\vspace{-10pt}
+\tiny \sffamily
+$2.0 < \ptd < 30.0$~\GeVc
+
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_20_SideBand_TotalBkgVsSig}
 \end{overpic}
 \end{center}
+\footnotesize
+\vspace{-20pt}
+\begin{itemize}
+\item \ptjet\ spectra scaled by a \ptd-dependent efficiency correction factor
+\item Sum together all the \ptd\ bins
+\end{itemize}
+\end{columns}
 \begin{itemize}
 \item \textcolor{BrickRed}{SB} jet spectra ($4\sigma_{\rm fit}<|m-m_{\rm fit}|<8\sigma_{\rm fit}$) \textcolor{ForestGreen}{subtracted} from \textcolor{NavyBlue}{peak region} ($|m-m_{\rm fit}|<2\sigma_{\rm fit}$)
 \end{itemize}
-\end{frame}
-
-\begin{frame}{Side-Band Total Spectra}
-\begin{columns}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_20_SideBand_TotalBkgVsSig}
-\end{overpic}
-\column{.50\textwidth}
-\begin{itemize}
-\item Efficiency applied to each \ptd\ bin shown in previous slide
-\item Then sum together
-\end{itemize}
-\end{columns}
 \end{frame}
 
 \begin{frame}{Comparison of the two methods}
@@ -224,15 +247,32 @@ $B_{\rm SB}$ = integral of the SB ($4\sigma_{\rm fit}<|m-m_{\rm fit}|<8\sigma_{\
 $\textcolor{NavyBlue}{N^{\rm c\rightarrow\Dzero}_{\rm det}(\ptchjet)} = N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet) - 
 \textcolor{BrickRed}{R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptchjet) \otimes \sum_{\ptd} \frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptd,\ptchjet)}$
 }
+\small
 \begin{itemize}
-\item B feed-down (red) is estimated with a POWHEG+PYTHIA6 simulation (scaled by the luminosity)
-\item The spectrum is weighted by the ratio of the prompt and non-prompt \Dzero\ reconstruction efficiencies
-\item Smeared using detector response matrix
+\item B Feed-Down (FD) spectrum is estimated with a POWHEG+PYTHIA6 simulation (scaled by the luminosity)
+\item Weighted by the ratio of the prompt and non-prompt \Dzero\ reconstruction efficiencies and smeared using detector response
+\item Subtracted from the measured yield before unfolding
 \end{itemize}
+\vspace{-5pt}
 {\tiny
 Note: no normalization is applied and not divided by the bin width, these are counts weighted by the reconstruction efficiency
 }
 
+\end{frame}
+
+\begin{frame}{FD \& Efficiency vs. \ptchjet\ and \ptd}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDownVsPtJet_powheg_Full_R040_1478868679_1478869008_Ratio}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtDPtSpectrum_PartialEfficiency}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item POWHEG+PYTHIA: Feed-Down fraction monotonically increases as a function of \ptchjet\ (left)
+\item PYTHIA+GEANT3: Reconstruction efficiency largely independent of \ptchjet, for $5<\ptchjet<30$~\GeVc\ (right)
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Prompt vs. Non-Prompt Detector Response}
@@ -240,6 +280,8 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/DetectorJetPtResolutionComparison}
 \end{overpic}
 \end{center}
+\vspace{-20pt}
+\small
 \begin{itemize}
 \item Momentum resolution as a function of \ptchjet
 \item Significantly different response for b~$\rightarrow$~\Dzero (blue) compared c~$\rightarrow$~\Dzero (red)
@@ -262,19 +304,9 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Prompt vs. Non-Prompt Reconstruction Efficiency}
-\begin{center}
-\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/ReconstructionEfficiencyComparison}
-\end{overpic}
-\end{center}
-\begin{itemize}
-\item Efficiency is higher for b~$\rightarrow$~\Dzero\ because of the longer decay length of B mesons (topological cuts)
-\end{itemize}
-\end{frame}
-
 \subsection{Unfolding}
 
-\begin{frame}{Unfolding: Bayesian}
+\begin{frame}{Unfolding}
 \begin{columns}
 \column{.50\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingSummary_Bayes}
@@ -289,63 +321,47 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Unfolding: Method Comparison}
+\begin{frame}{Unfolding Systematics}
 \begin{columns}
 \column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingMethod}
-\end{overpic}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingMethod_Ratio}
-\end{overpic}
-\end{columns}
-\begin{itemize}
-\item Baseline: Bayesian
-\item Compared with: bin-by-bin correction, regularized SVD
-\item All methods give equivalent results within few \% (large statistical uncertainty!)
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Unfolding: Prior Choice}
-\begin{columns}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingPrior_Bayes}
-\end{overpic}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingPrior_Bayes_Ratio}
-\end{overpic}
-\end{columns}
-\begin{itemize}
-\item Priors: PYTHIA spectrum, power laws index 3 and 7 (quite large variation)
-\item $\rightarrow$ no effect on the unfolding
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Unfolding: Bin-By-Bin Correction Factors}
 \begin{center}
-\begin{overpic}[width=.65\textwidth, trim=0 5 50 10, clip]{img/InvMassFit_DPt_20_BinByBinCorrectionFactors}
+\tiny
+Method Comparison
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingMethod_Ratio}
+\end{overpic}\\
+Bayesian Regularization
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
 \end{overpic}
 \end{center}
-\footnotesize
+\column{.50\textwidth}
+\begin{center}
+\tiny
+Prior Choice \\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingPrior_Bayes_Ratio}
+\end{overpic}
+\end{center}
+\vspace{-20pt}
 \begin{itemize}
-\item Bin-By-Bin correction factors: ratio between particle-level and detector-level
-\item Some dependence on the prior (= particle-level spectrum)
-\item 5-15\% correction
+\scriptsize
+\item Baseline: Bayesian
+\begin{itemize}
+\tiny
+\item fast convergence
+\item stable after 3 iterations
+\item then $< 1$\% variations
 \end{itemize}
-\end{frame}
-
-\begin{frame}{Unfolding: Bayesian Regularization (iterations)}
-\begin{columns}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingRegularization_Bayes_PriorResponseTruth}
-\end{overpic}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
-\end{overpic}
+\item Methods: bin-by-bin correction, SVD
+\begin{itemize}
+\tiny
+\item equivalent results within few \%
+\end{itemize}
+\item Priors: PYTHIA and $\ptjet^{-a}$ with $a=3, 7$
+\begin{itemize}
+\tiny
+\item no effect on the unfolding
+\end{itemize}
+\end{itemize}
 \end{columns}
-\begin{itemize}
-\item Very fast convergence
-\item Stable after 3 iterations, then $< 1$\% variations
-\end{itemize}
 \end{frame}
 
 \begin{frame}{Unfolding: Summary}
@@ -362,9 +378,48 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \end{itemize}
 \end{frame}
 
-\section{Fully corrected spectrum}
+\section{\pPb\ Analysis}
 
-\begin{frame}{Fully corrected spectrum}
+\subsection{Raw Yield Extraction}
+
+\begin{frame}{Comparison between Eff.Scale and SB}
+\begin{overpic}[width=\textwidth, trim=0 80 0 30, clip]{img/DJetspPb_3}
+\end{overpic}
+\end{frame}
+
+\subsection{Raw Yield Extraction Uncertainty}
+
+\begin{frame}{Systematic uncertainty from yield extraction}
+\begin{center}
+\begin{overpic}[width=.9\textwidth, trim=0 15 0 55, clip]{img/DJetspPb_4}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\begin{frame}{Systematic uncertainty from yield extraction (cont'd)}
+\begin{center}
+\begin{overpic}[width=.9\textwidth, trim=0 25 0 55, clip]{img/DJetspPb_5}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\subsection{Response Matrix \& Unfolding}
+
+\begin{frame}{Response matrices}
+\begin{overpic}[width=\textwidth, trim=0 40 0 70, clip]{img/DJetspPb_1}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{Quick look at unfolding with combined matrix}
+\begin{center}
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 70, clip]{img/DJetspPb_2}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\section{Summary}
+
+\begin{frame}{Fully corrected spectrum for \pp\ at $\s=7$~TeV}
 \begin{columns}
 \column{.50\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/TheoryComparison_powheg_Charged_R040_1478868679_LHC10_Train823_LHC15i2_Train961_efficiency}
@@ -374,33 +429,266 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \end{overpic}
 \end{columns}
 \begin{itemize}
-\item Hint at harder spectrum in data compared to POWHEG+PYTHIA6 (Perugia-2011)
+\item \Dzero-jets in \pp\ collisions at $\s=7$~TeV
+\item Raw yield extracted with the invariant mass fit in \ptchjet\ bins
+\item B feed-down subtracted using a POWHEG+PYTHIA simulation
+\item Unfolded using Bayesian method
+\item Hint at \textbf{larger yield} in data compared to POWHEG+PYTHIA6 (Perugia-2011)
 \end{itemize}
 \end{frame}
 
-\section*{Summary}
+\begin{frame}{D mesons vs. FONLL}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=300 500 70 50, clip]{img/1205_6344v1_p9}
+\end{overpic}
+\column{.50\textwidth}
+\begin{itemize}
+\item \href{https://doi.org/10.1007/JHEP10(2012)137}{Cacciari et al, Theoretical predictions for charm and bottom production at the LHC, JHEP 10 (2012) 137}
+\item D meson spectra are in the upper band of FONLL calculations
+\item Similarly as observed in \Dzero-jet compared with POWHEG+PYTHIA
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{\pp\ at $\s=7$~TeV vs. \pPb\ at $\snn=5.02$~TeV}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/pPbComparison_Charged_R040_LHC10_Train823_LHC15i2_Train961_efficiency}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/pPbComparison_Charged_R040_LHC10_Train823_LHC15i2_Train961_efficiency_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Note: B feed-down correction applied for \pp\ but not for \pPb\ (about 20\% in \pp)
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Conclusions}
 \begin{itemize}
-\item First fully corrected \pt\ spectrum of charm jets tagged using D mesons
-\item Very complex analysis: $>1$ year of a team work!
-\item Systematics:
-\begin{itemize}
-\item Unfolding: uncertainty negligible (much smaller than statistical uncertainty)
-\item B feed-down: variations of (time scale: 1 week)
-\item Raw yield extraction: done for \Dstar-jets in \pPb; in progress for \Dzero-jets in \pp\ (time scale: 2-3 days)
-\item Cut variations: some stability checks needed, can use most of the work done for D meson spectra (time scale: 1 week)
-\end{itemize}
+     \item \pp\ Analysis
+    \begin{itemize}
+        \item First fully corrected \pt\ spectrum of c-jets tagged using \Dzero\ mesons
+        \item Systematics:
+        \begin{itemize}
+            \item Unfolding: uncertainty negligible (much smaller than statistical uncertainty)
+            \item B feed-down: variations of PDF, $m_{\rm b}$, $\mu_0$, $\mu_F$, $\mu_R$ (time scale: first estimate $\sim$~10 days, finalized by preview week)
+            \item Raw yield extraction: in progress (time scale: 2-3 days)
+            \item Cut variations: some stability checks needed, can use most of the work done for D meson spectra (time scale: 1 week)
+        \end{itemize}
+    \end{itemize}
+    \item \pPb\ Analysis
+    \begin{itemize}
+        \item B feed-down needs to be done
+        \item Systematics:
+        \begin{itemize}
+            \item Unfolding: in progress (2-3 days)
+            \item Raw yield extraction: under finalization (time scale: 2-3 days)
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Plans}
 \begin{itemize}
 \item First draft of the analysis note will be sent to the ARC tonight
-\item Update in 1 week with finalized systematics
-\item Large statistical uncertainties $\approx 20-50$~\%: first measurement with minimum-bias collisions $\rightarrow$ short paper
+\item Update in $\sim10$ days with finalized systematics
+\item \pp\ Analysis: large statistical uncertainties $\approx 20-50$~\%
+\begin{itemize}
+\item First measurement with minimum-bias collisions $\rightarrow$ short paper
+\end{itemize}
 \item Looking forward to analyze the available statistics from both Run-1 and Run-2, including EMCal triggered data!
 \end{itemize}
 \end{frame}
+
+\section*{Extra}
+
+\begin{frame}{Extra Slides}
+\huge
+\begin{center}
+Extra Slides
+\end{center}
+\end{frame}
+
+\subsection*{Raw Yield Extraction}
+
+\begin{frame}{Side-Band Spectra}
+\begin{center}
+\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_20_SideBand_BkgVsSig}
+\end{overpic}
+\end{center}
+\begin{itemize}
+\item \textcolor{BrickRed}{SB} jet spectra ($4\sigma_{\rm fit}<|m-m_{\rm fit}|<8\sigma_{\rm fit}$) \textcolor{ForestGreen}{subtracted} from \textcolor{NavyBlue}{peak region} ($|m-m_{\rm fit}|<2\sigma_{\rm fit}$)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{MC Closure Test}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/MC_Charged_R040_JetPtSpectrum_DPt_20_SpectraComparison}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/MC_Charged_R040_JetPtSpectrum_DPt_20_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Spectra obtained using the inv. mass fit and SB methods compared with MC truth
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Systematic uncertainty from yield extraction}
+\begin{center}
+\begin{overpic}[width=.9\textwidth, trim=0 15 0 55, clip]{img/DJetspPb_7}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\begin{frame}{Systematic uncertainty from yield extraction (cont'd)}
+\begin{center}
+\begin{overpic}[width=.9\textwidth, trim=0 15 0 55, clip]{img/DJetspPb_8}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\begin{frame}{Systematic uncertainty from yield extraction (cont'd)}
+\begin{center}
+\begin{overpic}[width=.9\textwidth, trim=0 15 0 55, clip]{img/DJetspPb_9}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\subsection*{Detector Performance}
+
+\begin{frame}{Prompt vs. Non-Prompt Reconstruction Efficiency}
+\begin{center}
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/ReconstructionEfficiencyComparison}
+\end{overpic}
+\end{center}
+\vspace{-20pt}
+\begin{itemize}
+\item Efficiency is higher for b~$\rightarrow$~\Dzero\ because of the longer decay length of B mesons (topological cuts)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Efficiency vs. \ptchjet\ and \ptd}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtDPtSpectrum_PartialEfficiency}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtDPtSpectrum_PartialEfficiencyRatios}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Reconstruction efficiency largely independent of \ptchjet, for $5<\ptchjet<30$~\GeVc
+\end{itemize}
+\end{frame}
+
+\subsection*{Unfolding}
+
+\begin{frame}{Bin-By-Bin Correction Factors}
+\begin{center}
+\begin{overpic}[width=.65\textwidth, trim=0 5 50 10, clip]{img/InvMassFit_DPt_20_BinByBinCorrectionFactors}
+\end{overpic}
+\end{center}
+\vspace{-20pt}
+\footnotesize
+\begin{itemize}
+\item Bin-By-Bin correction factors: ratio between particle-level and detector-level
+\item Some dependence on the prior (= particle-level spectrum)
+\item 5-15\% correction
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Method Comparison}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingMethod}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingMethod_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Baseline: Bayesian
+\item Compared with: bin-by-bin correction, regularized SVD
+\item All methods give equivalent results within few \% (large statistical uncertainty!)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Prior Choice (Bayesian)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingPrior_Bayes}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingPrior_Bayes_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Priors: PYTHIA spectrum, power laws index 3 and 7 (quite large variation)
+\item $\rightarrow$ no effect on the unfolding
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Bayesian Regularization (iterations)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingRegularization_Bayes_PriorResponseTruth}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very fast convergence
+\item Stable after 3 iterations, then $< 1$\% variations
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Priors}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_Priors}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_Priors_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item PYTHIA6 spectrum
+\item Power-law spectra: $\ptjet^{-a}$, with $a=3, 7$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{MC Unfolding Closure Test: Signal-Only Spectra}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/MC_SignalOnly_DPt_20_UnfoldingMethod}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/MC_SignalOnly_DPt_20_UnfoldingMethod_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Detector-level spectra obtained (signal-only via MC truth info) are unfolded and compared with the MC generated spectra
+\end{itemize}
+\end{frame}
+
+\begin{frame}{MC Unfolding Closure Test: Inv.Mass Fit Spectra}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/MC_InvMassFit_DPt_20_UnfoldingMethod}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/MC_InvMassFit_DPt_20_UnfoldingMethod_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Spectra obtained using the inv. mass fit are unfolded and compared with the MC generated spectra
+\end{itemize}
+\end{frame}
+
 
 \end{document}
