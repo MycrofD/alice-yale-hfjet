@@ -235,40 +235,136 @@ Note: no normalization is applied and not divided by the bin width, these are co
 
 \end{frame}
 
-\section{Unfolding}
-
-\begin{frame}{Statistical uncertainty}
-\centering
-\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_PtD_20_UnfoldingStatisticalUncertaintyCompareMethods}
+\begin{frame}{Prompt vs. Non-Prompt Detector Response}
+\begin{center}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/DetectorJetPtResolutionComparison}
 \end{overpic}
+\end{center}
 \begin{itemize}
-\item The bin 14-18 has larger statistical uncertainty (black, input spectrum)
-\item The statistical uncertainty is magnified by unfolding (colors, any method)
-\item Rebin to gain statistical precision
+\item Momentum resolution as a function of \ptchjet
+\item Significantly different response for b~$\rightarrow$~\Dzero (blue) compared c~$\rightarrow$~\Dzero (red)
 \end{itemize}
 \end{frame}
 
-\begin{frame}{SVD: d-vector}
-\centering
-\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_PtD_20_SvdDvector_PriorResponseTruth}
+\begin{frame}{Smear w/ b~$\rightarrow$~\Dzero, unfold w/ c~$\rightarrow$~\Dzero}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/FD_FoldUnfold_Comparison}
 \end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/FD_FoldUnfold_Comparison_Ratio}
+\end{overpic}
+\end{columns}
 \begin{itemize}
-\item Also seen in the behaviour of the d-vector...
+\item Feed-Down spectrum smeared using b~$\rightarrow$~\Dzero\ response (blue)
+\item Unfolded using c~$\rightarrow$~\Dzero\ response (red)
+\item Sanity check: unfold using b~$\rightarrow$~\Dzero\ response (green)
 \end{itemize}
 \end{frame}
 
-\begin{frame}{SVD: Pearson's coefficients}
-\centering
-\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_PtD_20_Pearson_Svd_PriorResponseTruth}
+\begin{frame}{Prompt vs. Non-Prompt Reconstruction Efficiency}
+\begin{center}
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/ReconstructionEfficiencyComparison}
 \end{overpic}
+\end{center}
 \begin{itemize}
-\item ...and the Pearson's coefficients
+\item Efficiency is higher for b~$\rightarrow$~\Dzero\ because of the longer decay length of B mesons (topological cuts)
+\end{itemize}
+\end{frame}
+
+\subsection{Unfolding}
+
+\begin{frame}{Unfolding: Bayesian}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingSummary_Bayes}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very small correction (5-10\%), much smaller than the statistical uncertainty!
+\item Correction is small because: good momentum resolution (track-only, D-meson requirement) and large bins
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Unfolding: Method Comparison}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingMethod}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingMethod_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Baseline: Bayesian
+\item Compared with: bin-by-bin correction, regularized SVD
+\item All methods give equivalent results within few \% (large statistical uncertainty!)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Unfolding: Prior Choice}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingPrior_Bayes}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingPrior_Bayes_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Priors: PYTHIA spectrum, power laws index 3 and 7 (quite large variation)
+\item $\rightarrow$ no effect on the unfolding
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Unfolding: Bin-By-Bin Correction Factors}
+\begin{center}
+\begin{overpic}[width=.65\textwidth, trim=0 5 50 10, clip]{img/InvMassFit_DPt_20_BinByBinCorrectionFactors}
+\end{overpic}
+\end{center}
+\footnotesize
+\begin{itemize}
+\item Bin-By-Bin correction factors: ratio between particle-level and detector-level
+\item Some dependence on the prior (= particle-level spectrum)
+\item 5-15\% correction
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Unfolding: Bayesian Regularization (iterations)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingRegularization_Bayes_PriorResponseTruth}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassFit_DPt_20_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very fast convergence
+\item Stable after 3 iterations, then $< 1$\% variations
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Unfolding: Summary}
+\begin{itemize}
+\item Very small correction
+\item Very robust against:
+\begin{itemize}
+\item method variation (Bayesian, SVD, Bin-By-Bin)
+\item priors choice
+\item regularization strength
+\end{itemize}
+\item Systematic uncertainty much smaller than statistical $\approx 20-50$~\%
+\item No uncertainty quoted, or few \% based on MC closure tests
 \end{itemize}
 \end{frame}
 
 \section{Fully corrected spectrum}
 
-\begin{frame}{First fully corrected spectrum}
+\begin{frame}{Fully corrected spectrum}
 \begin{columns}
 \column{.50\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/TheoryComparison_powheg_Charged_R040_1478868679_LHC10_Train823_LHC15i2_Train961_efficiency}
@@ -278,9 +374,7 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \end{overpic}
 \end{columns}
 \begin{itemize}
-\item Data points are systematically higher than POWHEG+PYTHIA by about 10-20\%
-\item The shape seems similar
-\item Difficult to say whether the last point indicates a hardening of the spectrum from data w.r.t. MC or simply a statistical fluctuation
+\item Hint at harder spectrum in data compared to POWHEG+PYTHIA6 (Perugia-2011)
 \end{itemize}
 \end{frame}
 
@@ -288,14 +382,24 @@ Note: no normalization is applied and not divided by the bin width, these are co
 
 \begin{frame}{Conclusions}
 \begin{itemize}
-\item Central points of the final spectrum have been presented and compared with a POWHEG+PYTHIA6 simulation
+\item First fully corrected \pt\ spectrum of charm jets tagged using D mesons
+\item Very complex analysis: $>1$ year of a team work!
 \item Systematics:
 \begin{itemize}
-\item Unfolding: in progress, mostly done (apart from 14-18 bin issue)
-\item B feed-down: in progress
-\item Raw yield extraction: in progress (F. Colamaria)
-\item More?
+\item Unfolding: uncertainty negligible (much smaller than statistical uncertainty)
+\item B feed-down: variations of (time scale: 1 week)
+\item Raw yield extraction: done for \Dstar-jets in \pPb; in progress for \Dzero-jets in \pp\ (time scale: 2-3 days)
+\item Cut variations: some stability checks needed, can use most of the work done for D meson spectra (time scale: 1 week)
 \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Plans}
+\begin{itemize}
+\item First draft of the analysis note will be sent to the ARC tonight
+\item Update in 1 week with finalized systematics
+\item Large statistical uncertainties $\approx 20-50$~\%: first measurement with minimum-bias collisions $\rightarrow$ short paper
+\item Looking forward to analyze the available statistics from both Run-1 and Run-2, including EMCal triggered data!
 \end{itemize}
 \end{frame}
 
