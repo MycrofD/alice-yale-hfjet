@@ -1,0 +1,257 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[D-tagged jets in \pp] % (optional, use only with long paper titles)
+{D-tagged jets in \pp\ collisions: systematic studies}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Jan. 4th, 2017] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+January 4th, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+ %   \tableofcontents
+ %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{B Feed-Down}
+
+\begin{frame}{B Feed-Down Correction}
+
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_FDCorrection}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_FDCorrection_Ratio}
+\end{overpic}
+\end{columns}
+{\tiny
+$\textcolor{NavyBlue}{N^{\rm c\rightarrow\Dzero}_{\rm det}(\ptchjet)} = N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet) - 
+\textcolor{BrickRed}{R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptchjet) \otimes \sum_{\ptd} \frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptd,\ptchjet)}$
+}
+\small
+\begin{itemize}
+\item B Feed-Down (FD) spectrum is estimated with a POWHEG+PYTHIA6 simulation (scaled by the luminosity)
+\item Weighted by the ratio of the prompt and non-prompt \Dzero\ reconstruction efficiencies and smeared using detector response
+\item Subtracted from the measured yield before unfolding
+\end{itemize}
+\vspace{-5pt}
+{\tiny
+Note: no normalization is applied and not divided by the bin width, these are counts weighted by the reconstruction efficiency
+}
+
+\end{frame}
+
+
+\begin{frame}{Variations vs. \ptd}
+
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown/variations/BFeedDown_GeneratorLevel_DPtSpectrum_Comparison}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown/variations/BFeedDown_GeneratorLevel_DPtSpectrum_Comparison_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{itemize}
+\item Central values: $m_{\rm b}=4.75$~\GeVcsq, $\mu_{\rm F} = \mu_{\rm R} = 1$, PDF = CTEQ10nlo (11000)
+\item $m_{\rm b}$: 5-15\%, \ptd-dependent
+\item PDF: CT10 (10800) shows no difference, cteq6l1 (10042) is problematic (see next slide)
+\item $\mu_{\rm F}$, $\mu_{\rm R}$: 8-18\% (some of the less extreme variations are missing)
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}{PDF: cteq6l1}
+
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown/cteq6l1/BFeedDown_GeneratorLevel_DPtSpectrum_Comparison}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown/cteq6l1/BFeedDown_GeneratorLevel_DPtSpectrum_Comparison_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{itemize}
+\item cteq6l1 way off
+\item Need to find a more reasonable substitute?
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}{Variations vs. \ptchjet}
+
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown/variations/BFeedDown_GeneratorLevel_JetPtSpectrum_DPt_30_bEfficiencyMultiply_cEfficiencyDivide_Comparison}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown/variations/BFeedDown_GeneratorLevel_JetPtSpectrum_DPt_30_bEfficiencyMultiply_cEfficiencyDivide_Comparison_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{itemize}
+\item Central values: $m_{\rm b}=4.75$~\GeVcsq, $\mu_{\rm F} = \mu_{\rm R} = 1$, PDF = CTEQ10nlo (11000)
+\item $m_{\rm b}$: 5-10\%, \ptchjet-dependent
+\item PDF: CT10 (10800) shows no difference
+\item $\mu_{\rm F}$, $\mu_{\rm R}$: 10-18\% (some of the less extreme variations are missing)
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}{Systematic Uncertainty}
+\begin{itemize}
+\item Variations seem to be symmetric (need to verify this for PDF)
+\item Extract an absolute uncertainty for each of the 3 variations ($m_{\rm b}$, PDF, $\mu_{\rm F}$/$\mu_{\rm R}$) by picking the most extreme
+\item Since the FD spectrum is subtracted from the measured spectrum the absolute uncertainties are summed in quadrature
+\end{itemize}
+\end{frame}
+
+\section{Raw Yield Extraction}
+
+\section{Summary \& Outlook}
+
+\begin{frame}{List Of Preliminary Figures (\pp\ analysis)}
+
+{\footnotesize
+    \begin{enumerate}
+        \item \pt-spectrum of \Dzero\ jets: comparison with POWHEG+PYTHIA (Phys. Prel.)
+        \item Invariant Mass Distribution in bins of \ptchjet\ and in bins of \ptd\ (2-3 selected bins, Tech. Prel.)
+        \item \pt-spectrum of \Dzero-jet candidates in the peak area and in the side-bands (2-3 selected bins, Tech. Prel.)
+        \item Relative statistical uncertainty vs. \ptchjet\ (Tech. Prel.)
+        \item Relative systematic uncertainty vs. \ptchjet\ (Tech. Prel.)
+        \item Raw \pt-spectrum of \Dzero\ jets before unfolding (Tech. Prel.)
+        \item Raw \pt-spectrum of \Dzero\ jets before FD subtraction (Tech. Prel.)
+        \item Response Matrix (Sim.)
+        \item \ptchjet\ resolution for prompt and non-prompt \Dzero\ jets (Sim.)
+        \item Reconstruction efficiency for prompt and non-prompt \Dzero\ jets (Sim.)
+    \end{enumerate}
+    }
+\end{frame}
+
+\begin{frame}{Conclusions}
+    \begin{itemize}
+        \item Systematics:
+        \begin{itemize}
+            \item Unfolding: uncertainty negligible (much smaller than statistical uncertainty)
+            \item B feed-down: 12-20\%
+            \item Raw yield extraction: in progress
+            \item Cut variations?
+        \end{itemize}
+        \item Other missing points?
+    \end{itemize}
+\end{frame}
+
+\end{document}
