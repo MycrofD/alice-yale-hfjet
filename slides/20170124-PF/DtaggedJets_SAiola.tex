@@ -150,7 +150,7 @@ January 24th, 2017}
 \item efficiency correction applied at this step as a \ptd-dependent weight
 \end{itemize}
 \item \alert{B feed-down subtraction} using a POWHEG+PYTHIA simulation
-\item \alert{Unfolding for jet momentum resolution} with detector response from PYTHIA6+GEANT3 simulation
+\item \alert{Unfolding for jet momentum resolution} with detector response from PYTHIA6(HIJING)+GEANT3 simulation
 \item Datasets:
 \begin{itemize}
 \item \pp\ at $\s=7$~TeV: LHC10b,c,d,e pass4 (312 M events)
@@ -159,93 +159,13 @@ January 24th, 2017}
 \end{itemize}
 \end{frame}
 
-\subsection{Raw Yield Extraction}
-
-\begin{frame}{Side-Band Subtraction}
-\begin{center}
-\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_DPtBins_JetPt_5_30_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
-\end{overpic}
-\end{center}
-\vspace{-20pt}
-\footnotesize
+\begin{frame}{Analysis Overview}
 \begin{itemize}
-\item Invariant mass fits (in bins of \ptd) determine position and width of the mass peak
-\item Background normalization is $B_{\rm fit}/B_{\rm SB}$: $B_{\rm fit}$ = bkg. under the peak ($2\sigma_{\rm fit}$) from fit and
-$B_{\rm SB}$ = integral of the SB ($4\sigma_{\rm fit}<|m-m_{\rm fit}|<8\sigma_{\rm fit}$)
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Side-Band Spectra}
-\begin{columns}
-\column{.28\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 380 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
-\end{overpic}
-\column{.28\textwidth}
-\begin{overpic}[width=\textwidth, trim=380 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
-\end{overpic}
-\column{.44\textwidth}
-\begin{center}
-\vspace{-10pt}
-\tiny \sffamily
-$3.0 < \ptd < 30.0$~\GeVc
-
-\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_TotalBkgVsSig}
-\end{overpic}
-\end{center}
-\footnotesize
-\vspace{-20pt}
-\begin{itemize}
-\item \ptjet\ spectra scaled by a \ptd-dependent efficiency correction factor
-\item Sum together all the \ptd\ bins
-\end{itemize}
-\end{columns}
-\begin{itemize}
-\item \textcolor{BrickRed}{SB} jet spectra ($4\sigma_{\rm fit}<|m-m_{\rm fit}|<8\sigma_{\rm fit}$) \textcolor{ForestGreen}{subtracted} from \textcolor{NavyBlue}{peak region} ($|m-m_{\rm fit}|<2\sigma_{\rm fit}$)
-\end{itemize}
-\end{frame}
-
-\subsection{B feed-down correction}
-
-\begin{frame}{B feed-down correction}
-
-\begin{columns}
-\column{.45\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_InternalPlot}
-\end{overpic}
-\column{.50\textwidth}
-\small
-\begin{itemize}
-\item B Feed-Down (FD) spectrum is estimated with a POWHEG+PYTHIA6 simulation (scaled by the luminosity)
-\item Weighted by the ratio of the prompt and non-prompt \Dzero\ reconstruction efficiencies and smeared using detector response
-\item Subtracted from the measured yield before unfolding
-\end{itemize}
-\vspace{-5pt}
-\end{columns}
-{\tiny
-$\textcolor{ForestGreen}{N^{\rm c\rightarrow\Dzero}_{\rm det}(\ptchjet)} = \textcolor{NavyBlue}{N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet)} - 
-\textcolor{BrickRed}{R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptchjet) \otimes \sum_{\ptd} \frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptd,\ptchjet)}$
-}
-
-{\tiny
-Note: no normalization is applied and not divided by the bin width, these are counts weighted by the reconstruction efficiency
-}
-
-\end{frame}
-
-\subsection{Unfolding}
-
-\begin{frame}{Unfolding}
-\begin{columns}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingSummary_Bayes}
-\end{overpic}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
-\end{overpic}
-\end{columns}
-\begin{itemize}
-\item Very small correction (5-10\%), much smaller than the statistical uncertainty!
-\item Correction is small because: good momentum resolution (track-only, D-meson requirement) and large bins
+\item At the PWG-HF meeting it was decided to postpone the approval of the \pPb\ analysis
+\item Physics Preliminary request for the \pp\ analysis
+\item Results presented here are aimed at the poster for Quark Matter
+\item PAG coordinators: Andrea Rossi, Fabio Colamaria
+\item ARC: Jeremy Wilkinson, Leticia Conqueiro, Yasser Corrales
 \end{itemize}
 \end{frame}
 
@@ -283,12 +203,15 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ReflectionVariationComparison_Ratio}
 \end{overpic}
 \end{columns}
+{\footnotesize
 \begin{itemize}
 \item Reflection (= wrong mass hypothesis) templates (from MC) have been added in the fit procedure
 \item 5\% effect on the central points (purple dash-dotted line)
 \item Templates are fit with several functions (double Gaussian, Gaussian, pol3, pol6) $\rightarrow$ negligible effect
 \item The ratio reflection/signal ($\sim 0.3$) is varied by $\pm50$~\%: up to 10\% effect (red dashed line, taken as systematic uncertainty)
+\item Some checks still ongoing, but uncertainties covers all possible anomalies
 \end{itemize}
+}
 \end{frame}
 
 \subsection{Raw Yield Extraction}
@@ -307,7 +230,7 @@ The following variations are considered:
 \end{itemize}
 \end{columns}
 \begin{itemize}
-\item In total over 300 trials!
+\item In total over 300 trials
 \item 30 of them picked randomly: uncertainty is calculated as RMS of the trials with respect to the average
 \end{itemize}
 \end{frame}
@@ -329,13 +252,18 @@ The following variations are considered:
 \end{itemize}
 \end{columns}
 \begin{itemize}
-\item The largest variation in each bin is symmetrized and taken as systematic uncertainty
+\item The largest variation in each bin is taken as systematic uncertainty
+\item The uncertainty on the final cross section is much smaller $\rightarrow$ need to multiply by the feed-down fractio $\sim20-30$\%
 \end{itemize}
+{\tiny
+$\textcolor{ForestGreen}{N^{\rm c\rightarrow\Dzero}_{\rm det}(\ptchjet)} = \textcolor{NavyBlue}{N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet)} - 
+\textcolor{BrickRed}{R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptchjet) \otimes \sum_{\ptd} \frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptd,\ptchjet)}$
+}
 \end{frame}
 
 \subsection{Requests from PF}
 
-\begin{frame}{POWHEG vs. FONLL (beauty)}
+\begin{frame}{Does POWHEG+PYTHIA describe beauty production reasonably?}
 \begin{center}
 \begin{overpic}[width=.75\textwidth, trim=80 500 70 50, clip]{img/1205_6344v1_p11}
 \end{overpic}
@@ -375,6 +303,7 @@ The following variations are considered:
 \end{overpic}
 \end{columns}
 \begin{itemize}
+\item \Dzero-meson spectrum from the ongoing re-analysis of 2010 pass4 data
 \item Not of immediate interpretation
 \item Data and POWHEG show a similar trend, although different shape at low \pt
 \end{itemize}
@@ -402,6 +331,7 @@ The following variations are considered:
 \item Obtained with a full 2D (\ptchjet, num. of jet const.) side-band analysis
 \item Good agreement with MC (PYTHIA6 Perugia-2011)
 \item Distribution peaked at 2-3 constituents per jet (including the \Dzero\ meson)
+\item $<10$~\% of the jets have only 1 constituents
 \end{itemize}
 \end{frame}
 
@@ -424,6 +354,30 @@ The following variations are considered:
 \end{itemize}
 \end{frame}
 
+\begin{frame}{\pt-dependent Systematic Uncertainties}
+\begin{center}
+    \begin{tabular}{lrrrrrr}
+    \hline
+Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
+\ptchjet (\GeVc) & 5 - 6 & 6 - 8 & 8 - 10 & 10 - 14 & 14 - 20 & 20 - 30\\ \hline
+Tracking Eff.* & 1 & 2 & 3 & 3 & 3 & 4\\
+Raw Yield Extr. & 3 & 3 & 3 & 7 & 8 & 16\\
+Refl/Sign & 0 & 2 & 3 & 8 & 12 & 12\\
+B Feed-Down & 4 & 4 & 5 & 10 & 9 & 10\\
+\hline
+\pt-indep & \multicolumn{6}{c}{8.9} \\
+\hline
+Total Syst. & 10 & 11 & 12 & 17 & 20 & 25\\
+\hline
+Stat. Unc. & 10.7 & 10.0 & 14.8 & 28.2 & 31.2 & 48.4\\
+\hline
+Total Unc. & 15 & 15 & 19 & 33 & 37 & 54\\
+\hline
+    \end{tabular}
+    \end{center}
+    * Response Matrix
+\end{frame}
+
 \begin{frame}{\pt-independent Systematic Uncertainties}
 \begin{center}
     \begin{tabular}{lr}
@@ -441,29 +395,6 @@ Total & 8.9 \\
     \end{center}
 \end{frame}
 
-\begin{frame}{\pt-dependent Systematic Uncertainties}
-\begin{center}
-    \begin{tabular}{lrrrrrr}
-    \hline
-Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
-\ptchjet (\GeVc) & 5 - 6 & 6 - 8 & 8 - 10 & 10 - 14 & 14 - 20 & 20 - 30\\ \hline
-Tracking Eff. & 1 & 2 & 3 & 3 & 3 & 4\\
-Raw Yield Extr. & 3 & 3 & 3 & 7 & 8 & 16\\
-Refl/Sign & 0 & 2 & 3 & 8 & 12 & 12\\
-B Feed-Down & 4 & 4 & 5 & 10 & 9 & 10\\
-\hline
-\pt-indep & \multicolumn{6}{c}{8.9} \\
-\hline
-Total Syst. & 10 & 11 & 12 & 17 & 20 & 25\\
-\hline
-Stat. Unc. & 10.7 & 10.0 & 14.8 & 28.2 & 31.2 & 48.4\\
-\hline
-Total Unc. & 15 & 15 & 19 & 33 & 37 & 54\\
-\hline
-    \end{tabular}
-    \end{center}
-\end{frame}
-
 \subsection{Figures for Approval}
 
 \begin{frame}{Phys.Prel: \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV}
@@ -474,7 +405,7 @@ Total Unc. & 15 & 15 & 19 & 33 & 37 & 54\\
 \column{.50\textwidth}
 \begin{itemize}
 \item Good agreement with POWHEG for $\ptchjet>10$~\GeVc
-\item Data systematically higher than POWHEG for  $5 < \ptchjet< 10$~\GeVc, but still within uncertainties
+\item Data at the upper edge of the POWHEG uncertainty for  $5 < \ptchjet< 10$~\GeVc
 \end{itemize}
 \end{columns}
 \end{frame}
@@ -504,6 +435,7 @@ Total Unc. & 15 & 15 & 19 & 33 & 37 & 54\\
 \vspace{-20pt}
 \begin{itemize}
 \item Technical plot to show the contribution of the various sources to the total uncertainty
+\item Will modify this to include upper and lower uncertainties
 \end{itemize}
 \end{frame}
 
@@ -550,6 +482,98 @@ Total Unc. & 15 & 15 & 19 & 33 & 37 & 54\\
 \begin{center}
 Extra Slides
 \end{center}
+\end{frame}
+
+\subsection{Analysis Overview}
+
+\subsubsection*{Raw Yield Extraction}
+
+\begin{frame}{Side-Band Subtraction}
+\begin{center}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_DPtBins_JetPt_5_30_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
+\end{overpic}
+\end{center}
+\vspace{-20pt}
+\footnotesize
+\begin{itemize}
+\item Invariant mass fits (in bins of \ptd) determine position and width of the mass peak
+\item Background normalization is $B_{\rm fit}/B_{\rm SB}$: $B_{\rm fit}$ = bkg. under the peak ($2\sigma_{\rm fit}$) from fit and
+$B_{\rm SB}$ = integral of the SB ($4\sigma_{\rm fit}<|m-m_{\rm fit}|<8\sigma_{\rm fit}$)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Side-Band Spectra}
+\begin{columns}
+\column{.28\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 380 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
+\end{overpic}
+\column{.28\textwidth}
+\begin{overpic}[width=\textwidth, trim=380 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
+\end{overpic}
+\column{.44\textwidth}
+\begin{center}
+\vspace{-10pt}
+\tiny \sffamily
+$3.0 < \ptd < 30.0$~\GeVc
+
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_TotalBkgVsSig}
+\end{overpic}
+\end{center}
+\footnotesize
+\vspace{-20pt}
+\begin{itemize}
+\item \ptjet\ spectra scaled by a \ptd-dependent efficiency correction factor
+\item Sum together all the \ptd\ bins
+\end{itemize}
+\end{columns}
+\begin{itemize}
+\item \textcolor{BrickRed}{SB} jet spectra ($4\sigma_{\rm fit}<|m-m_{\rm fit}|<8\sigma_{\rm fit}$) \textcolor{ForestGreen}{subtracted} from \textcolor{NavyBlue}{peak region} ($|m-m_{\rm fit}|<2\sigma_{\rm fit}$)
+\end{itemize}
+\end{frame}
+
+\subsubsection*{B feed-down correction}
+
+\begin{frame}{B feed-down correction}
+
+\begin{columns}
+\column{.45\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_InternalPlot}
+\end{overpic}
+\column{.50\textwidth}
+\small
+\begin{itemize}
+\item B Feed-Down (FD) spectrum is estimated with a POWHEG+PYTHIA6 simulation (scaled by the luminosity)
+\item Weighted by the ratio of the prompt and non-prompt \Dzero\ reconstruction efficiencies and smeared using detector response
+\item Subtracted from the measured yield before unfolding
+\end{itemize}
+\vspace{-5pt}
+\end{columns}
+{\tiny
+$\textcolor{ForestGreen}{N^{\rm c\rightarrow\Dzero}_{\rm det}(\ptchjet)} = \textcolor{NavyBlue}{N^{\rm c,b\rightarrow\Dzero}_{\rm raw}(\ptchjet)} - 
+\textcolor{BrickRed}{R_{\rm det}^{\rm b\rightarrow\Dzero}(\ptchjet) \otimes \sum_{\ptd} \frac{\epsilon^{\rm b\rightarrow\Dzero}(\ptd)}{\epsilon^{\rm c\rightarrow\Dzero}(\ptd)} N^{\rm b\rightarrow\Dzero}_{\rm POWHEG}(\ptd,\ptchjet)}$
+}
+
+{\tiny
+Note: no normalization is applied and not divided by the bin width, these are counts weighted by the reconstruction efficiency
+}
+
+\end{frame}
+
+\subsubsection*{Unfolding}
+
+\begin{frame}{Unfolding}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingSummary_Bayes}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item Very small correction (5-10\%), much smaller than the statistical uncertainty!
+\item Correction is small because: good momentum resolution (track-only, D-meson requirement) and large bins
+\end{itemize}
 \end{frame}
 
 \subsection*{Raw Yield Extraction}
@@ -940,6 +964,18 @@ Total Unc. & 14.9 & 15.1 & 18.7 & 33.0 & 37.0 & 54.3\\
 \hline
     \end{tabular}
     \end{center}
+\end{frame}
+
+\begin{frame}{POWHEG comparison in the Preview}
+\begin{center}
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/POWHEG_comp}
+\end{overpic}
+\end{center}
+\vspace{-20pt}
+\begin{itemize}
+\item Wrong normalization
+\item No reflections
+\end{itemize}
 \end{frame}
 
 \end{document}
