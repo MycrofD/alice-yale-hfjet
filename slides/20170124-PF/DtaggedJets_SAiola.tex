@@ -141,8 +141,8 @@ January 24th, 2017}
 \item \alert{For each candidate reconstruct the jet using the \antikt\ algorithm}
 \begin{itemize}
 \item replace D-meson daughters with D-meson 4-momentum
-\item use \kt\ algorithm to estimate the background (\pPb)
 \end{itemize}
+\item Use \kt\ algorithm to estimate the average background (\pPb)
 \item Invariant mass analysis to extract the signal
 \begin{itemize}
 \item \alert{Side-Band (SB) \ptjet-spectra subtraction (in bins of \ptd)}, or
@@ -259,11 +259,8 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \begin{itemize}
 \item Reflection templates (i.e. wrong mass hypothesis) added in the fit procedure $\rightarrow$ central points shifted by about 5\% down
 \item Cut on D-meson \pt\ changed from $\ptd>2$~\GeVc\ to $\ptd>3$~\GeVc\
-\item Systematic uncertainties have been finalized
-\begin{itemize}
-\item Raw yield extraction
-\item B feed-down
-\end{itemize}
+\item Fixed event counting to include events w/o reconstructed vertex 
+\item Systematic uncertainties finalized (raw yield extr., B feed-down)
 \item Requests and open points from the Physics Forum Preview
 \begin{itemize}
 \item Validate POWHEG simulation with data (A. Dainese)
@@ -278,8 +275,6 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \end{itemize}
 }
 \end{frame}
-
-
 
 \begin{frame}{Reflection Templates}
 \begin{columns}
@@ -342,6 +337,20 @@ The following variations are considered:
 
 \subsubsection{Requests from PF}
 
+\begin{frame}{POWHEG vs. FONLL (beauty)}
+\begin{center}
+\begin{overpic}[width=.75\textwidth, trim=80 500 70 50, clip]{img/1205_6344v1_p11}
+\end{overpic}
+\end{center}
+{\small
+\begin{itemize}
+\item \href{https://doi.org/10.1007/JHEP10(2012)137}{Cacciari et al, Theoretical predictions for charm and bottom production at the LHC, JHEP 10 (2012) 137}
+\item Good agreement between POWHEG+PYTHIA and FONLL (left)
+\item FONLL in agreement with data (right)
+\end{itemize}
+}
+\end{frame}
+
 \begin{frame}{D-Meson Momentum Fraction}
 \begin{columns}
 \column{.50\textwidth}
@@ -396,43 +405,20 @@ The following variations are considered:
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Statistical precision of reconstruction efficiency}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtDPtSpectrum_PartialEfficiency}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/RecoEfficiencyRelStatUnc}
+\end{overpic}
+\end{columns}
+%\begin{itemize}
+%\end{itemize}
+\end{frame}
+
 \subsection{Final Uncertainties}
-
-\begin{frame}{\pt-independent Systematic Uncertainties}
-    \begin{tabular}{lr}
-    \hline
-Source & Uncertainty (\%) \\ \hline
-Unfolding & 5.0 \\
-Selection Cuts & 5.0 \\
-Tracking Efficiency (D-Meson) & 4.0 \\
-Branching Ratio & 1.0 \\
-Luminosity & 3.5 \\
-\hline
-Total & 8.9 \\
-\hline
-    \end{tabular}
-\end{frame}
-
-\begin{frame}{\pt-dependent Systematic Uncertainties}
-    \begin{tabular}{lrrrrrr}
-    \hline
-Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
-\ptchjet (\GeVc) & 5 - 6 & 6 - 8 & 8 - 10 & 10 - 14 & 14 - 20 & 20 - 30\\ \hline
-Tracking Eff. & 1.1 & 1.5 & 3.8 & 2.6 & 2.9 & 4.3\\
-Raw Yield Extr. & 2.0 & 5.9 & 2.3 & 7.1 & 5.0 & 9.3\\
-Refl/Sign & 0.2 & 1.8 & 2.6 & 7.7 & 12.5 & 10.6\\
-B Feed-Down & 3.6 & 3.8 & 4.2 & 8.4 & 7.2 & 8.6\\
-\hline
-\pt-indep. & \multicolumn{6}{c}{8.9} \\
-\hline
-Total Syst. & 9.9 & 11.6 & 11.1 & 16.3 & 17.9 & 19.2\\
-\hline
-Stat. Unc. & 10.5 & 9.8 & 14.5 & 26.9 & 29.9 & 46.1\\
-\hline
-Total Unc. & 14.4 & 15.2 & 18.2 & 31.4 & 34.8 & 49.9\\
-\hline
-    \end{tabular}
-\end{frame}
 
 \begin{frame}{Final Uncertainties}
 \begin{columns}
@@ -450,34 +436,79 @@ Total Unc. & 14.4 & 15.2 & 18.2 & 31.4 & 34.8 & 49.9\\
 \end{itemize}
 \end{frame}
 
+\begin{frame}{\pt-independent Systematic Uncertainties}
+\begin{center}
+    \begin{tabular}{lr}
+    \hline
+Source & Uncertainty (\%) \\ \hline
+Unfolding & 5.0 \\
+Selection Cuts & 5.0 \\
+Tracking Efficiency (D-Meson) & 4.0 \\
+Branching Ratio & 1.0 \\
+Luminosity & 3.5 \\
+\hline
+Total & 8.9 \\
+\hline
+    \end{tabular}
+    \end{center}
+\end{frame}
 
+\begin{frame}{\pt-dependent Systematic Uncertainties}
+\begin{center}
+    \begin{tabular}{lrrrrrr}
+    \hline
+Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
+\ptchjet (\GeVc) & 5 - 6 & 6 - 8 & 8 - 10 & 10 - 14 & 14 - 20 & 20 - 30\\ \hline
+Tracking Eff. & 1 & 2 & 3 & 3 & 3 & 4\\
+Raw Yield Extr. & 3 & 3 & 3 & 7 & 8 & 16\\
+Refl/Sign & 0 & 2 & 3 & 8 & 12 & 12\\
+B Feed-Down & 4 & 4 & 5 & 10 & 9 & 10\\
+\hline
+\pt-indep & \multicolumn{6}{c}{8.9} \\
+\hline
+Total Syst. & 10 & 11 & 12 & 17 & 20 & 25\\
+\hline
+Stat. Unc. & 10.7 & 10.0 & 14.8 & 28.2 & 31.2 & 48.4\\
+\hline
+Total Unc. & 15 & 15 & 19 & 33 & 37 & 54\\
+\hline
+    \end{tabular}
+    \end{center}
+\end{frame}
 
 \subsection{Figures for Approval}
 
-\begin{frame}{\Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0JetCrossSection_pp7TeV}
+\begin{frame}{Phys.Prel: \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV}
+\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/D0JetCrossSection_pp7TeV}
 \end{overpic}
 %\begin{itemize}
 %\end{itemize}
 \end{frame}
 
-\begin{frame}{Side-Band Signal Extraction}
+\begin{frame}{Tech.Prel.: Side-Band Signal Extraction}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBandInvMass_QM17}
 \end{overpic}
 %\begin{itemize}
 %\end{itemize}
 \end{frame}
 
-\begin{frame}{B Feed-Down Correction}
+\begin{frame}{Tech.Prel.: B Feed-Down Correction}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_QM17}
 \end{overpic}
 %\begin{itemize}
 %\end{itemize}
 \end{frame}
 
-\begin{frame}{Prompt vs. Non-Prompt Reconstruction Efficiency}
+\begin{frame}{Tech.Prel.: Relative Uncertainties}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Uncertainties_QM17}
+\end{overpic}
+%\begin{itemize}
+%\end{itemize}
+\end{frame}
+
+\begin{frame}{Sim.: Reconstruction Efficiency}
 \begin{center}
-\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/ReconstructionEfficiencyComparison}
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/Efficiency_QM17}
 \end{overpic}
 \end{center}
 \vspace{-20pt}
@@ -490,20 +521,6 @@ Total Unc. & 14.4 & 15.2 & 18.2 & 31.4 & 34.8 & 49.9\\
 \section{\pPb\ Analysis}
 
 \section{Summary}
-
-\begin{frame}{D mesons vs. FONLL}
-\begin{columns}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=300 500 70 50, clip]{img/1205_6344v1_p9}
-\end{overpic}
-\column{.50\textwidth}
-\begin{itemize}
-\item \href{https://doi.org/10.1007/JHEP10(2012)137}{Cacciari et al, Theoretical predictions for charm and bottom production at the LHC, JHEP 10 (2012) 137}
-\item D meson spectra are in the upper band of FONLL calculations
-\item Similarly as observed in \Dzero-jet compared with POWHEG+PYTHIA
-\end{itemize}
-\end{columns}
-\end{frame}
 
 \begin{frame}{Conclusions}
 \end{frame}
@@ -546,6 +563,68 @@ Extra Slides
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Raw Yield Variations in \ptd\ bins (SB method) / 1}
+\begin{columns}
+\column{.50\textwidth}
+$3 < \ptd < 4$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_0_Ratio}
+\end{overpic}
+$4 < \ptd < 5$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_1_Ratio}
+\end{overpic}
+\column{.50\textwidth}
+$5 < \ptd < 6$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_2_Ratio}
+\end{overpic}
+$6 < \ptd < 7$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_3_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Variations in \ptd\ bins (SB method) / 2}
+\begin{columns}
+\column{.50\textwidth}
+$7 < \ptd < 8$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_4_Ratio}
+\end{overpic}
+$8 < \ptd < 10$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_5_Ratio}
+\end{overpic}
+\column{.50\textwidth}
+$10 < \ptd < 12$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_6_Ratio}
+\end{overpic}
+$12 < \ptd < 16$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_7_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Variations in \ptd\ bins (SB method) / 3}
+\begin{columns}
+\column{.50\textwidth}
+$16 < \ptd < 30$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_8_Ratio}
+\end{overpic}
+\column{.50\textwidth}
+$3 < \ptd < 30$~\GeVc\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_AfterDbinSum_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Systematic Uncertainty}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/AverageRawYieldVsDefault}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/AverageRawYieldVsDefault_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
 \begin{frame}{Side-Band Spectra}
 \begin{center}
 \begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
@@ -572,15 +651,9 @@ Extra Slides
 
 \subsection*{B Feed-Down}
 
-\begin{frame}{FD \& Efficiency vs. \ptchjet\ and \ptd}
-\begin{columns}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDownVsPtJet_powheg_Full_R040_1478868679_1478869008_Ratio}
+\begin{frame}{FD vs. \ptchjet\ and \ptd}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/BFeedDownVsPtJet_powheg_Full_R040_1478868679_1478869008_Ratio}
 \end{overpic}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtDPtSpectrum_PartialEfficiency}
-\end{overpic}
-\end{columns}
 \begin{itemize}
 \item POWHEG+PYTHIA: Feed-Down fraction monotonically increases as a function of \ptchjet\ (left)
 \item PYTHIA+GEANT3: Reconstruction efficiency largely independent of \ptchjet, for $5<\ptchjet<30$~\GeVc\ (right)
@@ -616,6 +689,20 @@ Extra Slides
 \end{itemize}
 \end{frame}
 
+\begin{frame}{POWHEG vs. FONLL (charm)}
+\begin{center}
+\begin{overpic}[width=.75\textwidth, trim=80 500 70 50, clip]{img/1205_6344v1_p9}
+\end{overpic}
+\end{center}
+{\small
+\begin{itemize}
+\item \href{https://doi.org/10.1007/JHEP10(2012)137}{Cacciari et al, Theoretical predictions for charm and bottom production at the LHC, JHEP 10 (2012) 137}
+\item D meson spectra are in the upper band of FONLL calculations
+\item Similarly as observed in \Dzero-jet compared with POWHEG+PYTHIA
+\end{itemize}
+}
+\end{frame}
+
 \subsection*{Detector Performance}
 
 \begin{frame}{Efficiency vs. \ptchjet\ and \ptd}
@@ -630,6 +717,13 @@ Extra Slides
 \begin{itemize}
 \item Reconstruction efficiency largely independent of \ptchjet, for $5<\ptchjet<30$~\GeVc
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Detector Response \ptchjet\ Matrix}
+\begin{center}
+\begin{overpic}[width=.65\textwidth, trim=0 0 0 0, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtSpectrum_DPt_30_DetectorResponse_canvas}
+\end{overpic}
+\end{center}
 \end{frame}
 
 \subsection*{Unfolding}
@@ -794,5 +888,27 @@ Prior Choice \\
 \end{itemize}
 \end{frame}
 
+\begin{frame}{\pt-dependent Systematic Uncertainties (no smoothening)}
+\begin{center}
+    \begin{tabular}{lrrrrrr}
+    \hline
+Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
+\ptchjet (\GeVc) & 5 - 6 & 6 - 8 & 8 - 10 & 10 - 14 & 14 - 20 & 20 - 30\\ \hline
+Tracking Eff. & 1.1 & 1.5 & 3.8 & 2.6 & 2.9 & 4.3\\
+Raw Yield Extr. & 3.2 & 4.9 & 2.7 & 6.6 & 7.6 & 16.8\\
+Refl/Sign & 0.2 & 1.8 & 2.6 & 8.0 & 13.1 & 11.1\\
+B Feed-Down & 4.1 & 4.4 & 4.9 & 10.0 & 8.6 & 10.3\\
+\hline
+\pt-indep & \multicolumn{6}{c}{8.9} \\
+\hline
+Total Syst. & 10.4 & 11.3 & 11.5 & 17.2 & 19.8 & 24.6\\
+\hline
+Stat. Unc. & 10.7 & 10.0 & 14.8 & 28.2 & 31.2 & 48.4\\
+\hline
+Total Unc. & 14.9 & 15.1 & 18.7 & 33.0 & 37.0 & 54.3\\
+\hline
+    \end{tabular}
+    \end{center}
+\end{frame}
 
 \end{document}
