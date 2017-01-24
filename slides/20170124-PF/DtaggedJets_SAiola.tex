@@ -130,7 +130,7 @@ January 24th, 2017}
 % - If you omit details that are vital to the proof/implementation,
 %   just say so once. Everybody will be happy with that.
 
-\section{Introduction}
+\section{Analysis Overview}
 
 \begin{frame}{Analysis Overview}
 \begin{itemize}
@@ -158,8 +158,6 @@ January 24th, 2017}
 \end{itemize}
 \end{itemize}
 \end{frame}
-
-\section{\pp\ Analysis}
 
 \subsection{Raw Yield Extraction}
 
@@ -251,7 +249,7 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \end{itemize}
 \end{frame}
 
-\subsection{Updates}
+\section{Updates}
 
 \begin{frame}{Updates since the preview}
 
@@ -263,13 +261,13 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \item Systematic uncertainties finalized (raw yield extr., B feed-down)
 \item Requests and open points from the Physics Forum Preview
 \begin{itemize}
-\item Validate POWHEG simulation with data (A. Dainese)
+\item \textcolor{BrickRed}{Validate POWHEG simulation with data} (A. Dainese)
 \item Show response matrix with expanded color scale (A. Morsch)
 \item Ratios of yield extraction multi-trials for each \ptd\ bin (E. Bruna)
-\item Internal plot of D-meson momentum fraction (A. Morsch)
-\item Plot D-meson \pt\ spectrum on top of jet \pt\ spectrum
-\item Effect of the \ptd\ cut in POWHEG (M. van Leeuwen)
-\item Number of tracks in the jet (A. Dainese)
+\item \textcolor{BrickRed}{Internal plot of D-meson momentum fraction} (A. Morsch)
+\item \textcolor{BrickRed}{Plot D-meson \pt\ spectrum on top of jet \pt\ spectrum}
+\item \textcolor{BrickRed}{Effect of the \ptd\ cut in POWHEG} (M. van Leeuwen)
+\item \textcolor{BrickRed}{Number of tracks in the jet} (A. Dainese)
 \item Check statistical uncertainty of the efficiency
 \end{itemize}
 \end{itemize}
@@ -293,7 +291,7 @@ Note: no normalization is applied and not divided by the bin width, these are co
 \end{itemize}
 \end{frame}
 
-\subsubsection{Raw Yield Extraction}
+\subsection{Raw Yield Extraction}
 
 \begin{frame}{Raw Yield Extraction Uncertainty}
 \begin{columns}
@@ -315,7 +313,7 @@ The following variations are considered:
 \end{frame}
 
 
-\subsubsection{B Feed-Down}
+\subsection{B Feed-Down}
 
 \begin{frame}{B Feed-Down Uncertainty}
 \begin{columns}
@@ -335,7 +333,7 @@ The following variations are considered:
 \end{itemize}
 \end{frame}
 
-\subsubsection{Requests from PF}
+\subsection{Requests from PF}
 
 \begin{frame}{POWHEG vs. FONLL (beauty)}
 \begin{center}
@@ -391,8 +389,10 @@ The following variations are considered:
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_MCTruth_Charged_R040_jet_pt_SpectraComparison_Ratio}
 \end{overpic}
 \end{columns}
-%\begin{itemize}
-%\end{itemize}
+\begin{itemize}
+\item About 80\% of the jets at $\ptchjet=5$~\GeVc\ have a \Dzero\ with $\ptd>3$~\GeVc
+\item Plateau at 95\% for $\ptchjet>10$~\GeVc
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Number of jet constituents}
@@ -405,18 +405,7 @@ The following variations are considered:
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Statistical precision of reconstruction efficiency}
-\begin{columns}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtDPtSpectrum_PartialEfficiency}
-\end{overpic}
-\column{.50\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/RecoEfficiencyRelStatUnc}
-\end{overpic}
-\end{columns}
-%\begin{itemize}
-%\end{itemize}
-\end{frame}
+\section{Summary}
 
 \subsection{Final Uncertainties}
 
@@ -432,7 +421,6 @@ The following variations are considered:
 \begin{itemize}
 \item Systematic uncertainty dominated by Reflection/Signal ratio (10\%)
 \item Overall uncertainty dominated by statistics
-\item Figure on the right: request for approval as Technical Preliminary
 \end{itemize}
 \end{frame}
 
@@ -479,34 +467,47 @@ Total Unc. & 15 & 15 & 19 & 33 & 37 & 54\\
 \subsection{Figures for Approval}
 
 \begin{frame}{Phys.Prel: \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV}
-\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/D0JetCrossSection_pp7TeV}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0JetCrossSection_pp7TeV}
 \end{overpic}
-%\begin{itemize}
-%\end{itemize}
+\column{.50\textwidth}
+\begin{itemize}
+\item Good agreement with POWHEG for $\ptchjet>10$~\GeVc
+\item Data systematically higher than POWHEG for  $5 < \ptchjet< 10$~\GeVc, but still within uncertainties
+\end{itemize}
+\end{columns}
 \end{frame}
 
-\begin{frame}{Tech.Prel.: Side-Band Signal Extraction}
+\begin{frame}{Tech.Prel.: Side-Band Signal Extraction (\pp)}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBandInvMass_QM17}
 \end{overpic}
-%\begin{itemize}
-%\end{itemize}
 \end{frame}
 
-\begin{frame}{Tech.Prel.: B Feed-Down Correction}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_QM17}
+\begin{frame}{Tech.Prel.: B Feed-Down Correction (\pp)}
+\begin{center}
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_QM17}
 \end{overpic}
-%\begin{itemize}
-%\end{itemize}
+\end{center}
+\vspace{-20pt}
+\begin{itemize}
+\item Technical plot to show the amount of feed-down correction to be subtracted at detector level
+\item Folded with ALICE reconstruction efficiency
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Tech.Prel.: Relative Uncertainties}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Uncertainties_QM17}
+\begin{frame}{Tech.Prel.: Relative Uncertainties (\pp)}
+\begin{center}
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/Uncertainties_QM17}
 \end{overpic}
-%\begin{itemize}
-%\end{itemize}
+\end{center}
+\vspace{-20pt}
+\begin{itemize}
+\item Technical plot to show the contribution of the various sources to the total uncertainty
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Sim.: Reconstruction Efficiency}
+\begin{frame}{Sim.: Reconstruction Efficiency (\pp)}
 \begin{center}
 \begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/Efficiency_QM17}
 \end{overpic}
@@ -518,12 +519,29 @@ Total Unc. & 15 & 15 & 19 & 33 & 37 & 54\\
 \end{frame}
 
 
-\section{\pPb\ Analysis}
-
-\section{Summary}
-
-\begin{frame}{Conclusions}
+\begin{frame}{Perf.: Inv. Mass Distr. in bins of \ptchjet\ (\pPb)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/DjetInMass_JetPt_Perf}
+\end{overpic}
+%\begin{itemize}
+%\end{itemize}
 \end{frame}
+
+\begin{frame}{Perf.: Inv. Mass Distr. in bins of \ptd\ (\pPb)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/DjetInMass_DPt_Perf}
+\end{overpic}
+%\begin{itemize}
+%\end{itemize}
+\end{frame}
+
+\begin{frame}{Sim.: Reconstruction Efficiency (\pPb)}
+\begin{center}
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/DjetEff_Sim}
+\end{overpic}
+\end{center}
+\end{frame}
+
+%\begin{frame}{Conclusions}
+%\end{frame}
 
 \section*{Extra}
 
@@ -717,6 +735,19 @@ $3 < \ptd < 30$~\GeVc\
 \begin{itemize}
 \item Reconstruction efficiency largely independent of \ptchjet, for $5<\ptchjet<30$~\GeVc
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Statistical precision of reconstruction efficiency}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtDPtSpectrum_PartialEfficiency}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/RecoEfficiencyRelStatUnc}
+\end{overpic}
+\end{columns}
+%\begin{itemize}
+%\end{itemize}
 \end{frame}
 
 \begin{frame}{Detector Response \ptchjet\ Matrix}
