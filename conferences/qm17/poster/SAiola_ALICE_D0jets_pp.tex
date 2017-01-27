@@ -1,8 +1,8 @@
 \include{commands}
 
 \documentclass{tikzposter}
-
-\usetheme{Wave}
+\usetikzlibrary{positioning}
+\usetheme{Rays}
 
 \usepackage{url}
 
@@ -27,11 +27,13 @@ in \pp\ collisions with ALICE}
 \makeatletter
 \newcommand\insertlogoi[2][]{\def\@insertlogoi{\includegraphics[#1]{#2}}}
 \newcommand\insertlogoii[2][]{\def\@insertlogoii{\includegraphics[#1]{#2}}}
+\newcommand\insertlogoiii[2][]{\def\@insertlogoiii{\includegraphics[#1]{#2}}}
 \newlength\LogoSep
-\setlength\LogoSep{-70pt}
+\setlength\LogoSep{-150pt}
 
-\insertlogoi[width=9cm]{img/yale}
-\insertlogoii[width=7cm]{img/alice}
+\insertlogoi[width=8cm]{img/yale}
+\insertlogoii[width=4cm]{img/yale_text}
+\insertlogoiii[width=7cm]{img/alice}
 
 \renewcommand\maketitle[1][]{  % #1 keys
     \normalsize
@@ -62,12 +64,19 @@ in \pp\ collisions with ALICE}
         {\parbox{\TP@titlewidth-2\TP@titleinnersep}{\TP@maketitle}};
 
     \node[inner sep=0pt,anchor=west] 
-      at ([xshift=-\LogoSep]title.west)
+    (logo_yale_shield)
+      at ([shift={(-\LogoSep,1.5cm)}]title.west)
       {\@insertlogoi};
+      
+    \node[inner sep=0pt,anchor=west,below=of logo_yale_shield] 
+        (logo_yale)
+      %at ([xshift=\LogoSep]title.east)
+      {\@insertlogoii};
 
     \node[inner sep=0pt,anchor=east] 
+        (logo_alice)
       at ([xshift=\LogoSep]title.east)
-      {\@insertlogoii};
+      {\@insertlogoiii};
 
     % Settings for blocks
     \normalsize
@@ -77,6 +86,12 @@ in \pp\ collisions with ALICE}
 
 \begin{document}
 
-\maketitle
+\maketitle[width=.9\textwidth]
 
+\begin{columns}
+\column{.35}
+\block{Introduction}{bla bla}
+\column{.65}
+\block{ALICE}{bla bla}
+\end{columns}
 \end{document}
