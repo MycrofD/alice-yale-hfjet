@@ -1,0 +1,8 @@
+*.aux
+*.log
+*.nav
+*.out
+SAiola_ALICE_D0jets_pp.pdf
+*.snm
+*.synctex.gz
+*.toc
