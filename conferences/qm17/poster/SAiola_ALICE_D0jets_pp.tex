@@ -108,49 +108,53 @@ February 6-11, 2017, Chicago, IL, USA
 }
 \makeatother
 
+\definecolor{darkestblue}{RGB}{1,8,100}
+\definecolor{darkerblue}{RGB}{3,17,150}
+\definecolor{darkblue}{RGB}{7,26,200}
+\definecolor{lightred}{RGB}{202,103,104}
+\definecolor{lightgreen}{RGB}{106,202,107}
+
 \begin{document}
 
 \maketitle[width=.9\textwidth]
 
 \begin{columns}
 
-\column{.32}
+\column{.45}
 \block{Introduction}{
 \begin{adjustbox}{valign=t}
-\begin{minipage}[t]{0.48\colwidth}
+\begin{minipage}[t]{0.37\colwidth}
 \vspace{-20pt}
 \begin{tikzfigure}[Prompt \Dzero\ cross section.\par]     \label{fig:D0mesons}
-\begin{overpic}[width=\linewidth, trim=0 5 0 0, clip]{img/D0mesons}
+\begin{overpic}[width=\linewidth, trim=0 0 0 0, clip]{img/D0mesons}
  \put (22,20) {{\scalebox{.35}{Phys.Rev. C94 (2016) 054908}}}
 \end{overpic} \end{tikzfigure}
 \end{minipage}
 \end{adjustbox}
 %
 \begin{adjustbox}{valign=t}
-\begin{minipage}[t]{0.42\colwidth}
+\begin{minipage}[t]{0.55\colwidth}
 \begin{itemize}
-\item \Dzero\ mesons have been measured down to $\ptd\approx0$
-\item Testing \textbf{pQCD} at its \\limits of applicability $Q^{2} \approx m_{\rm c}^{2} \approx 1$~\GeVcsq
+\item \Dzero\ mesons down to $\ptd\approx0$
+\item Testing \textbf{pQCD} at its limits of applicability $Q^{2} \approx m_{\rm c}^{2} \approx 1$~\GeVcsq
 \item Baseline for \textbf{QGP} measurements
+\item Jet observables closer to the \textbf{parton\\ kinematics}
+\item Measurement of the heavy-quark\\ \textbf{fragmentation}
+\item Better handle on \textbf{dead-cone effect} in the QGP
 \end{itemize}
 \end{minipage}
 \end{adjustbox}
-\begin{itemize}
-\item Jet observables closer to the \textbf{parton kinematics}
-\item Measurement of the heavy-quark \textbf{fragmentation}
-\item Better handle on \textbf{dead-cone effect} in the QGP
-\end{itemize}
 }
 
-\column{.39}
+\column{.55}
 \block{ALICE at the LHC}{
-\begin{minipage}[t]{0.46\colwidth}
+\begin{minipage}[t]{0.34\colwidth}
 \begin{tikzfigure}[3D schematics of the ALICE detetcor.\par]     \label{fig:D0mesons}
 \includegraphics[width=\linewidth]{img/alice_schematics}
  \end{tikzfigure}
 \end{minipage}
 %
-\begin{minipage}[t]{0.48\colwidth}
+\begin{minipage}[t]{0.57\colwidth}
 \begin{itemize}
 \item Important features
 \begin{itemize}
@@ -163,85 +167,120 @@ February 6-11, 2017, Chicago, IL, USA
 \item PID, topological cuts
 \item invariant mass analysis
 \end{itemize}
-\end{itemize}
-\end{minipage}
-
-\begin{itemize}
 \item \textbf{Jet reconstruction} using \antikt\ algorithm
 \begin{itemize}
-\item \textcolor{ForestGreen}{charged constituents} (ITS, TPC) $\rightarrow$ \emph{charged jets} (this analysis)
+\item \textcolor{ForestGreen}{charged constituents} (ITS, TPC) $\rightarrow$ \emph{charged jets}
 \item add \textcolor{NavyBlue}{neutral constituents} (EMCal, DCal) $\rightarrow$ \emph{full jets} 
 \end{itemize}
 \end{itemize}
-}
-
-\column{.29}
-\block{Reconstruction Efficiency}{
-\begin{minipage}[t]{0.44\colwidth}
-\begin{tikzfigure}[Prompt vs. non-prompt.\par]     \label{fig:Efficiency_QM17}    \includegraphics[width=\linewidth]{img/Efficiency_QM17} \end{tikzfigure} 
 \end{minipage}
-%
-\begin{minipage}[t]{0.44\colwidth}
-\begin{tikzfigure}[Efficiency vs. \ptchjet\par]     \label{fig:HQ16_Simulation_EfficiencyVsDPt}    \includegraphics[width=\linewidth]{img/HQ16_Simulation_EfficiencyVsDPt} \end{tikzfigure}
-\end{minipage}
-\begin{itemize}
-\item Weak or no dependence on the jet \pt\ $\rightarrow$ simplify corrections and reduces systematics
-\item Higher non-prompt efficiency (topological cuts) $\rightarrow$ bias in the relative contributions of the reconstructed yields
-\end{itemize}
 }
-
 \end{columns}
 
 \begin{columns}
-\column{.58}
+\column{.55}
 \block{\Dzero-Jet \pt-Differential Cross Section}{
 \begin{minipage}[t]{0.60\colwidth}
-\begin{tikzfigure}[Prompt \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV]     \label{fig:D0JetCrossSection_pp7TeV}    \includegraphics[width=.9\linewidth]{img/D0JetCrossSection_pp7TeV} \end{tikzfigure}
+\begin{tikzfigure}[Prompt \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV.\par]     \label{fig:D0JetCrossSection_pp7TeV}    \includegraphics[width=1.05\linewidth]{img/D0JetCrossSection_pp7TeV} \end{tikzfigure}
 \end{minipage}
-\begin{minipage}[t]{0.40\colwidth}
-bla bla
+%
+\begin{minipage}[t]{0.35\colwidth}
+\vspace{50pt}
+{
+\begin{itemize}
+\item \pp\ collisions at $\s=7$~TeV
+\item $L_{\rm int}=5\, {\rm nb}^{-1}$
+\item \Antikt\ jet finding algorithm
+\item Charged constituents, $R=0.4$
+\item Charm content tagged with \Dzero\
+\item B feed-down subtracted using POWHEG+PYTHIA6
+\item Corrected to particle level
+\end{itemize}
+Comparison with prediction from a Monte Carlo generator
+\begin{itemize}
+\item Parton event generator:\\ POWHEG
+\item Shower and hadronization:\\ PYTHIA6 (Perugia-2011)
+\item Good agreement
+\item Low-momentum bins at the edge of the uncertainty
+\end{itemize}
+}
 \end{minipage}
 }
-\column{.42}
+\column{.45}
 
 \block{Signal Extraction}{
-\begin{tikzfigure}[Top: invariant mass distributions; bottom: jet \pt\ distributions from signal region and side bands.\par]     \label{fig:SideBandInvMass_QM17}    \includegraphics[width=.9\colwidth]{img/SideBandInvMass_QM17} \end{tikzfigure}
+\begin{tikzfigure}[Top: invariant mass distributions; bottom: jet \pt\ distributions from signal region and side bands.\par]     \label{fig:SideBandInvMass_QM17}    \includegraphics[width=.85\colwidth]{img/SideBandInvMass_QM17} \end{tikzfigure}
 \begin{itemize}
-\item 
+\item The \textbf{\textcolor{darkestblue}{invariant mass distributions}} of identified \Dzero-jet candidates are\\ \textbf{\textcolor{darkblue}{fitted}} in bins of \ptd\ to extract the peak position and width and the\\ background normalization $B'$
+\item The \ptchjet\ distributions of the \textbf{\textcolor{lightgreen}{side bands}} are subtracted from those of the \textbf{\textcolor{lightred}{signal region}} and weighted by the efficiency $\epsilon_{\Dzero}(\ptd)$ % (Fig.~\ref{fig:HQ16_Simulation_EfficiencyVsDP})
 \end{itemize}
+\centering
+ $\textcolor{darkerblue}{N(\ptchjet)}=\sum_{\ptd}\frac{1}{\epsilon_{\Dzero}(\ptd)} \cdot \left[\textcolor{lightred}{N_{\rm Sign}(\ptd,\ptchjet)}-B'\textcolor{lightgreen}{N_{\rm SB}(\ptd,\ptchjet)} \right]$
 }
 \end{columns}
 
 \begin{columns}
-\column{.65}
-\block{Jet Momentum Resolution}{
 
-\begin{minipage}[t]{0.4\colwidth}
-\begin{tikzfigure}[Prompt \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV]     \label{fig:HQ16_Simulation_EnergyScaleShift}    \includegraphics[width=.9\linewidth]{img/HQ16_Simulation_EnergyScaleShift} \end{tikzfigure}
-\begin{tikzfigure}[Prompt \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV]     \label{fig:HQ16_Simulation_Resolution}    \includegraphics[width=.9\linewidth]{img/HQ16_Simulation_Resolution} \end{tikzfigure}
+\column{.38}
+\block{Detector Performance}{
+\begin{minipage}[t]{0.47\colwidth}
+\begin{tikzfigure}[Mean and median of the JES shift\par]     \label{fig:HQ16_Simulation_EnergyScaleShift}    \includegraphics[width=.95\linewidth]{img/HQ16_Simulation_EnergyScaleShift} \end{tikzfigure}
+\begin{tikzfigure}[Momentum shift distribution\par]     \label{fig:HQ16_Simulation_DetectorResponse}    \includegraphics[width=.95\linewidth]{img/HQ16_Simulation_DetectorResponse} \end{tikzfigure}
+\begin{tikzfigure}[Efficiency vs. \ptchjet\par]     \label{fig:HQ16_Simulation_EfficiencyVsDPt}    \includegraphics[width=.95\linewidth]{img/HQ16_Simulation_EfficiencyVsDPt} \end{tikzfigure}
 \end{minipage}%
 %
-\begin{adjustbox}{valign=t}
-\begin{minipage}[t]{0.6\colwidth}
-\begin{tikzfigure}[Prompt \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV]     \label{fig:HQ16_Simulation_DetectorResponse}    \includegraphics[width=.9\linewidth]{img/HQ16_Simulation_DetectorResponse} \end{tikzfigure}
+\begin{minipage}[t]{0.4465\colwidth}
+\begin{tikzfigure}[Jet momentum resolution\par]     \label{fig:HQ16_Simulation_Resolution}    \includegraphics[width=\linewidth]{img/HQ16_Simulation_Resolution} \end{tikzfigure}
+\vspace{25pt}
+\begin{itemize}
+\item Jet \pt\ resolution $\approx11$~\%,\\ independent of \ptchjet
+\item Median jet energy scale (JES) shift $\approx-3$~\%
+\item The distribution of the momentum shift features a sharp peak at $0$ with a longer tail at negative values (expected due to tracking inefficiency) 
+\item The \Dzero\ reconstruction efficiency has weak or no dependence on the jet \pt\ $\rightarrow$ simplify corrections and reduces systematics
+\end{itemize}
 \end{minipage}
-\end{adjustbox}
+%
 
 }
-\column{.35}
+
+\column{.62}
+
 
 \block{B Feed-Down Subtraction}{
-\begin{minipage}[t]{0.45\colwidth}
-\begin{tikzfigure}[Prompt \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV]     \label{fig:BFeedDown_QM17}    \includegraphics[width=.9\linewidth]{img/BFeedDown_QM17} \end{tikzfigure}
+\begin{minipage}[t]{0.34\colwidth}
+\hspace{20pt}
+\begin{description}
+\item[Prompt]\hspace{2pt} fragmentation of a c quark 
+\item[Non-Prompt]\hspace{2pt} decay of a B meson
+\end{description}
+Due to the longer decay length of the B mesons, the topological cuts are more efficient for non-prompt \Dzero, thus biasing the
+relative contributions. We subtract the B feed-down fraction using POWHEG+PYTHIA6.
 \end{minipage}
-\begin{minipage}[t]{0.45\colwidth}
-bla bla
+%
+\begin{minipage}[t]{0.30\colwidth}
+\begin{tikzfigure}[Reconstruction efficiency.\par]     \label{fig:Efficiency_QM17}    \includegraphics[width=\linewidth]{img/Efficiency_QM17} \end{tikzfigure} 
+\end{minipage}
+%
+\begin{minipage}[t]{0.30\colwidth}
+\begin{tikzfigure}[B feed-down fraction\par]     \label{fig:BFeedDown_QM17}    \includegraphics[width=\linewidth]{img/BFeedDown_QM17} \end{tikzfigure}
 \end{minipage}
 }
 
-\block{Conclusions}{
-\begin{tikzfigure}[Prompt \Dzero-jet \pt-differential cross section in \pp\ collisions at $\s=7$~TeV]     \label{fig:Uncertainties_QM17}    \includegraphics[width=.5\colwidth]{img/Uncertainties_QM17} \end{tikzfigure}
+\block{Conclusions and Outlook}{
+\begin{minipage}[t]{0.40\colwidth}
+\begin{tikzfigure}[Relative uncertainties\par]     \label{fig:Uncertainties_QM17}    \includegraphics[width=\textwidth]{img/Uncertainties_QM17} \end{tikzfigure}
+\end{minipage}
+\begin{minipage}[t]{0.55\colwidth}
+\begin{itemize}
+\item ALICE has measured the cross section of charm jets tagged with fully reconstructed \Dzero\ mesons in the range $5<\ptchjet<30$~\GeVc\ in \pp\ collisions at $\s=7$~TeV
+\item POWHEG interfaced with PYTHIA6 (Perugia-2011) is in agreement with the measurement
+\item The precision of the measurement is limited by statistics
+\item In the near future we will extend this measurement to the larger datasets at $\s=8,13$~TeV using electromagnetic calorimeters for triggering and full jet reconstruction
+\item The goal is the measurement of the fragmentation of charm jets in an extended kinematic region
+\end{itemize}
+\end{minipage}
 }
+
 \end{columns}
 
 \end{document}
