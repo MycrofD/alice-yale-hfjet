@@ -1,0 +1,279 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[D-tagged jets in \pp] % (optional, use only with long paper titles)
+{D-tagged jets in \pp\ collisions: follow-up about pass4 vs pass2 cuts}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Apr. 19th, 2017] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+April 19th, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+ %   \tableofcontents
+ %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Invariant Mass Distributions}
+
+\begin{frame}{pass2: invariant mass distributions}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/823_D0_Charged_R040_DPtBins_JetPt_5_30}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{pass4: invariant mass distributions}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/883_D0_Charged_R040_DPtBins_JetPt_5_30}
+\end{overpic}
+\end{frame}
+
+\section{Raw Yields}
+
+\begin{frame}{Comparison of raw yields (Side Band method)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBand}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBand_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts (from C. Terrevoli)
+\end{description}}
+\end{frame}
+
+\begin{frame}{Comparison of raw yields (Inv.Mass Fit method)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsInvMassFit}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsInvMassFit_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts (from C. Terrevoli)
+\end{description}}
+\end{frame}
+
+\section{Efficiency-corrected Raw Yields}
+
+\begin{frame}{Comparison of raw yields (Side Band method)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBandEfficiency}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBandEfficiency_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts (from C. Terrevoli)
+\end{description}}
+\end{frame}
+
+\begin{frame}{Comparison of raw yields (Inv.Mass Fit method)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsInvMassFitEfficiency}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsInvMassFitEfficiency_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts (from C. Terrevoli)
+\end{description}}
+\end{frame}
+
+\begin{frame}{Comparison of prompt/non-prompt efficiencies}
+\begin{columns}
+\column{0.58\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareEfficiencyPass4vsPass2cuts}
+\end{overpic}
+{\tiny
+\begin{tabular}{ll}
+\textcolor{black}{LHC15i2\_Train961\_cresponse} & prompt, pass2 cuts\\
+\textcolor{NavyBlue}{LHC15i2\_Train1073\_cresponse} & prompt, pass4 cuts\\
+\textcolor{BrickRed}{LHC15i2\_Train973\_bresponse} & non-prompt, pass2 cuts\\
+\textcolor{ForestGreen}{LHC15i2\_Train1081\_bresponse} & non-prompt, pass4 cuts
+\end{tabular}}
+\column{0.42\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePromptEfficiencyPass4vsPass2cuts_Ratio}
+\put(30,10){\footnotesize Prompt}
+\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareNonPromptEfficiencyPass4vsPass2cuts_Ratio}
+\put(30,10){\footnotesize Non-Prompt}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\section{FD-corrected Raw Yields}
+
+\begin{frame}{Comparison of raw yields (Side Band method)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBandEfficiencyFDCorrected}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBandEfficiencyFDCorrected_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts (from C. Terrevoli)
+\end{description}}
+\end{frame}
+
+\begin{frame}{Comparison of raw yields (Inv.Mass Fit method)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsInvMassFitEfficiencyFDCorrected}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsInvMassFitEfficiencyFDCorrected_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts (from C. Terrevoli)
+\end{description}}
+\end{frame}
+
+\begin{frame}{Comparison of B feed-down fractions}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareBFeedDownPass4vsPass2cuts}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareBFeedDownPass4vsPass2cuts_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts (from C. Terrevoli)
+\end{description}}
+\end{frame}
+
+\end{document}
