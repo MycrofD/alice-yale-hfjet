@@ -34,6 +34,7 @@
 
 \usepackage[percent]{overpic}
 \usepackage[english]{babel}
+\usepackage{setspace}
 % or whatever
 
 \usepackage[latin1]{inputenc}
@@ -125,13 +126,23 @@ April 19th, 2017}
 
 \section{Invariant Mass Distributions}
 
-\begin{frame}{pass2: invariant mass distributions}
+\begin{frame}{pass2: invariant mass distributions vs. \ptd}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/823_D0_Charged_R040_DPtBins_JetPt_5_30}
 \end{overpic}
 \end{frame}
 
-\begin{frame}{pass4: invariant mass distributions}
+\begin{frame}{pass4: invariant mass distributions vs. \ptd}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/883_D0_Charged_R040_DPtBins_JetPt_5_30}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{pass2: invariant mass distributions vs. \ptchjet}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/823_D0_Charged_R040_JetPtBins_DPt_30}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{pass4: invariant mass distributions vs. \ptchjet}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/883_D0_Charged_R040_JetPtBins_DPt_30}
 \end{overpic}
 \end{frame}
 
@@ -209,19 +220,34 @@ April 19th, 2017}
 \centering
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareEfficiencyPass4vsPass2cuts}
 \end{overpic}
-{\tiny
+{
+\tiny
 \begin{tabular}{ll}
 \textcolor{black}{LHC15i2\_Train961\_cresponse} & prompt, pass2 cuts\\
 \textcolor{NavyBlue}{LHC15i2\_Train1073\_cresponse} & prompt, pass4 cuts\\
 \textcolor{BrickRed}{LHC15i2\_Train973\_bresponse} & non-prompt, pass2 cuts\\
 \textcolor{ForestGreen}{LHC15i2\_Train1081\_bresponse} & non-prompt, pass4 cuts
-\end{tabular}}
+\end{tabular}
+}
+\begin{spacing}{1.5}
+
+\end{spacing}
+\raggedright
+{\tiny
+\begin{spacing}{0.5}
+\textbf{Note}: the efficiencies are shown also for $\ptd<3$~\GeVc\ but only D mesons with $\ptd>3$~\GeVc\ are used in the analysis.
+In this kinematic region the ratios of the prompt efficiencies of pass4 over pass2 is roughly unity or higher by $10$\%;
+the non-prompt efficiency is about 20\% lower for the pass4 cuts compared to the pass2 cuts.
+\end{spacing}
+}
 \column{0.42\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePromptEfficiencyPass4vsPass2cuts_Ratio}
 \put(30,10){\footnotesize Prompt}
+\put(18,7){\color{red}\line(0,1){53}}
 \end{overpic}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareNonPromptEfficiencyPass4vsPass2cuts_Ratio}
 \put(30,10){\footnotesize Non-Prompt}
+\put(18,7){\color{red}\line(0,1){53}}
 \end{overpic}
 \end{columns}
 \end{frame}
