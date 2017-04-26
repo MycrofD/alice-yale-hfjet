@@ -1,0 +1,501 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+\usepackage{setspace}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage[at]{easylist}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\include{commands}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[D-meson jets reconstruction with ALICE] % (optional, use only with long paper titles)
+{D-meson jets reconstruction with ALICE}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[Apr. 27th, 2017] % (optional, should be abbreviation of conference name)
+{Yale Relativistic Heavy-Ion Group Meeting \\
+April 27th, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+   \tableofcontents
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+
+%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/823_D0_Charged_R040_JetPtBins_DPt_30}
+%\end{overpic}
+
+%\begin{columns}
+%\column{0.5\textwidth}
+%\column{0.5\textwidth}
+%\end{columns}
+
+\section{Where Were We}
+
+\begin{frame}[fragile]{Physics Motivations}
+\begin{columns}
+\column{0.76\textwidth}
+\begin{easylist}[itemize]
+@ \pp\ collisions: improve quantitative comparisons with perturbative \textbf{\textcolor{ForestGreen}{Quantum Chromo-Dynamics}} (pQCD)
+@@ $m_{\rm c} \sim 1$~\GeVcsq $\rightarrow$ pQCD valid down to $\pt\sim0$
+@ \PbPb\ collisions: probe of the \textbf{\textcolor{BrickRed}{Quark-Gluon Plasma}} (QGP)
+@@ Dynamics of the parton-medium interactions different for massless (u, d, s, g) vs.~massive (c, b) partons
+@@ Parton mass effects significant only at low momenta $\rightarrow$ \textcolor{magenta}{larger backgrounds}
+\end{easylist}
+\column{0.24\textwidth}
+\end{columns}
+\begin{easylist}[itemize]
+@ Relevant also to other fields: total charm cross section needed to calculate background for \textbf{\textcolor{NavyBlue}{high-energy neutrino astrophysics}}
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{D-Tagged Jets With ALICE}
+\begin{easylist}
+@ \Dzero\ via \alert{hadronic decay}: $\Dzero\rightarrow{\rm K}^{\pm}\pi^{\mp}$ (B.R. 3.93\%)
+@@ candidates identified among \alert{opposite-charge} track pairs
+@@ combinatorial background reduced via
+@@@ \alert{Particle Identification} (PID) on the decay products (\dedx\ and Time-Of-Flight)
+@@@ \alert{topological cuts} on the secondary vertex ($c\tau=123\,\mu{\rm m}$)
+@@ \alert{invariant mass analysis} to extract signal out of the residual combinatorial background@ Jets reconstructed using \Dzero\ candidates and all other tracks@@ \alert{\antikt} jet reconstruction algorithm (default choice at LHC)
+@@ \alert{underlying event} (UE) subtracted using the jet areas (\PbPb\ only)
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile,t]{D-Tagged Jets With ALICE (cont'd)}
+\begin{easylist}
+@ Corrections@@ \alert{Reconstruction efficiency} $\epsilon(\ptd)\approx5-25$\%@@ \alert{Feed-Down} (FD) from B mesons $\sim10-30$\%@@ \alert{Jet momentum resolution} $\sigma(\ptchjet)\approx 11$\%
+\end{easylist}
+\vspace{5pt}
+N.B.: numbers above for \pp\ collisions
+\end{frame}
+
+\begin{frame}{Work In Progress: July 2016}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/InvMassJuly2016}
+\end{overpic}
+\end{frame}
+
+\section{Conferences}
+
+\begin{frame}{Conference talks}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SPI}
+\put(2,70){\textcolor{white}{\tiny \textbf{Hot Quarks}, September 12-17, 2016, South Padre Island, TX}}
+\put(2,63){\textcolor{white}{\tiny Young scientists, $\sim70$ participants, all give plenary talks}}
+\end{overpic}
+\alert{\href{https://indico.cern.ch/event/507867/contributions/2218106/}{Measurement of D-meson tagged jets in \pp\ collisions at $\s=7$~TeV with ALICE}}\\
+Proceedings: \href{https://arxiv.org/abs/1611.04476}{arXiv:1611.04476}\\ (in press)
+\column{0.5\textwidth}
+\vspace{-30pt}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Chicago}
+\put(2,70){\textcolor{white}{\tiny \textbf{Quark Matter}, February 5-11, 2017, Chicago, IL}}
+\put(2,63){\textcolor{white}{\tiny Major conference in the field, 700+ participants,}}
+\put(2,59){\textcolor{white}{\tiny 500+ contributions}}
+\end{overpic}
+Poster: \alert{\href{https://indico.cern.ch/event/433345/contributions/2358064/}{Exploring the charm content of jets in \pp\ collisions with ALICE}}
+\end{columns}
+\end{frame}
+
+\subsection{Hot Quarks 2016}
+
+\begin{frame}[fragile]{Hot Quarks 2016}
+\begin{center}
+\alert{\textbf{Detector performance and Monte Carlo studies}}
+\end{center}
+\vspace{5pt}
+Updates: July - September 2016
+\begin{easylist}
+@ Detector performance
+@@ Reconstruction efficiency
+@@ Jet momentum resolution
+@ Monte Carlo validation of the analysis techniques
+@@ Invariant mass fits
+@@ Side-Band method
+@@ Like-Sign method
+\end{easylist}
+\end{frame}
+
+\begin{frame}{Detector Performance (Monte Carlo)}
+\begin{columns}
+\column{.50\textwidth}
+\centering
+\textbf{Reconstruction Efficiency}\\
+\vspace{2pt}
+\begin{overpic}[width=\textwidth, trim=0 0 38 15, clip]{img/HQ16_Simulation_EfficiencyVsDPt}
+\end{overpic}
+\vspace{-15pt}
+\begin{itemize}
+\item \alert{Strong increase with \ptd} \\
+$\rightarrow$ tighter topological cuts at low \ptd\
+\item \textcolor{ForestGreen}{No dependence on \ptchjet}
+\end{itemize}
+\column{.50\textwidth}
+
+\centering
+\textbf{\ptchjet\ resolution} \\
+\vspace{2pt}
+\begin{overpic}[width=\textwidth, trim=0 0 38 15, clip]{img/HQ16_Simulation_Resolution}
+\end{overpic}
+\vspace{-15pt}
+\begin{itemize}
+\item \ptchjet\ resolution dominated by \alert{tracking efficiency}
+\item \alert{No \pt\ dependence} in the range $5<\ptchjet<24$ \GeVc
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Signal Extraction (Monte Carlo)}
+\begin{columns}
+\column{.55\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/HQ16_Simulation_MethodComparison}
+\end{overpic}
+\column{.45\textwidth}
+\begin{itemize}
+\item PYTHIA6 Perugia-2011 and GEANT3
+\medskip
+\item D-tagged jet signal yields extracted using the  \textbf{\textcolor{NavyBlue}{invariant mass fit}}, \textbf{\textcolor{BrickRed}{Side-Band}} 
+and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \textbf{\textcolor{gray}{MC truth}}
+\medskip
+\item All methods \textbf{agree well} with the MC truth within their statistical uncertainties
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\subsection{Quark Matter 2017}
+
+\begin{frame}[fragile]{Quark Matter 2017}
+\begin{center}
+Preliminary result\\
+\Dzero-jet \pt-differential cross section in \pp\ collision at $\s=7$~TeV \\
+\end{center}
+\vspace{5pt}
+Updates: September 2016 - February 2017
+\begin{easylist}
+@ Signal extraction using side-band subtraction method
+@ Subtraction of the feed-down from B mesons
+@ Unfolding of the jet \pt\ spectrum to account for finite jet momentum resolution
+@ Finalization of the systematic uncertainties
+\end{easylist}
+\end{frame}
+
+\begin{frame}{Signal Extraction}
+\end{frame}
+
+\begin{frame}{B Feed-Down}
+\end{frame}
+
+\begin{frame}{Unfolding (jet \pt\ resolution)}
+\end{frame}
+
+\begin{frame}{\Dzero-jet cross section}
+\end{frame}
+
+\section{Updates}
+
+\subsection{\pp\ collisions at $\s=7$~TeV}
+
+\begin{frame}[fragile]{\pp\ collisions}
+Updates: February - April 2017
+\begin{easylist}
+@ Resolve issue with \Dzero\ ``reflections''
+@ Not much else
+\end{easylist}
+\end{frame}
+
+\begin{frame}{\Dzero\ reflections}
+\end{frame}
+
+\subsection{\PbPb\ collisions at $\s=5.02$~TeV}
+
+\begin{frame}[fragile]{\PbPb\ collisions}
+\begin{easylist}
+@ First look at \PbPb\ data collected in 2015 ($\s=5.02$~TeV)
+@ Invariant mass distributions, signal extraction
+\end{easylist}
+\end{frame}
+
+\begin{frame}{Invariant mass distributions vs. \ptchjet}
+\end{frame}
+
+\begin{frame}{Invariant mass distributions vs. \ptd}
+\end{frame}
+
+\begin{frame}{Signal Extraction}
+\end{frame}
+
+\begin{frame}{Comparison with inclusive jets}
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}{Summary}
+\end{frame}
+
+\begin{frame}{Future Plans}
+\end{frame}
+
+\section*{Extra Slides}
+
+\subsection{ALICE at the LHC}
+\begin{frame}{ALICE at the LHC}
+\begin{columns}
+
+\column{.58\textwidth}
+\includegraphics[width=\textwidth]{img/ALICE_Schematics}
+
+\column{.42\textwidth}
+\begin{itemize}
+\item Important features
+\begin{itemize}
+\item \alert{PID} \\
+(e, $\mu$, $\pi$, K, p, d, ${}^3$He)
+\item \alert{low-momentum tracking} ($\pt > 0.15$~\GeVc)
+\end{itemize}
+\item \alert{D mesons} via hadronic decays (ITS, TPC, TOF)
+\begin{itemize}
+\item PID, topological cuts
+\item invariant mass analysis
+\end{itemize}
+\end{itemize}
+\end{columns}
+\begin{itemize}
+\item \alert{Jet reconstruction} using \antikt\ algorithm
+\begin{itemize}
+\item \textcolor{ForestGreen}{charged constituents} (ITS, TPC) $\rightarrow$ \emph{charged jets} (this analysis)
+\item add \textcolor{NavyBlue}{neutral constituents} (EMCal, DCal) $\rightarrow$ \emph{full jets} 
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Jet Energy Scale shift and \pt\ resolution}
+\begin{columns}
+\column{.47\textwidth}
+\begin{overpic}[width=\textwidth]{img/ALICE_JetRes}
+\put (-3,4) {{\tiny PRD 91 (2015) 112012}}
+\end{overpic}\\
+\medskip
+{\small
+\textcolor{BrickRed}{
+\textbf{Inclusive Charged Jets} \\
+\medskip
+$\mu [(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx -3\%$ \\
+\smallskip
+$\sigma[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx17\%$
+}}
+\column{.53\textwidth}
+\medskip
+\begin{overpic}[width=\textwidth, trim=0 0 30 22, clip]{img/HQ16_Simulation_DetectorResponse}
+\end{overpic}\\
+\raggedleft
+{\small
+\textcolor{NavyBlue}{
+\textbf{D-Tagged Charged Jets}\\
+\medskip
+$\mu[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx -3\%$ \\
+\smallskip
+$\sigma[(\ptchjetdet-\ptchjetgen)/\ptchjetgen]\approx11\%$
+}}
+\end{columns}
+\bigskip
+\centering
+\textbf{slightly better \ptchjet\ resolution due to the D-meson requirement}
+\end{frame}
+
+\subsection{D-tagged jet signal extraction}
+
+\begin{frame}[t]{Signal extraction}
+\begin{columns}[T]
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMass}
+\end{overpic}
+\column{.5\textwidth}
+\textbf{\alert{Three methods}}
+\begin{enumerate}
+\item \textcolor{BrickRed}{Side-Band (S-B) background subtraction}
+\item \textcolor{ForestGreen}{Like-Sign (L-S) background subtraction}
+\item \textcolor{NavyBlue}{Invariant Mass fit in bins of \ptchjet}
+\end{enumerate}
+\end{columns}
+\end{frame}
+
+\begin{frame}[t]{Signal extraction: S-B method}
+\begin{columns}[T]
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMass}
+\end{overpic}
+\column{.50\textwidth}
+\textbf{\textcolor{BrickRed}{Method 1: Side-Band (S-B)}}
+\begin{enumerate}
+\item Fill D-meson invariant mass distributions in bins of \alert{\ptd}
+\item $N(\ptchjet, \ptd)$ distributions in\\
+\medskip
+\textcolor{NavyBlue}{\textbf{Peak Area}\\
+{\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma_{\rm fit}$}\\ 
+\smallskip
+$N_{\rm sig+bkg} (\ptchjet, \ptd)$}\\
+\medskip
+\textcolor{BrickRed}{\textbf{Side Bands}\\
+{\scriptsize $8\sigma_{\rm fit} <|M_{\rm K\pi} - M_{\rm fit}| < 4\sigma_{\rm fit}$}\\ 
+\smallskip
+$N_{\rm bkg, SB} (\ptchjet, \ptd)$}
+\end{enumerate}
+\end{columns}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Apply \textcolor{VioletRed}{efficiency correction} and \textcolor{YellowOrange}{integrate in \ptd}
+{\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \frac{B^{*}}{B}\textcolor{BrickRed}{N_{\rm bkg,SB}(\ptchjet, \ptd)}]$$}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[t]{Signal extraction: L-S method}
+\begin{columns}[T]
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMass}
+\end{overpic}
+\column{.50\textwidth}
+\textbf{\textcolor{ForestGreen}{Method 2: Like-Sign (L-S)}}
+\begin{enumerate}
+\item Fill D-meson invariant mass distributions in bins of \alert{\ptd}
+\item $N(\ptchjet, \ptd)$ distributions in\\
+\medskip
+\textcolor{NavyBlue}{\textbf{U-S peak area}\\
+{\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma_{\rm fit}$}\\ 
+\smallskip
+{\small $N_{\rm sig+bkg} (\ptchjet, \ptd)$}}\\
+\medskip
+\textcolor{ForestGreen}{\textbf{L-S peak area}\\
+{\scriptsize $|M_{\rm K\pi} - M_{\rm fit}| <2\sigma_{\rm fit}$}\\ 
+\smallskip
+{\small $N_{\rm bkg, LS} (\ptchjet, \ptd)$}}
+\end{enumerate}
+\end{columns}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Apply \textcolor{VioletRed}{efficiency correction} and \textcolor{YellowOrange}{integrate in \ptd}
+{\small $$N_{\rm signal} (\ptchjet)=\textcolor{YellowOrange}{\sum_{\ptd}} \textcolor{VioletRed}{\frac{1}{\epsilon(\ptd)}} [\textcolor{NavyBlue}{N_{\rm sig+bkg}(\ptchjet, \ptd)} - \frac{B^{*}}{B}\textcolor{ForestGreen}{N_{\rm bkg,LS}(\ptchjet, \ptd)}]$$}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[t]{Signal extraction: invariant mass fit}
+\begin{columns}[T]
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 50, clip]{img/HQ16_Simulation_InvMass}
+\end{overpic}
+\column{.5\textwidth}
+\textbf{\textcolor{NavyBlue}{Method 3: invariant mass fit}}
+\begin{enumerate}
+\item Fill D-meson invariant mass distributions in bins of \alert{\ptchjet}
+\item \textbf{Fit invariant mass distributions} with a \\ Gaussian (\textcolor{NavyBlue}{signal}) + exponential (\textcolor{BrickRed}{background})
+\item Extract $N_{\rm signal} (\ptchjet)$ from fit parameters
+\end{enumerate}
+\end{columns}
+\begin{itemize}
+\item The correction for the D-tagged jet reconstruction efficiency must be applied as a weight when filling the invariant mass plots
+\end{itemize}
+\end{frame}
+
+\end{document}
