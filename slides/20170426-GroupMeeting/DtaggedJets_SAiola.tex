@@ -43,8 +43,16 @@
 \usepackage[at]{easylist}
 \usepackage{times}
 \usepackage[T1]{fontenc}
+\usepackage{xcolor}
 % Or whatever. Note that the encoding and the font should match. If T1
 % does not look nice, try deleting the line with the fontenc.
+
+\definecolor{darkestblue}{RGB}{1,8,100}
+\definecolor{darkerblue}{RGB}{3,17,150}
+\definecolor{darkblue}{RGB}{7,26,200}
+\definecolor{lightred}{RGB}{202,103,104}
+\definecolor{lightgreen}{RGB}{106,202,107}
+
 \include{commands}
 
 \AtBeginSection[]{
@@ -70,9 +78,9 @@
 \institute[Yale University] % (optional, but mostly needed)
 {Yale University}
 
-\date[Apr. 27th, 2017] % (optional, should be abbreviation of conference name)
+\date[Apr. 26th, 2017] % (optional, should be abbreviation of conference name)
 {Yale Relativistic Heavy-Ion Group Meeting \\
-April 27th, 2017}
+April 26th, 2017}
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
 %   yourself) who are reading the slides online
@@ -138,19 +146,23 @@ April 27th, 2017}
 
 \begin{frame}[fragile]{Physics Motivations}
 \begin{columns}
-\column{0.76\textwidth}
+\column{0.70\textwidth}
+\small
 \begin{easylist}[itemize]
 @ \pp\ collisions: improve quantitative comparisons with perturbative \textbf{\textcolor{ForestGreen}{Quantum Chromo-Dynamics}} (pQCD)
 @@ $m_{\rm c} \sim 1$~\GeVcsq $\rightarrow$ pQCD valid down to $\pt\sim0$
 @ \PbPb\ collisions: probe of the \textbf{\textcolor{BrickRed}{Quark-Gluon Plasma}} (QGP)
 @@ Dynamics of the parton-medium interactions different for massless (u, d, s, g) vs.~massive (c, b) partons
 @@ Parton mass effects significant only at low momenta $\rightarrow$ \textcolor{magenta}{larger backgrounds}
-\end{easylist}
-\column{0.24\textwidth}
-\end{columns}
-\begin{easylist}[itemize]
 @ Relevant also to other fields: total charm cross section needed to calculate background for \textbf{\textcolor{NavyBlue}{high-energy neutrino astrophysics}}
 \end{easylist}
+\column{0.30\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ALICE_D0Meson}
+\end{overpic} \\
+\vspace{5pt}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ALICE_DMesonRAA}
+\end{overpic}
+\end{columns}
 \end{frame}
 
 \begin{frame}[fragile]{D-Tagged Jets With ALICE}
@@ -186,6 +198,7 @@ N.B.: numbers above for \pp\ collisions
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SPI}
 \put(2,70){\textcolor{white}{\tiny \textbf{Hot Quarks}, September 12-17, 2016, South Padre Island, TX}}
 \put(2,63){\textcolor{white}{\tiny Young scientists, $\sim70$ participants, all give plenary talks}}
+\put(2,40){\includegraphics[width=30px]{img/hq16}}
 \end{overpic}
 \alert{\href{https://indico.cern.ch/event/507867/contributions/2218106/}{Measurement of D-meson tagged jets in \pp\ collisions at $\s=7$~TeV with ALICE}}\\
 Proceedings: \href{https://arxiv.org/abs/1611.04476}{arXiv:1611.04476}\\ (in press)
@@ -195,6 +208,7 @@ Proceedings: \href{https://arxiv.org/abs/1611.04476}{arXiv:1611.04476}\\ (in pre
 \put(2,70){\textcolor{white}{\tiny \textbf{Quark Matter}, February 5-11, 2017, Chicago, IL}}
 \put(2,63){\textcolor{white}{\tiny Major conference in the field, 700+ participants,}}
 \put(2,59){\textcolor{white}{\tiny 500+ contributions}}
+\put(40,45){\includegraphics[width=50px]{img/qm17}}
 \end{overpic}
 Poster: \alert{\href{https://indico.cern.ch/event/433345/contributions/2358064/}{Exploring the charm content of jets in \pp\ collisions with ALICE}}
 \end{columns}
@@ -207,7 +221,7 @@ Poster: \alert{\href{https://indico.cern.ch/event/433345/contributions/2358064/}
 \alert{\textbf{Detector performance and Monte Carlo studies}}
 \end{center}
 \vspace{5pt}
-Updates: July - September 2016
+Updates: \alert{June - September 2016}
 \begin{easylist}
 @ Detector performance
 @@ Reconstruction efficiency
@@ -248,7 +262,7 @@ $\rightarrow$ tighter topological cuts at low \ptd\
 \end{columns}
 \end{frame}
 
-\begin{frame}{Signal Extraction (Monte Carlo)}
+\begin{frame}{Raw Signal Extraction (Monte Carlo)}
 \begin{columns}
 \column{.55\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/HQ16_Simulation_MethodComparison}
@@ -269,11 +283,11 @@ and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \t
 
 \begin{frame}[fragile]{Quark Matter 2017}
 \begin{center}
-Preliminary result\\
-\Dzero-jet \pt-differential cross section in \pp\ collision at $\s=7$~TeV \\
+\textcolor{BrickRed}{Preliminary result}\\
+\alert{\textbf{\Dzero-jet \pt-differential cross section in \pp\ collision at $\s=7$~TeV}} \\
 \end{center}
 \vspace{5pt}
-Updates: September 2016 - February 2017
+Updates: \alert{September 2016 - February 2017}
 \begin{easylist}
 @ Signal extraction using side-band subtraction method
 @ Subtraction of the feed-down from B mesons
@@ -282,16 +296,95 @@ Updates: September 2016 - February 2017
 \end{easylist}
 \end{frame}
 
-\begin{frame}{Signal Extraction}
+\begin{frame}{Raw Signal Extraction}
+\centering
+\begin{overpic}[width=0.73\textwidth, trim=0 0 0 0 0, clip]{img/SideBandInvMass_QM17}
+\end{overpic}
+\footnotesize
+\begin{itemize}
+\item \textbf{\textcolor{darkestblue}{Invariant mass distributions}} of identified \Dzero-jet candidates are \textbf{\textcolor{darkblue}{fit}} with a Guassian + exponential $\rightarrow$ peak position \& width, background normalization
+\item The \ptchjet\ distributions of the \textbf{\textcolor{lightgreen}{side bands}} are subtracted from those of the \textbf{\textcolor{lightred}{signal region}} and weighted by the efficiency $\epsilon_{\Dzero}(\ptd)$ % (Fig.~\ref{fig:HQ16_Simulation_EfficiencyVsDP})
+\end{itemize}
+\centering
+ $\textcolor{darkerblue}{N(\ptchjet)}=\sum_{\ptd}\frac{1}{\epsilon_{\Dzero}(\ptd)} \cdot \left[\textcolor{lightred}{N_{\rm Sign}(\ptd,\ptchjet)}-B'\textcolor{lightgreen}{N_{\rm SB}(\ptd,\ptchjet)} \right]$
 \end{frame}
 
 \begin{frame}{B Feed-Down}
+\begin{columns}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/Efficiency_QM17}
+\end{overpic}
+\column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/BFeedDown_QM17}
+\end{overpic}
+\end{columns}
+\begin{description}
+\item[Prompt:]\hspace{2pt} fragmentation of a c quark 
+\item[Non-Prompt:]\hspace{2pt} decay of a B hadron
+\end{description}
+Due to the longer decay length of the B hadrons, the topological cuts are more efficient for non-prompt \Dzero, thus biasing the
+relative contributions. We subtract the B feed-down fraction using POWHEG+PYTHIA6.
 \end{frame}
 
 \begin{frame}{Unfolding (jet \pt\ resolution)}
+\begin{columns}
+\column{.50\textwidth}
+\begin{center}
+\tiny
+Method Comparison
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingMethod_Ratio}
+\end{overpic}\\
+Bayesian Regularization
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}
+\end{center}
+\column{.50\textwidth}
+\begin{center}
+\tiny
+Prior Choice \\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingPrior_Bayes_Ratio}
+\end{overpic}
+\end{center}
+\vspace{-20pt}
+\begin{itemize}
+\scriptsize
+\item Baseline: Bayesian
+\begin{itemize}
+\tiny
+\item fast convergence
+\item stable after 3 iterations
+\item then $< 1$\% variations
+\end{itemize}
+\item Methods: bin-by-bin correction, SVD
+\begin{itemize}
+\tiny
+\item equivalent results within few \%
+\end{itemize}
+\item Priors: PYTHIA and $\ptjet^{-a}$ with $a=3, 7$
+\begin{itemize}
+\tiny
+\item no effect on the unfolding
+\end{itemize}
+\end{itemize}
+\end{columns}
 \end{frame}
 
-\begin{frame}{\Dzero-jet cross section}
+\begin{frame}{\Dzero-jet cross section in \pp\ collisions at $\s=7$~TeV}
+\begin{columns}
+\column{.55\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/D0JetCrossSection_pp7TeV}
+\end{overpic}
+\column{.45\textwidth}
+\small
+\begin{itemize}
+\item 355 M minimum-bias events corresponding to $L_{\rm int}=5.7\, {\rm nb}^{-1}$
+\item \antikt\ $R=0.4$, charged constituents
+\item Charm jets tagged with \Dzero\
+\item B feed-down subtracted using \\POWHEG+PYTHIA6
+\item Corrected to particle level
+\item Comparison with \textbf{POWHEG} (parton event) +  \textbf{PYTHIA6 Perugia-2011} (parton shower and hadronization)
+\end{itemize}
+\end{columns}
 \end{frame}
 
 \section{Updates}
@@ -299,46 +392,131 @@ Updates: September 2016 - February 2017
 \subsection{\pp\ collisions at $\s=7$~TeV}
 
 \begin{frame}[fragile]{\pp\ collisions}
-Updates: February - April 2017
+Updates: \alert{February - April 2017}
 \begin{easylist}
 @ Resolve issue with \Dzero\ ``reflections''
 @ Not much else
 \end{easylist}
 \end{frame}
 
-\begin{frame}{\Dzero\ reflections}
+\begin{frame}[fragile]{\Dzero\ reflections}
+\begin{easylist}
+@ \Dzero\ candidates are identified among opposite-charge track pairs
+@ Need to assign the pion and kaon masses to calculate the invariant mass of each pair
+@ In the absence of additional information, both hypothesis (pion-kaon, kaon-pion) are considered (i.e. each candidate is used twice in the invariant mass distribution)
+@ We call reflections the invariant mass entries with the wrong mass hypothesis
+@ For real \Dzero\ reflections bias the invariant mass distributions (see next slide)
+@ PID via \dedx\ and Time-Of-Flight reduces the amount of reflections
+@ \alert{An issue was identified earlier this year where PID was not as effective as expected}
+\end{easylist}
 \end{frame}
 
-\subsection{\PbPb\ collisions at $\s=5.02$~TeV}
+\begin{frame}[fragile]{\Dzero\ reflection templates (new)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/ReflectionTemplates_DPt_NoJet_DoubleGaus_New}
+\end{overpic}
+\end{frame}
+
+\begin{frame}[fragile]{\Dzero\ reflection templates (old)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/ReflectionTemplates_DPt_NoJet_DoubleGaus_Old}
+\end{overpic}
+\end{frame}
+
+\begin{frame}[fragile]{Effect on the raw yields}
+\begin{columns}
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/ReflectionIssue}
+\end{overpic}
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/ReflectionIssue_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\subsection{\PbPb\ collisions at $\snn=5.02$~TeV}
 
 \begin{frame}[fragile]{\PbPb\ collisions}
 \begin{easylist}
-@ First look at \PbPb\ data collected in 2015 ($\s=5.02$~TeV)
+@ First look at \PbPb\ data collected in 2015 ($\snn=5.02$~TeV)
+@ About 62 M minimum-bias events (0-90\% centrality)
 @ Invariant mass distributions, signal extraction
 \end{easylist}
 \end{frame}
 
-\begin{frame}{Invariant mass distributions vs. \ptchjet}
+\begin{frame}{Invariant mass distributions vs. \ptd (0-10\% centrality)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_0_10_D0_Charged_R040_DPtBins_JetPt_0_180_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
+\end{overpic}
 \end{frame}
 
-\begin{frame}{Invariant mass distributions vs. \ptd}
+\begin{frame}{Signal Extraction (0-10\% centrality)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_0_10_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
+\end{overpic}
 \end{frame}
 
-\begin{frame}{Signal Extraction}
+\begin{frame}{Invariant mass distributions vs. \ptd (10-30\% centrality)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_10_30_D0_Charged_R040_DPtBins_JetPt_0_180_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
+\end{overpic}
 \end{frame}
 
-\begin{frame}{Comparison with inclusive jets}
+\begin{frame}{Signal Extraction (10-30\% centrality)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_10_30_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
+\end{overpic}
 \end{frame}
+
+\begin{frame}{Invariant mass distributions vs. \ptd (30-50\% centrality)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_30_50_D0_Charged_R040_DPtBins_JetPt_0_180_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{Signal Extraction (30-50\% centrality)}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_30_50_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
+\end{overpic}
+\end{frame}
+
+%\begin{frame}{Comparison with inclusive jets}
+%\end{frame}
 
 \section{Conclusions}
 
-\begin{frame}{Summary}
+\begin{frame}[fragile]{Summary}
+\begin{easylist}
+@ \pp\ collisions at $\s=7$~TeV
+@@ \alert{Preliminary result}: \Dzero-jet \pt-differential cross section
+@@ Towards a publication in the next few months
+@ \PbPb\ collisions at $\snn=5.02$~TeV
+@@ First look at the data: \alert{quite promising, signal clearly visible}
+@@ More complex analysis
+@@ Past experience with jet reconstruction in \PbPb\ will help
+\end{easylist}
 \end{frame}
 
-\begin{frame}{Future Plans}
+\begin{frame}[fragile]{Future Plans}
+\small
+\begin{easylist}
+@ Talk at the LHCP conference in Shanghai, China (May 14-20)
+@@ Will report on new measurements on jet and heavy-flavor in heavy-ion collisions by ALICE
+@ Moving to CERN in June
+@ \pp\ collisions at $\s=7$~TeV
+@@ Underlying event
+@@ Refine B feed-down subtraction and systematics
+@@ Fragmentation function
+@@ Paper writing!
+@ \PbPb\ collisions at $\snn=5.02$~TeV
+@@ Next step: detector performance (reconstruction efficiency, jet \pt\ resolution)
+@@ Background fluctuations (a lot of past experience)
+@ \alert{Thesis ETA: June 2018!}
+\end{easylist}
 \end{frame}
 
 \section*{Extra Slides}
+
+\begin{frame}{Uncertainties}
+\centering
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0 0, clip]{img/Uncertainties_QM17}
+\end{overpic}
+\begin{itemize}
+\item Raw yield extraction is the largest systematic uncertainty, but the precision of the measurement is limited by \textbf{statistics}
+\end{itemize}
+\end{frame}
 
 \subsection{ALICE at the LHC}
 \begin{frame}{ALICE at the LHC}
