@@ -1,0 +1,9 @@
+*.aux
+*.log
+*.nav
+*.out
+SAiola_ALICE_HeavyIon_JetsHeavyFlavor.pdf
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
