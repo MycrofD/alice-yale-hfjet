@@ -38,6 +38,8 @@
 \usepackage[english]{babel}
 \usepackage{setspace}
 \usepackage{comment}
+\usepackage[makeroom]{cancel}
+\usepackage[absolute,overlay]{textpos}
 % or whatever
 
 \usepackage[latin1]{inputenc}
@@ -84,7 +86,8 @@ on behalf of the ALICE Collaboration}
 %   affiliation.
 
 \institute[Yale University] % (optional, but mostly needed)
-{Yale University}
+{  \includegraphics[height=0.9cm]{img/yale}\quad
+    \includegraphics[height=0.8cm]{img/yale_text}}
 
 \date[May 18th, 2017] % (optional, should be abbreviation of conference name)
 {LHCP Conference \\
@@ -99,6 +102,20 @@ May 18th, 2017}
 \renewcommand*\insertshorttitle{%
    \oldmacro\hfill%
    \insertframenumber\,/\,\inserttotalframenumber}
+   
+   \addtobeamertemplate{frametitle}{}{%
+  \begin{textblock*}{2cm}(11.6cm,0.1cm) % {block width} (coords)
+  \includegraphics[height=1.1cm]{img/alice}
+  \end{textblock*}}
+  
+  \newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}
+
 
 \subject{High-Energy Physics}
 % This is only inserted into the PDF information catalog. Can be left
@@ -124,11 +141,18 @@ May 18th, 2017}
 
 \begin{frame}
   \titlepage
+  \begin{textblock*}{2cm}(11.6cm,0.1cm) % {block width} (coords)
+  \includegraphics[height=1.1cm]{img/alice}
+  \end{textblock*}
+  
+    \begin{textblock*}{2.2cm}(0.2cm,8.2cm) % {block width} (coords)
+  \includegraphics[height=1.1cm]{img/doe}
+  \end{textblock*}
 \end{frame}
 
-\begin{frame}{Outline}
-   \tableofcontents
-\end{frame}
+%\begin{frame}{Outline}
+  % \tableofcontents
+%\end{frame}
 
 
 % Structuring a talk is a difficult task and the following structure
@@ -193,18 +217,24 @@ May 18th, 2017}
 \begin{columns}
 \column{0.5\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/jets/2015-Jul-20-RAA_all2newZ0}
-\end{overpic}
+\end{overpic}\\
 \column{0.5\textwidth}
 \footnotesize
 \begin{itemize}
 \item Nuclear modification factor:\\
 \vspace{4pt}
 $R_{\rm AA} = \frac{\mathrm{d}N_{\rm AA} / \mathrm{d}\pt}{N_{\rm coll}\mathrm{d}N_{\rm\pp} / \mathrm{d}\pt}$
-\item Strong suppression of high-\pt\ hadrons
-\item Binary scaling works for EW probes ($\gamma$, Z, W)
-\item No suppression observed in high-\pt\ hadrons in pA collisions
+\item \textcolor{red}{Strong suppression of high-\pt\ hadrons}
+\item Binary scaling works for EW probes (\textcolor{ForestGreen}{$\gamma$}, \textcolor{NavyBlue}{Z}, \textcolor{NavyBlue}{W})
+\item \textbf{\textcolor{NavyBlue}{No suppression}} observed in high-\pt\ hadrons in \textcolor{NavyBlue}{pA collisions}
 \end{itemize}
 \end{columns}
+\tiny
+\href{http://doi.org/10.1016/j.physletb.2013.01.051}{Phys. Lett. B 720 (2013) 52}\\
+\href{http://doi.org/10.1140/epjc/s10052-012-1945-x}{Eur. Phys. J. C 72 (2012) 1945}\\
+\href{http://doi.org/10.1016/j.physletb.2012.02.077}{Phys. Lett. B 710 (2012) 256}\\
+\href{http://doi.org/10.1016/j.physletb.2012.07.025}{Phys. Lett. B 715 (2012) 66}\\
+\href{http://doi.org/10.1007/JHEP03(2015)022}{JHEP 03 (2015) 022}
 \end{frame}
 
 \begin{frame}{Jets in Heavy-Ion Collisions}
@@ -221,7 +251,7 @@ $R_{\rm AA} = \frac{\mathrm{d}N_{\rm AA} / \mathrm{d}\pt}{N_{\rm coll}\mathrm{d}
 \item Strong suppression of high-\pt\ hadrons
 \item Binary scaling works for EW probes ($\gamma$, Z, W)
 \item No suppression observed in high-\pt\ hadrons in pA collisions
-\item Jets suppressed as well
+\item \alert{Jets are suppressed as well}
 \end{itemize}
 \end{columns}
 \begin{itemize}
@@ -235,28 +265,20 @@ $R_{\rm AA} = \frac{\mathrm{d}N_{\rm AA} / \mathrm{d}\pt}{N_{\rm coll}\mathrm{d}
 \begin{columns}
 \column{0.4\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/hf/2015-Sep-24-AverageDmesonRaavspT_Pions_Nch_010}
+\put(30,40){\tiny \href{http://doi.org/10.1007/JHEP03(2016)081}{JHEP 03 (2016) 081}}
 \end{overpic}
 \column{0.6\textwidth}
 \small
 \begin{itemize}
-\item Charm and beauty produced in high-$Q^{2}$ processes
-\item Produced early in the collision $\rightarrow$ experience medium evolution
+\item Charm and beauty produced in \alert{high-$Q^{2}$ processes}
+\item Produced early in the collision $\rightarrow$ \alert{experience medium evolution}
 \item Negligible thermal production in the QGP ($m_{\rm c,b}\gg T_{\rm QGP}$)
 \end{itemize}
-\begin{comment}
-\begin{easylist}[itemize]
-@ Heavy-flavor ``puzzle'': early expectations $R_{\rm AA}^{\rm B} > R_{\rm AA}^{\rm D} > R_{\rm AA}^{\rm \pi}$
-@ Advancements in the energy loss models
-@@ Radiative vs. collisional energy loss%~\cite{Djordjevic:2014,Blagojevic:2015,Alberico:2011}
-@@ Fragmentation and hadronic phase%~\cite{Djordjevic:2014}
-@@ Temperature dependence%~\cite{Das:2015}
-\end{easylist}
-\end{comment}
 \end{columns}
 \small
 \begin{itemize}
-\item Thermalization in the QGP at low \pt: medium transport properties
-\item Energy loss in the QGP at hight \pt: medium size and density
+\item Thermalization in the QGP at low \pt: \alert{medium transport properties}
+\item Energy loss in the QGP at hight \pt: \alert{medium size and density}
 \begin{itemize}
 \item Color charge (Casimir factor): $\Delta E_{\rm q} < \Delta E_{\rm g}$
 \item Dead cone effect (radiative energy loss): $\Delta E_{\rm b} < \Delta E_{\rm c} < \Delta E_{\rm u,d,s,g}$
@@ -269,20 +291,9 @@ $R_{\rm AA} = \frac{\mathrm{d}N_{\rm AA} / \mathrm{d}\pt}{N_{\rm coll}\mathrm{d}
 \begin{frame}{\PbPb\ collisions}
 Selected jet and heavy-flavor measurements in \PbPb\ collisions:
 \begin{itemize}
-\item jet mass
-\item nsubjettiness
-\item elliptic flow of heavy-flavor hadrons
-\item e-h correlations
-\end{itemize}
-\end{frame}
-
-\begin{frame}{\PbPb\ collisions}
-Selected jet and heavy-flavor measurements in \PbPb\ collisions:
-\begin{itemize}
-\item jet mass $\rightarrow$ \alert{first such measurement in HI collisions}
-\item nsubjettiness $\rightarrow$ \alert{first such measurement in HI collisions}
-\item elliptic flow of heavy-flavor hadrons
-\item e-h correlations
+\item jet internal substructure
+\item elliptic flow of open and hidden charm
+\item strange D mesons
 \end{itemize}
 \end{frame}
 
@@ -290,9 +301,9 @@ Selected jet and heavy-flavor measurements in \PbPb\ collisions:
 
 \begin{frame}{Jet Mass}
 \begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/jets/cMassPbPbNoKineCor_v2-22938}
+\put(60,30){\tiny\href{https://arxiv.org/abs/1702.00804}{arXiv:1702.00804}, submitted to PLB}
 \end{overpic}
 \footnotesize
-\vspace{-10pt}
 \begin{itemize}
 \item \textbf{First jet mass measurement in heavy-ion collisions}
 \item Jet mass measures the ``virtuality'' of the jet
@@ -308,27 +319,34 @@ Selected jet and heavy-flavor measurements in \PbPb\ collisions:
 \begin{frame}{Jet Mass (\PbPb\ and \pPb)}
 \centering
 \begin{overpic}[width=.75\textwidth, trim=0 0 0 0, clip]{img/jets/cMassNoKineCor_v2-22929}
+\put(60,30){\tiny\href{https://arxiv.org/abs/1702.00804}{arXiv:1702.00804}, submitted to PLB}
 \end{overpic}\\
 \begin{overpic}[width=.75\textwidth, trim=0 0 0 0, clip]{img/jets/cRatioPbPbOpPbNoKineCor_v2-22932}
 \end{overpic}\\
 \small
-\alert{Measurements show no significant difference between \pPb\ and \PbPb}
+\alert{No significant difference} observed between \pPb\ and \PbPb
 \end{frame}
 
 \begin{frame}{Nsubjettiness}
+Nsubjettiness $\tau_{\rm N}$ is a measure of how much N-cored a jet is
 \begin{columns}
-\column{0.6\textwidth}
-\begin{overpic}[width=1.15\textwidth, trim=0 0 0 0, clip]{img/jets/2017-Feb-03-Tau2to1_40to60_Full_Results_0}
+\column{0.5\textwidth}
+\begin{overpic}[width=1.18\textwidth, trim=0 0 0 0, clip]{img/jets/2017-Feb-03-Tau2to1_40to60_Full_Results_0}
 \end{overpic} 
-\column{0.4\textwidth}
-\footnotesize
+\column{0.5\textwidth}
 \begin{itemize}
-\item Nsubejettiness $\tau_{\rm N}$ is a measure of how much N-cored a jet is
-\item $\tau_2 / \tau_1 = 1 \rightarrow$ the jet has two hard cores
-\item Sensitive to coherent energy loss $\rightarrow$ a pair of partons interacts with the medium like a color singlet
-\item \alert{No modification observed compared to PYTHIA}
+\item \scriptsize$\tau_N \rightarrow 0$: the jet has $N$ or fewer cores
+\item \scriptsize$\tau_N \rightarrow 1$: the jet has more than $N$ cores
+\item \scriptsize$\tau_2 / \tau_1 \rightarrow 0$: the jet has two hard cores
+\item Sensitive to \alert{coherent energy loss}
+\begin{itemize}
+\item \scriptsize Coherent emission \\$\rightarrow$ jet becomes more 2-pronged ($\tau_2 / \tau_1$ decreases)
+\item \scriptsize Incoherent emission \\$\rightarrow$ jet becomes less 2-pronged ($\tau_2 / \tau_1$ increases)
+\end{itemize}
 \end{itemize}
 \end{columns}
+\centering
+\alert{No modification} observed compared to PYTHIA
 \end{frame}
 
 \subsection*{Heavy Flavor}
@@ -353,22 +371,9 @@ Selected jet and heavy-flavor measurements in \PbPb\ collisions:
 \end{overpic}
 \column{0.5\textwidth}
 \begin{itemize}
-\item At high-\pt\ $v_2(D) \approx v_2(\pi)$ $\rightarrow$ sensitive to \alert{parton energy loss}
-\item At low-\pt: charm can thermalize in the medium $\rightarrow$ sensitive to \alert{transport properties} of the medium
-\end{itemize}
-\end{columns}
-\end{frame}
-
-\begin{frame}{Strange D-Meson Elliptic Flow}
-\begin{columns}
-\column{0.5\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/hf/2017-May-08-D0DplusAverageDsv2_05May2017}
-\end{overpic}
-\column{0.5\textwidth}
-\begin{itemize}
-\item First measurement of D$^+_s$ $v_2$ at the LHC
-\item Tool to study of coalescence effects
-\item Similar $v_2$ of non-strange and strange D mesons
+\item At high-\pt: sensitive to \alert{parton energy loss}
+\item At low-\pt: charm can thermalize in the medium, sensitive to \alert{transport properties} of the medium
+\item $v_2({\rm D}) \approx v_2(\pi)$
 \end{itemize}
 \end{columns}
 \end{frame}
@@ -381,8 +386,8 @@ Selected jet and heavy-flavor measurements in \PbPb\ collisions:
 \column{0.5\textwidth}
 \begin{itemize}
 \item If thermalized in the QGP, charm quarks should exhibit a non-zero $v_2$
-\item In particular, regenerated J/$\psi$ should flow with the medium
-\item Similar $v_2$ for hidden (J/$\psi$) and open (D) charm
+\item In particular, \alert{regenerated J/$\psi$} expected to flow with the medium
+\item \alert{Similar $v_2$ for hidden (J/$\psi$) and open (D) charm}
 \end{itemize}
 \end{columns}
 \end{frame}
@@ -397,44 +402,29 @@ Selected jet and heavy-flavor measurements in \PbPb\ collisions:
 \item If thermalized in the QGP, charm quarks should exhibit a non-zero $v_2$
 \item In particular, regenerated J/$\psi$ should flow with the medium
 \item Similar $v_2$ for hidden (J/$\psi$) and open (D) charm
-\item Models have difficulty reproducing the J/$\psi$ $v_2$
+\item \alert{Models have difficulty reproducing the J/$\psi$ $v_2$}
 \end{itemize}
 \end{columns}
 \end{frame}
 
-\begin{frame}{e-h Correlations}
+\begin{frame}{Strange D-Meson}
 \begin{columns}
 \column{0.55\textwidth}
-\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0, clip]{img/hf/2017-Jan-31-DphiHFEwSys4Bins}
-\end{overpic} 
+\centering
+\scriptsize
+Tool to study of \alert{coalescence} of charm with strange\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/hf/2017-May-08-DmesonAverageDs_3050_05May2017}
+\end{overpic}\\
+\scriptsize
+$R_{\rm AA}$ of strange D meson slightly above the non-strange D, but \alert{compatible within uncertainties}
 \column{0.45\textwidth}
-\small
-Trigger: heavy-flavor electron\\
-Associated: charged hadron
-\footnotesize
-\begin{itemize}
-\item Near side $\rightarrow$ modification of the parton fragmentation in the QGP
-\item Away side $\rightarrow$ path-length dependence of in-medium energy loss
-\item $\Delta\varphi$ measured for $4<\pt^{\rm e}<12$~\GeVc\ and in 4 bins of $\pt^{\rm assoc}$ from 1 to 5~\GeVc\
-\item Next: measure $I_{\rm CP}$ and $I_{\rm AA}$
-\end{itemize}
+\centering
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/hf/2017-May-08-D0DplusAverageDsv2_05May2017}
+\end{overpic}\\
+\scriptsize
+\alert{First measurement} of  $v_2({\rm D}^+_{\rm s})$ at the LHC \\
+Similar $v_2$ of non-strange and strange D mesons
 \end{columns}
-\end{frame}
-
-\begin{frame}{Conclusions: \PbPb\ collisions}
-\begin{itemize}
-\item New observables to investigate jet internal substructure $\rightarrow$ first measurements in HI collisions
-\begin{itemize}
-\item jet mass and nsubjettiness
-\item \alert{no modification observed within uncertainties}
-\end{itemize}
-\item More precise measurements of heavy-flavor elliptic flow and $R_{\rm AA}$
-\begin{itemize}
-\item first measurement at the LHC of the $v_2$ of strange D mesons
-\item similar $v_2$ for pions, open and hidden heavy-flavor and strange D mesons
-\end{itemize}
-\item heavy-flavor correlations to investigate modification of heavy-flavor parton fragmentation in the QGP
-\end{itemize}
 \end{frame}
 
 \section{\pPb\ collisions}
@@ -454,35 +444,43 @@ Associated: charged hadron
 
 \subsection*{Jets}
 
-\begin{frame}{Semi-Inclusive Hadron-Jet Production}
-\begin{columns}
-\column{0.5\textwidth}
-\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/jets/2017-Feb-01-figPAP_DeltaRecoilRaw_R04_ZNA020_split2}
-\end{overpic}
-\column{0.5\textwidth}
-\begin{overpic}[width=.75\textwidth, trim=0 0 0 0, clip]{img/jets/2017-Feb-01-ppb5_RCP_pap_AKT04_ZNA_split2}
-\end{overpic}
-\end{columns}
-\small
-\begin{itemize}
-\item Jets recoiled from high-\pt\ hadron
-\item $\Delta_{\rm recoil} =$~TT\{12,50\}$-$TT\{6,7\} $\rightarrow$ suppresses combinatorial background from underlying event
-\item Self-normalized ratio of cross sections: \alert{does not to scale for the number of binary collisions}
-\item \alert{No modification of the jet yield observed in high-multiplicity \pPb}
-\end{itemize}
-\end{frame}
-
 \begin{frame}{Jet Hard Substructure}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/jets/2017-Feb-01-zg_unfolded_20GeV_ALL}
+\begin{center}
+$z_{\rm g} = \frac{\min({p_{\rm T,1},p_{\rm T,2}})}{p_{\rm T,1}+p_{\rm T,2}}$ 
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/jets/2017-Feb-01-zg_unfolded_20GeV_ALL}
 \end{overpic}
+\end{center}
 \vspace{-10pt}
 \footnotesize
 \begin{itemize}
-\item $z_{\rm g} = \frac{\min{p_{\rm T,1},p_{\rm T,2}}}{p_{\rm T,1}+p_{\rm T,2}}$ of the two hard cores of the jet as defined by the soft-drop condition $z_{\rm g} > 0.1$
+\item Undo last step of Cambridge/Aachen clustering until the two subjets fulfill the soft-drop condition $z_{\rm g} > 0.1$
 \item Look for modification of the jet hard substructure
-\item \alert{No modification observed in minimum-bias \pPb\ compared to PYTHIA}
+\item \alert{No modification} observed in minimum-bias \pPb\ compared to PYTHIA
 \item Next: redo the analysis in multiplicity classes, measure a \pp\ baseline
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Semi-Inclusive Hadron-Jet Production}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0, clip]{img/jets/2017-Feb-01-ppb5_RCP_pap_AKT04_ZNA_split2}
+\end{overpic}
+\column{0.5\textwidth}
+\small
+\begin{itemize}
+\item Jets recoiled from high-\pt\ hadrons
+\item Self-normalized ratio of cross sections\\
+\vspace{4pt}
+$\frac{1}{\sigma^{{\rm pPb}\rightarrow{\rm h+X}}} \frac{\mathrm{d}\sigma^{{\rm pPb}\rightarrow{\rm h+jet+X}}}{\mathrm{d}p_{\rm T,jet}^{\rm ch}} = 
+\frac{1}{\cancel{\textcolor{red}{T_{\rm pPb}}}\sigma^{{\rm pp}\rightarrow{\rm h+X}}} \frac{\cancel{\textcolor{red}{T_{\rm pPb}}}\mathrm{d}\sigma^{{\rm pp}\rightarrow{\rm h+jet+X}}}{\mathrm{d}p_{\rm T,jet}^{\rm ch}}$\\
+$\rightarrow$ \alert{no $T_{\rm pPb}$ scaling needed}
+\item \alert{No modification} of the jet yield observed in high event activity \pPb\ collisions
+\end{itemize}
+\par
+\scriptsize
+\quad ZNA = energy deposited in forward neutron \\
+\quad calorimeters (Pb-going direction)
+\end{columns}
 \end{frame}
 
 \subsection*{Heavy Flavor}
@@ -490,88 +488,61 @@ Associated: charged hadron
 \begin{frame}{D mesons production vs. multiplicity}
 \begin{columns}
 \column{0.5\textwidth}
-\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/hf/2016-May-24-AverageDmesQpPb_ZNA_AllCentr_FDcomb_paper}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/hf/2016-May-24-AverageDmesQpPb_ZNA_AllCentr_FDcomb_paper}
+\tiny\put(15,15){\href{http://doi.org/10.1007/JHEP08(2016)078}{JHEP 08 (2016) 078}}
 \end{overpic}
 \footnotesize
+\column{0.5\textwidth}
 \begin{itemize}
-\item No suppression observed for high-\pt\ D mesons
+\item No suppression observed for D mesons in the measured \pt\ interval
 \item \alert{No ordering w.r.t. multiplicity classes}
 \end{itemize}
-\column{0.5\textwidth}
-\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/hf/2016-May-24-Daverage_vsPt_pp1_pPb1_Nch_xeqyline}
-\end{overpic}
-\footnotesize
+\end{columns}
+\end{frame}
+
+\section{Summary and Outlook}
+
+\begin{frame}{Summary}
+\textbf{\PbPb\ collisions}
 \begin{itemize}
-\item Similar increase of heavy-flavor mesons with multiplicity in \pp\ and in \pPb\
-\item Multi-Parton Interactions, number of binary collisions in \pPb\
-\end{itemize}
-\end{columns}
-\end{frame}
-
-\begin{frame}{Azimuthal D-h correlations}
-\begin{columns}
-\column{0.5\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/hf/plotComparison_WeightedAverage_pp_pPb_UniqueCanvas_Style1_18044}
-\end{overpic}
-\column{0.5\textwidth}
-\small
+\item New observables to investigate modifications in the jet internal substructure
 \begin{itemize}
-\item \alert{No modification observed} in minimum-bias \pPb\ ($\snn=5$~TeV) compared to a \pp\ baseline ($\snn=7$~TeV)
-\item Powerful tool to study modification of the fragmentation of charm jets
-\item Near side: modification of parton fragmentation
-\item Away side: look for yield suppression, path-length dependence of energy loss
+\item \alert{jet mass} and \alert{nsubjettiness}
+\item first such measurements in HI collisions
+\item \alert{no modification} observed within a jet cone radius of $R<0.4$
 \end{itemize}
-\end{columns}
+\item More precise measurements of the \alert{heavy-flavor elliptic flow}
+\begin{itemize}
+\item first measurement at the LHC of the \alert{$v_2$ of strange D mesons}
+\item $v_2$ of pions, open and hidden charm as well as strange D mesons are the same within uncertainties
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}{Summary}
+\textbf{\pPb\ collisions}
+\begin{itemize}
+\item Self-normalized \alert{semi-inclusive hadron-jet spectra} used to compare jet production in high-multiplicity vs. low-multiplicity
+\item \alert{No suppression} of jet and heavy-flavor production
+\item \alert{No modification} observed in the jet hard substructure (minimum-bias events)
+\end{itemize}
 \end{frame}
 
-\section{Conclusions and Outlook}
-
-\begin{frame}[fragile]{Summary}
-\small
-\begin{easylist}[itemize]
-@ \PbPb\ collisions
-@@ No modification of the jet internal substructure observed with a cone radius of $R<0.4$
-@@ More observables being explored
-@@ More precise measurements of heavy-flavor meson suppression and elliptic flow in Run-2
-@@ D-h and e-h correlations to investigate modification of (HF) parton fragmentation
-@ \pPb\ collisions
-@@ Jet yield suppression not observed in self-normalized semi-inclusive hadron-jet spectra
-@@ No suppression of high-\pt\ heavy-flavor mesons in all event multiplicity classes
-\end{easylist}
+\begin{frame}{Future plans}
+More analysis ongoing from ALICE:
+\begin{itemize}
+\item D-h and e-h correlations
+\item Charm jets tagged with fully reconstructed D mesons
+\item b-jets with displaced secondary vertex
+\item Di-jet asymmetry
+\item $\gamma$-jet correlations
+\item Jet-h correlations
+\item More jet shape observables
+\end{itemize}
 \end{frame}
 
-\section*{Extra Slides}
+\backupbegin
 
-\subsection*{Jets in \pPb}
-
-\begin{frame}{Jet Mass}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/jets/cMasspPbNoKineCor_v2-22926}
-\end{overpic}\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/jets/2016-Sep-22-cRatiopPbOPyNoKineCor}
-\end{overpic}
-\end{frame}
-
-\begin{frame}[fragile]{Probing the Quark-Gluon Plasma}
-\begin{columns}
-\column{0.7\textwidth}
-\small
-\begin{easylist}[itemize]
-@ Droplet of Quark-Gluon Plasma (QGP) produced in ultra-relativistic heavy-ion collisions
-@@ Extremely hot, dense, small and short-lived
-@ Self-produced hard probes: energetic partons moving through the QGP
-@ Factorization theorem: 
-@@ $Q^2\gtrsim1\,\mathrm{GeV}^{2}$: produced before the QGP formation time
-@@ Evolution through the QGP
-@@ Fragmentation
-\end{easylist}
-\column{0.3\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/jetquenching}
-\end{overpic}
-\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/bullet}
-\end{overpic}
-\end{columns}
-\end{frame}
+\section[]{Extra Slides}
 
 \begin{frame}{Nuclear Modification Factor}
 \begin{columns}
@@ -597,7 +568,6 @@ Associated: charged hadron
 \end{overpic}
 \column{0.35\textwidth}
 \begin{itemize}
-\item ALICE muon arm: $\eta_{\rm lab} > xx$
 \item Cold Nuclear Matter effects more pronounced at large rapidities
 \item Measurement in agreement with NLO calculations with nuclear shadowing
 \end{itemize}
@@ -614,12 +584,49 @@ Associated: charged hadron
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/eventplane}
 \end{overpic}
 \end{columns}
-\footnotesize
+\scriptsize
 \begin{itemize}
 \item Partons expected to loose more energy when traversing more medium (out-of-plane) [add cartoon?]
 \item Models predict that path-length is a subleading effect (compared to energy loss fluctuations and out-of-cone radiation) [cite jewel paper]
 \item \alert{No difference observed between in- and out-of-plane jet-hadron yields} (in qualitative agreement with models)
 \end{itemize}
 \end{frame}
+
+\begin{frame}{e-h Correlations}
+\begin{columns}
+\column{0.55\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0, clip]{img/hf/2017-Jan-31-DphiHFEwSys4Bins}
+\end{overpic} 
+\column{0.45\textwidth}
+\small
+Trigger: heavy-flavor electron\\
+Associated: charged hadron
+\footnotesize
+\begin{itemize}
+\item Near side $\rightarrow$ modification of the parton fragmentation in the QGP
+\item Away side $\rightarrow$ path-length dependence of in-medium energy loss
+\item $\Delta\varphi$ measured for $4<\pt^{\rm e}<12$~\GeVc\ and in 4 bins of $\pt^{\rm assoc}$ from 1 to 5~\GeVc\
+\item Next: measure $I_{\rm CP}$ and $I_{\rm AA}$
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Azimuthal D-h correlations}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/hf/plotComparison_WeightedAverage_pp_pPb_UniqueCanvas_Style1_18044}
+\end{overpic}
+\column{0.5\textwidth}
+\small
+\begin{itemize}
+\item \alert{No modification observed} in minimum-bias \pPb\ ($\snn=5$~TeV) compared to a \pp\ baseline ($\snn=7$~TeV)
+\item Powerful tool to study modification of the fragmentation of charm jets
+\item Near side: modification of parton fragmentation
+\item Away side: look for yield suppression, path-length dependence of energy loss
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\backupend
 
 \end{document}
