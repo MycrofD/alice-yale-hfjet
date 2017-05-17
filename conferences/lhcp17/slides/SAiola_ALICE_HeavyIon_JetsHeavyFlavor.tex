@@ -194,8 +194,8 @@ May 18th, 2017}
 \begin{itemize}
 \item \alert{D mesons} via hadronic decays (ITS, TPC, TOF)
 \begin{itemize}
-\item PID, topological cuts
-\item invariant mass analysis
+\item \footnotesize PID, topological cuts
+\item \footnotesize invariant mass analysis
 \end{itemize}
 \item Semi-leptonic decays of heavy-flavor hadrons
 \begin{itemize}
@@ -234,28 +234,35 @@ $R_{\rm AA} = \frac{\mathrm{d}N_{\rm AA} / \mathrm{d}\pt}{\langle N_{\rm coll} \
 \end{columns}
 \begin{itemize}
 \item What is the underlying energy loss mechanism?
-\item Is the internal structure of the jet modified?
+\item Is the \alert{internal structure} of the jet modified?
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Jet Mass}
+\vspace{-10pt}
 \begin{center}
-\textbf{First jet mass measurement in heavy-ion collisions}
+\textbf{First jet mass measurement in heavy-ion collisions}\\
 \begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/jets/cMassPbPbNoKineCor_v2-22938}
 \put(60,30){\tiny\href{https://arxiv.org/abs/1702.00804}{arXiv:1702.00804}, submitted to PLB}
 \end{overpic}
 \end{center}
+\vspace{-15pt}
+\begin{columns}
+\column{.8\textwidth}
 \footnotesize
-\vspace{-5pt}
 \begin{itemize}
-\item Jet mass measures the ``virtuality'' of the jet
 \item Models predict \textbf{larger} jet mass due to softening of parton fragmentation in the medium $\rightarrow$ \alert{not observed}
 \item Competing effects:
 \begin{itemize}
-\item Softer fragmentation $\rightarrow$ \textcolor{ForestGreen}{jet mass increases}
-\item Out-of-cone radiation $\rightarrow$ \textcolor{BrickRed}{jet mass decreases}
+\item \footnotesize Softer fragmentation $\rightarrow$ \textcolor{ForestGreen}{jet mass increases}
+\item \footnotesize Out-of-cone radiation $\rightarrow$ \textcolor{BrickRed}{jet mass decreases}
 \end{itemize}
 \end{itemize}
+\column{.25\textwidth}
+\tiny
+Mass calculated from the 4-momentum of the jet\\
+$M=\sqrt{E^2-p_{\rm T}^2-p_{\rm z}^2}$
+\end{columns}
 \end{frame}
 
 \begin{frame}{Jet Mass (\PbPb\ and \pPb\ collisions)}
@@ -271,22 +278,30 @@ $R_{\rm AA} = \frac{\mathrm{d}N_{\rm AA} / \mathrm{d}\pt}{\langle N_{\rm coll} \
 
 \begin{frame}{Nsubjettiness}
 Nsubjettiness $\tau_{\rm N}$ is a measure of how much N-cored a jet is
-\begin{columns}
+\vspace{5pt}
+\begin{columns}[T]
 \column{0.5\textwidth}
-\begin{overpic}[width=1.18\textwidth, trim=0 0 0 0, clip]{img/jets/2017-Feb-03-Tau2to1_40to60_Full_Results_0}
+\scriptsize $\tau_{N}=\frac{\sum_{i=1}^{N}p_{{\rm T},i}\min{(\Delta R_{i,1}, \Delta R_{i,2},\dots,\Delta R_{i,N})}}{R_0\sum_{i=1}^{N}p_{{\rm T},i}}$ \\
+\vspace{5pt}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 40, clip]{img/jets/2017-Feb-03-Tau2to1_40to60_Full_Results_0}
 \end{overpic} 
 \column{0.5\textwidth}
-\begin{itemize}
-\item \scriptsize$\tau_N \rightarrow 0$: the jet has $N$ or fewer cores
-\item \scriptsize$\tau_N \rightarrow 1$: the jet has more than $N$ cores
-\item \scriptsize$\tau_2 / \tau_1 \rightarrow 0$: the jet has two hard cores
-\item Sensitive to \alert{coherent energy loss}
-\begin{itemize}
-\item \scriptsize Coherent emission \\$\rightarrow$ jet becomes more 2-pronged ($\tau_2 / \tau_1$ decreases)
-\item \scriptsize Incoherent emission \\$\rightarrow$ jet becomes less 2-pronged ($\tau_2 / \tau_1$ increases)
-\end{itemize}
-\end{itemize}
+\tiny 
+$R_0=$ jet resolution parameter \\
+$\Delta R_{i,j}=$ distance in $\eta,\varphi$ between track $i$ and subjet $j$ \\
+$p_{{\rm T},i}=\pt$ of track $i$\\
+\vspace{5pt}
+\scriptsize$\tau_N \rightarrow 0$: the jet has $N$ or fewer cores \\
+\scriptsize$\tau_N \rightarrow 1$: the jet has more than $N$ cores \\
+\scriptsize \textbf{$\tau_2 / \tau_1 \rightarrow 0$: the jet has two hard cores} \\
+\vspace{10pt}
+\footnotesize \textcolor{BrickRed}{Coherent emission} \\$\rightarrow$ jet becomes more 2-pronged \\
+\scriptsize ($\tau_2 / \tau_1$ decreases) \\
+\vspace{10pt}
+\footnotesize \textcolor{NavyBlue}{Incoherent emission} \\$\rightarrow$ jet becomes less 2-pronged \\
+\scriptsize ($\tau_2 / \tau_1$ increases)
 \end{columns}
+\vspace{5pt}
 \centering
 \alert{No modification} observed compared to PYTHIA
 \end{frame}
@@ -416,28 +431,10 @@ $\rightarrow$ \alert{no $T_{\rm pPb}$ scaling needed}
 \end{columns}
 \end{frame}
 
-\begin{frame}{D-Meson Production vs. Multiplicity}
-\begin{columns}
-\column{0.5\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/hf/2016-May-24-AverageDmesQpPb_ZNA_AllCentr_FDcomb_paper}
-\tiny\put(15,15){\href{http://doi.org/10.1007/JHEP08(2016)078}{JHEP 08 (2016) 078}}
-\end{overpic}
-\footnotesize
-\column{0.5\textwidth}
-\begin{itemize}
-\item No suppression observed for D mesons in the measured \pt\ interval within uncertainties
-\item \alert{No ordering w.r.t. multiplicity classes}
-\end{itemize}
-\scriptsize
-\vspace{35pt}
-We use the expression $Q_{\rm pPb}$ instead of $R_{\rm pPb}$ to stress the possible presence of biases in the centrality selection
-\end{columns}
-\end{frame}
-
 \begin{frame}{Jet Hard Substructure}
 \begin{itemize}
 \item \scriptsize Reclusterize \antikt\ jets with Cambridge/Aachen
-\item \scriptsize Undo last step of C/A soft-drop condition $z_{\rm g} > 0.1$ on the two subjets in fullfilled
+\item \scriptsize Undo last step of C/A until soft-drop condition $z_{\rm g} > 0.1$ on the two subjets in fullfilled
 \end{itemize}
 \begin{center}
 \scriptsize $z_{\rm g} = \frac{\min({p_{\rm T,1},p_{\rm T,2}})}{p_{\rm T,1}+p_{\rm T,2}}$ 
@@ -470,11 +467,12 @@ We use the expression $Q_{\rm pPb}$ instead of $R_{\rm pPb}$ to stress the possi
 \end{itemize}
 \end{itemize}
 \end{frame}
+
 \begin{frame}{Summary}
 \textbf{\pPb\ collisions}
 \begin{itemize}
 \item Self-normalized \alert{semi-inclusive hadron-jet cross sections} used to compare jet production in high-multiplicity vs. low-multiplicity
-\item \alert{No suppression} of jet and heavy-flavor production
+\item \alert{No suppression} of the jet production observed in high-activity (``central'') \pPb\ collisions
 \item \alert{No modification} observed in the jet hard substructure (minimum-bias events)
 \end{itemize}
 \end{frame}
@@ -504,6 +502,30 @@ Analysis ongoing in \pPb\ and \PbPb
 \backupbegin
 
 \section[]{Extra Slides}
+
+\begin{frame}
+\centering
+\huge
+Extra Slides
+\end{frame}
+
+\begin{frame}{D-Meson Production vs. Multiplicity}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/hf/2016-May-24-AverageDmesQpPb_ZNA_AllCentr_FDcomb_paper}
+\tiny\put(15,15){\href{http://doi.org/10.1007/JHEP08(2016)078}{JHEP 08 (2016) 078}}
+\end{overpic}
+\footnotesize
+\column{0.5\textwidth}
+\begin{itemize}
+\item No suppression observed for D mesons in the measured \pt\ interval within uncertainties
+\item \alert{No ordering w.r.t. multiplicity classes}
+\end{itemize}
+\scriptsize
+\vspace{35pt}
+We use the expression $Q_{\rm pPb}$ instead of $R_{\rm pPb}$ to stress the possible presence of biases in the centrality selection
+\end{columns}
+\end{frame}
 
 \begin{frame}{J/$\psi$ Elliptic Flow}
 \begin{columns}
