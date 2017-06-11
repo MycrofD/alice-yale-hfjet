@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
 #python script to do trigger class analysis
 
 import ROOT

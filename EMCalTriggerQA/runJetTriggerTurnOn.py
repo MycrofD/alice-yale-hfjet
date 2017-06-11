@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
 #python script to do EMCal jet trigger turn on curves
 
 import ROOT

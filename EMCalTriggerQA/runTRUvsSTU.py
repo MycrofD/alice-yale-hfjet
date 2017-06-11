@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/local/bin/python
 #python script to do TRU vs STU correlation studies
 
 import ROOT
