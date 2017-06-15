@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 #python script to do EMCal trigger QA plots
 
 import ROOT

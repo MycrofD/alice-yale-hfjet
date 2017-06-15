@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 #python script to do study effect of L0 threshold on the L1 triggers
 
 import ROOT
