@@ -134,16 +134,17 @@ July 12th, 2017}
 \begin{columns}
 \column{0.6\textwidth}
 \begin{overpic}[width=1.15\textwidth, trim=0 0 0 0, clip]{img/RhoDistributionDetLev}
-\put(30,43){{\scriptsize 300M minimum-bias events}}
-\put(30,39){{\scriptsize \pp\ at $\s=7$~TeV (2010, pass4)}}
+\put(35,39){{\scriptsize 300M minimum-bias events}}
+\put(35,35){{\scriptsize \pp\ at $\s=7$~TeV (2010, pass4)}}
 \end{overpic}
 The transverse plane method has a slightly smaller $\left<\rho\right>$, but longer tail \\(3-jet events? misidentified leading jet?)
 \column{0.4\textwidth}
 \begin{itemize}
 \item \small \textbf{CMS method}: median of \kt\ cluster momentum density with event occupancy correction factor\\
 {{\tiny \href{https://doi.org/10.1007/JHEP08(2012)130}{JHEP08(2012)130}, \href{https://doi.org/10.1007/JHEP04(2010)065}{JHEP04(2010)065}}} \\
-\tiny$\rho_{\rm CMS} = \underset{j\in{\rm physical jets}}{\rm median}\left\{\frac{p_{{\rm T}j}}{A_j}\right\}\cdot C$
-\item \small \textcolor{NavyBlue}{\textbf{Trans plane}}: momentum density in the $\phi$ directions perpendicular to the leading jet \\
+\tiny$\rho_{\rm CMS} = \underset{j\in{\rm physical jets}}{\rm median}\left\{\frac{p_{{\rm T}j}}{A_j}\right\}\cdot C$ \\
+\tiny$\left<C\right>\approx0.3$
+\item \small \textcolor{BrickRed}{\textbf{Trans plane}}: momentum density in the $\phi$ directions perpendicular to the leading jet \\
 {\tiny$\rho_{\rm trans} = \frac{1}{Acc} \underset{\rm perp.tracks}{\sum}{p_{\rm T,track}}$,}\\
 {\tiny where perp. tracks are such that $67.5^{\circ} < \phi_{\rm track} - \phi_{\rm lead.jet}<112.5^{\circ}$}\\
 {\tiny $Acc = (\eta_{\rm max} - \eta_{\rm min}) \frac{\pi}{2}$}
@@ -188,11 +189,11 @@ The average background density is quite flat vs. event activity classes (around 
 \begin{frame}{Comparison with PYTHIA6}
 \begin{columns}
 \column{0.5\textwidth}
-\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/LHC10_Train976_LHC14j4_Train1157RhoDistr_Mean_RhoDev_Rho_Signal}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/LHC10_Train981_LHC14j4_Train1167RhoDistr_Mean_RhoDev_Rho_Signal}
 \put(27,43){{\scriptsize CMS Method}}
 \end{overpic}
 \column{0.5\textwidth}
-\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/LHC10_Train976_LHC14j4_Train1157RhoDistr_Mean_RhoTransDev_RhoTrans_Signal}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/LHC10_Train981_LHC14j4_Train1167RhoDistr_Mean_RhoTransDev_RhoTrans_Signal}
 \put(27,43){{\scriptsize Trans Plane}}
 \end{overpic}
 \end{columns}
@@ -203,6 +204,87 @@ The average background density is quite flat vs. event activity classes (around 
 \item Not understood why with the trans plane method $\rho_{\rm trans}$ (right plot) is significantly larger at particle level
 \end{itemize}
 \end{frame}
+
+\section{Background fluctuations}
+
+\begin{frame}{Random Cones}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=10 0 0 35, clip]{img/RCDeltaPt_RhoDev_Rho_Signal}
+\put(17,35){{\scriptsize CMS Method}}
+\end{overpic}
+\begin{overpic}[width=1.1\textwidth, trim=10 0 0 35, clip]{img/RCDeltaPt_RhoDev_RhoExclLeadJets_Signal}
+\put(17,35){{\scriptsize CMS Method,}}
+\put(17,31){{\scriptsize excl. lead. jet}}
+\end{overpic}
+\column{0.55\textwidth}
+\begin{center}
+\begin{overpic}[width=0.9\textwidth, trim=10 0 25 35, clip]{img/RCDeltaPt_RhoTransDev_RhoTrans_Signal}
+\put(17,35){{\scriptsize Trans Plane}}
+\end{overpic}
+\end{center}
+\vspace{-10pt}
+\footnotesize
+\begin{itemize}
+\item The standard deviation is $0.4-0.5$~\GeVc, \textbf{same magnitude as $\left<\rho\right>$}
+\item Similarly to $\left<\rho\right>$, dependence on hard process (not shown here, fluctuations are larger if a jet with $\pt>10$~\GeVc\ is required)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\section{\Dzero-Jets}
+
+\begin{frame}{Background Subtraction (using the CMS method)}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 35, clip]{img/AnyINT_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_Normalized_canvas}
+\put(17,15){{\scriptsize Unsubtracted}}
+\end{overpic}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 35, clip]{img/AnyINT_D0_Charged_R040_JetCorrPtSpectrum_DPt_30_SideBand_Normalized_canvas}
+\put(17,19){{\scriptsize Subtracted}}
+\put(17,15){{\scriptsize CMS method}}
+\end{overpic}
+\column{0.55\textwidth}
+\begin{center}
+\begin{overpic}[width=0.6\textwidth, trim=10 0 25 35, clip]{img/RatioCorrOverUncorr}
+\put(17,19){{\scriptsize Ratio $\approx0.75$}}
+\end{overpic}\\
+\vspace{5pt}
+\tiny Shown below is the distribution of the \pt\ subtracted $=\ptchjet^{\rm raw}-\ptchjet^{\rm sub}$
+\begin{overpic}[width=0.8\textwidth, trim=0 0 0 35, clip]{img/AnyINT_D0_Charged_R040_JetBkgPtSpectrum_DPt_30_SideBand_Normalized_canvas}
+\end{overpic}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Summary}
+\begin{itemize}
+\item The underlying event in \pp\ collisions has been characterised using the traditional transverse plane method (see e.g. [1], [2]) and the modern jet-area-based method proposed by Cacciari et al. [3] and improved by the CMS collaboration for sparse environments [4]
+\item In minimum-bias \pp\ collisions at $\s=7$~TeV, $\left<\rho\right>\approx0.4-0.5$~\GeVc, largely independent of the technique used to estimate it
+\item Events that contain a hard process have $\left<\rho\right>\approx1.5$~\GeVc, weakly depending on the hard scale and with some variations depending on the technique used to estimate it
+(different techniques have different biases from the presence of the hard process)
+\end{itemize}
+{\tiny
+{[1]} \href{https://aliceinfo.cern.ch/Notes/sites/aliceinfo.cern.ch.Notes/files/notes/analysis/rma/2013-Mar-29-analysis_note-ppJet_note.pdf}{Analysis note: Inclusive jet spectrum in \pp\ collisions at $\s=2.76$~TeV with ALICE} \\
+{[2]} \href{https://doi.org/10.1016/j.physletb.2013.04.026}{Phys. Lett. B 722 (2013) 262-272} \\
+{[3]} \href{https://doi.org/10.1007/JHEP04(2010)065}{JHEP04(2010)065}\\
+{[4]} \href{https://doi.org/10.1007/JHEP08(2012)130}{JHEP08(2012)130}
+}
+\end{frame}
+
+\begin{frame}{Summary (cont'd)}
+\begin{itemize}
+\item The HEP community \textbf{never subtracts} the UE in jet measurements (to my knowledge) $\rightarrow$ the UE must be added in the theoretical models
+\item Usually this is done by default when comparing to Monte Carlo generators
+\item pQCD calculations need to explicitly include it (but in any case pQCD calculations need also external inputs for hadronisation)
+\item In the HI community we want to compare \pp\ results with \PbPb, where UE subtraction is obviously unavoidable
+\item My proposal would be to publish both subtracted and unsubtracted
+\item For the subtracted case I would propose to do an average subtraction at particle level (\textbf{not event-by-event}) 
+because fluctuations are as large as the amount of the correction itself (so a jet-by-jet subtraction is quite meaningless)
+\item This approach has been used in [1], [2]
+\end{itemize}
+\end{frame}
+
 
 \section{Extra Slides}
 
