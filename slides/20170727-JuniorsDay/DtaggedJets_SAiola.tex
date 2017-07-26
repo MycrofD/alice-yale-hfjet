@@ -228,23 +228,6 @@ $\rightarrow$ tighter topological cuts at low \ptd\
 \end{columns}
 \end{frame}
 
-\begin{frame}{Raw Signal Extraction (Monte Carlo)}
-\begin{columns}
-\column{.55\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/HQ16_Simulation_MethodComparison}
-\end{overpic}
-\column{.45\textwidth}
-\begin{itemize}
-\item PYTHIA6 Perugia-2011 and GEANT3
-\medskip
-\item D-tagged jet signal yields extracted using the  \textbf{\textcolor{NavyBlue}{invariant mass fit}}, \textbf{\textcolor{BrickRed}{Side-Band}} 
-and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \textbf{\textcolor{gray}{MC truth}}
-\medskip
-\item All methods \textbf{agree well} with the MC truth within their statistical uncertainties
-\end{itemize}
-\end{columns}
-\end{frame}
-
 \subsection{Results}
 
 \begin{frame}{Raw Signal Extraction}
@@ -260,7 +243,7 @@ and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \t
  $\textcolor{darkerblue}{N(\ptchjet)}=\sum_{\ptd}\frac{1}{\epsilon_{\Dzero}(\ptd)} \cdot \left[\textcolor{lightred}{N_{\rm Sign}(\ptd,\ptchjet)}-B'\textcolor{lightgreen}{N_{\rm SB}(\ptd,\ptchjet)} \right]$
 \end{frame}
 
-\begin{frame}{B Feed-Down}
+\begin{frame}{B Feed-Down ($\rm B\rightarrow$\Dzero)}
 \begin{columns}
 \column{.50\textwidth}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/Efficiency_QM17}
@@ -430,6 +413,8 @@ Prior Choice \\
 \end{itemize}
 \end{frame}
 
+
+
 \begin{frame}{ALICE at the LHC}
 \begin{columns}
 
@@ -583,6 +568,23 @@ $N_{\rm bkg, SB} (\ptchjet, \ptd)$}
 \begin{itemize}
 \item The correction for the D-tagged jet reconstruction efficiency must be applied as a weight when filling the invariant mass plots
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Raw Signal Extraction (Monte Carlo)}
+\begin{columns}
+\column{.55\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 50 0, clip]{img/HQ16_Simulation_MethodComparison}
+\end{overpic}
+\column{.45\textwidth}
+\begin{itemize}
+\item PYTHIA6 Perugia-2011 and GEANT3
+\medskip
+\item D-tagged jet signal yields extracted using the  \textbf{\textcolor{NavyBlue}{invariant mass fit}}, \textbf{\textcolor{BrickRed}{Side-Band}} 
+and \textbf{\textcolor{ForestGreen}{Like-Sign}} methods are compared with the \textbf{\textcolor{gray}{MC truth}}
+\medskip
+\item All methods \textbf{agree well} with the MC truth within their statistical uncertainties
+\end{itemize}
+\end{columns}
 \end{frame}
 
 \end{document}
