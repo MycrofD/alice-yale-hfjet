@@ -197,38 +197,7 @@ N.B.: numbers above for \pp\ collisions
 
 \section{Preliminary Results}
 
-\subsection{Detector Performance}
-
-\begin{frame}{Efficiency and Resolution}
-\begin{columns}
-\column{.50\textwidth}
-\centering
-\textbf{Reconstruction Efficiency}\\
-\vspace{2pt}
-\begin{overpic}[width=\textwidth, trim=0 0 38 15, clip]{img/HQ16_Simulation_EfficiencyVsDPt}
-\end{overpic}
-\vspace{-15pt}
-\begin{itemize}
-\item \alert{Strong increase with \ptd} \\
-$\rightarrow$ tighter topological cuts at low \ptd\
-\item \textcolor{ForestGreen}{No dependence on \ptchjet}
-\end{itemize}
-\column{.50\textwidth}
-
-\centering
-\textbf{\ptchjet\ resolution} \\
-\vspace{2pt}
-\begin{overpic}[width=\textwidth, trim=0 0 38 15, clip]{img/HQ16_Simulation_Resolution}
-\end{overpic}
-\vspace{-15pt}
-\begin{itemize}
-\item \ptchjet\ resolution dominated by \alert{tracking efficiency}
-\item \alert{No \pt\ dependence} in the range $5<\ptchjet<24$ \GeVc
-\end{itemize}
-\end{columns}
-\end{frame}
-
-\subsection{Results}
+\subsection{Signal Extraction}
 
 \begin{frame}{Raw Signal Extraction}
 \centering
@@ -237,10 +206,23 @@ $\rightarrow$ tighter topological cuts at low \ptd\
 \footnotesize
 \begin{itemize}
 \item \textbf{\textcolor{darkestblue}{Invariant mass distributions}} of identified \Dzero-jet candidates are \textbf{\textcolor{darkblue}{fit}} with a Guassian + exponential $\rightarrow$ peak position \& width, background normalization
-\item The \ptchjet\ distributions of the \textbf{\textcolor{lightgreen}{side bands}} are subtracted from those of the \textbf{\textcolor{lightred}{signal region}} and weighted by the efficiency $\epsilon_{\Dzero}(\ptd)$ % (Fig.~\ref{fig:HQ16_Simulation_EfficiencyVsDP})
+\item The \ptchjet\ distributions of the \textbf{\textcolor{lightgreen}{side bands}} are subtracted from those of the \textbf{\textcolor{lightred}{signal region}} and weighted by the efficiency $\epsilon_{\Dzero}(\ptd)$
 \end{itemize}
 \centering
  $\textcolor{darkerblue}{N(\ptchjet)}=\sum_{\ptd}\frac{1}{\epsilon_{\Dzero}(\ptd)} \cdot \left[\textcolor{lightred}{N_{\rm Sign}(\ptd,\ptchjet)}-B'\textcolor{lightgreen}{N_{\rm SB}(\ptd,\ptchjet)} \right]$
+\end{frame}
+
+\subsection{Corrections}
+
+\begin{frame}{Reconstruction Efficiency}
+\begin{center}
+\begin{overpic}[width=.65\textwidth, trim=0 0 38 15, clip]{img/HQ16_Simulation_EfficiencyVsDPt}
+\end{overpic}
+\begin{itemize}
+\item \alert{Strong increase with \ptd} $\rightarrow$ tighter topological cuts at low \ptd\
+\item \alert{No dependence on \ptchjet}
+\end{itemize}
+\end{center}
 \end{frame}
 
 \begin{frame}{B Feed-Down ($\rm B\rightarrow$\Dzero)}
@@ -260,55 +242,67 @@ Due to the longer decay length of the B hadrons, the topological cuts are more e
 relative contributions. We subtract the B feed-down fraction using POWHEG+PYTHIA6.
 \end{frame}
 
-\begin{frame}{Unfolding (jet \pt\ resolution)}
+\begin{frame}{Jet Momentum Resolution}
 \begin{columns}
 \column{.50\textwidth}
-\begin{center}
-\tiny
-Method Comparison
-\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingMethod_Ratio}
-\end{overpic}\\
-Bayesian Regularization
-\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\begin{overpic}[width=\textwidth, trim=0 0 38 15, clip]{img/D0_Jet_AKTChargedR040_pt_scheme_JetPtSpectrum_DPt_30_Prompt_DetectorResponse_canvas}
 \end{overpic}
-\end{center}
+\vspace{-15pt}
 \column{.50\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 38 15, clip]{img/HQ16_Simulation_Resolution}
+\end{overpic}
+\end{columns}
+\begin{itemize}
+\item PYTHIA6 (event generator) + GEANT3 (detector simulation)
+\item Precision of the measurement of the jet momentum is limited (as any scientific measurement :-) )
+\item Good correlation between \ptchjetdet\ and \ptchjetgen
+\item \ptchjet\ resolution dominated by \alert{tracking efficiency}
+\item \alert{No \pt\ dependence} in the range $5<\ptchjet<24$ \GeVc
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Unfolding detector effects}
+\begin{columns}
+\column{.55\textwidth}
 \begin{center}
-\tiny
-Prior Choice \\
-\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingPrior_Bayes_Ratio}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingSummary_Bayes}
 \end{overpic}
 \end{center}
-\vspace{-20pt}
+\column{.45\textwidth}
 \begin{itemize}
-\scriptsize
-\item Baseline: Bayesian
-\begin{itemize}
-\tiny
-\item fast convergence
-\item stable after 3 iterations
-\item then $< 1$\% variations
-\end{itemize}
-\item Methods: bin-by-bin correction, SVD
-\begin{itemize}
-\tiny
-\item equivalent results within few \%
-\end{itemize}
-\item Priors: PYTHIA and $\ptjet^{-a}$ with $a=3, 7$
-\begin{itemize}
-\tiny
-\item no effect on the unfolding
-\end{itemize}
+\item \scriptsize The limited precision of the reconstructed jet momentum distorts the shape of the \pt-differential jet spectrum
+\item \scriptsize Entries ``move'' from one bin to the other according to a probability distribution parametrized in the detector response matrix
+\item \scriptsize Unfolding: try to recover the true distribution, given the measured spectrum and the knowledge of the detector rseponse, encoded in the response matrix
 \end{itemize}
 \end{columns}
+\begin{itemize}
+\item \small \textcolor{BrickRed}{Measured spectrum}
+\item \small \textcolor{NavyBlue}{Unfolded spectrum} (Bayesian method)
+\item \small \textcolor{ForestGreen}{Refolded spectrum} (re-apply the response matrix to unfolded spectrum)
+\item \small BUT: systematic uncertainties arising from assumptions needed to stabilize the unfolding procedure!
+\end{itemize}
 \end{frame}
+
+\begin{frame}{Uncertainties}
+\begin{center}
+\begin{overpic}[width=.6\textwidth, trim=0 0 0 0, clip]{img/2017-Jan-31-Uncertainties_QM17}
+\end{overpic}
+\end{center}
+\vspace{-15pt}
+\begin{itemize}
+\item Systematic uncertainties dominated by raw yield extraction (invariant mass fit)
+\item Overall uncertainty dominated by statistics $\rightarrow$ possibility to improve the precision of the measurement using larger datasets in Run-2
+\end{itemize}
+\end{frame}
+
+\subsection{Results}
 
 \begin{frame}{\Dzero-jet cross section in \pp\ collisions at $\s=7$~TeV}
 \begin{columns}
-\column{.55\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/D0JetCrossSection_pp7TeV}
+\column{.50\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0 0, clip]{img/D0JetCrossSection_pp7TeV}
 \end{overpic}
-\column{.45\textwidth}
+\column{.50\textwidth}
 \small
 \begin{itemize}
 \item 355 M minimum-bias events corresponding to $L_{\rm int}=5.7\, {\rm nb}^{-1}$
@@ -317,6 +311,7 @@ Prior Choice \\
 \item B feed-down subtracted using \\POWHEG+PYTHIA6
 \item Corrected to particle level
 \item Comparison with \textbf{POWHEG} (parton event) +  \textbf{PYTHIA6 Perugia-2011} (parton shower and hadronization)
+\item Presented at Quark Matter 2017
 \end{itemize}
 \end{columns}
 \end{frame}
@@ -325,16 +320,52 @@ Prior Choice \\
 
 \subsection{\pp\ collisions at $\s=7$~TeV}
 
+\begin{frame}{Next steps: \pp\ collisions at $\s=7$~TeV}
+\begin{columns}
+\column{.45\textwidth}
+\begin{itemize}
+\item Fragmentation function $\rightarrow$ in preparation, need to assess systematics (ETA: $\sim$ 2-3 weeks)
+\item Ratio of charm jets over inclusive jets
+\item Paper preparation (paper proposal next fall)
+\end{itemize}
+\column{.55\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_SideBand_TotalBkgVsSig}
+\end{overpic}
+\end{columns}
+\end{frame}
+
 \subsection{\pPb\ collisions at $\snn=5.02$~TeV}
+\begin{frame}{Next steps: \pPb\ collisions at $\snn=5.02$~TeV}
+\begin{itemize}
+\item Main analyzer: \underline{Barbara Trzeciak} (Utrecht University)
+\item \pt-differential cross-section of \Dstar-jets in \pPb\ at $\snn=5$~TeV (2016 dataset) $\rightarrow$ last refinements, soon preliminary
+\end{itemize}
+\begin{columns}
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/jetPtSpectrum_SB_Rebin_FASTwoSDD}
+\end{overpic}
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/DjetEff_Sim_log}
+\end{overpic}
+\end{columns}
+\end{frame}
 
 \subsection{\PbPb\ collisions at $\snn=5.02$~TeV}
-
-\begin{frame}[fragile]{\PbPb\ collisions}
-\begin{easylist}
-@ First look at \PbPb\ data collected in 2015 ($\snn=5.02$~TeV)
-@ About 62 M minimum-bias events (0-90\% centrality)
-@ Invariant mass distributions, signal extraction
-\end{easylist}
+\begin{frame}{Next steps: \PbPb\ collisions at $\snn=5.02$~TeV}
+\begin{itemize}
+\item Main analyzer: \underline{Antonio Oliveira da Silva} (University of Sao Paulo \& Utrecht University)
+\item Lots of preparation work, feasibility studies, QA, etc.
+\end{itemize}
+\begin{columns}
+\column{.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 40 0, clip]{img/2015-Sep-20-jetpt}
+\end{overpic}
+\column{.5\textwidth}
+\begin{itemize}
+\item Simulation to assess the feasibility of the measurement with the Run-2 \PbPb\ data (before the fact)
+\item Unfolding stability test with statistics similar to that available from Run-2
+\end{itemize}
+\end{columns}
 \end{frame}
 
 \begin{frame}{Invariant mass distributions vs. \ptd (0-10\% centrality)}
@@ -347,73 +378,25 @@ Prior Choice \\
 \end{overpic}
 \end{frame}
 
-\begin{frame}{Invariant mass distributions vs. \ptd (10-30\% centrality)}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_10_30_D0_Charged_R040_DPtBins_JetPt_0_180_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
-\end{overpic}
-\end{frame}
-
-\begin{frame}{Signal Extraction (10-30\% centrality)}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_10_30_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
-\end{overpic}
-\end{frame}
-
-\begin{frame}{Invariant mass distributions vs. \ptd (30-50\% centrality)}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_30_50_D0_Charged_R040_DPtBins_JetPt_0_180_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
-\end{overpic}
-\end{frame}
-
-\begin{frame}{Signal Extraction (30-50\% centrality)}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/INT7_Cent_30_50_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_BkgVsSig}
-\end{overpic}
-\end{frame}
-
-%\begin{frame}{Comparison with inclusive jets}
-%\end{frame}
-
 \section{Conclusions}
 
 \begin{frame}[fragile]{Summary}
 \begin{easylist}
 @ \pp\ collisions at $\s=7$~TeV
 @@ \alert{Preliminary result}: \Dzero-jet \pt-differential cross section
+@@ Soon: fragmentation function
 @@ Towards a publication in the next few months
-@ \PbPb\ collisions at $\snn=5.02$~TeV
-@@ First look at the data: \alert{quite promising, signal clearly visible}
+@ \pPb\ collisions at $\snn=5.02$~TeV (Barbara)
+@@ \pt-differential cross section on the way
+@@ Working on UE background subtraction and detector response unfolding
+@ \PbPb\ collisions at $\snn=5.02$~TeV (Antonio)
 @@ More complex analysis
-@@ Past experience with jet reconstruction in \PbPb\ will help
-\end{easylist}
-\end{frame}
-
-\begin{frame}[fragile]{Future Plans}
-\small
-\begin{easylist}
-@ Talk at the LHCP conference in Shanghai, China (May 14-20)
-@@ Will report on new measurements on jet and heavy-flavor in heavy-ion collisions by ALICE
-@ Moving to CERN in June
-@ \pp\ collisions at $\s=7$~TeV
-@@ Underlying event
-@@ Refine B feed-down subtraction and systematics
-@@ Fragmentation function
-@@ Paper writing!
-@ \PbPb\ collisions at $\snn=5.02$~TeV
-@@ Next step: detector performance (reconstruction efficiency, jet \pt\ resolution)
-@@ Background fluctuations (a lot of past experience)
-@ \alert{Thesis ETA: June 2018!}
+@@ Enough data from Run-2 to perform the analysis 
+@@ Aiming at preliminary for next spring
 \end{easylist}
 \end{frame}
 
 \section*{Extra Slides}
-
-\begin{frame}{Uncertainties}
-\centering
-\begin{overpic}[width=.7\textwidth, trim=0 0 0 0 0, clip]{img/Uncertainties_QM17}
-\end{overpic}
-\begin{itemize}
-\item Raw yield extraction is the largest systematic uncertainty, but the precision of the measurement is limited by \textbf{statistics}
-\end{itemize}
-\end{frame}
-
-
 
 \begin{frame}{ALICE at the LHC}
 \begin{columns}
