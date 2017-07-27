@@ -1,0 +1,263 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+\usepackage{setspace}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+\usepackage{listings}
+\usepackage[at]{easylist}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+\definecolor{darkestblue}{RGB}{1,8,100}
+\definecolor{darkerblue}{RGB}{3,17,150}
+\definecolor{darkblue}{RGB}{7,26,200}
+\definecolor{lightred}{RGB}{202,103,104}
+\definecolor{lightgreen}{RGB}{106,202,107}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[Some pointers on pointers] % (optional, use only with long paper titles)
+{Some pointers on pointers}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[July 28th, 2017] % (optional, should be abbreviation of conference name)
+{Analysis Tutorial \\
+ALICE Week \\
+CERN, July 28th, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+   \tableofcontents
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+
+%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/823_D0_Charged_R040_JetPtBins_DPt_30}
+%\end{overpic}
+
+%\begin{columns}
+%\column{0.5\textwidth}
+%\column{0.5\textwidth}
+%\end{columns}
+
+\section{Introduction}
+
+\subsection{Disclaimer}
+
+\begin{frame}[fragile]{Disclaimer}
+\begin{easylist}[itemize]
+@ Some parts will be too boring for some people, some other parts will be too advanced for others
+@@ On the other hand, most people might find some parts interesting
+@ Not a comprehensive lecture on memory management in C++
+@@ Not even close!
+@@ Rather some suggestions to write efficient, maintainable and robust code
+@ Not an IT expert! 
+@@ Experience from writing analysis code in ALICE + some limited readings
+\end{easylist}
+\end{frame}
+
+
+\subsection{Pointers and Memory Management}
+
+\begin{frame}[fragile]{What is a Pointer?}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Pointers}
+\end{overpic}
+\column{0.5\textwidth}
+A pointer is an object whose value ``points to'' another value stored somewhere else in memory
+\begin{itemize}
+\item Very powerful tool
+\item Great power = great responsibility!
+\item Extensive use of pointers in ROOT/AliRoot/AliPhysics
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Using a Pointer}
+\scriptsize
+\begin{lstlisting}[language=C++]
+/* Defining a pointer */
+int* a; // declares a pointer that can point to an integer value
+//DANGER: the pointer points to a random memory portion!
+
+int* b = nullptr; // OK, pointer is initialized to a null memory address
+
+int* c = new int; // allocate memory for an integer value in the heap 
+//and assign its memory address to this pointer
+
+int** d = &a; // this pointer points to a pointer to an integer value
+
+MyObject* e = new MyObject(); // allocate memory for MyObject
+// and assign its memory address to this pointer
+
+/* Using a pointer */
+int f = *c; // dereferencing a pointer and assigning the pointed
+// value to another integer variable
+
+e->DoSomething(); // dereferencing a pointer and calling
+// the method DoSomething() of the instance of MyObject
+// pointed by e
+\end{lstlisting}
+\end{frame}
+
+\section{Why a raw pointer is hard to love}
+
+\begin{frame}[fragile]{Array or single value?}
+\begin{itemize}
+\item A pointer can point to a single value or to an array, however its declaration does not indicate it
+\item Different syntax to destroy (= deallocate, free) the pointed object for arrays and single objects 
+\end{itemize}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void UserExec()
+{
+  MyTrack *track = new MyTrack(0,0,0,0);
+  double *trackPts = new double[100];
+  double *returnValue = AnalyzeTracks(trackPts);
+
+  // here use the pointers
+
+  delete track;
+  delete[] trackPts;
+  delete returnValue; // or should I use delete[] ??
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Memory leaks and double deletes}
+\begin{itemize}
+\item Each memory allocation should match a corresponding deallocation
+\item Difficult to keep track of all memory allocations in a large project
+\item Ownership of the pointed memory is ambiguous: multiple deletes of the same object may occur
+\end{itemize}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void UserExec()
+{
+  AliVTracks* tracks = FilterTracks();
+
+  AnalyzeTracks(tracks);
+
+  delete[] tracks; // should I actually delete it?? 
+  //or was it already deleted by AnalyzeTracks?
+}
+\end{lstlisting}
+\end{frame}
+
+\section{Smart Pointers}
+
+\section{Conclusions}
+
+\begin{frame}{Final remarks}
+\begin{itemize}
+\item When the extra-flexibility of a pointer is not needed, do not use it
+\item Alternative example: arguments  by reference (not covered here)
+\item Avoid raw pointers whenever possible!
+\item Smart pointers (unique\_ptr and shared\_ptr) should cover most use cases and provide
+a much more robust and safe memory management
+\end{itemize}
+\end{frame}
+
+\end{document}
