@@ -192,10 +192,11 @@ e->DoSomething(); // dereferencing a pointer and calling
 \begin{lstlisting}[language=C++]
 void UserExec()
 {
+  TLorentzVector* v = nullptr;
   for (int i = 0; i < InputEvent()->GetNumberOfTracks(); i++) {
     AliVTrack* track = InputEvent()->GetTrack(i);
     if (!track) continue;
-    TLorentzVector* v = new TLorentzVector(track->Px(), 
+    v = new TLorentzVector(track->Px(), 
       track->Py(), track->Pz(), track->M());
     
     // my analysis here
