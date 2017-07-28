@@ -143,23 +143,6 @@ CERN, July 28th, 2017}
 
 \section{Introduction}
 
-\subsection{Disclaimer}
-
-\begin{frame}[fragile]{Disclaimer}
-\begin{easylist}[itemize]
-@ Some parts will be too boring for some people, some other parts will be too advanced for others
-@@ On the other hand, most people might find some parts interesting
-@ Not a comprehensive lecture on memory management in C++
-@@ Not even close!
-@@ Rather some suggestions to write efficient, maintainable and robust code
-@ Not an IT expert! 
-@@ Experience from writing analysis code in ALICE + some limited readings
-\end{easylist}
-\end{frame}
-
-
-\subsection{Pointers and Memory Management}
-
 \begin{frame}[fragile]{What is a Pointer?}
 \begin{columns}
 \column{0.5\textwidth}
@@ -204,6 +187,30 @@ e->DoSomething(); // dereferencing a pointer and calling
 
 \section{Why a raw pointer is hard to love}
 
+\begin{frame}[fragile]{Memory leak}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void UserExec()
+{
+  for (int i = 0; i < InputEvent()->GetNumberOfTracks(); i++) {
+    AliVTrack* track = InputEvent()->GetTrack(i);
+    if (!track) continue;
+    TLorentzVector* v = new TLorentzVector(track->Px(), 
+      track->Py(), track->Pz(), track->M());
+    
+    // my analysis here
+    std::cout << v->Pt() << std::endl;
+  }
+  
+  delete v;
+}
+\end{lstlisting}
+\small 
+\begin{center}
+What is the problem with this code?
+\end{center}
+\end{frame}
+
 \begin{frame}[fragile]{Array or single value?}
 \begin{itemize}
 \item A pointer can point to a single value or to an array, however its declaration does not indicate it
@@ -211,22 +218,24 @@ e->DoSomething(); // dereferencing a pointer and calling
 \end{itemize}
 \scriptsize
 \begin{lstlisting}[language=C++]
+AliVTrack* FilterTracks();
+
 void UserExec()
 {
-  MyTrack *track = new MyTrack(0,0,0,0);
+  TLorentzVector *vect = new TLorentzVector(0,0,0,0);
   double *trackPts = new double[100];
-  double *returnValue = AnalyzeTracks(trackPts);
+  AliVTrack *returnValue = FilterTracks();
 
   // here use the pointers
 
-  delete track;
+  delete vect;
   delete[] trackPts;
   delete returnValue; // or should I use delete[] ??
 }
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Memory leaks and double deletes}
+\begin{frame}[fragile]{Double deletes}
 \begin{itemize}
 \item Each memory allocation should match a corresponding deallocation
 \item Difficult to keep track of all memory allocations in a large project
@@ -234,9 +243,12 @@ void UserExec()
 \end{itemize}
 \scriptsize
 \begin{lstlisting}[language=C++]
+AliVTrack* FilterTracks();
+void AnalyzeTracks(AliVTrack* tracks);
+
 void UserExec()
 {
-  AliVTracks* tracks = FilterTracks();
+  AliVTrack* tracks = FilterTracks();
 
   AnalyzeTracks(tracks);
 
@@ -248,16 +260,206 @@ void UserExec()
 
 \section{Smart Pointers}
 
+\begin{frame}[fragile]{Smart Pointers}
+\begin{itemize}
+\item Clear (shared or exclusive) ownership of the pointed object
+\item Automatic garbage collection: memory is deallocated when the last pointer goes out of scope
+\item Available since C++11
+\item Can be used in the implementation files of AliPhysics (*.cxx files)
+\item In the header files (*.h) need to hide them from CINT (therefore cannot be used as non-transient class members) \\
+{\scriptsize
+\begin{lstlisting}[language=C++]
+#if !(defined(__CINT__) || defined(__MAKECINT__))
+// your C++11 code goes here
+#endif
+\end{lstlisting}
+}
+\item Cannot be used anywhere in AliRoot
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Exclusive-Ownership Pointers: unique\_ptr}
+\begin{itemize}
+\item Automatic garbage collection with no additional CPU or memory overhead (i.e. it uses the same resources as a raw pointer)
+\item unique\_ptr owns the object it points
+\item Memory is automatically released when unique\_ptr goes out of scope or when its reset method is called
+\item Only one unique\_ptr can point to the same memory address
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{unique\_ptr example / 1}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void MyFunction() {
+  std::unique_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
+  std::unique_ptr<TLorentzVector> vector2(new TLorentzVector(0,0,0,0));
+  
+  // use vector and vector2
+  
+  // dereferencing unique_ptr works exactly as a raw pointer
+  std::cout << vector->Pt() << std::endl;
+  
+  // the line below does not compile!
+  // vector = vector2;
+  // cannot assign the same address to two unique_ptr instances
+  
+  vector.swap(vector2); // however I can swap the memory addresses
+  
+  // this also releases the memory previously pointed by vector2
+  vector2.reset(new TLorentzVector(0,0,0,0)); 
+  
+  // objects pointed by vector and vector2 are deleted here
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{unique\_ptr example / 2}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void UserExec()
+{
+  for (int i = 0; i < InputEvent()->GetNumberOfTracks(); i++) {
+    AliVTrack* track = InputEvent()->GetTrack(i);
+    if (!track) continue;
+    std::unique_ptr<TLorentzVector> v(new TLorentzVector(track->Px(), 
+      track->Py(), track->Pz(), track->M()));
+    
+    // my analysis here
+    std::cout << v->Pt() << std::endl;
+  }
+}
+\end{lstlisting}
+\small 
+\begin{center}
+No memory leak here! :)
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Shared-Ownership Pointers: shared\_ptr}
+\begin{itemize}
+\item Automatic garbage collection with some CPU and memory overhead
+\item The pointed object is collectively owned by one or more shared\_ptr instances
+\item Memory is automatically released the last shared\_ptr goes out of scope or when it is re-assigned
+\end{itemize}
+\begin{center}
+\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/Sharedptr}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{shared\_ptr example / 1}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void MyFunction() {
+  std::shared_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
+  std::shared_ptr<TLorentzVector> vector2(new TLorentzVector(0,0,0,0));
+  
+  // dereferencing shared_ptr works exactly as a raw pointer
+  std::cout << vector->Pt() << std::endl;
+  
+  // assignment is allowed between shared_ptr instances
+  vector = vector2; 
+  // the object previously pointed by vector is deleted!
+  // vector and vector2 now share the ownership of the same object
+  
+  // object pointed by both vector and vector2 is deleted here
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{shared\_ptr example / 2}
+\scriptsize
+\begin{lstlisting}[language=C++]
+class MyClass {
+  public:
+    MyClass();
+  private:
+    void MyFunction();
+    std::shared_ptr<TLorentzVector> fVector;
+};
+
+void MyClass::MyFunction() {
+  std::shared_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
+  
+  // assignment is allowed between shared_ptr instances
+  fVector = vector;
+  // the object previously pointed by fVector (if any) is deleted
+  // vector and fVector now share the ownership of the same object
+
+  // here vector goes out-of-scope
+  // however fVector is a class member so the object is not deleted!
+  // it will be deleted automatically when this instance of the class
+  // is deleted (and therefore fVector goes out-of-scope) :)
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Some word of caution on shared\_ptr}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void MyClass::MyFunction() {
+  auto ptr = new TLorentzVector(0,0,0,0);
+  
+  std::shared_ptr<TLorentzVector> v1 (ptr);
+  std::shared_ptr<TLorentzVector> v2 (ptr);
+  
+  // a double delete occurs here!
+}
+\end{lstlisting}
+\begin{center}
+\small
+What is the problem with the code above?
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Some word of caution on shared\_ptr}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void MyFunction() {
+  auto ptr = new TLorentzVector(0,0,0,0);
+  
+  std::shared_ptr<TLorentzVector> v1 (ptr);
+  std::shared_ptr<TLorentzVector> v2 (ptr);
+  
+  // a double delete occurs here!
+}
+\end{lstlisting}
+\small
+\begin{itemize}
+\item v1 does not know about v2 and viceversa!
+\item Two control blocks have been created for the same pointed objects
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Some word of caution on shared\_ptr}
+\scriptsize
+\begin{lstlisting}[language=C++]
+void MyFunction() {
+  std::shared_ptr<TLorentzVector> v1 (new TLorentzVector(0,0,0,0));
+  std::shared_ptr<TLorentzVector> v2 (v1);
+  
+  // this is fine!
+}
+\end{lstlisting}
+\small
+\begin{itemize}
+\item Solution: use raw pointers only when absolutely needed (if at all)
+\end{itemize}
+\end{frame}
+
 \section{Conclusions}
 
-\begin{frame}{Final remarks}
+\begin{frame}[fragile]{Final remarks}
 \begin{itemize}
 \item When the extra-flexibility of a pointer is not needed, do not use it
-\item Alternative example: arguments  by reference (not covered here)
+\item Alternative to pointers: arguments by reference (not covered here)
 \item Avoid raw pointers whenever possible!
 \item Smart pointers (unique\_ptr and shared\_ptr) should cover most use cases and provide
 a much more robust and safe memory management
 \end{itemize}
+References \\
+Effective modern C++, Scott Meyers (O'Reilly 2015) \\
+\href{http://en.cppreference.com/}{http://en.cppreference.com/}
 \end{frame}
 
 \end{document}
