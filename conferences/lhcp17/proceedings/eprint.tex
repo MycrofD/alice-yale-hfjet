@@ -1,0 +1,210 @@
+%  sample eprint article in LaTeX           --- M. Peskin, 9/7/00
+%  modified for LHCP2017, lhcp2017@sjtu.edu.cn
+%  This file is part of a tar file, which can be downloaded from the LHCP2017 indico site. 
+%   https://indico.cern.ch/event/517784/overview 
+% 
+
+
+\documentclass[10pt]{article}
+\usepackage{graphicx}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   document style macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\Title#1{\begin{center} {\Large #1 } \end{center}}
+\def\Author#1{\begin{center}{ \sc #1} \end{center}}
+\def\Address#1{\begin{center}{ \it #1} \end{center}}
+\def\andauth{\begin{center}{and} \end{center}}
+\def\submit#1{\begin{center}Submitted to {\sl #1} \end{center}}
+\newcommand\pubblock{\rightline{\begin{tabular}{l} Proceedings of the Fifth Annual LHCP\\ \pubnumber\\
+         \pubdate  \end{tabular}}}
+
+\newenvironment{Abstract}{\begin{quotation} \begin{center} 
+             \large ABSTRACT \end{center}\bigskip 
+      \begin{center}\begin{large}}{\end{large}\end{center} \end{quotation}}
+
+\newenvironment{Presented}{\begin{quotation} \begin{center} 
+             PRESENTED AT\end{center}\bigskip 
+      \begin{center}\begin{large}}{\end{large}\end{center} \end{quotation}}
+
+\def\Acknowledgements{\bigskip  \bigskip \begin{center} \begin{large}
+             \bf ACKNOWLEDGEMENTS \end{large}\end{center}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  personal abbreviations and macros
+%    the following package contains macros used in this document:
+\input econfmacros.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textwidth=6.5in  \textheight=8.75in
+\hoffset=-.85in
+\voffset=-0.6in
+
+%%  DO NOT CHANGE anything above.
+
+% include packages you will need
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% basic data for the eprint:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Instruction:
+% Please change each of the following fields:
+%
+
+%% preprint number data:
+% If there is a preprint number from your institute, or experiment note number, please fill it in 
+\newcommand\pubnumber{ ATL-PHYS-PROC-2017-XXX }
+% \newcommand\pubnumber{ }
+
+%% date
+\newcommand\pubdate{\today}
+
+%%  Affiliation
+\def\affiliation{
+On behalf of the XYZ Experiment, \\
+Department of Physics \\
+XYZ University, Beijing, 100049, China}
+
+%% Acknowledge the support
+\def\support{\footnote{Work supported by  XYZ Foundation }}
+
+
+
+\begin{document}
+
+% large size for the first page
+\large
+\begin{titlepage}
+\pubblock
+
+
+%% Change the title, name, abstract
+%% Title 
+\vfill
+\Title{  THE TITLE OF YOUR PROCEEDINGS  }
+\vfill
+
+%  if you need to add the support use this, fill the \support definition above. 
+%   \Author{ FIRSTNAME LASTNAME \support }
+\Author{ FIRSTNAME LASTNAME  }
+\Address{\affiliation}
+\vfill
+\begin{Abstract}
+
+HERE IS YOUR ABSTRACT.  REPLACE THE TEXT. The fifth annual Large Hadron Collider Physics (LHCP) conference will be held at Shanghai Jiao Tong University in Shanghai from May 15-20, 2017. 
+
+\end{Abstract}
+\vfill
+
+% DO NOT CHANGE 
+\begin{Presented}
+The Fifth Annual Conference\\
+ on Large Hadron Collider Physics \\
+Shanghai Jiao Tong University, Shanghai, China\\ 
+May 15-20, 2017
+\end{Presented}
+\vfill
+\end{titlepage}
+\def\thefootnote{\fnsymbol{footnote}}
+\setcounter{footnote}{0}
+%
+
+% normal size for the rest
+\normalsize 
+
+%% Your paper should be entered below. 
+
+\section{Introduction}
+
+HERE IS YOUR INTRODUCTION, REPLACE THE TEXT
+
+The program will be devoted to a review of the latest experimental and theoretical results on hadron collider physics and a discussion on the outlook for the coming years. The conference intends to provide a lively discussion between experimenters and theorists on topics such as the Standard Model Physics and Beyond, the Higgs Boson, Supersymmetry and Heavy Ion Physics and planning for the high luminosity upgrades.
+
+\section{Observations}
+
+REPLACE THE TEXT, FIGURE and TABLE.
+
+Observation of the Higgs Boson,  \cite{Aad:2012tfa},\cite{Chatrchyan:2012ufa}. 
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   use this format to include an .eps figure into your paper
+%%
+%\begin{figure}[htb]
+%\centering
+%\includegraphics[height=2in]{head_lhcp2017.jpg}
+%\caption{ Place the caption here}
+%\label{fig:figure1}
+%\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+See Figure \ref{fig:figure1} and Table \ref{tab:table1}. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   use this format to include a LaTeX table  into your paper
+%%
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{l|ccc}  
+Patient &  Initial level($\mu$g/cc) &  w. Magnet &  
+w. Magnet and Sound \\ \hline
+ Guglielmo B.  &   0.12     &     0.10      &     0.001  \\
+ Ferrando di N. &  0.15     &     0.11      &  $< 0.0005$ \\ \hline
+\end{tabular}
+\caption{ place the caption here }
+\label{tab:table1}
+\end{center}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Interpretations}
+
+......
+
+\section{Conclusions}
+
+...... 
+
+%%  if necessary
+\Acknowledgements
+I am grateful to XYZ for fruitful discussions.
+
+
+\begin{thebibliography}{99}
+
+%%
+%%  bibliographic items can be constructed using the LaTeX format in SPIRES:
+%%    see    http://www.slac.stanford.edu/spires/hep/latex.html
+%%  SPIRES will also supply the CITATION line information; please include it.
+%%
+
+\bibitem{Aad:2012tfa} 
+  G.~Aad {\it et al.}  [ATLAS Collaboration],
+  %``Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC,''
+  Phys.\ Lett.\ B {\bf 716}, 1 (2012)
+  [arXiv:1207.7214 [hep-ex]].
+  %%CITATION = ARXIV:1207.7214;%%
+  %3009 citations counted in INSPIRE as of 22 Jul 2014
+  
+  
+%\cite{Chatrchyan:2012ufa}
+\bibitem{Chatrchyan:2012ufa} 
+  S.~Chatrchyan {\it et al.}  [CMS Collaboration],
+  %``Observation of a new boson at a mass of 125 GeV with the CMS experiment at the LHC,''
+  Phys.\ Lett.\ B {\bf 716}, 30 (2012)
+  [arXiv:1207.7235 [hep-ex]].
+  %%CITATION = ARXIV:1207.7235;%%
+  %2951 citations counted in INSPIRE as of 22 Jul 2014
+
+
+
+\end{thebibliography}
+
+ 
+\end{document}
+
