@@ -1,4 +1,7 @@
 *.log
 *.aux
 eprint.pdf
+eprint.bbl
+eprint.blg
+eprint.out
 *.gz

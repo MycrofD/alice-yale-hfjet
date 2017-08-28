@@ -7,6 +7,9 @@
 
 \documentclass[10pt]{article}
 \usepackage{graphicx}
+\usepackage{hyperref}
+
+\include{commands}
 
 
 
@@ -56,22 +59,20 @@
 
 %% preprint number data:
 % If there is a preprint number from your institute, or experiment note number, please fill it in 
-\newcommand\pubnumber{ ATL-PHYS-PROC-2017-XXX }
-% \newcommand\pubnumber{ }
+%\newcommand\pubnumber{ ATL-PHYS-PROC-2017-XXX }
+\newcommand\pubnumber{ }
 
 %% date
 \newcommand\pubdate{\today}
 
 %%  Affiliation
 \def\affiliation{
-On behalf of the XYZ Experiment, \\
-Department of Physics \\
-XYZ University, Beijing, 100049, China}
+On behalf of the ALICE Collaboration, \\
+Physics Department, \\
+Yale University, New Haven, CT 06511, USA}
 
 %% Acknowledge the support
-\def\support{\footnote{Work supported by  XYZ Foundation }}
-
-
+\def\support{\footnote{Work supported by the U.S. Department of Energy under grant number DE-SC0004168.}}
 
 \begin{document}
 
@@ -84,17 +85,17 @@ XYZ University, Beijing, 100049, China}
 %% Change the title, name, abstract
 %% Title 
 \vfill
-\Title{  THE TITLE OF YOUR PROCEEDINGS  }
+\Title{New results on jets and heavy flavor in heavy-ion collisions with ALICE}
 \vfill
 
 %  if you need to add the support use this, fill the \support definition above. 
 %   \Author{ FIRSTNAME LASTNAME \support }
-\Author{ FIRSTNAME LASTNAME  }
+\Author{Salvatore Aiola\support}
 \Address{\affiliation}
 \vfill
 \begin{Abstract}
 
-HERE IS YOUR ABSTRACT.  REPLACE THE TEXT. The fifth annual Large Hadron Collider Physics (LHCP) conference will be held at Shanghai Jiao Tong University in Shanghai from May 15-20, 2017. 
+here it goes
 
 \end{Abstract}
 \vfill
@@ -118,16 +119,47 @@ May 15-20, 2017
 %% Your paper should be entered below. 
 
 \section{Introduction}
+A comprehensive and far-reaching heavy-ion programme is part of the scientific goals of the CERN Large Hadron Collider.
+The large statistics accumulated during the LHC Run-1 and Run-2 have given access to an unprecedented number of observables connected to rare high-$Q^2$ processes.
+Such hard probes are rare enough to be singled out from the large bulk of particles produced in ultra-relativistic heavy-ion collision. By interacting with the Quark-Gluon Plasma (QGP) these self-produced probes
+can carry crucial pieces of information about the transport properties of the QGP.
 
-HERE IS YOUR INTRODUCTION, REPLACE THE TEXT
+The suppression of the jet production cross section in ultra-relativistic heavy-ion collisions has been established both at RHIC~\cite{STAR:2017a} and at the LHC~\cite{ALICE:2015a}. The suppression is interpreted as the result of the interaction of the hard-scattered partons 
+with the QGP, which dampens the momentum of the hard parton via radiative and collisional energy loss (\emph{jet quenching}). A number of theoretical models, such as JEWEL and YaJEM, can effectively reproduce
+the data; however the exact determination of the parameters of the energy loss as well as the details of the energy-loss mechanism are still pending. Some additional constraints come from the observation (or lack thereof) of
+the modification of the internal structure of the jets. A number of observable has been proposed. The ALICE Collaboration is active in this area and some of the latest results have been presented at this conference.
 
-The program will be devoted to a review of the latest experimental and theoretical results on hadron collider physics and a discussion on the outlook for the coming years. The conference intends to provide a lively discussion between experimenters and theorists on topics such as the Standard Model Physics and Beyond, the Higgs Boson, Supersymmetry and Heavy Ion Physics and planning for the high luminosity upgrades.
+Heavy-flavor (charm and beauty) particles have been used as probes of the QGP both at RHIC and at the LHC. What makes heavy-flavor partons special is their non-zero mass which plays the role of a second hard scale, independent of the momentum.
+As a consequence, they can be singled out from the bulk even at low momentum. Furthermore, perturbative Quantum Chromo-Dynamics (pQCD) methods are effective in calculating the production cross-section in vacuum, i.e. in \pp\ collisions, down to zero momentum, notwithstanding large uncertainties.
+The production cross section of open-charm mesons has been observed to be suppressed at about the same level as in the light-flavor case. Earlier theoretical predictions showed smaller suppression, however improvements in the theoretical models 
+have reduced the discrepancy between theory and experiments. The measured azimuthal anisotropy of D mesons (the elliptic flow measured via the second coefficient $v_2$ of the Fourier decomposition) has played an important role in challenging
+the theoretical models. Hidden-charm mesons have an equally important role in the characterisation of the QGP.
+The observed \jpsi\ yield in heavy-ion collision has been interpreted as being the result of two competing effects: dissociation of the \ccbar\ pairs in the QGP; and generation in the QGP from pairs of charm and anti-charm quarks coming from independent scatterings.
+The \jpsi\ generated in the QGP is expected to flow with the QGP medium, therefore a precise measurement of the \jpsi\ elliptic flow is crucial.
+At this conference the ALICE Collaboration has presented an updated measurement of the $v_2$ of D mesons as well as \jpsi, using the larger statistical samples available from Run-2.
 
-\section{Observations}
+In recent years, collective effects usually associated with the formation of the QGP have been observed in a subset of \pPb\ and in \pp\ collisions, characterised by a very large event multiplicity. These observations could be taken as indication that the smallest drop
+of QGP is formed in such collisions, however no unambiguous proof has been shown yet. In particular no unexpected effects have been observed using hard probes (jets or heavy-flavor particles). In these proceedings we present two recent measurements from ALICE.
 
-REPLACE THE TEXT, FIGURE and TABLE.
+\section{\PbPb\ collisions}
 
-Observation of the Higgs Boson,  \cite{Aad:2012tfa},\cite{Chatrchyan:2012ufa}. 
+\subsection{Jet Substructure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.5\textwidth]{img/2017-Feb-03-Tau2to1_40to60_Full_Results_0}
+\caption{Nsubjettiness}
+\label{fig:nsubjettiness}
+\end{figure}
+
+
+\subsection{Heavy-Flavor Elliptic Flow}
+
+\section{\pPb\ collisions}
+
+\subsection{Hadron-Jet Cross Section}
+
+\subsection{Jet Substructure}
 
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -142,69 +174,31 @@ Observation of the Higgs Boson,  \cite{Aad:2012tfa},\cite{Chatrchyan:2012ufa}.
 %\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-See Figure \ref{fig:figure1} and Table \ref{tab:table1}. 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %%   use this format to include a LaTeX table  into your paper
 %%
-\begin{table}[t]
-\begin{center}
-\begin{tabular}{l|ccc}  
-Patient &  Initial level($\mu$g/cc) &  w. Magnet &  
-w. Magnet and Sound \\ \hline
- Guglielmo B.  &   0.12     &     0.10      &     0.001  \\
- Ferrando di N. &  0.15     &     0.11      &  $< 0.0005$ \\ \hline
-\end{tabular}
-\caption{ place the caption here }
-\label{tab:table1}
-\end{center}
-\end{table}
+%\begin{table}[t]
+%\begin{center}
+%\begin{tabular}{l|ccc}  
+%Patient &  Initial level($\mu$g/cc) &  w. Magnet &  
+%w. Magnet and Sound \\ \hline
+%Guglielmo B.  &   0.12     &     0.10      &     0.001  \\
+%Ferrando di N. &  0.15     &     0.11      &  $< 0.0005$ \\ \hline
+%\end{tabular}
+%\caption{ place the caption here }
+%\label{tab:table1}
+%\end{center}
+%\end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Interpretations}
-
-......
-
-\section{Conclusions}
-
-...... 
 
 %%  if necessary
-\Acknowledgements
-I am grateful to XYZ for fruitful discussions.
+%\Acknowledgements
+%I am grateful to XYZ for fruitful discussions.
 
-
-\begin{thebibliography}{99}
-
-%%
-%%  bibliographic items can be constructed using the LaTeX format in SPIRES:
-%%    see    http://www.slac.stanford.edu/spires/hep/latex.html
-%%  SPIRES will also supply the CITATION line information; please include it.
-%%
-
-\bibitem{Aad:2012tfa} 
-  G.~Aad {\it et al.}  [ATLAS Collaboration],
-  %``Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC,''
-  Phys.\ Lett.\ B {\bf 716}, 1 (2012)
-  [arXiv:1207.7214 [hep-ex]].
-  %%CITATION = ARXIV:1207.7214;%%
-  %3009 citations counted in INSPIRE as of 22 Jul 2014
-  
-  
-%\cite{Chatrchyan:2012ufa}
-\bibitem{Chatrchyan:2012ufa} 
-  S.~Chatrchyan {\it et al.}  [CMS Collaboration],
-  %``Observation of a new boson at a mass of 125 GeV with the CMS experiment at the LHC,''
-  Phys.\ Lett.\ B {\bf 716}, 30 (2012)
-  [arXiv:1207.7235 [hep-ex]].
-  %%CITATION = ARXIV:1207.7235;%%
-  %2951 citations counted in INSPIRE as of 22 Jul 2014
-
-
-
-\end{thebibliography}
-
+\bibliography{biblio}{}
+\bibliographystyle{iopart-num}
  
 \end{document}
 
