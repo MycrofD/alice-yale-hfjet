@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage{amssymb}
 \usepackage{subcaption}
+\usepackage{cancel}
 
 \include{commands}
 
@@ -134,8 +135,8 @@ Furthermore the non-zero mass of charm and beauty has an impact in their interac
 Therefore studying the dynamics of heavy quarks in the QGP can put important additional constraints on its transport properties.
 At this conference the ALICE Collaboration has presented an updated measurement of the $v_2$ of D mesons as well as \jpsi, using the larger statistical samples available from Run-2.
 
-In recent years, collective effects usually associated with the formation of the QGP have been observed in a subset of \pPb\ and in \pp\ collisions, characterised by a very large event multiplicity. These observations could be taken as indication that the smallest drop
-of QGP is formed in such collisions, however no unambiguous proof has been shown yet. In particular no unexpected effects have been observed using hard probes (jets or heavy-flavor particles). In these proceedings we present two recent measurements from ALICE.
+In recent years, collective effects usually associated with the formation of the QGP have been observed in a subset of \pPb\ and in \pp\ collisions, characterised by a very large event multiplicity or event activity (EA). These observations could be taken as indication that the smallest drop
+of QGP is formed in large EA collisions, however no unambiguous proof has been shown yet. In particular no unexpected effects have been observed using hard probes (jets or heavy-flavor particles). In these proceedings we present two recent measurements from ALICE.
 
 The ALICE detector and its performance are described elsewhere~\cite{}. We refer the interested reader to those publications.
 
@@ -215,7 +216,27 @@ The \jpsi\ mesons generated in the QGP are expected to flow with the QGP medium.
 
 \section{\pPb\ collisions}
 
-\subsection{Hadron-Jet Cross Section}
+\subsection{Hadron-Jet Cross Section} 
+A challenge presented by small systems, \pp\ or \pPb, lies in the weak correlation between the EA and the collision geometry,
+as various conservation laws and fluctuations play an important role and induce bias in the geometric modelling~\cite{}. 
+This issue becomes even more prominent when measuring hard processes, since they tend to put additional biases on the most common estimators of the EA.
+This bias can be partially avoided by constructing observables which allow to identify medium-induced effects without the need to know the relation between EA and collision geometry. 
+An example is a semi-inclusive cross section of the coincidence of a high-\pt\ hadron and recoiling jets.
+This cross section is defined as the ratio of two cross sections as in Eq.~\ref{eq:hjet}. Here $\sigma^{{\rm p+Pb (p+p)}\rightarrow{\rm h+X}}$ is the inclusive single-hadron cross
+section, $\mathrm{d}\sigma^{{\rm p+Pb (p+p)}\rightarrow{\rm h+jet+X}}/ \mathrm{d}p_{\rm T,jet}^{\rm ch}$ is the hadron+jet \pt-differential inclusive cross section.
+$T_{\rm pPb}$ is the nuclear thickness of the Pb nucleus traversed by the proton, which depends on the collision geometry and cancels in the equation.
+\begin{equation}
+\frac{1}{\sigma^{{\rm p+Pb}\rightarrow{\rm h+X}}} \frac{\mathrm{d}\sigma^{{\rm p+Pb}\rightarrow{\rm h+jet+X}}}{\mathrm{d}p_{\rm T,jet}^{\rm ch}} = 
+\frac{1}{\cancel{T_{\rm pPb}}\sigma^{{\rm p+p}\rightarrow{\rm h+X}}} \frac{\cancel{T_{\rm pPb}}\mathrm{d}\sigma^{{\rm p+p}\rightarrow{\rm h+jet+X}}}{\mathrm{d}p_{\rm T,jet}^{\rm ch}}
+\label{eq:hjet}
+\end{equation}
+Figure~\ref{fig:rppbhjet} shows it.
+\begin{figure}[tb]
+\centering
+\includegraphics[width=.5\textwidth]{img/2017-Feb-01-ppb5_RCP_pap_AKT04_ZNA_split2}
+\caption{.}
+\label{fig:rppbhjet}
+\end{figure}
 
 \subsection{Jet Substructure}
 
