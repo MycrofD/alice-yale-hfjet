@@ -142,10 +142,11 @@ The ALICE detector and its performance are described elsewhere~\cite{}. We refer
 
 \section{\PbPb\ collisions}
 
-\subsection{Jet Substructure}
+\subsection{Nsubjettiness}
+\label{sect:nsubjettiness}
 If two partons within the same parton shower are separated by a distance smaller than the tranvserse resolution scale of the medium, they interact coherently with the QGP as a color singlet (color coherence). 
 Conversely, if they are separated by larger distances they interact incoherently with the medium as independent color charges.
-The transverse resolution scale can be characterized with a critical angle $\theta_{\rm c}$. This angle can be related to the medium decoherence parameter $\Delta_{\rm med}$, which enters the amplitude of the antenna emission, via Eq.~\ref{eq:delta_med}\cite{Mehtar-Tani:2012, Casalderrey-Solana:2013}.
+The transverse resolution scale can be characterized with a critical angle $\theta_{\rm c}$. This angle can be related to the medium decoherence parameter $\Delta_{\rm med}$, which enters the calculation of the amplitude of the antenna emission, via Eq.~\ref{eq:delta_med}\cite{Mehtar-Tani:2012, Casalderrey-Solana:2013}.
 \begin{equation}
 \Delta_{\rm med} \simeq 1 - e^{-\frac{1}{12}\hat{q}Lr^2_{\bot}} \equiv 1 - e^{-(\theta/\theta_{\rm c})^2}
 \label{eq:delta_med}
@@ -176,23 +177,22 @@ The measured distribution is compared with a PYTHIA6 Perugia-11 simulation which
 \begin{figure}[tb]
 \centering
 \includegraphics[width=.5\textwidth]{img/2017-Feb-03-Tau2to1_40to60_Full_Results_0}
-\caption{Distribution of $\tau_2/\tau_1$ for \antikt\ charged jets with $R=0.4$s in \PbPb\ collisions at $\snn=2.76$~TeV in the $0-10$\% most central events. 
+\caption{Distribution of $\tau_2/\tau_1$ for \antikt\ charged jets with $R=0.4$ in \PbPb\ collisions at $\snn=2.76$~TeV in the $0-10$\% most central events. 
 ALICE data points (black) are compared with a PYTHIA6 Perugia-11 simulation (red).}
 \label{fig:nsubjettiness}
 \end{figure}
 
-ALICE has recently measured the jet mass both in \pPb\ and \PbPb\ collisions. Also for this jet shape observable no modification due to either cold or hot nuclear matter effects is observed~\cite{}.
-
 \subsection{Heavy-Flavor Elliptic Flow}
 The azimuthal anisotropy of D mesons is characterized by $v_2= \left<\cos 2(\phi - \psi_2)\right>$, where $\phi$ is the D-meson azimuthal angle and $\psi_2$ is the symmetry plane of the second-order
 harmonic in the Fourier decomposition of the azimuthal distribution of the particles produced in the event.
-This coefficient is usually referred to as \emph{elliptic flow} because its existence is ascribed to the initial asimmetric spatial configuration of the QGP that is formed in semi-central heavy-ion collisions.
+This coefficient is usually referred to as \emph{elliptic flow} because its existence is ascribed to the initial asimmetric spatial configuration of the QGP, characteristic of semi-central heavy-ion collisions.
 The QGP flows according to pressure gradients which are determined by its almond-like shape.
 The measurement of the elliptic flow of D mesons provides important insight into the interactions of charm quarks with themedium. At low \pt, the D-meson $v_2$ offers the unique opportunity to test whether also charm quarks participate inthe collective expansion dynamics and possibly thermalize in the medium~\cite{}. At high \pt, it provides constraints on the path-length dependence of parton energy loss~\cite{}.
 The measurement of the $v_2$ of D mesons has played an important role in challenging
 the theoretical models, so it is paramount to measure it with the best precision possible.
-Figure~\ref{fig:v2d0} shows the elliptic flow of D mesons in semi-central \PbPb\ collisions at $\snn=5.02$~TeV.
-The values of $v_2$ are compatible with the corresponding values for pions within uncertainties in the range $2<\pt<24$~\GeVc.
+Figure~\ref{fig:v2d0} shows the elliptic flow of D mesons in semi-central \PbPb\ collisions at $\snn=5.02$~TeV as a function of \pt.
+Non-flow contributions to the $v_2$ coming from decays and jets, are stronglyreduced by the separation of at least 0.9 units in $\eta$ between the D mesons and the particles usedto estimate the event plane. 
+The values of $v_2$ are greater than zero and compatible with the corresponding values for pions within uncertainties in the range $2<\pt<24$~\GeVc.
 \begin{figure}[tb]
 \centering
 \begin{subfigure}[b]{0.43\textwidth}
@@ -212,16 +212,16 @@ The values of $v_2$ are compatible with the corresponding values for pions withi
 
 Hidden-charm mesons have an equally important role in the characterisation of the QGP.
 The observed \jpsi\ yield in heavy-ion collision has been interpreted as being the result of two competing effects: dissociation of the \ccbar\ pairs in the QGP; and generation in the QGP from pairs of charm and anti-charm quarks coming from initially independent hard scatterings.
-The \jpsi\ mesons generated in the QGP are expected to flow with the QGP medium. The strong $v_2$ of \jpsi, shown in Fig.~\ref{fig:v2jpsi} is an indication of large fraction of \jpsi\ generated in the QGP.
+The observed non-zero $v_2$ of the \jpsi, shown in Fig.~\ref{fig:v2jpsi}, is an indication of a large fraction of \jpsi\ generated in the QGP.
 
 \section{\pPb\ collisions}
 
 \subsection{Hadron-Jet Cross Section} 
 A challenge presented by small systems, \pp\ or \pPb, lies in the weak correlation between the EA and the collision geometry,
 as various conservation laws and fluctuations play an important role and induce bias in the geometric modelling~\cite{}. 
-This issue becomes even more prominent when measuring hard processes, since they tend to put additional biases on the most common estimators of the EA.
+This issue becomes even more prominent when measuring hard processes, since they introduce additional biases on EA estimators.
 This bias can be partially avoided by constructing observables which allow to identify medium-induced effects without the need to know the relation between EA and collision geometry. 
-An example is a semi-inclusive cross section of the coincidence of a high-\pt\ hadron and recoiling jets.
+An example is the semi-inclusive cross section of the coincidence of high-\pt\ hadrons and recoiling jets.
 This cross section is defined as the ratio of two cross sections as in Eq.~\ref{eq:hjet}. Here $\sigma^{{\rm p+Pb (p+p)}\rightarrow{\rm h+X}}$ is the inclusive single-hadron cross
 section, $\mathrm{d}\sigma^{{\rm p+Pb (p+p)}\rightarrow{\rm h+jet+X}}/ \mathrm{d}p_{\rm T,jet}^{\rm ch}$ is the hadron+jet \pt-differential inclusive cross section.
 $T_{\rm pPb}$ is the nuclear thickness of the Pb nucleus traversed by the proton, which depends on the collision geometry and cancels in the equation.
@@ -230,19 +230,60 @@ $T_{\rm pPb}$ is the nuclear thickness of the Pb nucleus traversed by the proton
 \frac{1}{\cancel{T_{\rm pPb}}\sigma^{{\rm p+p}\rightarrow{\rm h+X}}} \frac{\cancel{T_{\rm pPb}}\mathrm{d}\sigma^{{\rm p+p}\rightarrow{\rm h+jet+X}}}{\mathrm{d}p_{\rm T,jet}^{\rm ch}}
 \label{eq:hjet}
 \end{equation}
-Figure~\ref{fig:rppbhjet} shows it.
+Jets are reconstructed using only charged tracks using the \antikt\ algorithm with $R=0.4$.
+As for the nsubjettiness measurement described in Section~\ref{sect:nsubjettiness}, in order to remove the contamination coming from combinatorial jets the difference between the yields
+for two trigger hadron classes are reported. In this case the trigger hadron \pt\ classes are $12-50$~\GeVc\ (signal class) and $6-7$~\GeVc\ (reference class).
+The raw yields are unfolded to correct for instrumental effects and local background fluctuations.
+
+The \pPb\ events are divided in EA classes based on the energy measured by the Zero-Degree Calorimeter~\cite{} positioned in the forward direction of the Pb-going side.
+Figure~\ref{fig:rppbhjet} shows the ratio of the semi-inclusive hadron-jet cross section in the $0-20$\% events with largest EA over the $50-100$\%
+in \pPb\ collisions at $\snn=5.02$~TeV.
+The ratio is consistent with unity within uncertainty, which puts severe constraints on jet energy loss in high EA \pPb\ collisions.
 \begin{figure}[tb]
 \centering
 \includegraphics[width=.5\textwidth]{img/2017-Feb-01-ppb5_RCP_pap_AKT04_ZNA_split2}
-\caption{.}
+\caption{Ratio of the semi-inclusive \pt-differential cross sections of hadron+jet in the $0-20$\% largest EA over $50-100$\% \pPb\ collisions at $\snn=5.02$~TeV.}
 \label{fig:rppbhjet}
 \end{figure}
 
-\subsection{Jet Substructure}
+\subsection{Jet Splitting Function}
+The jet splitting function $z_{\rm g}$ is defined in Eq.~\ref{eq:zg}, where $p_{\rm T,1}$ and $p_{\rm T,2}$ are the transverse momenta
+of the two hard subjets.
+\begin{equation}
+z_{\rm g} = \frac{\min({p_{\rm T,1},p_{\rm T,2}})}{p_{\rm T,1}+p_{\rm T,2}}
+\label{eq:zg}
+\end{equation}
+In order to find the two hard subjets a ``soft drop'' algorithm is employed. Jets are first identified via the \antikt\ algorithm, then reclustered using Cambridge/Aachen algorithm~\cite{}.
+The last step of the clustering procedure is unwinded and the soft drop condition $z_{\rm g} > z_{\rm g, min}$ is applied. If the soft drop condition is not satisfied the softer subjet is dropped.
+The procedure continues by unwinding the previous clustering step until the soft drop condition is satisfied or the last clustering step is reached (in which case the jet is rejected).
+When applied to jets in heavy-ion collisions, this jet shape observable is sensitive to nuclear effects occurring in the early stages of the parton shower evolution.
+CMS has recently reported a modification of the jet splitting function in central \PbPb\ collisions at $\snn=5.02$~TeV compared with
+\pp\ collisiona at the same energy~\cite{CMS:2017a}.
+Figure~\ref{fig:zgppb} shows the distribution of $z_{\rm g}$ of jets in \pPb\ collisions at $\snn=5.02$~TeV in three jet \pt\ ranges, $60-80$, $80-100$ and $100-120$~\GeVc. 
+Contrary to the CMS measurement in \PbPb\ collisions, no modification is observed when comparing the data with a PYTHIA6 Perugia-11 simulation.
+Results from the ALICE measurements are corrected for instrumental effects as well as local background fluctuations with a Bayesian 2D unfolding procedure.
+\begin{figure}[tb]
+\centering
+\includegraphics[width=.85\textwidth]{img/2017-Feb-01-zg_unfolded_20GeV_ALL}
+\caption{Distribution of $z_{\rm g}$ in \pPb\ collisions at $\snn=5.02$~TeV in three jet \pt\ ranges, $60-80$ (left), $80-100$ (center) and $100-120$ (right) \GeVc.
+The red curve represents a PYTHIA6 Perugia-11 simulation.}
+\label{fig:zgppb}
+\end{figure}
 
 \section{Conclusions}
-This indicates
+The picture that emerges from the most recent measurements from ALICE using Run-2 data confirms earlier results from Run-1 with significantly better precision.
+Jets and heavy-flavor mesons are strongly suppressed in centrall \PbPb\ collisions compared to \pp\ collisions. Both open and hidden charm mesons show a non-zero $v_2$ which indicates 
 that charm quarks participate in the collective dynamic expansion with the medium.
+ALICE has not observed any modification in the internal substructure of jets so far. Work is in progress to extend the $z_{\rm g}$ measurement to \PbPb\ collisions
+in order to provide an independent confirmation of the modification reported by the CMS Collaboration~\cite{} and possibly extend the measurement to a different kinematic range.
+In order to investigate the details of the energy loss of charm quarks in the QGP, ALICE is working on a measurement of charm jets tagged using D mesons.
+A preliminary cross section of \Dzero-tagged jets in \pp\ collisions have been recently reported and the measurement is being extended to both \pPb\ and \PbPb\ collision systems.
+
+In \pPb\ collisions ALICE has confirmed that there is no evidence of jet quenching due to either cold or hot nuclear matter effects.
+In particular the self-normalized ratio of the semi-inclusive cross section of hadron+jet in high EA over low EA collisions is compatible with unity within uncertainties.
+A first look into the internal hard substructure of jets in \pPb\ collisions has also shown that they are compatible with expectations from PYTHIA6.
+From the one hand these findings confirm the interpretation of the jet quenching observed in \PbPb\ collisions as the result of the interactions of hard scattered partons
+with the QGP; from the other hand they suggest that no QGP is formed in high EA \pPb\ collisions or that the drop of QGP formed in such collisions is too small or dilute to give rise to observable jet quenching effects.
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
