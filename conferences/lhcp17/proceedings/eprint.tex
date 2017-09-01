@@ -95,10 +95,11 @@ Physics Department, Yale University, New Haven, CT 06511, USA}
 \vfill
 \begin{Abstract}
 The large statistics accumulated during the LHC Run-1 and Run-2 have provided the unique opportunity to study the properties of the Quark-Gluon Plasma
-using rare hard probes. The ALICE Collaboration has presented new results on jet substructure in \pPb\ and \PbPb\ collisions which show no modification
+using rare hard probes. The ALICE Collaboration has presented new results on the jet shape observables in \pPb\ and \PbPb\ collision. Particularly the nsubjettiness in \PbPb\ 
+and the jet splitting function $z_{\rm g}$ in \pPb\ show no modification
 compared to a vacuum reference. Using data from Run-2, the elliptic flow of open and hidden charm mesons have been measured with much better precision,
 confirming that charm quarks participate in the collective dynamic expansion with the medium. In \pPb\ collisions the absence of jet quenching 
-correlated with high event activity has been confirmed measuring the self-normalized semi-inclusive hadron+jet cross section.
+correlated with high event activity has been confirmed by a self-normalized semi-inclusive hadron+jet measurement.
 \end{Abstract}
 \vfill
 
@@ -153,16 +154,22 @@ The transverse resolution scale can be characterized with a critical angle $\the
 \Delta_{\rm med} \simeq 1 - e^{-\frac{1}{12}\hat{q}Lr^2_{\bot}} \equiv 1 - e^{-(\theta/\theta_{\rm c})^2}
 \label{eq:delta_med}
 \end{equation}
-Here $\hat{q}$ is the medium transport parameter, $L$ is the medium'slength and $r_{\bot}$ is the jet's transverse extension in the medium. $\theta$ is the jet's opening angle, which is given bythe largest antenna (the two substructures with the largest angular separation) in the jet which in a vacuumcorresponds to the first splitting. Recent theoretical work has highlighted the sensitivity of two-pronged jetsto coherence effects in the QGP~\cite{Mehtar-Tani:2016}.
+Here $\hat{q}$ is the medium transport parameter, $L$ is the medium's
+length and $r_{\bot}$ is the jet's transverse extension in the medium. $\theta$ is the jet's opening angle, which is given by
+the largest antenna (the two substructures with the largest angular separation) in the jet which in a vacuum
+corresponds to the first splitting. Recent theoretical work has highlighted the sensitivity of two-pronged jets
+to coherence effects in the QGP~\cite{Mehtar-Tani:2016}.
 
-The nsubjettiness~\cite{Thaler:2010} $\tau_{\rm N}$ is a measure of how $N$-cored a jet's substructure is. It is defined in Eq.~\ref{eq:nsubjettiness}, where$i$ denotes each jet constituents, $N$ is the number of cores found in the jet, $M$ is the number of jet constituents, $R$ is the jet resolution parameter used in the \kt\ jet finding algorithm
+The nsubjettiness~\cite{Thaler:2010} $\tau_{\rm N}$ is a measure of how $N$-cored a jet's substructure is. It is defined in Eq.~\ref{eq:nsubjettiness}, where
+$i$ denotes each jet constituents, $N$ is the number of cores found in the jet, $M$ is the number of jet constituents, $R$ is the jet resolution parameter used in the \kt\ jet finding algorithm
 and $\Delta R_{j,i}$ is the distance in the $(\eta,\phi)$ plane between the track $i$ and the jet axis core $j$.
 \begin{equation}
 \tau_N = \frac{\sum^M_{i=1}p_{{\rm T},i}\min(\Delta R_{1,i},\Delta R_{2,i},...,\Delta R_{N,i})}{\sum^M_{i=1}p_{{\rm T},i}R}
 \label{eq:nsubjettiness}
 \end{equation}
 A jet with $\tau_N$ approaching $0$ 
-has $N$ or fewer definite cores; conversely a $\tau_N$ valueapproaching unity indicates the presence of at least $N + 1$ substructures. 
+has $N$ or fewer definite cores; conversely a $\tau_N$ value
+approaching unity indicates the presence of at least $N + 1$ substructures. 
 It follows that the ratio $\tau_2/\tau_1$ is sensitive to jets that have exactly two definite hard cores. 
 
 Jets are first reconstructed with the \antikt\ algorithm as implemented in the \texttt{FastJet}\cite{Cacciari:2012a} software package.
@@ -189,11 +196,15 @@ The azimuthal anisotropy of D mesons is characterized by $v_2= \left<\cos 2(\phi
 harmonic in the Fourier decomposition of the azimuthal distribution of the particles produced in the event.
 This coefficient is usually referred to as \emph{elliptic flow} because its existence is ascribed to the initial asimmetric spatial configuration of the QGP, characteristic of semi-central heavy-ion collisions.
 The QGP flows according to pressure gradients which are determined by its almond-like shape.
-The measurement of the elliptic flow of D mesons provides important insight into the interactions of charm quarks with themedium. At low \pt, the D-meson $v_2$ offers the unique opportunity to test whether also charm quarks participate inthe collective expansion dynamics and possibly thermalize in the medium~\cite{Greco:2003}. At high \pt, it provides constraints on the path-length dependence of parton energy loss~\cite{Gyulassy:2000}.
+The measurement of the elliptic flow of D mesons provides important insight into the interactions of charm quarks with the
+medium. At low \pt, the D-meson $v_2$ offers the unique opportunity to test whether also charm quarks participate in
+the collective expansion dynamics and possibly thermalize in the medium~\cite{Greco:2003}. At high \pt, it provides constraints on the path-length dependence of parton energy loss~\cite{Gyulassy:2000}.
 The measurement of the $v_2$ of D mesons has played an important role in challenging
 the theoretical models~\cite{Das:2015}, so it is paramount to measure it with the best precision possible.
 Figure~\ref{fig:v2d0} shows the elliptic flow of D mesons in semi-central \PbPb\ collisions at $\snn=5.02$~TeV as a function of \pt.
-Non-flow contributions to the $v_2$ coming from decays and jets, are stronglyreduced by the separation of at least 0.9 units in $\eta$ between the D mesons and the particles usedto estimate the event plane. 
+Non-flow contributions to the $v_2$ coming from decays and jets, are strongly
+reduced by the separation of at least 0.9 units in $\eta$ between the D mesons and the particles used
+to estimate the event plane. 
 The values of $v_2$ are greater than zero and compatible with the corresponding values for pions within uncertainties in the range $2<\pt<24$~\GeVc.
 \begin{figure}[tb]
 \centering
@@ -255,13 +266,13 @@ of the two hard subjets.
 z_{\rm g} = \frac{\min({p_{\rm T,1},p_{\rm T,2}})}{p_{\rm T,1}+p_{\rm T,2}}
 \label{eq:zg}
 \end{equation}
-In order to find the two hard subjets a ``soft drop'' algorithm is employed. Jets are first identified via the \antikt\ algorithm, then reclustered using Cambridge/Aachen algorithm.
+In order to find the two hard subjets a ``soft drop'' algorithm is employed~\cite{Larkoski:2014, Larkoski:2015}. Jets are first identified via the \antikt\ algorithm, then reclustered using Cambridge/Aachen algorithm.
 The last step of the clustering procedure is unwinded and the soft drop condition $z_{\rm g} > z_{\rm g, min}$ is applied. If the soft drop condition is not satisfied the softer subjet is dropped.
 The procedure continues by unwinding the previous clustering step until the soft drop condition is satisfied or the last clustering step is reached (in which case the jet is rejected).
 When applied to jets in heavy-ion collisions, this jet shape observable is sensitive to nuclear effects occurring in the early stages of the parton shower evolution.
 CMS has recently reported a modification of the jet splitting function in central \PbPb\ collisions at $\snn=5.02$~TeV compared with
-\pp\ collisiona at the same energy~\cite{CMS:2017a}.
-Figure~\ref{fig:zgppb} shows the distribution of $z_{\rm g}$ of jets in \pPb\ collisions at $\snn=5.02$~TeV in three jet \pt\ ranges, $60-80$, $80-100$ and $100-120$~\GeVc. 
+\pp\ collisions at the same energy~\cite{CMS:2017a}.
+Figure~\ref{fig:zgppb} shows the distribution of $z_{\rm g}$ of charged jets in \pPb\ collisions at $\snn=5.02$~TeV in three jet \pt\ ranges, $60-80$, $80-100$ and $100-120$~\GeVc. 
 Contrary to the CMS measurement in \PbPb\ collisions, no modification is observed when comparing the data with a PYTHIA6 Perugia-11 simulation.
 Results from the ALICE measurements are corrected for instrumental effects as well as local background fluctuations with a Bayesian 2D unfolding procedure.
 \begin{figure}[tb]
@@ -274,7 +285,7 @@ The red curve represents a PYTHIA6 Perugia-11 simulation.}
 
 \section{Conclusions}
 The picture that emerges from the most recent measurements from ALICE using Run-2 data confirms earlier results from Run-1 with significantly better precision.
-Jets and heavy-flavor mesons are strongly suppressed in centrall \PbPb\ collisions compared to \pp\ collisions. Both open and hidden charm mesons show a non-zero $v_2$ which indicates 
+Jets and heavy-flavor mesons are strongly suppressed in central \PbPb\ collisions compared to \pp\ collisions. Both open and hidden charm mesons show a non-zero $v_2$ which indicates 
 that charm quarks participate in the collective dynamic expansion with the medium.
 ALICE has not observed any modification in the internal substructure of jets so far. Work is in progress to extend the $z_{\rm g}$ measurement to \PbPb\ collisions
 in order to provide an independent confirmation of the modification reported by the CMS Collaboration and possibly extend the measurement to a different kinematic range.
