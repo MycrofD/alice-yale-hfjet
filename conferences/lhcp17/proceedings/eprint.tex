@@ -182,7 +182,8 @@ A PYTHIA6+GEANT3 simulation is used to estimate the detector effects on the jet 
 The hadron-jet coincidence technique described in~\cite{ALICE:2015g} is used to reject combinatorial jets from the measured sample. 
 Instead of the absolute cross section, which suffers from a large combinatorial contamination, the difference in the yields of jets recoiling from two high-\pt\ trigger hadron classes is reported. 
 The trigger hadron \pt\ classes are $15-45$~\GeVc\ (signal class) and $8-9$~\GeVc\ (reference class). The distribution of $\tau_2/\tau_1$ is shown in Fig.~\ref{fig:nsubjettiness} for jets with $40<p_{\rm T,ch.jet}<60$~\GeVc.
-The measured distribution is compared with a PYTHIA6 Perugia-11 simulation which agrees with the data within the uncertainties. We conclude that no coherence effects in the parton energy loss are supported by this measurement.
+The measured distribution is compared with a PYTHIA6 Perugia-11 simulation which agrees with the data within the uncertainties. 
+This indicates that the way the radiation is aligned relative to the two defined axes is not modified in \PbPb\ collisions compared to a PYTHIA baseline. \textcolor{red}{check this with Leticia}.
 \begin{figure}[tb]
 \centering
 \includegraphics[width=.5\textwidth]{img/2017-Feb-03-Tau2to1_40to60_Full_Results_0}
@@ -272,9 +273,10 @@ The procedure continues by unwinding the previous clustering step until the soft
 When applied to jets in heavy-ion collisions, this jet shape observable is sensitive to nuclear effects occurring in the early stages of the parton shower evolution.
 CMS has recently reported a modification of the jet splitting function in central \PbPb\ collisions at $\snn=5.02$~TeV compared with
 \pp\ collisions at the same energy~\cite{CMS:2017a}.
+\textcolor{red}{STAR has measured it too}~\cite{Kauder:2017}.
 Figure~\ref{fig:zgppb} shows the distribution of $z_{\rm g}$ of charged jets in \pPb\ collisions at $\snn=5.02$~TeV in three jet \pt\ ranges, $60-80$, $80-100$ and $100-120$~\GeVc. 
-Contrary to the CMS measurement in \PbPb\ collisions, no modification is observed when comparing the data with a PYTHIA6 Perugia-11 simulation.
-Results from the ALICE measurements are corrected for instrumental effects as well as local background fluctuations with a Bayesian 2D unfolding procedure.
+The distributions are corrected for instrumental effects as well as local background fluctuations with a Bayesian 2D unfolding procedure.
+No modification is observed when comparing the data with a PYTHIA6 Perugia-11 simulation.
 \begin{figure}[tb]
 \centering
 \includegraphics[width=.85\textwidth]{img/2017-Feb-01-zg_unfolded_20GeV_ALL}
@@ -282,6 +284,9 @@ Results from the ALICE measurements are corrected for instrumental effects as we
 The red curve represents a PYTHIA6 Perugia-11 simulation.}
 \label{fig:zgppb}
 \end{figure}
+%ALICE plans to perform this measurement in \PbPb\ collisions using data collected during Run-2.
+%CMS uses a cut $\Delta R > 0.1$, which is expected to potentially change the physics interpretation. 
+%Thanks to their better angular resolution, charged-only jets reconstructed using ALICE tracking system (ITS+TPC) could allow to relax this constraint.
 
 \section{Conclusions}
 The picture that emerges from the most recent measurements from ALICE using Run-2 data confirms earlier results from Run-1 with significantly better precision.
