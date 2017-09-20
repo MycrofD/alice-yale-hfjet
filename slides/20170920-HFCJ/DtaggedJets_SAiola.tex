@@ -1,0 +1,328 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\input{../shared/commands}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[D-Tagged Jets in \pp] % (optional, use only with long paper titles)
+{D-Tagged Jets in \pp\ Collisions \\Fragmentation Function}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Sept. 20th, 2017] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+September 20th, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+ %   \tableofcontents
+ %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+%\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/ReflectionTemplates_DPt_NoJet_DoubleGaus_1010}
+%\put(0,61){{\tiny No jet requirement}}
+%\put(60,61){{\tiny \textcolor{ForestGreen}{\textbf{Used for QM17 preliminary}}}}
+%\end{overpic}
+
+%\begin{columns}
+%\column{0.5\textwidth}
+%\column{0.5\textwidth}
+%\end{columns}
+
+\section{Raw Yield Extraction}
+
+\subsection{Standard Cuts}
+
+\begin{frame}{Invariant Mass Fits in \zpar\ bins}
+\begin{center}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_JetZBins_DPt_30_JetPt_5_30}
+\put(70,20){\tiny $\ptd > 3$~\GeVc}
+\put(70,16){\tiny $5 < \ptchjet < 30$~\GeVc}
+\end{overpic}
+\end{center}
+\vspace{-5pt}
+\small
+\begin{itemize}
+\item No signal in $0 < \zpar < 0.2$ (as expected due to the kinematic cuts)
+\item Good S/B in all bins
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Side Band Method}
+\begin{center}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_DPtBins_JetPt_5_30_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
+\end{overpic}
+\end{center}
+\vspace{-5pt}
+\small
+\begin{itemize}
+\item Same as for the jet \pt\ spectrum
+\item $\ptd > 3$~\GeVc\ and $5 < \ptchjet < 30$~\GeVc
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Side Band Method in \zpar\ bins}
+\begin{columns}
+\column{0.65\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_SideBand_BkgVsSig}
+\end{overpic}
+\column{0.35\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_SideBand_TotalBkgVsSig}
+\end{overpic}
+\vspace{-5pt}
+\begin{itemize}
+\item Subtraction of the \zpar\ spectra in bins of \ptd
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Method Comparison}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_d_z_SpectraComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_d_z_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item The two methods agree quite well except in the bin $0.4<\zpar<0.6$
+\item Invariant mass for the bin $0.4<\zpar<0.6$ has a larger width (see backup slide)
+\end{itemize}
+\end{frame}
+
+\subsection{Varying Kinematic Cuts}
+
+\section{Systematic Uncertainty: Raw Yield Extraction}
+
+\subsection{Multi-Trial}
+
+\begin{frame}{Multi-Trial Result}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_unc/CompareRawYieldUncVariations_AfterDbinSum}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_unc/CompareRawYieldUncVariations_AfterDbinSum_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reflection Template Variations}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_unc/SideBandReflectionVariationComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_unc/SideBandReflectionVariationComparison_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\section{Systematic Uncertainty: B Feed-Down}
+
+\begin{frame}{Simulation Variations (Generator Level)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Simulation Variations (Detector Level)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\item It includes ratio of prompt/non-prompt efficiency and detector resolution (non-prompt)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Feed-Down Cross-Section with Systematics}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum_canvas}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide_canvas}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Left: generator level
+\item Right: detector level (divided by prompt efficiency)
+\end{itemize}
+\end{frame}
+
+\section{Conclusions}
+
+\subsection{Raw Yield Extraction}
+
+\begin{frame}{Optimisation of the kinematic cuts}
+\begin{itemize}
+\item The kinematic cuts $\ptd>3$~\GeVc\ and $5<\ptchjet<30$~\GeVc\ alter the shape of the \zpar\ distribution
+\item If the goal is to measure the full FF down to $\zpar=0.2$ for jets down to $\ptchjet=5$~\GeVc\ we should include D-mesons down to $\ptd=1$~\GeVc
+\item We could also try to measure the FF for two bins of \ptchjet: $5-15$ and $15-30$~\GeVc
+\item All of this needs some optimisation of the topological cuts
+\item In particular we could exploit the fact that requiring the presence of a jet may decrease the combinatorial background and improve S/B ratio even with weaker topological cuts (especially for the $15-30$~\GeVc\ bin in the scenario with two jet \pt\ bins)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$\ptd>1$~\GeVc\ and $5<\ptchjet<15$~\GeVc}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_DPtBins_JetPt_5_15_SideBand_D0_Charged_R040_JetZSpectrum_DPt_10_JetPt_5_15_SideBand}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{$\ptd>3$~\GeVc\ and $15<\ptchjet<30$~\GeVc}
+\begin{overpic}[width=.65\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_15_30_SideBand}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{Conclusions}
+\begin{itemize}
+\item The full analysis chain has been adapted to work with \zpar\
+\item Two main open points: \alert{optimisation of kinematic/topological cuts} and \alert{unfolding}
+\item Timeline to have a fully corrected fragmentation function: 4-6 weeks
+\end{itemize}
+\end{frame}
+
+
+\section{Extra Slides}
+
+\begin{frame}{Invariant Mass Fit Width vs. \zpar}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_InvMassFit_MassWidth_canvas}
+\end{overpic}
+\end{frame}
+
+\end{document}
