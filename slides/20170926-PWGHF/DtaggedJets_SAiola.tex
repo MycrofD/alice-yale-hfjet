@@ -1,0 +1,733 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+\usepackage{setspace}
+\usepackage{appendixnumberbeamer}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\input{../shared/commands}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[D-Tagged Jets in \pp\ and \PbPb] % (optional, use only with long paper titles)
+{D-Tagged Jets in \pp\ and \PbPb\ Collisions}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola \\ for PAG-HFCJ}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PWG-HF - Sept. 26th, 2017] % (optional, should be abbreviation of conference name)
+{PWG-HF \\
+September 26th, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+   \tableofcontents
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+%\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/ReflectionTemplates_DPt_NoJet_DoubleGaus_1010}
+%\put(0,61){{\tiny No jet requirement}}
+%\put(60,61){{\tiny \textcolor{ForestGreen}{\textbf{Used for QM17 preliminary}}}}
+%\end{overpic}
+
+%\begin{columns}
+%\column{0.5\textwidth}
+%\column{0.5\textwidth}
+%\end{columns}
+
+\section{\Dzero-Jet \pt-differential cross section in \pp\ @ $\s=7$~TeV}
+
+\subsection{Reminder: preliminary at QM17}
+\begin{frame}{QM17 Preliminary}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{center}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0, clip]{img/2017-Jun-12-D0JetCrossSection_pp7TeV}
+\end{overpic}
+\end{center}
+\vspace{-5pt}
+\scriptsize
+\column{0.55\textwidth}
+\small
+\begin{itemize}
+\item \Dzero\ candidates identified in the ${\rm K}\pi$ decay channel
+\item Jets reconstructed out of the \Dzero-candidate 4-momentum + all remaining tracks
+\item Invariant mass analysis: in jet \pt\ bins or in D \pt\ bins (side band method)
+\item MB \pp\ @ 7 TeV, 2010 (LHC10b,c,d,e)
+\item Preliminary shown at QM17 (\href{https://indico.cern.ch/event/433345/contributions/2358064/}{poster})
+\item Good agreement with POWHEG within uncertainties
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+\subsection{Reflections}
+
+\begin{frame}{Issue with reflection templates: fixed}
+\begin{center}
+\begin{overpic}[width=.6\textwidth, trim=0 0 0 0, clip]{img/fixed_reflections}
+\end{overpic}\\
+Fixed small issue in \textbf{reflections}: PID response task was configured for pass2 instead of pass4\\
+1-7\% effect on the final spectrum (well within uncertainties)
+\end{center}
+\end{frame}
+
+\subsection{pass2 vs. pass4 cuts}
+
+\begin{frame}{Comparison of prompt/non-prompt efficiencies}
+\begin{columns}
+\column{0.58\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareEfficiencyPass4vsPass2cuts}
+\end{overpic}
+{
+\tiny
+\begin{tabular}{ll}
+\textcolor{black}{LHC15i2\_Train961\_cresponse} & prompt, pass2 cuts\\
+\textcolor{NavyBlue}{LHC15i2\_Train1073\_cresponse} & prompt, pass4 cuts\\
+\textcolor{BrickRed}{LHC15i2\_Train973\_bresponse} & non-prompt, pass2 cuts\\
+\textcolor{ForestGreen}{LHC15i2\_Train1081\_bresponse} & non-prompt, pass4 cuts
+\end{tabular}
+}
+\begin{spacing}{1.5}
+
+\end{spacing}
+\raggedright
+{\tiny
+\begin{spacing}{0.5}
+\textbf{Note}: the efficiencies are shown also for $\ptd<3$~\GeVc\ but only D mesons with $\ptd>3$~\GeVc\ are used in the analysis.
+In this kinematic region the ratios of the prompt efficiencies of pass4 over pass2 is roughly unity or higher by $10$\%;
+the non-prompt efficiency is about 20\% lower for the pass4 cuts compared to the pass2 cuts.
+\end{spacing}
+}
+\column{0.42\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePromptEfficiencyPass4vsPass2cuts_Ratio}
+\put(30,10){\footnotesize Prompt}
+\put(18,7){\color{red}\line(0,1){53}}
+\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareNonPromptEfficiencyPass4vsPass2cuts_Ratio}
+\put(30,10){\footnotesize Non-Prompt}
+\put(18,7){\color{red}\line(0,1){53}}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Comparison of efficiency-corrected raw yields}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBandEfficiency}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBandEfficiency_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts [PRC 94, 054908 (2016)]
+\end{description}}
+\end{frame}
+
+\begin{frame}{Comparison of raw yields with FD subtraction}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBandEfficiencyFDCorrected}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ComparePass4vsPass2cutsSideBandEfficiencyFDCorrected_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts [PRC 94, 054908 (2016)]
+\end{description}}
+\end{frame}
+
+\section{Underlying Event in \pp}
+
+\subsection{Average background density}
+
+\begin{frame}{Distribution of the background density $\rho$}
+\begin{columns}
+\column{0.6\textwidth}
+\begin{overpic}[width=1.15\textwidth, trim=0 0 0 0, clip]{img/RhoDistributionDetLev}
+\put(35,39){{\scriptsize 300M minimum-bias events}}
+\put(35,35){{\scriptsize \pp\ at $\s=7$~TeV (2010, pass4)}}
+\end{overpic}
+The transverse plane method has a slightly smaller $\left<\rho\right>$, but longer tail \\ (3-jet events? misidentified leading jet?)
+\column{0.4\textwidth}
+\begin{itemize}
+\item \small \textcolor{BrickRed}{\textbf{Trans plane}}: momentum density in the $\phi$ directions perpendicular to the leading jet \\
+{\tiny$\rho_{\rm trans} = \frac{1}{Acc} \underset{\rm perp.tracks}{\sum}{p_{\rm T,track}}$,}\\
+{\tiny where perp. tracks are such that $67.5^{\circ} < \phi_{\rm track} - \phi_{\rm lead.jet}<112.5^{\circ}$}\\
+{\tiny $Acc = (\eta_{\rm max} - \eta_{\rm min}) \frac{\pi}{2}$}
+\item \small \textbf{CMS method}: median of \kt\ cluster momentum density with event occupancy correction factor\\
+{{\tiny \href{https://doi.org/10.1007/JHEP08(2012)130}{JHEP08(2012)130}, \href{https://doi.org/10.1007/JHEP04(2010)065}{JHEP04(2010)065}}} \\
+\tiny$\rho_{\rm CMS} = \underset{j\in{\rm physical jets}}{\rm median}\left\{\frac{p_{{\rm T}j}}{A_j}\right\}\cdot C$ \\
+\tiny$\left<C\right>\approx0.3$
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Average background density $\rho$ vs. multiplicity}
+\begin{center}
+\vspace{-15pt}
+\begin{overpic}[width=.80\textwidth, trim=10 0 0 35, clip]{img/MeanRhoVsCentDetLev}
+\put(27,43){{\scriptsize 300M minimum-bias events}}
+\put(27,39){{\scriptsize \pp\ at $\s=7$~TeV (2010, pass4)}}
+\put(27,35){{\scriptsize Multiplicty classes calculated using V0 detectors}}
+\end{overpic}
+\end{center}
+\vspace{-15pt}
+\footnotesize
+The average background density is quite flat vs. event activity classes (around 400 MeV/c), except for the 30\% of the events with largest event activity, where it can go up to 1 GeV/c.
+(These numbers must be multiplied by the jet area, $A\approx0.5$ for $R=0.4$).
+\end{frame}
+
+\begin{frame}{Average background density $\rho$ vs. leading jet/track \pt}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/MeanRhoVsLeadJetPtDetLev}
+\put(27,43){{\scriptsize $\left<\rho\right>$ vs. $p_{\rm T,lead.jet}$}}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/MeanRhoVsLeadTrackPtDetLev}
+\put(27,43){{\scriptsize $\left<\rho\right>$ vs. $p_{\rm T,lead.track}$}}
+\end{overpic}
+\end{columns}
+\footnotesize
+\begin{itemize}
+\item It is generally assumed that the underlying event is independent of the hard process $\rightarrow$ only true up to a certain point
+\item Events with a jet $\pt>10$~\GeVc\ have $\left<\rho\right> > 1$~\GeVc\ (compared to $\left<\rho\right> \approx 0.45$~\GeVc\ in minimum-bias events)
+\item For leading track/jet $\pt>10$~\GeVc\ the dependence of the UE on the hard process scale is weak
+\end{itemize}
+\end{frame}
+
+\subsection{Background vs. \Dzero-Jets}
+
+\begin{frame}{Average background density $\rho$ vs. leading D-jet candidate}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/DmesonJets_AnyINT_histosDmesonJets_AnyINT_D0_Jet_AKTChargedR040_pt_scheme_RhoVsLeadJetPt_Profile}
+\put(27,23){{\scriptsize $\left<\rho\right>$ vs. $p_{\rm T,cand.D-jet}^{\rm lead}$}}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/DmesonJets_AnyINT_histosDmesonJets_AnyINT_D0_Jet_AKTChargedR040_pt_scheme_RhoVsLeadDPt_Profile}
+\put(27,23){{\scriptsize $\left<\rho\right>$ vs. $p_{\rm T,cand.D}^{\rm lead}$}}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+
+\section{\Dzero-Jet Fragmentation Function in \pp}
+
+\subsection{Raw Yield Extraction}
+
+\begin{frame}{Invariant Mass Fits in \zpar\ bins}
+\begin{center}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_JetZBins_DPt_30_JetPt_5_30}
+\put(70,20){\tiny $\ptd > 3$~\GeVc}
+\put(70,16){\tiny $5 < \ptchjet < 30$~\GeVc}
+\end{overpic}
+\end{center}
+\vspace{-5pt}
+\small
+\begin{itemize}
+\item No signal in $0 < \zpar < 0.2$ (as expected due to the kinematic cuts)
+\item Good S/B in all bins
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Side Band Method}
+\begin{center}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_DPtBins_JetPt_5_30_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
+\end{overpic}
+\end{center}
+\vspace{-5pt}
+\small
+\begin{itemize}
+\item Same as for the jet \pt\ spectrum
+\item $\ptd > 3$~\GeVc\ and $5 < \ptchjet < 30$~\GeVc
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Side Band Method in \zpar\ bins}
+\begin{columns}
+\column{0.65\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_SideBand_BkgVsSig}
+\end{overpic}
+\column{0.35\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_SideBand_TotalBkgVsSig}
+\end{overpic}
+\vspace{-5pt}
+\begin{itemize}
+\item Subtraction of the \zpar\ spectra in bins of \ptd
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Method Comparison}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_d_z_SpectraComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_d_z_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item The two methods agree quite well except in the bin $0.4<\zpar<0.6$
+\item Invariant mass for the bin $0.4<\zpar<0.6$ has a larger width (see backup slide)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Optimisation of the kinematic cuts}
+\begin{columns}
+\column{0.6\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/z_powheg_charged}
+\end{overpic}
+\column{0.4\textwidth}
+\small
+\begin{center}
+The kinematic cuts $\ptd>3$~\GeVc\ and $5<\ptchjet<30$~\GeVc\ alter the shape of the \zpar\ distribution
+\end{center}
+\end{columns}
+\small
+\begin{itemize}
+\item Unbiased FF down to $\zpar=0.2$ for jets down to $\ptchjet=5$~\GeVc\ needs $\ptd>1$~\GeVc
+\item We could also try to measure the FF for two bins of \ptchjet: $5-15$ and $15-30$~\GeVc
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$\ptd>1$~\GeVc\ and $5<\ptchjet<15$~\GeVc}
+\begin{center}
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_DPtBins_JetPt_5_15_SideBand_D0_Charged_R040_JetZSpectrum_DPt_10_JetPt_5_15_SideBand}
+\end{overpic}
+\end{center}
+\vspace{-10pt}
+\small
+The bin $2-3$~\GeVc\ could be included, also in the jet \pt\ spectrum \\
+The bin $1-2$~\GeVc\ is probably out of reach with the present techniques, but could try different approach as in PRC 94, 054908 (2016)
+\end{frame}
+
+\begin{frame}{$\ptd>3$~\GeVc\ and $15<\ptchjet<30$~\GeVc}
+\begin{columns}
+\column{0.65\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_15_30_SideBand}
+\end{overpic}
+\column{0.35\textwidth}
+\begin{itemize}
+\item Not looking promising, but could try to \alert{optimise topological cuts} to gain statistics
+\item \alert{Presence of a jet} may decrease the combinatorial background (even with weaker topological cuts)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\subsection{Systematic Uncertainty: raw yield and B feed-down}
+
+\begin{frame}{Raw Yield Extraction}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_AfterDbinSum}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareRawYieldUncVariations_AfterDbinSum_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reflection Template Variations}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBandReflectionVariationComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/SideBandReflectionVariationComparison_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Simulation Variations (Generator Level)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Simulation Variations (Detector Level)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\item It includes ratio of prompt/non-prompt efficiency and detector resolution (non-prompt)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Feed-Down Cross-Section with Systematics}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum_canvas}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide_canvas}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Left: generator level
+\item Right: detector level (divided by prompt efficiency)
+\end{itemize}
+\end{frame}
+
+\section{\PbPb\ @ $\snn=5.02$~TeV: status}
+
+\begin{frame}{Efficiency-corrected yields}
+\small
+\begin{itemize}
+\item Much better significance in Run-2 compared to Run-1
+\item Larger luminosity, larger cross section, better ITS performance
+\end{itemize}
+\vspace{-5pt}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{center}
+\textbf{Run-1}\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/pbpb_invmass_run1}
+\end{overpic}
+\end{center}
+\column{0.6\textwidth}
+\begin{center}
+\textbf{Run-2}\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/pbpb_invmass_run2}
+\end{overpic}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Efficiency-corrected yields}
+\small
+\begin{itemize}
+\item Direct extraction in jet \pt\ bins
+\item Significant improvement in statistics compared to Run-1
+\end{itemize}
+\vspace{-5pt}
+\begin{columns}
+\column{0.5\textwidth}
+\small
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/pbpb_efficiency_corrected_yields}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/pbpb_statistical_unc}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Current status}
+\begin{columns}
+\column{0.6\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/pbpb_unfolded_spectrum}
+\end{overpic}
+\column{0.4\textwidth}
+\begin{itemize}
+\item Analysis chain fully developed up to unfolding
+\item \textbf{\textcolor{red}{Work in progress!}}
+\item Just a snapshot of the current status
+\item Still need to check the stability of the corrections (especially unfolding, tracking and D-jet efficiencies)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}{Conclusions}
+\begin{itemize}
+\item Updates since QM17 on \pt-differential cross section in \pp: \textbf{fixed issue with reflections} + use \textbf{new topological cuts} from 2016 PRC paper
+\item Underlying event in \pp: after some discussion in PAG-HFCJ and PWG-JE the consensus was \textbf{not to apply} any correction in the \pp\ result (as it is common practice in the HEP community)
+\item \textbf{Fragmentation function}: the full analysis chain has been adapted to work with \zpar; now working on optimisation of kinematic/topological cuts
+\item \textbf{Paper proposal} in the fall for a paper about \Dzero-jets in \pp\ collisions @ 7 TeV (cross section and FF)
+\item \textbf{\PbPb\ collisions}: full analysis chain has been developed, now working on stability checks, systematics
+\end{itemize}
+\end{frame}
+
+\appendix
+\section*{Extra Slides}
+
+\begin{frame}{Average background: data vs. MC}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/LHC10_Train993_LHC14j4_Train1175RhoDistribution_Mean_RhoDev_Rho_Signal}
+\put(27,43){{\scriptsize CMS Method}}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/LHC10_Train993_LHC14j4_Train1175RhoDistribution_Mean_RhoTransDev_RhoTrans_Signal}
+\put(27,43){{\scriptsize Trans Plane}}
+\end{overpic}
+\end{columns}
+\footnotesize
+\begin{itemize}
+\item Very good agreement between data and \textcolor{NavyBlue}{PYTHIA6+GEANT3 (detector level)}
+\item At \textcolor{BrickRed}{PYTHIA6 particle level} $\rho_{\rm CMS}$ (left plot) just slightly larger than detector level (particle level includes all charged particles down to zero momentum)
+\item Not understood why with the trans plane method $\rho_{\rm trans}$ (right plot) is significantly larger at particle level
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Background fluctuations: data vs. MC}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/LHC10_Train993_LHC14j4_Train1175RCDeltaPtDistribution_Mean_RhoDev_Rho_Signal}
+\put(27,43){{\scriptsize RC}}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=10 0 0 35, clip]{img/LHC10_Train993_LHC14j4_Train1175RCExclLeadJetDeltaPtDistribution_Mean_RhoDev_RhoExclLeadJets_Signal}
+\put(27,43){{\scriptsize RC, excl. lead. jets}}
+\end{overpic}
+\end{columns}
+\footnotesize
+\begin{itemize}
+\item Very good agreement between data and \textcolor{NavyBlue}{PYTHIA6+GEANT3 (detector level)}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Background Subtraction (using the CMS method)}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 35, clip]{img/AnyINT_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand_Normalized_canvas}
+\put(17,15){{\scriptsize Unsubtracted}}
+\end{overpic}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 35, clip]{img/AnyINT_D0_Charged_R040_JetCorrPtSpectrum_DPt_30_SideBand_Normalized_canvas}
+\put(17,19){{\scriptsize Subtracted}}
+\put(17,15){{\scriptsize CMS method}}
+\end{overpic}
+\column{0.55\textwidth}
+\begin{center}
+\begin{overpic}[width=0.45\textwidth, trim=10 0 25 35, clip]{img/RatioCorrOverUncorr}
+\put(17,25){{\tiny CMS method}}
+\put(17,17){{\tiny ratio $\approx0.75$}}
+\end{overpic}\quad
+\begin{overpic}[width=0.49\textwidth, trim=10 0 25 35, clip]{img/RatioCorrOverUncorr_exclead}
+\put(17,25){{\tiny CMS method, excl. lead. jet}}
+\put(17,17){{\tiny ratio $\approx0.85$}}
+\end{overpic}
+\vspace{5pt}
+\tiny Shown below is the distribution of the \pt\ subtracted $=\ptchjet^{\rm raw}-\ptchjet^{\rm sub}$
+\begin{overpic}[width=0.8\textwidth, trim=0 0 0 35, clip]{img/AnyINT_D0_Charged_R040_JetBkgPtSpectrum_DPt_30_SideBand_Normalized_canvas}
+\end{overpic}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Occupancy correction factor (CMS method)}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/OccCorrFactDistribution_RhoDev_Rho_Signal}
+\put(15,39){{\scriptsize 300M minimum-bias events}}
+\put(15,35){{\scriptsize \pp\ at $\s=7$~TeV (2010, pass4)}}
+\put(15,31){{\scriptsize All event activity classes}}
+\end{overpic} 
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/RhoDev_Rho_OccCorrvsCent_Profile}
+\end{overpic}
+\end{columns}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/RhoDev_Rho_OccCorrvsCent}
+\end{overpic}
+\column{0.6\textwidth}
+\begin{itemize}
+\item Strong correlation of the occupancy factor vs. event activity class (as expected)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Random Cones}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=10 0 0 35, clip]{img/RCDeltaPt_RhoDev_Rho_Signal}
+\put(17,35){{\scriptsize CMS Method}}
+\end{overpic}
+\begin{overpic}[width=1.1\textwidth, trim=10 0 0 35, clip]{img/RCDeltaPt_RhoDev_RhoExclLeadJets_Signal}
+\put(17,35){{\scriptsize CMS Method,}}
+\put(17,31){{\scriptsize excl. lead. jet}}
+\end{overpic}
+\column{0.55\textwidth}
+\begin{center}
+\begin{overpic}[width=0.9\textwidth, trim=10 0 25 35, clip]{img/RCDeltaPt_RhoTransDev_RhoTrans_Signal}
+\put(17,35){{\scriptsize Trans Plane}}
+\end{overpic}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Standard deviation of the background fluctuations}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=10 0 0 35, clip]{img/StdDevDeltaPtVsCentRhoDev_RhoExclLeadJets_Signal}
+\end{overpic}
+\begin{overpic}[width=1.1\textwidth, trim=10 0 0 35, clip]{img/StdDevDeltaPtVsLeadJetPtRhoDev_RhoExclLeadJets_Signal}
+\end{overpic}
+\column{0.55\textwidth}
+\begin{center}
+\begin{overpic}[width=0.9\textwidth, trim=10 0 25 35, clip]{img/MeanRhoVsCentDetLev}
+\end{overpic}
+\end{center}
+\vspace{-10pt}
+\footnotesize
+\begin{itemize}
+\item The standard deviation is $0.4-0.5$~\GeVc, \textbf{same magnitude as $\left<\rho\right>$}
+\item Similarly to $\left<\rho\right>$, dependence on hard process (fluctuations are larger if a jet with $\pt>10$~\GeVc\ is required)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Comparison of B feed-down fractions}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareBFeedDownPass4vsPass2cuts}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/CompareBFeedDownPass4vsPass2cuts_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts [PRC 94, 054908 (2016)]
+\end{description}}
+\end{frame}
+
+\begin{frame}{Invariant Mass Fit Width vs. \zpar}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_InvMassFit_MassWidth_canvas}
+\end{overpic}
+\end{frame}
+
+
+\end{document}
