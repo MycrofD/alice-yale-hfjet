@@ -1,0 +1,555 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\input{../shared/commands}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[D-Tagged Jets in \pp] % (optional, use only with long paper titles)
+{D-Tagged Jets in \pp\ Collisions}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Nov. 2nd, 2017] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+November 2nd, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+ %   \tableofcontents
+ %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+%\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/ReflectionTemplates_DPt_NoJet_DoubleGaus_1010}
+%\put(0,61){{\tiny No jet requirement}}
+%\put(60,61){{\tiny \textcolor{ForestGreen}{\textbf{Used for QM17 preliminary}}}}
+%\end{overpic}
+
+%\begin{columns}
+%\column{0.5\textwidth}
+%\column{0.5\textwidth}
+%\end{columns}
+
+\section{Introduction}
+
+\subsection{Raw Yield}
+
+\begin{frame}{Raw Yield Extraction}
+\textcolor{red}{From HFCJ September 20th}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_d_z_SpectraComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_d_z_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item The two methods agree quite well except in the bin $0.4<\zpar<0.6$
+\item Invariant mass for the bin $0.4<\zpar<0.6$ has a larger width (see backup slide)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Multi-Trial Result}
+\textcolor{red}{From HFCJ September 20th}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_unc/CompareRawYieldUncVariations_AfterDbinSum}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_unc/CompareRawYieldUncVariations_AfterDbinSum_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reflection Template Variations}
+\textcolor{red}{From HFCJ September 20th}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_unc/SideBandReflectionVariationComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_unc/SideBandReflectionVariationComparison_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\subsection{B Feed-Down}
+
+\begin{frame}{Feed-Down Cross-Section with Systematics}
+\textcolor{red}{From HFCJ September 20th}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum_canvas}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide_canvas}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Left: generator level
+\item Right: detector level (divided by prompt efficiency)
+\end{itemize}
+\end{frame}
+
+\subsection{Conclusions (September 20th)}
+
+\begin{frame}{Conclusions (September 20th)}
+\begin{itemize}
+\item \textcolor<2>{gray}{The full analysis chain has been adapted to work with \zpar}
+\item \textcolor<2>{gray}{Two main open points:} \alert{\textbf<2>{optimisation of kinematic/topological cuts}} \textcolor<2>{gray}{and \alert<1>{unfolding}}
+\end{itemize}
+\end{frame}
+
+\section{Topological Cuts}
+
+\subsection{Strategy}
+
+\begin{frame}{Sig/Bkg Efficiency vs. Cut Variations: $\cos(\theta_{\rm p})$}
+\begin{columns}
+\column{0.7\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/CosPointing_CutEfficiency_copy_JetPt5_15_DPt3_6}
+\put(12,10){\tiny $5 < \ptchjet < 15$~\GeVc\ and  $3 < \ptd < 6$~\GeVc}
+\end{overpic}
+\column{0.3\textwidth}
+\footnotesize
+\textbf{Signal} and \textbf{\textcolor{NavyBlue}{Non-Prompt}} from LHC15i2\{b,c,d,e\} (charm-enhanced with \pt-hard bins)\\
+\vspace{10pt}
+\textbf{\textcolor{BrickRed}{Background}} from LHC14j4\{b,c,d,e\} (minimum-bias) \\
+\vspace{10pt}
+\textbf{For each bin of \ptchjet\ and \ptd}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Sig/Bkg Efficiency vs. Cut Variations: $\cos(\theta^{*})$}
+\begin{columns}
+\column{0.7\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/CosThetaStar_CutEfficiency_copy_JetPt15_30_DPt6_9}
+\put(12,10){\tiny $5 < \ptchjet < 15$~\GeVc\ and  $6 < \ptd < 9$~\GeVc}
+\end{overpic}
+\column{0.3\textwidth}
+\footnotesize
+\textbf{Signal} and \textbf{\textcolor{NavyBlue}{Non-Prompt}} from LHC15i2\{b,c,d,e\} (charm-enhanced with \pt-hard bins)\\
+\vspace{10pt}
+\textbf{\textcolor{BrickRed}{Background}} from LHC14j4\{b,c,d,e\} (minimum-bias) \\
+\vspace{10pt}
+\textbf{For each bin of \ptchjet\ and \ptd}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Sig/Bkg Efficiency vs. Cut Variations: $d_{0,\rm K}d_{0,\pi}$}
+\begin{columns}
+\column{0.7\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/d0d0_CutEfficiency_copy_JetPt5_15_DPt3_6}
+\put(12,10){\tiny $5 < \ptchjet < 15$~\GeVc\ and  $3 < \ptd < 6$~\GeVc}
+\end{overpic}
+\column{0.3\textwidth}
+\footnotesize
+\textbf{Signal} and \textbf{\textcolor{NavyBlue}{Non-Prompt}} from LHC15i2\{b,c,d,e\} (charm-enhanced with \pt-hard bins)\\
+\vspace{10pt}
+\textbf{\textcolor{BrickRed}{Background}} from LHC14j4\{b,c,d,e\} (minimum-bias) \\
+\vspace{10pt}
+\textbf{For each bin of \ptchjet\ and \ptd}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Sig/Bkg Efficiency vs. Cut Variations: topomatic}
+\begin{columns}
+\column{0.7\textwidth}
+\begin{overpic}[width=1.1\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/MaxNormd0_CutEfficiency_copy_JetPt15_30_DPt6_9}
+\put(12,10){\tiny $15 < \ptchjet < 30$~\GeVc\ and  $6 < \ptd < 9$~\GeVc}
+\end{overpic}
+\column{0.3\textwidth}
+\footnotesize
+\textbf{Signal} and \textbf{\textcolor{NavyBlue}{Non-Prompt}} from LHC15i2\{b,c,d,e\} (charm-enhanced with \pt-hard bins)\\
+\vspace{10pt}
+\textbf{\textcolor{BrickRed}{Background}} from LHC14j4\{b,c,d,e\} (minimum-bias) \\
+\vspace{10pt}
+\textbf{For each bin of \ptchjet\ and \ptd}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Startegy}
+\begin{itemize}
+\item Use the previous plots as a guidance to select the best cuts in each \ptchjet\ and \ptd\ bin
+\item Try to maximise the significance
+\item \textbf{Use wider \ptd\ bins} $\rightarrow$ this is crucial for $15 < \ptchjet < 30$~\GeVc
+\end{itemize}
+\end{frame}
+
+\subsection{Results}
+
+\begin{frame}{Summary of the Results}
+\begin{itemize}
+\item Small improvements of the significance of the fit
+\item Not particularly crucial for $5 < \ptchjet < 15$~\GeVc\ (significance already in the range [8,18])
+\item For $15 < \ptchjet < 30$~\GeVc\ use two large bins in \ptd: [6, 12] and [12, 30]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Summary of the Results: $5 < \ptchjet < 15$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtBins_JetPt_5_15_DPt4_Cut0_SideBand_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_5_15_DPt4_SideBand_Cut0}
+\put(16,50){\scriptsize \textcolor{red}{Old cuts}}
+\put(60,3){\footnotesize $m({\rm K\pi})$ (\GeVc$^2$)}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtBins_JetPt_5_15_DPt4_Cut1_SideBand_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_5_15_DPt4_SideBand_Cut1}
+\put(16,50){\scriptsize \textcolor{blue}{Optimized cuts}}
+\put(60,3){\footnotesize $m({\rm K\pi})$ (\GeVc$^2$)}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Summary of the Results: $5 < \ptchjet < 15$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_5_15_DPt4_SideBand_Cut0_BkgVsSig}
+\put(16,50){\scriptsize \textcolor{red}{Old cuts}}
+\put(60,3){\footnotesize \ptd\ (\GeVc)}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_5_15_DPt4_SideBand_Cut1_BkgVsSig}
+\put(16,50){\scriptsize \textcolor{blue}{Optimized cuts}}
+\put(60,3){\footnotesize \ptd\ (\GeVc)}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Summary of the Results: $15 < \ptchjet < 30$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtBins_JetPt_15_30_DPt1_Cut2_SideBand_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_15_30_DPt1_SideBand_Cut2}
+\put(60,3){\footnotesize $m({\rm K\pi})$ (\GeVc$^2$)}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_15_30_DPt1_SideBand_Cut2_BkgVsSig}
+\put(60,3){\footnotesize \ptd\ (\GeVc)}
+\end{overpic}
+\end{columns}
+\Dzero\ meson signal comes from the full \ptd\ range
+\end{frame}
+
+\begin{frame}{Summary of the Results: $15 < \ptchjet < 30$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtBins_JetPt_15_30_DPt2_Cut0_SideBand_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_15_30_DPt2_SideBand_Cut0}
+\put(16,50){\scriptsize \textcolor{red}{Old cuts}}
+\put(60,3){\footnotesize $m({\rm K\pi})$ (\GeVc$^2$)}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtBins_JetPt_15_30_DPt2_Cut4_SideBand_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_15_30_DPt2_SideBand_Cut4}
+\put(16,50){\scriptsize \textcolor{blue}{Optimized cuts}}
+\put(60,3){\footnotesize $m({\rm K\pi})$ (\GeVc$^2$)}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Summary of the Results: $15 < \ptchjet < 30$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_15_30_DPt2_SideBand_Cut0_BkgVsSig}
+\put(16,50){\scriptsize \textcolor{red}{Old cuts}}
+\put(60,3){\footnotesize \ptd\ (\GeVc)}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/AnyINT_D0_D0toKpiCuts_loosest_pid_Charged_R040_DPtSpectrum_JetPt_15_30_DPt2_SideBand_Cut4_BkgVsSig}
+\put(16,50){\scriptsize \textcolor{blue}{Optimized cuts}}
+\put(60,3){\footnotesize \ptd\ (\GeVc)}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\section{Raw Yields with New Cuts and \ptd\ Ranges}
+
+\begin{frame}{Inv.Mass Fits w/ New Cuts: $5 < \ptchjet < 15$~\GeVc}
+\begin{columns}
+\column{0.65\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/new/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv1_Charged_R040_DPtBins_JetPt_5_15_SideBand_D0_D0toKpiCuts_D0JetOptimLowJetPtv1_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand}
+\end{overpic}
+\column{0.35\textwidth}
+4 wide \ptd\ bins\\
+\vspace{10pt}
+ \textbf{starting at $\ptd>2$~\GeVc}\\
+ \vspace{10pt}
+ Not much room for improvement, but \textbf{significance already good}
+\end{columns}
+\end{frame}
+
+\begin{frame}{\ptd\ Raw Yields w/ New Cuts: $5 < \ptchjet < 15$~\GeVc}
+\begin{columns}
+\column{0.65\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/new/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv1_Charged_R040_DPtSpectrum_JetPt_5_15_SideBand_BkgVsSig}
+\end{overpic}
+\column{0.35\textwidth}
+4 wide \ptd\ bins\\
+\vspace{10pt}
+ \textbf{starting at $\ptd>2$~\GeVc}
+\end{columns}
+\end{frame}
+
+\begin{frame}{\zpar\ Raw Yields w/ New Cuts: $5 < \ptchjet < 15$~\GeVc}
+\begin{columns}
+\column{0.65\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/new/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv1_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_BkgVsSig}
+\end{overpic}
+\column{0.35\textwidth}
+4 wide \ptd\ bins\\
+\vspace{10pt}
+ \textbf{starting at $\ptd>2$~\GeVc}\\
+ The \zpar\ distribution is unbiased for $\zpar>0.4$.
+\end{columns}
+\end{frame}
+
+\begin{frame}{Inv.Mass Fits w/ New Cuts: $15 < \ptchjet < 30$~\GeVc}
+\begin{center}
+\begin{overpic}[width=0.9\textwidth, trim=0 0 0 0, clip]{img/new/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv1_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_D0toKpiCuts_D0JetOptimHighJetPtv1_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}\\
+2 wide \ptd\ bins\\
+\vspace{10pt}
+\textbf{starting at $\ptd>6$~\GeVc}\\
+\vspace{6pt}
+Not much room for improving the significance
+\end{center}
+\end{frame}
+
+\begin{frame}{\ptd\ Raw Yields w/ New Cuts: $15 < \ptchjet < 30$~\GeVc}
+\begin{center}
+\begin{overpic}[width=0.9\textwidth, trim=0 0 0 0, clip]{img/new/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv1_Charged_R040_DPtSpectrum_JetPt_15_30_SideBand_BkgVsSig}
+\end{overpic}\\
+The bin [6,12] shows a steep \ptd\ distribution of \Dzero\ signal across the \ptd\ bin $\rightarrow$ cuts need to be tuned also to avoid large variations in the efficiency within one \ptd\ bin (this could impact negatively the systematics)
+ \end{center}
+\end{frame}
+
+\begin{frame}{\zpar\ Raw Yields w/ New Cuts: $15 < \ptchjet < 30$~\GeVc}
+\begin{center}
+\begin{overpic}[width=0.9\textwidth, trim=0 0 0 0, clip]{img/new/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv1_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_BkgVsSig}
+\end{overpic}\\
+2 wide \ptd\ bins,
+ \textbf{starting at $\ptd>6$~\GeVc}\\
+ The \zpar\ distribution is unbiased for $\zpar>0.4$.
+ \end{center}
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}{Conclusions}
+\begin{itemize}
+\item Statistics are sufficient to measure fragmentation function in two jet \pt\ bins (it won't be a precision measurement, though!): [5, 15] and [15, 30]
+\item Change w.r.t. the previous results: wider \ptd\ bins used for the SB subtraction
+\item In the [5, 15] jet \pt\ bin can include $\ptd>2$~\GeVc (was $3$~\GeVc\ in the approved preliminary jet cross section)
+\item The optimisation of the topological cuts need to be done in a blind test using MC, however I do not expect a significant improvement w.r.t. the old cuts
+\item Next: finalise cuts using a blind MC optimisation, calculate efficiency vs. \ptd\ and \ptchjet\ with the new cuts
+\end{itemize}
+\end{frame}
+
+\section{Extra Slides}
+
+\subsection{Raw Yield}
+
+\begin{frame}{Invariant Mass Fits in \zpar\ bins}
+\textcolor{red}{From HFCJ September 20th}
+\begin{center}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_JetZBins_DPt_30_JetPt_5_30}
+\put(70,20){\tiny $\ptd > 3$~\GeVc}
+\put(70,16){\tiny $5 < \ptchjet < 30$~\GeVc}
+\end{overpic}
+\end{center}
+\vspace{-5pt}
+\small
+\begin{itemize}
+\item No signal in $0 < \zpar < 0.2$ (as expected due to the kinematic cuts)
+\item Good S/B in all bins
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Side Band Method}
+\textcolor{red}{From HFCJ September 20th}
+\begin{center}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_DPtBins_JetPt_5_30_SideBand_D0_Charged_R040_JetPtSpectrum_DPt_30_SideBand}
+\end{overpic}
+\end{center}
+\vspace{-5pt}
+\small
+\begin{itemize}
+\item Same as for the jet \pt\ spectrum
+\item $\ptd > 3$~\GeVc\ and $5 < \ptchjet < 30$~\GeVc
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Side Band Method in \zpar\ bins}
+\textcolor{red}{From HFCJ September 20th}
+\begin{columns}
+\column{0.65\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_SideBand_BkgVsSig}
+\end{overpic}
+\column{0.35\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_SideBand_TotalBkgVsSig}
+\end{overpic}
+\vspace{-5pt}
+\begin{itemize}
+\item Subtraction of the \zpar\ spectra in bins of \ptd
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Invariant Mass Fit Width vs. \zpar}
+\textcolor{red}{From HFCJ September 20th}
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_Charged_R040_JetZSpectrum_DPt_30_JetPt_5_30_InvMassFit_MassWidth_canvas}
+\end{overpic}
+\end{frame}
+
+\subsection{B Feed-Down}
+
+\begin{frame}{Simulation Variations (Generator Level)}
+\textcolor{red}{From HFCJ September 20th}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_GeneratorLevel_JetZSpectrum_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Simulation Variations (Detector Level)}
+\textcolor{red}{From HFCJ September 20th}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed-down/BFeedDown_1505317519_1242_JetZSpectrum_DPt_30_JetPt_5_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide_Ratio}
+\end{overpic}
+\end{columns}
+\vspace{-5pt}
+\begin{itemize}
+\item Code updated to work with \zpar
+\item Same strategy used for the jet \pt\ spectrum
+\item It includes ratio of prompt/non-prompt efficiency and detector resolution (non-prompt)
+\end{itemize}
+\end{frame}
+
+\end{document}
