@@ -1,0 +1,503 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+\usepackage{setspace}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+\usepackage{listings}
+\usepackage[at]{easylist}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{setspace}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+\definecolor{darkestblue}{RGB}{1,8,100}
+\definecolor{darkerblue}{RGB}{3,17,150}
+\definecolor{darkblue}{RGB}{7,26,200}
+\definecolor{lightred}{RGB}{202,103,104}
+\definecolor{lightgreen}{RGB}{106,202,107}
+
+\lstloadlanguages{{C++}}
+
+\lstset{escapeinside={(*@}{@*)}}
+
+\lstdefinestyle{base}{
+  language=C++,
+  basicstyle=\color{black},
+  keywordstyle=\color{red},
+  commentstyle=\color{ForestGreen},
+}
+%\lstdefinestyle{base}{
+%  language=C++,
+%  basicstyle=\color{black!20},
+%  keywordstyle=\color{red!20},
+%  commentstyle=\color{ForestGreen!20},
+%  moredelim=**[is][\only<+>{\color{black}\lstset{style=highlight}}]{@}{@},
+%}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[Memory management in C++] % (optional, use only with long paper titles)
+{Manage memory efficiently in your C++ code with smart pointers}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[Nov. 3rd, 2017] % (optional, should be abbreviation of conference name)
+{ALICE Analysis Tutorial Week \\
+CERN, November 3rd, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+   \tableofcontents
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+
+%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/823_D0_Charged_R040_JetPtBins_DPt_30}
+%\end{overpic}
+
+%\begin{columns}
+%\column{0.5\textwidth}
+%\column{0.5\textwidth}
+%\end{columns}
+
+\section{Introduction}
+
+\begin{frame}[fragile]{What is a Pointer?}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/Pointers}
+\put(70,22){\footnotesize \textcolor{NavyBlue}{\textbf{5}}}
+\end{overpic}
+\column{0.5\textwidth}
+A pointer is an object whose value ``points to'' another value stored somewhere else in memory
+\begin{itemize}
+\item it contains a \textbf{memory address}
+\item \textcolor{red}{\textbf{dereferencing}}: obtaining the \textcolor{NavyBlue}{\textbf{value}} stored at the pointed location
+\item very flexible and powerful tool
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Using a Pointer}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    /* Defining a pointer */
+    int* a; // declares a pointer that can point to an integer value
+    (*@ \onslide<2-> @*)//DANGER: the pointer points to a random memory portion!
+    
+    (*@ \onslide<3-> @*)int* b = nullptr; // OK, pointer is initialised to a null memory address
+
+    (*@ \onslide<4-> @*)int* c = new int; // allocate memory for an integer value in the heap
+    //and assign its memory address to this pointer
+    
+    (*@ \onslide<5-> @*)int** d = &a; // this pointer points to a pointer to an integer value
+    
+    (*@ \onslide<6-> @*)MyObject* e = new MyObject(); // allocate memory for MyObject
+    // and assign its memory address to the pointer e
+    
+    (*@ \onslide<7-> @*)/* Using a pointer */
+    int f = *c; // dereferencing a pointer and assigning the pointed
+    // value to another integer variable
+    
+    (*@ \onslide<8-> @*)e->DoSomething(); // dereferencing a pointer and calling
+    // the method DoSomething() of the instance of MyObject
+    // pointed by e
+\end{lstlisting}
+\end{frame}
+
+\section{Why a raw pointer is hard to love}
+
+\begin{frame}[fragile]{Memory leak}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    void MyAnalysisTask::UserExec()
+    {
+      TLorentzVector* v = nullptr;
+      for (int i = 0; i < InputEvent()->GetNumberOfTracks(); i++) {
+        AliVTrack* track = InputEvent()->GetTrack(i);
+        if (!track) continue;
+        v = new TLorentzVector(track->Px(), 
+          track->Py(), track->Pz(), track->M());
+    
+        // my analysis here
+        std::cout << v->Pt() << std::endl;
+      }
+  
+      delete v;
+    }
+\end{lstlisting}
+\small 
+\begin{center}
+What is the problem with this code?
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Array or single value?}
+\begin{itemize}
+\item A pointer can point to a single value or to an array $\rightarrow$ no way to infer it from its declaration
+\item Different syntax to destroy (= deallocate, free) the pointed object for arrays and single objects 
+\end{itemize}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    AliVTrack* FilterTracks();
+
+    void UserExec()
+    {
+      TLorentzVector *vect = new TLorentzVector(0,0,0,0);
+      double *trackPts = new double[100];
+      AliVTrack *returnValue = FilterTracks();
+
+      // here use the pointers
+
+      delete vect;
+      delete[] trackPts;
+      delete returnValue; // or should I use delete[] ??
+    }
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Double deletes}
+\begin{itemize}
+\item Each memory allocation should match a corresponding deallocation
+\item Difficult to keep track of all memory allocations/deallocations in a large project
+\item \textbf{Ownership} of the pointed memory is ambiguous: multiple deletes of the same object may occur
+\end{itemize}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    AliVTrack* FilterTracks();
+    void AnalyzeTracks(AliVTrack* tracks);
+
+    void MyAnalysisTask::UserExec()
+    {
+      AliVTrack* tracks = FilterTracks();
+
+      AnalyzeTracks(tracks);
+
+      delete[] tracks; // should I actually delete it?? 
+      //or was it already deleted by AnalyzeTracks?
+    }
+\end{lstlisting}
+\end{frame}
+
+\section{Smart Pointers}
+
+\begin{frame}[fragile]{Smart Pointers}
+\linespread{1.5}
+\begin{itemize}
+\item Clear (\emph{shared} or \emph{exclusive}) \textbf{ownership} of the pointed object
+\pause
+\item \alert{\textbf{Automatic garbage collection}}: memory is deallocated when the last pointer goes out of scope
+\pause
+\item Available since C++11
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Exclusive-Ownership Pointers: \texttt{unique\_ptr}}
+\linespread{1.5}
+\begin{itemize}
+\item Automatic garbage collection with \textbf{\alert{no additional CPU or memory overhead}} (i.e. it uses the same resources as a raw pointer)
+\pause
+\item \texttt{unique\_ptr} \textbf{owns} the object it points
+\pause
+\item Memory automatically released when \texttt{unique\_ptr} goes out of scope or when its \texttt{reset(T* ptr)} method is called
+\pause
+\item Only one \texttt{unique\_ptr} can point to the same memory address
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{unique\_ptr} example / 1}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    void MyFunction() {
+      std::unique_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
+      std::unique_ptr<TLorentzVector> vector2(new TLorentzVector(0,0,0,0));
+  
+      // use vector and vector2
+  
+      // dereferencing unique_ptr works exactly as a raw pointer
+      std::cout << vector->Pt() << std::endl;
+  
+      // the line below does not compile!
+      // vector = vector2;
+      // cannot assign the same address to two unique_ptr instances
+  
+      vector.swap(vector2); // however I can swap the memory addresses
+  
+      // this also releases the memory previously pointed by vector2
+      vector2.reset(new TLorentzVector(0,0,0,0)); 
+  
+      // objects pointed by vector and vector2 are deleted here
+    }
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{unique\_ptr} example / 2}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    void MyAnalysisTask::UserExec()
+    {
+      for (int i = 0; i < InputEvent()->GetNumberOfTracks(); i++) {
+        AliVTrack* track = InputEvent()->GetTrack(i);
+        if (!track) continue;
+        std::unique_ptr<TLorentzVector> v(new TLorentzVector(track->Px(), 
+          track->Py(), track->Pz(), track->M()));
+    
+        // my analysis here
+        std::cout << v->Pt() << std::endl;
+        // no need to delete
+        // v is automatically deallocated after each for loop
+      }
+    }
+\end{lstlisting}
+\small 
+\begin{center}
+No memory leak here! :)
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Shared-Ownership Pointers: \texttt{shared\_ptr}}
+\linespread{1.2}
+\begin{itemize}
+\item Automatic garbage collection with some CPU and memory overhead
+\pause
+\item The pointed object is \emph{collectively owned} by one or more \texttt{shared\_ptr} instances
+\pause
+\item Memory automatically released the last \texttt{shared\_ptr} goes out of scope or when it is re-assigned
+\end{itemize}
+\vspace{-10pt}
+\begin{center}
+\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/Sharedptr}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{shared\_ptr} example / 1}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    void MyFunction() {
+      std::shared_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
+      std::shared_ptr<TLorentzVector> vector2(new TLorentzVector(0,0,0,0));
+  
+      // dereferencing shared_ptr works exactly as a raw pointer
+      std::cout << vector->Pt() << std::endl;
+  
+      // assignment is allowed between shared_ptr instances
+      vector = vector2; 
+      // the object previously pointed by vector is deleted!
+      // vector and vector2 now share the ownership of the same object
+  
+      // object pointed by both vector and vector2 is deleted here
+    }
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{shared\_ptr} example / 2}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    class MyClass {
+      public:
+        MyClass();
+      private:
+        void MyFunction();
+        std::shared_ptr<TLorentzVector> fVector;
+    };
+
+    void MyClass::MyFunction() {
+      std::shared_ptr<TLorentzVector> vector(new TLorentzVector(0,0,0,0));
+  
+      // assignment is allowed between shared_ptr instances
+      fVector = vector;
+      // the object previously pointed by fVector (if any) is deleted
+      // vector and fVector now share the ownership of the same object
+
+      // here vector goes out-of-scope
+      // however fVector is a class member so the object is not deleted!
+      // it will be deleted automatically when this instance of the class
+      // is deleted (and therefore fVector goes out-of-scope) :)
+    }
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Some word of caution on \texttt{shared\_ptr}}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    void MyClass::MyFunction() {
+      auto ptr = new TLorentzVector(0,0,0,0);
+  
+      std::shared_ptr<TLorentzVector> v1 (ptr);
+      std::shared_ptr<TLorentzVector> v2 (ptr);
+  
+      // a double delete occurs here!
+    }
+\end{lstlisting}
+\begin{center}
+\small
+What is the problem with the code above?
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Some word of caution on \texttt{shared\_ptr}}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    void MyFunction() {
+      auto ptr = new TLorentzVector(0,0,0,0);
+  
+      std::shared_ptr<TLorentzVector> v1 (ptr);
+      std::shared_ptr<TLorentzVector> v2 (ptr);
+  
+      // a double delete occurs here!
+    }
+\end{lstlisting}
+\small
+\begin{itemize}
+\item \texttt{v1} does not know about \texttt{v2} and viceversa!
+\item Two control blocks have been created for the same pointed objects
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Some word of caution on \texttt{shared\_ptr}}
+\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    void MyFunction() {
+      std::shared_ptr<TLorentzVector> v1 (new TLorentzVector(0,0,0,0));
+      std::shared_ptr<TLorentzVector> v2 (v1);
+  
+      // this is fine!
+    }
+\end{lstlisting}
+\small
+\begin{itemize}
+\item Solution: use raw pointers only when absolutely needed (if at all)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Usage Notes for ALICE Software}
+\begin{itemize}
+\item \textcolor{ForestGreen}{Can be used in the implementation files of \textbf{AliPhysics} (*.cxx files)}
+\item \textcolor{orange}{In the header files (*.h) need to hide them from CINT} (therefore cannot be used as non-transient class members) \\
+{\scriptsize
+\begin{lstlisting}[style=base, gobble=4]
+    #if !(defined(__CINT__) || defined(__MAKECINT__))
+    // your C++11 code goes here
+    #endif
+\end{lstlisting}
+}
+\item \textcolor{red}{Cannot be used anywhere in \textbf{AliRoot}}
+\end{itemize}
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}[fragile]{Final remarks}
+\begin{itemize}
+\item When the extra-flexibility of a pointer is not needed, do not use it
+\item Alternative to pointers: arguments by reference (not covered here)
+\item Avoid raw pointers whenever possible!
+\item Smart pointers (\texttt{unique\_ptr} and \texttt{shared\_ptr}) should cover most use cases and provide
+a much more robust and safe memory management
+\end{itemize}
+References \\
+Effective modern C++, Scott Meyers (O'Reilly 2015) \\
+\href{http://en.cppreference.com/}{http://en.cppreference.com/}
+\end{frame}
+
+\end{document}
