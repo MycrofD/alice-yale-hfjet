@@ -221,74 +221,106 @@ relative contributions. We subtract the B feed-down fraction using POWHEG+PYTHIA
 
 \subsection{Cut Optimizations}
 
-\begin{frame}{Motivations and Strategy}
-\begin{itemize}
-\item bla
-\end{itemize}
-The strategy:
-\begin{itemize}
-\item Possible further improvements: machine learning
-\end{itemize}
+\begin{frame}[fragile]{Motivations and Strategy}
+\begin{easylist}[itemize]
+@ Use MC to simulate the S/B and significance as a function of topological variable cuts
+@ Focus on 4 variables
+@@ $\cos(\theta*)$: angle between the kaon and the \Dzero\ directions
+@@ $\cos(\theta_{\rm p})$: angle between the \Dzero\ direction and the direction given by the line that connects the PV with the intersection of the kaon-pion directions
+@@ $d_{0,\rm K}d_{0,\pi}$: product of the distances between the PV and the kaon/pion flight lines
+@@ DCA: distance of closest approach between the flight lines of kaon and pion
+@ Possible further improvements: machine learning
+\end{easylist}
+\end{frame}
+
+\begin{frame}{Example: $\cos(\theta_{\rm p})$}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/topo_cuts/CosPointing_CutFraction_MB_Bkg_JetPt5_15_DPt6_9}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/topo_cuts/CosPointing_CutSignificance_MB_Bkg_JetPt5_15_DPt6_9}
+\end{overpic}
+\end{columns}
+green line: maximizes S/B\\
+magenta line: maximizes significance
+\end{frame}
+
+\begin{frame}{Example: $\cos(\theta*)$}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/topo_cuts/CosThetaStar_CutFraction_MB_Bkg_JetPt5_15_DPt9_15}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/topo_cuts/CosThetaStar_CutSignificance_MB_Bkg_JetPt5_15_DPt9_15}
+\end{overpic}
+\end{columns}
+green line: maximizes S/B\\
+magenta line: maximizes significance
 \end{frame}
 
 \subsection{Efficiency and B Feed-Down}
 
-\subsection{Raw Yields}
-
-\section{Unfolding}
-
-\begin{frame}{Unfolding (jet \pt\ resolution)}
+\begin{frame}{Prompt Efficiency}
 \begin{columns}
-\column{.50\textwidth}
-\begin{center}
-\tiny
-Method Comparison
-%\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingMethod_Ratio}
-%\end{overpic}\\
-Bayesian Regularization
-%\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
-%\end{overpic}
-\end{center}
-\column{.50\textwidth}
-\begin{center}
-\tiny
-Prior Choice \\
-%\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/SideBand_DPt_30_UnfoldingPrior_Bayes_Ratio}
-%\end{overpic}
-\end{center}
-\vspace{-20pt}
-\begin{itemize}
-\scriptsize
-\item Baseline: Bayesian
-\begin{itemize}
-\tiny
-\item fast convergence
-\item stable after 3 iterations
-\item then $< 1$\% variations
-\end{itemize}
-\item Methods: bin-by-bin correction, SVD
-\begin{itemize}
-\tiny
-\item equivalent results within few \%
-\end{itemize}
-\item Priors: PYTHIA and $\ptjet^{-a}$ with $a=3, 7$
-\begin{itemize}
-\tiny
-\item no effect on the unfolding
-\end{itemize}
-\end{itemize}
+\column{0.5\textwidth}
+Old cuts
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/efficiency/Prompt_D0_D0toKpiCuts_Jet_AKTChargedR040_pt_scheme_DPtSpectrum_JetPt_5_30_Efficiency_canvas}
+\end{overpic}
+\column{0.5\textwidth}
+New cuts
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/efficiency/Prompt_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Jet_AKTChargedR040_pt_scheme_DPtSpectrum_JetPt_5_30_Efficiency_canvas}
+\end{overpic}
 \end{columns}
 \end{frame}
 
-\subsection{Jet Cross-Section}
+\begin{frame}{Non-Prompt (B feed-down) Efficiency}
+\begin{columns}
+\column{0.5\textwidth}
+Old cuts
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/efficiency/NonPrompt_D0_D0toKpiCuts_Jet_AKTChargedR040_pt_scheme_DPtSpectrum_JetPt_5_30_Efficiency_canvas}
+\end{overpic}
+\column{0.5\textwidth}
+New cuts
+\begin{overpic}[width=\textwidth, trim=0 0 0 0 0, clip]{img/efficiency/NonPrompt_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Jet_AKTChargedR040_pt_scheme_DPtSpectrum_JetPt_5_30_Efficiency_canvas}
+\end{overpic}
+\end{columns}
+\end{frame}
 
-\subsection{Fragmentation Function}
+\subsection{Raw Yields}
+
+\begin{frame}{Improved S/B in data}
+\begin{center}
+Old cuts\\
+\begin{overpic}[width=.55\textwidth, trim=0 0 0 0 0, clip]{img/raw_yields/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}
+\end{center}
+\begin{center}
+New cuts\\
+\begin{overpic}[width=.55\textwidth, trim=0 0 0 0 0, clip]{img/raw_yields/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}
+\end{center}
+\end{frame}
+
+\begin{frame}{Improved S/B in data (after efficiency correction)}
+\begin{center}
+Old cuts\\
+\begin{overpic}[width=.55\textwidth, trim=0 0 0 0 0, clip]{img/raw_yields_eff/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}
+\end{center}
+\begin{center}
+New cuts\\
+\begin{overpic}[width=.55\textwidth, trim=0 0 0 0 0, clip]{img/raw_yields_eff/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}
+\end{center}
+\end{frame}
 
 \section{Conclusions}
 
 \begin{frame}[fragile]{Summary}
 \begin{easylist}[itemize]
-@ bla bla
+@ Improvement in the raw signal extraction
+@ Unfolding also almost done for both jet \pt\ spectrum and fragmentation function
 \end{easylist}
 \end{frame}
 
