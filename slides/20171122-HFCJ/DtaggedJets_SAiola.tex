@@ -1,0 +1,467 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+\usepackage{multirow}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\input{../shared/commands}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[D-Tagged Jets in \pp] % (optional, use only with long paper titles)
+{D-Tagged Jets in \pp\ Collisions}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PAG-HFCJ - Nov. 22nd, 2017] % (optional, should be abbreviation of conference name)
+{PAG-HFCJ \\
+November 22nd, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+ %   \tableofcontents
+ %\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+%\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/ReflectionTemplates_DPt_NoJet_DoubleGaus_1010}
+%\put(0,61){{\tiny No jet requirement}}
+%\put(60,61){{\tiny \textcolor{ForestGreen}{\textbf{Used for QM17 preliminary}}}}
+%\end{overpic}
+
+%\begin{columns}
+%\column{0.5\textwidth}
+%\column{0.5\textwidth}
+%\end{columns}
+
+\section{Efficiency}
+
+\begin{frame}{Prompt Efficiency}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/efficiency/Comparison_Prompt_D0toKpiCuts_D0toKpiCuts_D0JetOptimLowJetPtv4_D0toKpiCuts_D0JetOptimHighJetPtv4}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/efficiency/Comparison_Prompt_D0toKpiCuts_D0toKpiCuts_D0JetOptimLowJetPtv4_D0toKpiCuts_D0JetOptimHighJetPtv4_Ratio}
+\end{overpic}
+\end{columns}
+\footnotesize
+\begin{itemize}
+\item Efficiency lower by up to 50\%
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Non-Prompt Efficiency}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/efficiency/Comparison_NonPrompt_D0toKpiCuts_D0toKpiCuts_D0JetOptimLowJetPtv4_D0toKpiCuts_D0JetOptimHighJetPtv4}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/efficiency/Comparison_NonPrompt_D0toKpiCuts_D0toKpiCuts_D0JetOptimLowJetPtv4_D0toKpiCuts_D0JetOptimHighJetPtv4_Ratio}
+\end{overpic}
+\end{columns}
+\footnotesize
+\begin{itemize}
+\item Efficiency lower by up to 60\%
+\item Almost flat efficiency for $\ptd>3$~\GeVc\
+\end{itemize}
+\end{frame}
+
+\section{Raw Yields}
+
+\begin{frame}{Jet \pt\ spectrum, $\ptd>2$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yields/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yields/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{FF, $\ptd>2$~\GeVc\ and $5<\ptchjet<15$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yields/Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_SpectraComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yields/Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{FF, $\ptd>6$~\GeVc\ and $15<\ptchjet<30$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yields/Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_SpectraComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yields/Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\section{Statistical Uncertainties}
+
+\begin{frame}{Jet \pt\ spectrum, $\ptd>2$~\GeVc}
+\centering
+Statistical Uncertainties, no efficiency correction
+\vspace{25pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+Side-Band in \ptd\ bins\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/stat_unc/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraUncertaintyComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+Inv.Mass Fit in \ptchjet\ bins\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/stat_unc/Charged_R040_JetPtSpectrum_DPt_20_InvMassFit_SpectraUncertaintyComparison}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{FF, $\ptd>2$~\GeVc\ and $5<\ptchjet<15$~\GeVc}
+\centering
+Statistical Uncertainties, no efficiency correction
+\vspace{25pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+Side-Band in \ptd\ bins \\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/stat_unc/Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_SpectraUncertaintyComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+Inv.Mass Fit in \zpar\ bins\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/stat_unc/Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_InvMassFit_SpectraUncertaintyComparison}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{FF, $\ptd>6$~\GeVc\ and $15<\ptchjet<30$~\GeVc}
+\centering
+Statistical Uncertainties, no efficiency correction
+\vspace{25pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+Side-Band in \ptd\ bins \\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/stat_unc/Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_SpectraUncertaintyComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+Inv.Mass Fit in \zpar\ bins\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/stat_unc/Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_InvMassFit_SpectraUncertaintyComparison}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Statistical Uncertainties w/ eff. corr. (SB method)}
+\centering
+\footnotesize
+Jet \pt\ spectrum, $\ptd>2$~\GeVc \\
+\begin{overpic}[width=.4\textwidth, trim=0 0 0 0, clip]{img/stat_unc_eff/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraUncertaintyComparison}
+\end{overpic}\\
+\footnotesize
+Fragmentation Function
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\tiny
+$\ptd>2$~\GeVc\ and $5<\ptchjet<15$~\GeVc\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/stat_unc_eff/Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_SpectraUncertaintyComparison}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\tiny
+$\ptd>6$~\GeVc\ and $15<\ptchjet<30$~\GeVc\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/stat_unc_eff/Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_SpectraUncertaintyComparison}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\section{B Feed-Down}
+
+\begin{frame}{Prompt vs. Non-Prompt}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/efficiency/Comparison_Prompt_NonPrompt}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/efficiency/Comparison_Prompt_NonPrompt_Ratio}
+\end{overpic}
+\end{columns}
+\footnotesize
+\begin{itemize}
+\item Slightly better ratio prompt/non-prompt
+\end{itemize}
+\end{frame}
+
+\begin{frame}{B Feed-Down w/ non-prompt efficiency}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed_down/Comparison_JetPtSpectrum_DPt_20_DetectorLevel_JetPtSpectrum_bEfficiencyMultiply_BFeedDown_1505317519_1399_BFeedDown_1505317519_1399_oldcuts}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed_down/Comparison_JetPtSpectrum_DPt_20_DetectorLevel_JetPtSpectrum_bEfficiencyMultiply_BFeedDown_1505317519_1399_BFeedDown_1505317519_1399_oldcuts_Ratio}
+\end{overpic}
+\end{columns}
+\footnotesize
+\begin{itemize}
+\item Smaller non-prompt with the new cuts...
+\end{itemize}
+\end{frame}
+
+\begin{frame}{B Feed-Down w/ non-prompt/prompt}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed_down/Comparison_JetPtSpectrum_DPt_20_DetectorLevel_JetPtSpectrum_bEfficiencyMultiply_cEfficiencyDivide_BFeedDown_1505317519_1399_BFeedDown_1505317519_1399_oldcuts}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/feed_down/Comparison_JetPtSpectrum_DPt_20_DetectorLevel_JetPtSpectrum_bEfficiencyMultiply_cEfficiencyDivide_BFeedDown_1505317519_1399_BFeedDown_1505317519_1399_oldcuts_Ratio}
+\end{overpic}
+\end{columns}
+\footnotesize
+\begin{itemize}
+\item Smaller non-prompt with the new cuts...
+\item ...but similar fraction because efficiency is also lower for prompt
+\end{itemize}
+\end{frame}
+
+\section{Unfolding}
+
+\begin{frame}{Kinematic cuts and efficiency}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/efficiency/D0toKpiCuts_D0JetOptimLowJetPtv4_Comparison_KineCuts_KinCuts}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/efficiency/D0toKpiCuts_D0JetOptimLowJetPtv4_Comparison_KineCuts_KinCuts_Ratio}
+\end{overpic}
+\end{columns}
+\tiny
+\begin{itemize}
+\item Denominator of the efficiency is the same for both cases: all generated \Dzero-jets within the accepted kinematic ranges
+\item Numerator for white points: generated \Dzero-jets within the accepted kinematic ranges matched to reconstructed \Dzero-jets (which not necessarily within the accepted kinematic ranges)
+\item Numerator for blue points: generated \Dzero-jets (not necessarily within the accepted kinematic ranges) matched to reconstructed \Dzero-jets within the accepted kinematic ranges
+\end{itemize}
+In other words the difference is whether in the numerator the cuts are applied at generated level (white) or reconstructed level (blue). In the first case we get the simple efficiency, 
+i.e. the probability of reconstructing a \Dzero-jet with certain kinematic properties; in the second case we fold in the acceptance factor (feed-in and feed-out of the accepted range).
+\end{frame}
+
+\begin{frame}{Detector Response: Prompt}
+\centering
+$\ptd>2$~\GeVc\ and $5<\ptchjet<15$~\GeVc\\
+\vspace{10pt}
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/unfolding/Prompt_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Jet_AKTChargedR040_pt_scheme_JetZSpectrum_DPt_20_JetPt_5_15_DetectorResponse}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{Detector Response: Prompt}
+\centering
+$\ptd>6$~\GeVc\ and $15<\ptchjet<30$~\GeVc\\
+\vspace{10pt}
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/unfolding/Prompt_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Jet_AKTChargedR040_pt_scheme_JetZSpectrum_DPt_60_JetPt_15_30_DetectorResponse}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{Resolution of the momentum fraction}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\tiny
+$\ptd>2$~\GeVc\ and $5<\ptchjet<15$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/Prompt_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Jet_AKTChargedR040_pt_scheme_JetZSpectrum_DPt_20_JetPt_5_15_DetectorResponse_Resolution_canvas}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\tiny
+$\ptd>6$~\GeVc\ and $15<\ptchjet<30$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/Prompt_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Jet_AKTChargedR040_pt_scheme_JetZSpectrum_DPt_60_JetPt_15_30_DetectorResponse_Resolution_canvas}
+\end{overpic}
+\end{columns}
+Resolution is smaller than the bin size $\rightarrow$ expect negligible correction from unfolding
+\end{frame}
+
+\begin{frame}{Bayesian Unfolding}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=.71\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Response_PriorResponseTruth}
+\end{overpic}\\
+\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_RefoldedOverMeasured}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes}
+\end{overpic}\\
+\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Unfolding Stability}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\tiny 
+Number of iterations\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\tiny
+Unfolding method\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingMethod_Ratio}
+\end{overpic}
+\end{columns}
+\centering
+\tiny
+Pearsons' coefficients\\
+\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Pearson_Bayes_PriorResponseTruth}
+\end{overpic}
+\end{frame}
+
+\begin{frame}{FF in PYTHIA6+GEANT3}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\tiny
+$\ptd>2$~\GeVc\ and $5<\ptchjet<15$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/z_rec_gen_5_15}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\tiny
+$\ptd>6$~\GeVc\ and $15<\ptchjet<30$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/z_rec_gen_15_30}
+\end{overpic}
+\end{columns}
+PYTHIA captures the main features of the shape of the distribution as observed in data \\
+Important since we use it to estimate the corrections (efficiency, resolution)
+\end{frame}
+
+\section{Conclusions}
+
+\begin{frame}{Conclusions: topological cuts}
+\begin{itemize}
+\item No significant improvement with the new cuts
+\item Check is whether the systematic uncertainty from the raw yield multi-trial improves with the new cuts (because of a more stable fit)
+\item For the moment, stay with the old cuts?
+\item On the side I will try to adopt a multi-variate study of the topological variable to see whether a better set of cuts can be found in this way (instead of looking at each variable one by one)
+\item Check whether the wider \ptd\ bins lead to an improvement: for sure they are needed for the \zpar\ spectrum in the high \ptchjet\ bin, but not obvious for the other cases
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusions: unfolding}
+\begin{itemize}
+\item Unfolding of the \zpar\ spectrum is stable for $5<\ptchjet<15$~\GeVc
+\item Small correction as for the jet \pt\ spectrum
+\item Need to vary the prior as a final check
+\item Working on the unfolding of the \zpar\ spectrum for $15<\ptchjet<30$~\GeVc, which seems more unstable (probably due to the larger statistical uncertainties)
+\end{itemize}
+\end{frame}
+
+\end{document}
