@@ -35,7 +35,7 @@
 \usepackage[percent]{overpic}
 \usepackage[english]{babel}
 \usepackage{multirow}
-\usepackage{url}
+\usepackage[at]{easylist}
 % or whatever
 
 \usepackage[latin1]{inputenc}
@@ -147,13 +147,36 @@ November 24th, 2017}
 
 \subsection{Raw Yield Extr. Systematic Uncertainty}
 
-\begin{frame}{Jet \pt\ spectrum, $\ptd>2$~\GeVc}
+\begin{frame}{Jet \pt\ spectrum, $\ptd>2$~\GeVc\ (Fit in \ptchjet\ bins)}
 \begin{columns}
 \column{0.5\textwidth}
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraComparison}
-%\end{overpic}
+\centering
+\small
+No efficiency correction\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_20_InvMassFit}
+\end{overpic}
 \column{0.5\textwidth}
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraComparison_Ratio}
+\centering
+\small
+Efficiency Corrected\\
+%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_20_InvMassFit}
+%\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Jet \pt\ spectrum, $\ptd>2$~\GeVc\ (SB in \ptd\ bins)}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\small
+No efficiency correction\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_20_SideBand}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\small
+Efficiency Corrected\\
+%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_20_SideBand}
 %\end{overpic}
 \end{columns}
 \end{frame}
@@ -161,10 +184,16 @@ November 24th, 2017}
 \begin{frame}{FF, $\ptd>2$~\GeVc\ and $5<\ptchjet<15$~\GeVc}
 \begin{columns}
 \column{0.5\textwidth}
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_SpectraComparison}
-%\end{overpic}
+\centering
+\small
+No efficiency correction\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/ComparisonSystematic_DMesonCuts_JetZSpectrum_DPt_20_JetPt_5_15_SideBand}
+\end{overpic}
 \column{0.5\textwidth}
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_SpectraComparison_Ratio}
+\centering
+\small
+Efficiency Corrected\\
+%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetZSpectrum_DPt_20_JetPt_5_15_SideBand}
 %\end{overpic}
 \end{columns}
 \end{frame}
@@ -172,10 +201,16 @@ November 24th, 2017}
 \begin{frame}{FF, $\ptd>6$~\GeVc\ and $15<\ptchjet<30$~\GeVc}
 \begin{columns}
 \column{0.5\textwidth}
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_SpectraComparison}
-%\end{overpic}
+\centering
+\small
+No efficiency correction\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/ComparisonSystematic_DMesonCuts_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}
 \column{0.5\textwidth}
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topo_cuts/Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_SpectraComparison_Ratio}
+\centering
+\small
+Efficiency Corrected\\
+%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
 %\end{overpic}
 \end{columns}
 \end{frame}
@@ -470,23 +505,27 @@ Pearsons' coefficients\\
 
 \section{Conclusions}
 
-\begin{frame}{Conclusions: topological cuts}
-\begin{itemize}
-\item No significant improvement with the new cuts
-\item Check is whether the systematic uncertainty from the raw yield multi-trial improves with the new cuts (because of a more stable fit)
-\item For the moment, stay with the old cuts?
-\item On the side I will try to adopt a multi-variate study of the topological variable to see whether a better set of cuts can be found in this way (instead of looking at each variable one by one)
-\item Check whether the wider \ptd\ bins lead to an improvement: for sure they are needed for the \zpar\ spectrum in the high \ptchjet\ bin, but not obvious for the other cases
-\end{itemize}
+\begin{frame}[fragile]{Conclusions /1}
+\begin{easylist}[itemize]
+@ Topological cuts
+@@ No significant improvement with the new cuts for the side-band method
+@@ Both the statistical and the systematic uncertainties are reduced in the invariant mass fit method for the highest two jet \pt\ bins
+@@ For the moment, stay with the old cuts?
+@ Width of the \ptd\ bins in the side-band method
+@@ Identical results with small/wide bins
+@@ Only useful for the FF at high jet \pt\
+\end{easylist}
 \end{frame}
 
-\begin{frame}{Conclusions: unfolding}
-\begin{itemize}
-\item Unfolding of the \zpar\ spectrum is stable for $5<\ptchjet<15$~\GeVc
-\item Small correction as for the jet \pt\ spectrum
-\item Need to vary the prior as a final check
-\item Working on the unfolding of the \zpar\ spectrum for $15<\ptchjet<30$~\GeVc, which seems more unstable (probably due to the larger statistical uncertainties)
-\end{itemize}
+\begin{frame}[fragile]{Conclusions /2}
+\begin{easylist}[itemize]
+@ $\ptd>2$ vs. $\ptd>3$~\GeVc
+@@ Slightly worse statistical uncertainty after efficiency correction
+@@ My preference would be for $\ptd>2$~\GeVc: reduced bias and same cut used for FF
+@@ But I am open to suggestions
+@ Unfolding
+@@ Stable and with minimal uncertainties ($<5$\%) for $z$ spectra for both high and low jet momenta
+\end{easylist}
 \end{frame}
 
 \end{document}
