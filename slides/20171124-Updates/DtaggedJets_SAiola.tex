@@ -1,6 +1,6 @@
 % $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
 
-\documentclass[xcolor={usenames,dvipsnames}]{beamer}
+\documentclass[xcolor={usenames,dvipsnames}, aspectratio=169]{beamer}
 
 % This file is a solution template for:
 
@@ -159,8 +159,8 @@ No efficiency correction\\
 \centering
 \small
 Efficiency Corrected\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_20_InvMassFit}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_20_InvMassFit}
+\end{overpic}
 \end{columns}
 \end{frame}
 
@@ -176,8 +176,8 @@ No efficiency correction\\
 \centering
 \small
 Efficiency Corrected\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_20_SideBand}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_20_SideBand}
+\end{overpic}
 \end{columns}
 \end{frame}
 
@@ -193,8 +193,8 @@ No efficiency correction\\
 \centering
 \small
 Efficiency Corrected\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetZSpectrum_DPt_20_JetPt_5_15_SideBand}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetZSpectrum_DPt_20_JetPt_5_15_SideBand}
+\end{overpic}
 \end{columns}
 \end{frame}
 
@@ -210,8 +210,8 @@ No efficiency correction\\
 \centering
 \small
 Efficiency Corrected\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/ComparisonSystematic_DMesonCuts_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}
 \end{columns}
 \end{frame}
 
@@ -338,14 +338,14 @@ Efficiency Corrected\\
 \centering
 \small
 No efficiency correction\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraUncertaintyComparison}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/D0_D0toKpiCuts_ComparisonSystematic_JetPtSpectrum_DPt_20_DPtBinWidth}
+\end{overpic}
 \column{0.5\textwidth}
 \centering
 \small
 Efficiency Corrected\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/Charged_R040_JetPtSpectrum_DPt_20_InvMassFit_SpectraUncertaintyComparison}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/D0_D0toKpiCuts_ComparisonSystematic_JetPtSpectrum_DPt_20_DPtBinWidth}
+\end{overpic}
 \end{columns}
 \end{frame}
 
@@ -412,10 +412,32 @@ Efficiency Corrected\\
 \begin{frame}{FF (high \ptchjet): Invariant Mass Fits}
 \begin{columns}
 \column{.6\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_FineBins}
+\begin{overpic}[width=\textwidth, trim=0 185 0 0, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_FineBins}
 \end{overpic}
 \column{.4\textwidth}
-Statistics is very scarce
+\begin{overpic}[width=\textwidth, trim=0 0 200 370, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_FineBins}
+\end{overpic}\\
+\begin{overpic}[width=.5\textwidth, trim=380 0 0 370, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_FineBins}
+\end{overpic}\\
+\end{columns}
+\small
+Statistics is very scarce $\rightarrow$ Wider \ptd\ bins needed for the FF at w/ $15<\ptchjet<30$~\GeVc
+\end{frame}
+
+\begin{frame}{FF (high \ptchjet): Invariant Mass Fits w/ wide \ptd\ bins}
+\begin{columns}
+\column{.5\textwidth}
+\centering
+Old cuts\\
+\vspace{10pt}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30}
+\end{overpic}
+\column{.5\textwidth}
+\centering
+New cuts\\
+\vspace{10pt}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_DPtBins_JetPt_15_30}
+\end{overpic}
 \end{columns}
 \end{frame}
 
