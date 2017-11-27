@@ -70,9 +70,9 @@
 \institute[Yale University] % (optional, but mostly needed)
 {Yale University}
 
-\date[Updates - Nov. 24th, 2017] % (optional, should be abbreviation of conference name)
+\date[Updates - Nov. 27th, 2017] % (optional, should be abbreviation of conference name)
 {Updates \\
-November 24th, 2017}
+November 27th, 2017}
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
 %   yourself) who are reading the slides online
@@ -269,14 +269,14 @@ Efficiency Corrected\\
 \centering
 \small
 No efficiency correction\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraUncertaintyComparison}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/D0_D0toKpiCuts_D0JetOptimLowJetPtv4_ComparisonSystematic_JetPtSpectrum_DPtCutSideBand}
+\end{overpic}
 \column{0.5\textwidth}
 \centering
 \small
 Efficiency Corrected\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/Charged_R040_JetPtSpectrum_DPt_20_InvMassFit_SpectraUncertaintyComparison}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/D0_D0toKpiCuts_D0JetOptimLowJetPtv4_ComparisonSystematic_JetPtSpectrum_DPtCutSideBand}
+\end{overpic}
 \end{columns}
 \end{frame}
 
@@ -396,32 +396,25 @@ Efficiency Corrected\\
 \centering
 \small
 No efficiency correction\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/Charged_R040_JetPtSpectrum_DPt_20_SideBand_SpectraUncertaintyComparison}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc/D0_D0toKpiCuts_ComparisonSystematic_JetZSpectrum_DPt_20_JetPt_5_15_DPtBinWidth}
+\end{overpic}
 \column{0.5\textwidth}
 \centering
 \small
 Efficiency Corrected\\
-%\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/Charged_R040_JetPtSpectrum_DPt_20_InvMassFit_SpectraUncertaintyComparison}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/syst_unc_eff/D0_D0toKpiCuts_ComparisonSystematic_JetZSpectrum_DPt_20_JetPt_5_15_DPtBinWidth}
+\end{overpic}
 \end{columns}
 \end{frame}
 
 \subsection{FF, $\ptd>6$~\GeVc\ and $15<\ptchjet<30$~\GeVc}
 
 \begin{frame}{FF (high \ptchjet): Invariant Mass Fits}
-\begin{columns}
-\column{.6\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 185 0 0, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_FineBins}
-\end{overpic}
-\column{.4\textwidth}
-\begin{overpic}[width=\textwidth, trim=0 0 200 370, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_FineBins}
+\centering
+\begin{overpic}[width=.7\textwidth, trim=0 0 0 0, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_FineBins}
 \end{overpic}\\
-\begin{overpic}[width=.5\textwidth, trim=380 0 0 370, clip]{img/raw_yield/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_FineBins}
-\end{overpic}\\
-\end{columns}
 \small
-Statistics is very scarce $\rightarrow$ Wider \ptd\ bins needed for the FF at w/ $15<\ptchjet<30$~\GeVc
+Statistics is very scarce $\rightarrow$ Wider \ptd\ bins needed for the FF with $15<\ptchjet<30$~\GeVc
 \end{frame}
 
 \begin{frame}{FF (high \ptchjet): Invariant Mass Fits w/ wide \ptd\ bins}
@@ -445,84 +438,103 @@ New cuts\\
 
 \subsection{$5<\ptchjet<15$~\GeVc}
 
-\begin{frame}{Bayesian Unfolding}
-\begin{columns}
-\column{0.5\textwidth}
+\begin{frame}{Bayesian Unfolding: $5<\ptchjet<15$~\GeVc}
+\begin{columns}[t]
+\column{0.33\textwidth}
 \centering
-%\begin{overpic}[width=.71\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Response_PriorResponseTruth}
-%\end{overpic}\\
-%\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_RefoldedOverMeasured}
-%\end{overpic}
-\column{0.5\textwidth}
+\begin{overpic}[width=.81\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Response_PriorResponseTruth}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_RefoldedOverMeasured}
+\end{overpic}
+\column{0.33\textwidth}
 \centering
-%\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes}
-%\end{overpic}\\
-%\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\column{0.34\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Priors}
+\end{overpic}\\
+\footnotesize
+\begin{itemize}
+\item Good performance of the unfolding
+\item Very small correction, up to $\sim4$\% (see left)
+\item Unfolded distribution very similar to PYTHIA (see above)
+\end{itemize}
 \end{columns}
 \end{frame}
 
-\begin{frame}{Unfolding Stability}
+\begin{frame}{Unfolding Stability: $5<\ptchjet<15$~\GeVc}
 \begin{columns}
-\column{0.5\textwidth}
+\column{0.3\textwidth}
 \centering
 \tiny 
-Number of iterations\\
-%\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
-%\end{overpic}
-\column{0.5\textwidth}
-\centering
+Number of iterations (Bayes)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}\\
 \tiny
 Unfolding method\\
-%\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingMethod_Ratio}
-%\end{overpic}
-\end{columns}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingMethod_Ratio}
+\end{overpic}
+\column{0.7\textwidth}
 \centering
 \tiny
-Pearsons' coefficients\\
-%\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Pearson_Bayes_PriorResponseTruth}
-%\end{overpic}
+Pearsons' coefficients (Bayesian Method)\\
+\vspace{10pt}
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Pearson_Bayes_PriorResponseTruth}
+\end{overpic}
+\end{columns}
 \end{frame}
 
 \subsection{$15<\ptchjet<30$~\GeVc}
 
 \begin{frame}{Bayesian Unfolding}
-\begin{columns}
-\column{0.5\textwidth}
+\begin{columns}[t]
+\column{0.33\textwidth}
 \centering
-%\begin{overpic}[width=.71\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Response_PriorResponseTruth}
-%\end{overpic}\\
-%\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_RefoldedOverMeasured}
-%\end{overpic}
-\column{0.5\textwidth}
+\begin{overpic}[width=.81\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Response_PriorResponseTruth}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes_RefoldedOverMeasured}
+\end{overpic}
+\column{0.33\textwidth}
 \centering
-%\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes}
-%\end{overpic}\\
-%\begin{overpic}[width=.88\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
-%\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\column{0.34\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Priors}
+\end{overpic}\\
+\footnotesize
+\begin{itemize}
+\item First bin $0.2<z<0.4$ is unstable (not enough statistics)
+\item Unfolding correction is $\sim20-15$\% (see left)
+\item Unfolded distribution quite different from PYTHIA (see above)
+\end{itemize}
 \end{columns}
 \end{frame}
 
 \begin{frame}{Unfolding Stability}
 \begin{columns}
-\column{0.5\textwidth}
+\column{0.3\textwidth}
 \centering
 \tiny 
-Number of iterations\\
-%\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
-%\end{overpic}
-\column{0.5\textwidth}
+Number of iterations (Bayes)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}\\
 \centering
 \tiny
 Unfolding method\\
-%\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingMethod_Ratio}
-%\end{overpic}
-\end{columns}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingMethod_Ratio}
+\end{overpic}
+\column{0.7\textwidth}
 \centering
 \tiny
-Pearsons' coefficients\\
-%\begin{overpic}[width=.5\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Pearson_Bayes_PriorResponseTruth}
-%\end{overpic}
+Pearsons' coefficients (Bayesian Method)\\
+\vspace{10pt}
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Pearson_Bayes_PriorResponseTruth}
+\end{overpic}
+\end{columns}
 \end{frame}
 
 \section{Conclusions}
@@ -531,22 +543,23 @@ Pearsons' coefficients\\
 \begin{easylist}[itemize]
 @ Topological cuts
 @@ No significant improvement with the new cuts for the side-band method
-@@ Both the statistical and the systematic uncertainties are reduced in the invariant mass fit method for the highest two jet \pt\ bins
+@@ Both the statistical and the systematic uncertainties are reduced in the invariant mass fit in \ptchjet\ bins for the highest two bins (slide 4)
 @@ For the moment, stay with the old cuts?
-@ Width of the \ptd\ bins in the side-band method
-@@ Identical results with small/wide bins
-@@ Only useful for the FF at high jet \pt\
+@ $\ptd>2$ vs. $\ptd>3$~\GeVc
+@@ Slightly worse statistical uncertainty after efficiency correction
+@@ My preference would be for $\ptd>2$~\GeVc: reduced bias and same cut used for FF
+@@ But I am open to suggestions
 \end{easylist}
 \end{frame}
 
 \begin{frame}[fragile]{Conclusions /2}
 \begin{easylist}[itemize]
-@ $\ptd>2$ vs. $\ptd>3$~\GeVc
-@@ Slightly worse statistical uncertainty after efficiency correction
-@@ My preference would be for $\ptd>2$~\GeVc: reduced bias and same cut used for FF
-@@ But I am open to suggestions
+@ Width of the \ptd\ bins in the side-band method
+@@ Identical results with small/wide bins
+@@ Only useful for the FF at high jet \pt\
 @ Unfolding
-@@ Stable and with minimal uncertainties ($<5$\%) for $z$ spectra for both high and low jet momenta
+@@ Stable and with minimal uncertainties ($<5$\%) for $z$ distribution at both high and low jet momenta
+@@ Bin $0.2<z<0.4$ is unstable for high jet momenta because of low statistics $\rightarrow$ use it as input for unfolding (better kinematic efficiency) but drop it in the final result
 \end{easylist}
 \end{frame}
 
