@@ -1,0 +1,645 @@
+% $Header: /Users/joseph/Documents/LaTeX/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass[xcolor={usenames,dvipsnames}, aspectratio=169]{beamer}
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{AnnArbor}
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+ }
+
+\usepackage[percent]{overpic}
+\usepackage[english]{babel}
+\usepackage{multirow}
+\usepackage[at]{easylist}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+\input{../shared/commands}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title[D-Tagged Jets in \pp, \pPb\ and \PbPb] % (optional, use only with long paper titles)
+{D-Tagged Jets in \pp, \pPb\ and \PbPb}
+
+\author[Salvatore Aiola]% (optional, use only with lots of authors)
+{Salvatore Aiola \\
+for PAG-HFCJ}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Yale University] % (optional, but mostly needed)
+{Yale University}
+
+\date[PWG-HF - Nov. 28th, 2017] % (optional, should be abbreviation of conference name)
+{PWG-HF \\
+November 28th, 2017}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{High-Energy Physics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+  %  \tableofcontents
+%\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+%\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/ReflectionTemplates_DPt_NoJet_DoubleGaus_1010}
+%\put(0,61){{\tiny No jet requirement}}
+%\put(60,61){{\tiny \textcolor{ForestGreen}{\textbf{Used for QM17 preliminary}}}}
+%\end{overpic}
+
+%\begin{columns}
+%\column{0.5\textwidth}
+%\column{0.5\textwidth}
+%\end{columns}
+
+\section{\pp\ collisions at $\s=7$~TeV}
+
+\subsection{\Dzero-Jet Cross Section}
+
+\begin{frame}{Preliminary: \Dzero-Jet Cross Section}
+\begin{columns}
+\column{0.40\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/approved_figures/D0JetCrossSection_pp7TeV}
+\end{overpic}\\
+\small
+Preliminary shown at QM17 (\href{https://indico.cern.ch/event/433345/contributions/2358064/}{poster})
+\column{0.60\textwidth}
+\footnotesize
+\begin{itemize}
+\item Jets reconstructed out of the \Dzero\ candidate (K$\pi$ channel) and all other tracks
+\item Invariant mass analysis: in jet \pt\ bins (used as cross-check) or side-band method in D \pt\ bins (default)
+\item MB \pp\ at $\s=7$~TeV, 2010 (LHC10b,c,d,e)
+\end{itemize}
+\vspace{10pt}
+\large
+$\rightarrow$ New
+\small
+\begin{itemize}
+\item Attempt to improve statistical precision by optimizing the topological cuts 
+\item Variation of the width of the \ptd\ bins in the side-band method
+\item Reduce minimum \ptd\ cut to $2$~\GeVc\ (to be decided)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Topological Cuts}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{itemize}
+\item Strategy: plot $S/B$ and $S/\sqrt{S+B}$ (significance) as a function of the cut value
+\item Focus on 4 variables: $\cos(\theta_{\rm p})$, $\cos(\theta^{*})$, $d_{0}d_{0}$, DCA
+\item Cut value on each variable optmized independently $\rightarrow$ limitation, for the future will try to use a multi-variate approach
+\item Cuts optmized in two bins of \ptchjet\ [5, 15, 30] and 5 bins of \ptd\ [2, 4, 6, 9, 15, 30]
+\end{itemize}
+\column{0.6\textwidth}
+\scriptsize
+Example: $\cos(\theta^{*})$ for $6<\ptd<9$~\GeVc\ and $5<\ptchjet<15$~\GeVc
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/CosThetaStar_CutFraction_MB_Bkg_JetPt5_15_DPt6_9}
+\end{overpic}\\
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/CosThetaStar_CutSignificance_MB_Bkg_JetPt5_15_DPt6_9}
+\end{overpic}
+\end{columns}
+\centering
+\footnotesize
+\textcolor{ForestGreen}{green} (\textcolor{magenta}{magenta}) line\\
+ $x$ such that $|\cos(\theta^{*})|<x$ maximizes \textcolor{ForestGreen}{$S/B$} (\textcolor{magenta}{$S/\sqrt{S+B}$})
+\end{columns}
+\end{frame}
+
+\begin{frame}{Invariant Mass Fits: comparison new/old cuts}
+\begin{columns}
+\column{0.45\textwidth}
+\centering
+\scriptsize
+Side Band Method in \ptd\ bins
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\footnotesize
+Old cuts\\
+\vspace{5pt}
+\begin{overpic}[width=\textwidth, trim=380 170 10 0, clip]{img/topological_cuts/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_5_30}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\footnotesize
+New cuts\\
+\vspace{5pt}
+\begin{overpic}[width=\textwidth, trim=380 170 10 0, clip]{img/topological_cuts/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_DPtBins_JetPt_5_30}
+\end{overpic}
+\end{columns}
+\centering
+Improved $S/B$ ($1.6\rightarrow3.1$) at the cost of a slightly smaller significance ($19.8\rightarrow17.8$)
+\column{0.05\textwidth}
+\column{0.45\textwidth}
+\centering
+\scriptsize
+Invariant Mass Fits in \ptchjet\ bins
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\footnotesize
+Old cuts\\
+\vspace{5pt}
+\begin{overpic}[width=\textwidth, trim=190 0 190 180, clip]{img/topological_cuts/AnyINT_D0_D0toKpiCuts_Charged_R040_JetPtBins_DPt_30}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\footnotesize
+New cuts\\
+\vspace{5pt}
+\begin{overpic}[width=\textwidth, trim=190 0 190 180, clip]{img/topological_cuts/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_JetPtBins_DPt_30}
+\end{overpic}
+\end{columns}
+\centering
+Improved $S/B$ ($0.4\rightarrow0.8$) with similar significance
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yields: comparison new/old cuts}
+\begin{columns}
+\column{0.34\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/Comparison_Prompt_D0toKpiCuts_D0toKpiCuts_D0JetOptimLowJetPtv4_D0toKpiCuts_D0JetOptimHighJetPtv4}
+\end{overpic}\\
+\footnotesize
+\begin{itemize}
+\item Lower efficiency at high \ptd
+\item Raw yields compatible after efficiency correction with old/new cuts
+\end{itemize}
+\column{0.31\textwidth}
+\centering
+\tiny
+Before efficiency correction (SB method)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/Charged_R040_JetPtSpectrum_DPt_30_SideBand_SpectraComparison}
+\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 00 0, clip]{img/topological_cuts/Charged_R040_JetPtSpectrum_DPt_30_SideBand_SpectraComparison_Ratio}
+\end{overpic}
+\column{0.31\textwidth}
+\centering
+\tiny
+After efficiency correction (SB method)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/Charged_R040_JetPtSpectrum_DPt_30_SideBand_SpectraComparison_eff}
+\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 00 0, clip]{img/topological_cuts/Charged_R040_JetPtSpectrum_DPt_30_SideBand_SpectraComparison_Ratio_eff}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Uncertainty comparison (after efficiency correction)}
+\begin{columns}[t]
+\column{0.45\textwidth}
+\centering
+\small
+Inv. Mass Fit in \ptchjet\ bins
+\begin{columns}[t]
+\column{0.6\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/Charged_R040_JetPtSpectrum_DPt_30_InvMassFit_SpectraUncertaintyComparison_eff}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_30_InvMassFit_eff}
+\end{overpic}
+\column{0.4\textwidth}
+\centering
+\scriptsize
+\vspace{-50pt}\\
+Statistical uncertainty: improved with new cuts in the last bin\\
+\vspace{30pt}
+Systematic uncertainty on raw yield extr.: improved ($\rightarrow$ fits more stable), unable to calculate for the last bin with the old cuts (many trials failed)
+\end{columns}
+\column{0.05\textwidth}
+\column{0.45\textwidth}
+\centering
+\small
+Side-Band Method in \ptd\ bins
+\begin{columns}[t]
+\column{0.6\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/Charged_R040_JetPtSpectrum_DPt_30_SideBand_SpectraUncertaintyComparison_eff}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/topological_cuts/ComparisonSystematic_DMesonCuts_JetPtSpectrum_DPt_30_SideBand_eff}
+\end{overpic}
+\column{0.4\textwidth}
+\centering
+\small
+Less obvious whether there is any improvement
+\end{columns}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Width of the \ptd\ bins in the SB method}
+\begin{columns}
+\column{0.31\textwidth}
+\centering
+\tiny
+Raw Yields\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ptd_bin_width/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBinWidth_jet_pt_50_300_SpectraComparison}
+\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ptd_bin_width/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBinWidth_jet_pt_50_300_SpectraComparison_Ratio}
+\end{overpic}
+\column{0.31\textwidth}
+\centering
+\tiny
+Statistical Uncertainty\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ptd_bin_width/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBinWidth_jet_pt_50_300_SpectraComparison_Uncertainty}
+\end{overpic}\\
+Systematic Uncertainty on Raw Yield Extr.
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/ptd_bin_width/D0_D0toKpiCuts_ComparisonSystematic_JetPtSpectrum_DPt_20_DPtBinWidth}
+\end{overpic}
+\column{0.34\textwidth}
+\scriptsize
+\begin{itemize}
+\item Small bins: [2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20, 30] $\rightarrow$ efficiency correction applied before summing the \ptchjet\ spectra from each \ptd\ bin
+\item Wide bins: [2, 4, 6, 9, 15, 30] $\rightarrow$ efficiency correction (binned in smaller bins) applied as a weight to each candidate in the invariant mass distribution
+\item Raw yields identical in the two cases $\rightarrow$ confirms robustness of the side-band method
+\item No significant change in the statistical/systematic uncertainties
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{$\ptd>2$ vs. $\ptd>3$~\GeVc}
+\begin{columns}
+\column{0.31\textwidth}
+\centering
+\tiny
+Raw Yields (Side-Band Method)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/min_ptd_cut/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_DPtCutSideBand_jet_pt_50_300_SpectraComparison}
+\end{overpic}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/min_ptd_cut/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_DPtCutSideBand_jet_pt_50_300_SpectraComparison_Ratio}
+\end{overpic}
+\column{0.31\textwidth}
+\centering
+\tiny
+Statistical Uncertainty\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/min_ptd_cut/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_DPtCutSideBand_jet_pt_50_300_SpectraComparison_Uncertainty}
+\end{overpic}\\
+Systematic Uncertainty on Raw Yield Extr.
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/min_ptd_cut/D0_D0toKpiCuts_D0JetOptimLowJetPtv4_ComparisonSystematic_JetPtSpectrum_DPtCutSideBand}
+\end{overpic}
+\column{0.34\textwidth}
+\small
+Reducing the cut from $3$ to $2$~\GeVc\ 
+\begin{itemize}
+\item Smaller bias on jet fragmentation at low \pt
+\item Increases the relative statistical uncertainties by $\sim +10\%$ for $\ptchjet>14$~\GeVc\
+\item Systematic uncertainties on raw yield extraction also a bit higher
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\subsection{Jet Momentum Fraction Carried by the \Dzero}
+
+\begin{frame}{Raw Yield Extraction: $5<\ptchjet<15$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_DPtBins_JetPt_5_15_SideBand_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_BkgVsSig}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Extraction: $15<\ptchjet<30$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_BkgVsSig}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Extraction: Method Comparison}
+\begin{columns}
+\column{0.32\textwidth}
+\centering
+\footnotesize
+$5<\ptchjet<15$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_MethodHigh_d_z_2_10_SpectraComparison}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_D0JetOptimHighJetPtv4_Charged_R040_MethodHigh_d_z_2_10_SpectraComparison_Ratio}
+\end{overpic}
+\column{0.32\textwidth}
+\centering
+\footnotesize
+$15<\ptchjet<30$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_MethodLow_d_z_2_10_SpectraComparison}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_D0JetOptimLowJetPtv4_Charged_R040_MethodLow_d_z_2_10_SpectraComparison_Ratio}
+\end{overpic}
+\column{0.34\textwidth}
+\small
+\begin{itemize}
+\item Good agreement except in the first bin
+\item The bin $0.2<z<0.4$ has very low statistics therefore the fit of the invariant mass distribution is not reliable (but should be ok with the side band method)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Extraction: Systematic Uncertainty}
+\begin{columns}
+\column{0.32\textwidth}
+\centering
+\footnotesize
+$5<\ptchjet<15$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z_syst/AverageRawYieldVsDefault_low}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z_syst/AverageRawYieldVsDefault_Ratio_low}
+\end{overpic}
+\column{0.32\textwidth}
+\centering
+\footnotesize
+$15<\ptchjet<30$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z_syst/AverageRawYieldVsDefault_high}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z_syst/AverageRawYieldVsDefault_Ratio_high}
+\end{overpic}
+\column{0.34\textwidth}
+\small
+\begin{itemize}
+\item Comparing the default fit with the average of many trials with different fit settings (fixed parameters, shape of the background function, etc.)
+\item The band is the root-mean-square of the variations
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{B Feed-Down Subtraction}
+\begin{columns}
+\column{0.64\textwidth}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\footnotesize
+$5<\ptchjet<15$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/b_feed_down/JetZSpectrum_DPt_20_JetPt_5_15_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide_canvas}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\footnotesize
+$15<\ptchjet<30$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/b_feed_down/JetZSpectrum_DPt_60_JetPt_15_30_DetectorLevel_JetZSpectrum_bEfficiencyMultiply_cEfficiencyDivide_canvas}
+\end{overpic}
+\end{columns}
+\footnotesize
+Theory systematic uncertainty: variation of beauty mass, PDF, factorization and renormalization scales...
+\column{0.36\textwidth}
+\small
+\begin{itemize}
+\item Folded with detector response (jet momentum resolution)
+\item Multiplied by the ratio of the prompt / non-prompt efficiency
+\item Multiply by the luminosity and subtract from efficiency-corrected raw yields from data
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Bayesian Unfolding: $5<\ptchjet<15$~\GeVc}
+\begin{columns}[t]
+\column{0.33\textwidth}
+\centering
+\begin{overpic}[width=.81\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Response_PriorResponseTruth}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_RefoldedOverMeasured}
+\end{overpic}
+\column{0.33\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\column{0.34\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Priors}
+\end{overpic}\\
+\footnotesize
+\begin{itemize}
+\item Good performance of the unfolding
+\item Very small correction, up to $\sim4$\% (see left)
+\item Unfolded distribution very similar to PYTHIA (see above)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Unfolding Stability: $5<\ptchjet<15$~\GeVc}
+\begin{columns}
+\column{0.3\textwidth}
+\centering
+\tiny 
+Number of iterations (Bayes)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}\\
+\tiny
+Unfolding method\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_UnfoldingMethod_Ratio}
+\end{overpic}
+\column{0.7\textwidth}
+\centering
+\tiny
+Pearsons' coefficients (Bayesian Method)\\
+\vspace{10pt}
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Pearson_Bayes_PriorResponseTruth}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Bayesian Unfolding: $15<\ptchjet<30$~\GeVc}
+\begin{columns}[t]
+\column{0.33\textwidth}
+\centering
+\begin{overpic}[width=.81\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Response_PriorResponseTruth}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes_RefoldedOverMeasured}
+\end{overpic}
+\column{0.33\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\column{0.34\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Priors}
+\end{overpic}\\
+\footnotesize
+\begin{itemize}
+\item First bin $0.2<z<0.4$ is unstable (not enough statistics)
+\item Unfolding correction is $\sim20-15$\% (see left)
+\item Unfolded distribution quite different from PYTHIA (see above)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Unfolding Stability: $15<\ptchjet<30$~\GeVc}
+\begin{columns}
+\column{0.3\textwidth}
+\centering
+\tiny 
+Number of iterations (Bayes)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}\\
+\centering
+\tiny
+Unfolding method\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingMethod_Ratio}
+\end{overpic}
+\column{0.7\textwidth}
+\centering
+\tiny
+Pearsons' coefficients (Bayesian Method)\\
+\vspace{10pt}
+\begin{overpic}[width=.9\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Pearson_Bayes_PriorResponseTruth}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Final Spectra}
+\begin{columns}
+\column{0.32\textwidth}
+\centering
+\footnotesize
+$5<\ptchjet<15$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/final_spectra/JetZSpectrum_JetPt_5_15_Systematics}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/final_spectra/CompareUncertainties_JetZSpectrum_JetPt_5_15_Systematics}
+\end{overpic}
+\column{0.32\textwidth}
+\centering
+\footnotesize
+$15<\ptchjet<30$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/final_spectra/JetZSpectrum_JetPt_15_30_Systematics}
+\end{overpic}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/final_spectra/CompareUncertainties_JetZSpectrum_JetPt_15_30_Systematics}
+\end{overpic}
+\column{0.34\textwidth}
+\scriptsize
+\begin{itemize}
+\item The fragmentation looks very different for the two \ptchjet\ ranges
+\item A similar difference is present also in PYTHIA: would be interesting to try to dig into this (difference in the dominant production mechanism?)
+\item The data does not match PYTHIA, especially in the range $15<\ptchjet<30$~\GeVc
+\item Very interesting results despite large uncertainties
+\item Theory curves in preparation (POWHEG + PYTHIA6, etc.)
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\section{\Dzero Jets in \pPb\ Collisions at $\s=5.02$~TeV}
+
+\section{\Dzero-Jets in \PbPb\ Collisions at $\s=5.02$~TeV}
+
+\section{Conclusions}
+
+\begin{frame}[fragile]{Conclusions: \pp\ collisions at $\s=7$~TeV / 1}
+\footnotesize
+\begin{easylist}[itemize]
+@ Minor updates for the jet cross section (preliminary approved for QM17)
+@@ Bug fix in configuration of the PID response task (shown at PWG-HF 26/9)
+@@ Switch to new cuts used in the re-analysis of the D mesons (shown at PWG-HF 26/9)
+@@ Optmizations of the topological cuts $\rightarrow$ no improvements so far, multi-variate approach in the to-do list
+@@ Minimum \ptd\ cut: $2$ instead of $3$~\GeVc\ could be an option, to be discussed
+@ Distribution of the jet momentum fraction carried by the \Dzero
+@@ Two ranges of jet \pt: $5<\ptchjet<15$~\GeVc\ and $15<\ptchjet<30$~\GeVc\
+@@ Raw yield extraction with the side-band method in \ptd\ bins (also inv. mass fit in $z$ bins as a cross check
+@@ B feed-down with POWHEG+PYTHIA6 (with systematic uncertainty)
+@@ Bayesian unfolding (also SVD and bin-by-bin)
+@@ Interesting result, despite large uncertainties (dominated by statistics)
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{Conclusions: \pp\ collisions at $\s=7$~TeV / 2}
+\begin{easylist}[itemize]
+@ Paper proposal: ``Measurement of the \pt-differential cross-section and fragmentation function of \Dzero-tagged charged jets in \pp\ collisions at $\s=7$~TeV with ALICE''
+@ Preference for two separate papers dedicated for \pp\ and \pPb\
+@@ The \pp\ measurement has a strong physics case by itself and a different message
+@@ Different timelines
+@@ Different collision energy
+@@ Potentially different audience (HEP community probably more interested in \pp)
+\end{easylist}
+\end{frame}
+
+\end{document}
