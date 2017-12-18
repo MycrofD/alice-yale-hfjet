@@ -1,0 +1,3 @@
+\frametitle{Pearsons' coefficients (Bayesian Method): $15<\ptchjet <30$~\GeVc }
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Pearson_Bayes_PriorResponseTruth}
+\end{overpic}
