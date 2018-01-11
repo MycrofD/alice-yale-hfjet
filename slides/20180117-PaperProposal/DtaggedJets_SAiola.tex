@@ -37,6 +37,7 @@
 \usepackage[at]{easylist}
 \usepackage{appendixnumberbeamer}
 \usepackage{bm}
+\usepackage{setspace}
 % or whatever
 
 \usepackage[latin1]{inputenc}
@@ -945,6 +946,166 @@ i.e. the probability of reconstructing a \Dzero-jet with certain kinematic prope
 \begin{frame}[fragile]{Pearsons' coefficients (Bayesian Method): $15<\ptchjet<30$~\GeVc}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Pearson_Bayes_PriorResponseTruth}
 \end{overpic}
+\end{frame}
+
+\subsection{PID task bug (Reflections)}
+
+\begin{frame}{Issue with reflection templates: fixed}
+\begin{columns}
+\column{0.65\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/cross_section_updates/fixed_reflections}
+\end{overpic}
+\column{0.35\textwidth}
+\centering
+Fixed small issue in \textbf{reflections}: PID response task was configured for pass2 instead of pass4\\
+\vspace{10pt}
+1-7\% effect on the final spectrum (well within uncertainties)
+\end{columns}
+\end{frame}
+
+\subsection{pass2 vs. pass4 cuts}
+
+\begin{frame}{Comparison of prompt/non-prompt efficiencies}
+\begin{columns}
+\column{0.44\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/cross_section_updates/CompareEfficiencyPass4vsPass2cuts}
+\end{overpic}
+{
+\tiny
+\begin{tabular}{ll}
+\textcolor{black}{LHC15i2\_Train961\_cresponse} & prompt, pass2 cuts\\
+\textcolor{NavyBlue}{LHC15i2\_Train1073\_cresponse} & prompt, pass4 cuts\\
+\textcolor{BrickRed}{LHC15i2\_Train973\_bresponse} & non-prompt, pass2 cuts\\
+\textcolor{ForestGreen}{LHC15i2\_Train1081\_bresponse} & non-prompt, pass4 cuts
+\end{tabular}
+}
+\begin{spacing}{1.5}
+
+\end{spacing}
+\column{0.28\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/cross_section_updates/ComparePromptEfficiencyPass4vsPass2cuts_Ratio}
+\put(30,10){\footnotesize Prompt}
+\put(18,7){\color{red}\line(0,1){53}}
+\end{overpic}
+\column{0.28\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/cross_section_updates/CompareNonPromptEfficiencyPass4vsPass2cuts_Ratio}
+\put(30,10){\footnotesize Non-Prompt}
+\put(18,7){\color{red}\line(0,1){53}}
+\end{overpic}
+\end{columns}
+\vspace{-10pt}
+\raggedright
+{\tiny
+\begin{spacing}{0.5}
+\textbf{Note}: the efficiencies are shown also for $\ptd<3$~\GeVc\ but only D mesons with $\ptd>3$~\GeVc\ are used in the analysis.
+In this kinematic region the ratios of the prompt efficiencies of pass4 over pass2 is roughly unity or higher by $10$\%;
+the non-prompt efficiency is about 20\% lower for the pass4 cuts compared to the pass2 cuts.
+\end{spacing}
+}
+\end{frame}
+
+\begin{frame}{Comparison of efficiency-corrected raw yields}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/cross_section_updates/ComparePass4vsPass2cutsSideBandEfficiency}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/cross_section_updates/ComparePass4vsPass2cutsSideBandEfficiency_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts [PRC 94, 054908 (2016)]
+\end{description}}
+\end{frame}
+
+\begin{frame}{Comparison of raw yields with FD subtraction}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/cross_section_updates/ComparePass4vsPass2cutsSideBandEfficiencyFDCorrected}
+\end{overpic}
+\column{0.5\textwidth}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/cross_section_updates/ComparePass4vsPass2cutsSideBandEfficiencyFDCorrected_Ratio}
+\end{overpic}
+\end{columns}
+{\footnotesize
+\begin{description}
+\item[\textcolor{black}{LHC10\_Train823\_with1010}] pass2 cuts
+\item[\textcolor{NavyBlue}{LHC10\_Train883}] pass4 cuts [PRC 94, 054908 (2016)]
+\end{description}}
+\end{frame}
+
+\subsection{Unfolding of the jet cross section}
+
+\begin{frame}{Bayesian Unfolding: \Dzero\ jet cross section}
+\begin{columns}
+\column{0.36\textwidth}
+\scriptsize
+\centering
+Response Matrix\\
+\begin{overpic}[width=.81\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetPt_SideBand_DPt_30_Response_PriorResponseTruth}
+\end{overpic}
+\column{0.30\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetPt_SideBand_DPt_30_UnfoldingSummary_Bayes}
+\end{overpic}\\
+\scriptsize
+\centering
+\textcolor{NavyBlue}{Unfolded / Measured}\\
+\vspace{2pt}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetPt_SideBand_DPt_30_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\column{0.34\textwidth}
+\scriptsize
+\centering
+\textcolor{ForestGreen}{Refolded / Measured}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetPt_SideBand_DPt_30_UnfoldingSummary_Bayes_RefoldedOverMeasured}
+\end{overpic}
+Statistical fluctuations are ``regularized'' in the unfolded solution \\
+small oscillations in the ratio \textcolor{ForestGreen}{refolded / measured}, but well
+below the statistical uncertainties in each bin\\
+\vspace{5pt}
+Unfolding correction on the yield up to $\sim14$\% (see \textcolor{NavyBlue}{Unfolded/Measured})
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Unfolding Stability: \Dzero\ jet cross section}
+\begin{columns}
+\column{0.32\textwidth}
+\centering
+\tiny 
+Number of iterations (Bayes)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetPt_SideBand_DPt_30_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}\\
+\tiny
+Unfolding method\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetPt_SideBand_DPt_30_UnfoldingMethod_Ratio}
+\end{overpic}
+\column{0.68\textwidth}
+\scriptsize
+\begin{easylist}[itemize]
+@ Unfolding converges after $\sim3$ iterations
+@ Agreement with \textcolor{BrickRed}{bin-by-bin} correction and \textcolor{NavyBlue}{regularized SVD} (within $\sim15$\%)
+@ Prior variation: \textcolor{NavyBlue}{MC truth} (default), \textcolor{BrickRed}{softer}, \textcolor{ForestGreen}{harder} and \textcolor{orange}{flat} distribution
+\end{easylist}
+\vspace{5pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\tiny
+Priors\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 20, clip]{img/unfolding/JetPt_SideBand_DPt_30_Priors}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\tiny
+Prior effect\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 20, clip]{img/unfolding/JetPt_SideBand_DPt_30_UnfoldingPrior_Bayes_Ratio}
+\end{overpic}
+\end{columns}
+\end{columns}
 \end{frame}
 
 \end{document}
