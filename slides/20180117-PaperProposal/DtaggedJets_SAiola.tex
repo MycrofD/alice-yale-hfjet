@@ -138,6 +138,51 @@ January 17th, 2018}
 %\column{0.5\textwidth}
 %\end{columns}
 
+\section{Introduction}
+
+\subsection{Physics Motivations}
+
+\begin{frame}{Charm jets: experimental results}
+\begin{columns}
+\column{0.35\textwidth}
+\begin{overpic}[width=\textwidth, trim=90 550 300 45, clip]{img/misc/2012-ATLAS-DstarInJets}
+\end{overpic}\\
+\vspace{-8pt}
+\scriptsize
+\begin{itemize}
+\item Normalized by the inclusive jet cross section
+\item Full jets, lowest momentum bin: $25 < \ptjet < 30$~\GeVc
+\item B feed-down not subtracted
+\end{itemize}
+\tiny
+\href{https://doi.org/10.1103/PhysRevD.85.052005}{PRD 85, 052005 (2012)}
+\column{0.35\textwidth}
+\begin{overpic}[width=\textwidth, trim=40 190 300 360, clip]{img/misc/2009-STAR-DstarInJetsPP}
+\put(35,80){\scriptsize \textbf{STAR}}
+\end{overpic}\\
+\vspace{-8pt}
+\scriptsize
+\begin{itemize}
+\item Full jets, $8 < \ptjet < 20$~\GeVc
+\item Corrected for jet momentum resolution, but \textbf{not} for efficiency (shown) and trigger effects
+\end{itemize}
+\tiny
+\href{https://doi.org/10.1103/PhysRevD.79.112006}{PRD 79, 112006 (2009)}
+\column{0.30\textwidth}
+\small
+\begin{itemize}
+\item Strong disagreement between data and MC generators (POWHEG, HERWIG, PYTHIA)
+\item Fragmentation observed in data is significantly softer
+\item STAR attempted to interpret it as a contribution from gluon splitting
+\end{itemize}
+\end{columns}
+\end{frame}
+
+%\begin{frame}{Charm jets: recent theoretical progress}
+%\end{frame}
+
+%\subsection{Analysis Overview}
+
 \section{\pt-differential cross section}
 
 \begin{frame}[fragile]{\Dzero-Jet Cross Section}
@@ -192,7 +237,13 @@ Changes are within statistical uncertainties\\
 $5<\ptchjet<15$~\GeVc\\
 $\ptd>2$~\GeVc\\
 \begin{overpic}[width=1.07\textwidth, trim=0 0 0 0, clip]{img/paper_figures/JetZSpectrum_JetPt_5_15_Paper}
-\end{overpic}
+\end{overpic}\\
+\only<3>{
+\scriptsize
+$\overline{z}_{\rm data}=0.765 \pm 0.014$\\
+$\overline{z}_{\rm theory}=0.785 \pm 0.004$\\
+p-value$=0.41$ (full distribution)
+}
 \column{0.30\textwidth}
 \centering
 \footnotesize
@@ -200,9 +251,11 @@ $15<\ptchjet<30$~\GeVc\\
 $\ptd>6$~\GeVc\\
 \begin{overpic}[width=1.07\textwidth, trim=0 0 0 0, clip]{img/paper_figures/JetZSpectrum_JetPt_15_30_Paper}
 \end{overpic}\\
-\only<4>{\begin{flushright}
-\scriptsize \href{https://doi.org/10.1103/PhysRevD.85.052005}{PRD 85, 052005 (2012)}
-\end{flushright}
+\only<3>{
+\scriptsize
+$\overline{z}_{\rm data}=0.710 \pm 0.028$\\
+$\overline{z}_{\rm theory}=0.747 \pm 0.005$\\
+p-value$=0.08$ (full distribution)
 }
 \column{0.38\textwidth}
 \vspace{-20pt}
@@ -224,22 +277,10 @@ $\zpar=\frac{\boldsymbol{p}_{\rm ch\,jet} \cdot \boldsymbol{p}_{\rm D}}{\boldsym
 \only<3>{
 \item Theory: POWHEG+PYTHIA6
 \item The systematic uncertainty on the MC distribution is small because the overall normalization does not matter
-\item Low jet momentum range: data agrees with theory
-\item Intermediate jet momentum range: indication of a softer fragmentation in data compared to theory
+%\item Statistical analysis points to a softer fragmentation observed in data compared to theory
 \item To do: separate different production mechanisms in MC
 }
-\only<4>{
-\item Similar observation from ATLAS
-\item Data shows softer fragmentation compared to MC
-}
 \end{itemize}
-\only<4>{
-\vspace{-15pt}
-\begin{center}
-\begin{overpic}[width=.75\textwidth, trim=90 550 300 45, clip]{img/misc/2012-ATLAS-DstarInJets}
-\end{overpic}
-\end{center}
-}
 \end{columns}
 \end{frame}
 
@@ -247,15 +288,21 @@ $\zpar=\frac{\boldsymbol{p}_{\rm ch\,jet} \cdot \boldsymbol{p}_{\rm D}}{\boldsym
 
 \begin{frame}{Raw Yield Extraction: $5<\ptchjet<15$~\GeVc}
 \begin{columns}
-\column{0.5\textwidth}
+\column{0.33\textwidth}
 \centering
-\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_5_15_SideBand_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_5_15_SideBand_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand}
 \end{overpic}
-\column{0.5\textwidth}
+\column{0.33\textwidth}
 \centering
-\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_BkgVsSig}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_BkgVsSig}
+\end{overpic}
+\column{0.33\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_TotalBkgVsSig}
 \end{overpic}
 \end{columns}
+\centering
+$\textcolor{NavyBlue}{N_{\rm raw}(\zpar)}=\sum_{\ptd}\frac{1}{\epsilon\left(\ptd\right)}\left(\textcolor{BrickRed}{N_{\rm sig}(\zpar,\ptd)}-\frac{S}{B}\textcolor{ForestGreen}{N_{\rm SB}(\zpar,\ptd)}\right)$
 \end{frame}
 
 \begin{frame}{Comparison w/ fits in \zpar\ bins: $5<\ptchjet<15$~\GeVc}
@@ -445,6 +492,7 @@ Unfolding method\\
 @ Prior variation: \textcolor{NavyBlue}{MC truth} (default), \textcolor{BrickRed}{softer}, \textcolor{ForestGreen}{harder} and \textcolor{orange}{flat} distribution
 @ First bin: large statistical uncertainties/fluctuations are ``regularized'' by unfolding, which causes fluctuations in the unfolding result of $\sim\pm10$\%
 @@ Statistical uncertainties are large enough in this bin ($> 70$\%) to make this (potential) systematic bias negligible
+@ Only to test stability: 5\% uncertainty from results of the MC closure test
 \end{easylist}
 \vspace{5pt}
 \begin{columns}
@@ -464,78 +512,76 @@ Prior effect\\
 \end{columns}
 \end{frame}
 
-\begin{frame}{Bayesian Unfolding: $15<\ptchjet<30$~\GeVc}
-\begin{columns}
-\column{0.36\textwidth}
-\scriptsize
-\centering
-Response Matrix\\
-\begin{overpic}[width=.81\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Response_PriorResponseTruth}
-\end{overpic}\\ 
-\scriptsize
-Good resolution (color log scale!)\\
-$\sim10$~\% off diagonal
-\column{0.30\textwidth}
-\centering
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes}
-\end{overpic}\\
-\scriptsize
-\centering
-\textcolor{NavyBlue}{Unfolded / Measured}\\
-\vspace{2pt}
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
-\end{overpic}
-\column{0.34\textwidth}
-\scriptsize
-\centering
-\textcolor{ForestGreen}{Refolded / Measured}\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes_RefoldedOverMeasured}
-\end{overpic}
-Statistical fluctuations are ``regularized'' in the unfolded solution \\
-$\rightarrow$ up to $\sim10$\% oscillations in the ratio \textcolor{ForestGreen}{refolded / measured}, but well
-below the statistical uncertainties in each bin\\
-\vspace{5pt}
-Unfolding correction on the yield up to $\sim30$\% (see \textcolor{NavyBlue}{Unfolded/Measured})
-\end{columns}
+\section{Uncertainties}
+
+\begin{frame}{Uncertainty Summary: \ptchjet\ spectrum, $\ptd>3$~\GeVc}
+\footnotesize
+\begin{table}
+\begin{tabular}{lrrrrrr}
+Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
+\ptchjet\ (\GeVc) & 5 - 6 & 6 - 8 & 8 - 10 & 10 - 14 & 14 - 20 & 20 - 30\\ \hline
+Tracking Eff. (Jet Energy Scale) & 0 & 1 & 2 & 3 & 4 & 4\\
+Raw Yield Extraction & 4 & 5 & 5 & 5 & 11 & 15\\
+B Feed-Down & 6 & 6 & 7 & 9 & 14 & 16\\
+Unfolding & 5 & 5 & 5 & 5 & 5 & 5\\
+Selection Cuts & 5 & 5 & 5 & 5 & 5 & 5\\
+Tracking Eff. (D-Meson) & 4 & 4 & 4 & 4 & 4 & 4\\
+\hline
+Normalization (luminosity and BR) & \multicolumn{6}{c}{3.6} \\
+\hline
+Total Systematic Uncertainty & 11.5 & 11.9 & 12.5 & 13.9 & 20.3 & 24.0\\
+\hline
+Statistical & 10.0 & 9.0 & 12.3 & 15.9 & 23.7 & 64.1\\
+\hline
+Total Uncertainty & 15.2 & 14.9 & 17.6 & 21.2 & 31.2 & 68.5\\
+  \end{tabular}
+\end{table}
 \end{frame}
 
-\begin{frame}[fragile]{Unfolding Stability: $15<\ptchjet<30$~\GeVc}
-\begin{columns}
-\column{0.32\textwidth}
+\begin{frame}{Uncertainty Summary: \zpar\ spectrum, $5<\ptchjet<15$~\GeVc}
+\footnotesize
+\begin{table}
+\begin{tabular}{lrrrrrr}
+Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
+\zpar\ & 0.2 - 0.4 & 0.4 - 0.6 & 0.6 - 0.7 & 0.7 - 0.8 & 0.8 - 0.9 & 0.9 - 1.0\\ \hline
+Tracking Eff. (Jet Energy Scale) & 3 & 2 & 1 & 1 & 2 & 2\\
+Raw Yield Extraction & 18 & 13 & 3 & 3 & 3 & 3\\
+B Feed-Down & 9 & 6 & 2 & 2 & 1 & 1\\
+Unfolding & 5 & 5 & 5 & 5 & 5 & 5\\
+Selection Cuts & 5 & 5 & 5 & 5 & 5 & 5\\
+Tracking Eff. (D-Meson) & 4 & 4 & 4 & 4 & 4 & 4\\
+\hline
+Total Systematic Uncertainty & 21.9 & 16.6 & 8.9 & 8.9 & 8.9 & 8.9\\
+\hline
+Statistical & 77.8 & 20.0 & 13.7 & 10.4 & 10.3 & 6.7\\
+\hline
+Total Uncertainty & 80.9 & 26.0 & 16.3 & 13.8 & 13.6 & 11.2\\
+  \end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}{Uncertainty Summary: \zpar\ spectrum, $15<\ptchjet<30$~\GeVc}
+\footnotesize
+\begin{table}
+\begin{tabular}{lrrrrrr}
+Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
+\zpar\ & 0.2 - 0.4 & 0.4 - 0.6 & 0.6 - 0.7 & 0.7 - 0.8 & 0.8 - 0.9 & 0.9 - 1.0\\ \hline
+Tracking Eff. (Jet Energy Scale) & 2 & 2 & 2 & 3 & 9 & 13\\
+Raw Yield Extraction & 13 & 12 & 9 & 7 & 7 & 8\\
+B Feed-Down & 10 & 10 & 10 & 7 & 7 & 7\\
+Unfolding & 5 & 5 & 5 & 5 & 5 & 5\\
+Selection Cuts & 5 & 5 & 5 & 5 & 5 & 5\\
+Tracking Eff. (D-Meson) & 4 & 4 & 4 & 4 & 4 & 4\\
+\hline
+Total Systematic Uncertainty & 18.4 & 17.7 & 15.8 & 13.2 & 15.7 & 18.7\\
+\hline
+Statistical & 101.2 & 75.7 & 33.0 & 35.1 & 32.4 & 80.6\\
+\hline
+Total Uncertainty & 102.9 & 77.7 & 36.6 & 37.5 & 36.0 & 82.7\\
+  \end{tabular}
+\end{table}
 \centering
-\tiny 
-Number of iterations (Bayes)\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
-\end{overpic}\\
-\tiny
-Unfolding method\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingMethod_Ratio}
-\end{overpic}
-\column{0.68\textwidth}
-\scriptsize
-\begin{easylist}[itemize]
-@ Unfolding converges after $\sim3$ iterations
-@ Agreement with \textcolor{BrickRed}{bin-by-bin} correction and \textcolor{NavyBlue}{regularized SVD} (within $\sim20$\%)
-@ Prior variation: \textcolor{NavyBlue}{MC truth} (default), \textcolor{BrickRed}{softer}, \textcolor{ForestGreen}{harder} and \textcolor{orange}{flat} distribution
-@ Statistical fluctuations are ``regularized'' by unfolding, which causes fluctuations in the unfolding result of $\sim\pm10$\% (up to $15$\%)
-@@ Statistical uncertainties are large enough (see backup) to make this (potential) systematic bias negligible in all bins
-\end{easylist}
-\vspace{5pt}
-\begin{columns}
-\column{0.5\textwidth}
-\centering
-\tiny
-Priors\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 20, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Priors}
-\end{overpic}
-\column{0.5\textwidth}
-\centering
-\tiny
-Prior effect\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 20, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingPrior_Bayes_Ratio}
-\end{overpic}
-\end{columns}
-\end{columns}
+The bin [0.2, 0.4] is excluded from the final result.
 \end{frame}
 
 \section{Conclusions}
@@ -565,7 +611,7 @@ Prior effect\\
 \end{center}
 \scriptsize
 \begin{easylist}[itemize]
-@ Target journal: EPJC or JHEP
+@ Target journal: JHEP
 @ PC: Salvatore Aiola (chair), Barbara Trzeciak, Antonio Silva, Andrea Rossi
 @ ARC (for the preliminary approved in January 2017): Leticia Conqueiro, Jeremy Wilkinson, Yasser Morales
 \only<1> {
@@ -656,29 +702,6 @@ Jet \pt\ cross section\\
 \end{columns}
 \end{frame}
 
-\begin{frame}{Relative Uncertainties}
-\begin{columns}
-\column{0.33\textwidth}
-\centering
-\footnotesize
-Fragmentation Function: $5<\ptchjet<15$~\GeVc\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/paper_figures/Uncertainties_JetZSpectrum_JetPt_5_15_Paper}
-\end{overpic}
-\column{0.33\textwidth}
-\centering
-\footnotesize
-Fragmentation Function: $15<\ptchjet<30$~\GeVc\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/paper_figures/Uncertainties_JetZSpectrum_JetPt_15_30_Paper}
-\end{overpic}
-\column{0.34\textwidth}
-\centering
-\footnotesize
-Jet \pt\ cross section\\
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/paper_figures/Uncertainties_JetPtSpectrum_DPt_30_Paper}
-\end{overpic}
-\end{columns}
-\end{frame}
-
 \begin{frame}{Detector Resolution}
 \begin{columns}
 \column{0.5\textwidth}
@@ -702,74 +725,27 @@ Jet \pt\ cross section\\
 
 \subsection{Uncertainties}
 
-\begin{frame}{Uncertainty Summary: \ptchjet\ spectrum, $\ptd>3$~\GeVc}
-\footnotesize
-\begin{table}
-\begin{tabular}{lrrrrrr}
-Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
-\ptchjet\ (\GeVc) & 5 - 6 & 6 - 8 & 8 - 10 & 10 - 14 & 14 - 20 & 20 - 30\\ \hline
-Tracking Eff. (Jet Energy Scale) & 0 & 1 & 2 & 3 & 4 & 4\\
-Raw Yield Extraction & 4 & 5 & 5 & 5 & 11 & 15\\
-B Feed-Down & 6 & 6 & 7 & 9 & 14 & 16\\
-Unfolding & 5 & 5 & 5 & 5 & 5 & 5\\
-Selection Cuts & 5 & 5 & 5 & 5 & 5 & 5\\
-Tracking Eff. (D-Meson) & 4 & 4 & 4 & 4 & 4 & 4\\
-\hline
-Normalization (luminosity and BR) & \multicolumn{6}{c}{3.6} \\
-\hline
-Total Systematic Uncertainty & 11.5 & 11.9 & 12.5 & 13.9 & 20.3 & 24.0\\
-\hline
-Statistical & 10.0 & 9.0 & 12.3 & 15.9 & 23.7 & 64.1\\
-\hline
-Total Uncertainty & 15.2 & 14.9 & 17.6 & 21.2 & 31.2 & 68.5\\
-  \end{tabular}
-\end{table}
-\end{frame}
-
-\begin{frame}{Uncertainty Summary: \zpar\ spectrum, $5<\ptchjet<15$~\GeVc}
-\footnotesize
-\begin{table}
-\begin{tabular}{lrrrrrr}
-Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
-\zpar\ & 0.2 - 0.4 & 0.4 - 0.6 & 0.6 - 0.7 & 0.7 - 0.8 & 0.8 - 0.9 & 0.9 - 1.0\\ \hline
-Tracking Eff. (Jet Energy Scale) & 3 & 2 & 1 & 1 & 2 & 2\\
-Raw Yield Extraction & 18 & 13 & 3 & 3 & 3 & 3\\
-B Feed-Down & 9 & 6 & 2 & 2 & 1 & 1\\
-Unfolding & 5 & 5 & 5 & 5 & 5 & 5\\
-Selection Cuts & 5 & 5 & 5 & 5 & 5 & 5\\
-Tracking Eff. (D-Meson) & 4 & 4 & 4 & 4 & 4 & 4\\
-\hline
-Total Systematic Uncertainty & 21.9 & 16.6 & 8.9 & 8.9 & 8.9 & 8.9\\
-\hline
-Statistical & 77.8 & 20.0 & 13.7 & 10.4 & 10.3 & 6.7\\
-\hline
-Total Uncertainty & 80.9 & 26.0 & 16.3 & 13.8 & 13.6 & 11.2\\
-  \end{tabular}
-\end{table}
-\end{frame}
-
-\begin{frame}{Uncertainty Summary: \zpar\ spectrum, $15<\ptchjet<30$~\GeVc}
-\footnotesize
-\begin{table}
-\begin{tabular}{lrrrrrr}
-Source & \multicolumn{6}{c}{Uncertainty (\%)} \\ \hline
-\zpar\ & 0.2 - 0.4 & 0.4 - 0.6 & 0.6 - 0.7 & 0.7 - 0.8 & 0.8 - 0.9 & 0.9 - 1.0\\ \hline
-Tracking Eff. (Jet Energy Scale) & 2 & 2 & 2 & 3 & 9 & 13\\
-Raw Yield Extraction & 13 & 12 & 9 & 7 & 7 & 8\\
-B Feed-Down & 10 & 10 & 10 & 7 & 7 & 7\\
-Unfolding & 5 & 5 & 5 & 5 & 5 & 5\\
-Selection Cuts & 5 & 5 & 5 & 5 & 5 & 5\\
-Tracking Eff. (D-Meson) & 4 & 4 & 4 & 4 & 4 & 4\\
-\hline
-Total Systematic Uncertainty & 18.4 & 17.7 & 15.8 & 13.2 & 15.7 & 18.7\\
-\hline
-Statistical & 101.2 & 75.7 & 33.0 & 35.1 & 32.4 & 80.6\\
-\hline
-Total Uncertainty & 102.9 & 77.7 & 36.6 & 37.5 & 36.0 & 82.7\\
-  \end{tabular}
-\end{table}
+\begin{frame}{Relative Uncertainties}
+\begin{columns}
+\column{0.33\textwidth}
 \centering
-The bin [0.2, 0.4] is excluded from the final result.
+\footnotesize
+Fragmentation Function: $5<\ptchjet<15$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/paper_figures/Uncertainties_JetZSpectrum_JetPt_5_15_Paper}
+\end{overpic}
+\column{0.33\textwidth}
+\centering
+\footnotesize
+Fragmentation Function: $15<\ptchjet<30$~\GeVc\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/paper_figures/Uncertainties_JetZSpectrum_JetPt_15_30_Paper}
+\end{overpic}
+\column{0.34\textwidth}
+\centering
+\footnotesize
+Jet \pt\ cross section\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/paper_figures/Uncertainties_JetPtSpectrum_DPt_30_Paper}
+\end{overpic}
+\end{columns}
 \end{frame}
 
 \subsection{Width of the \ptd\ bins in the SB method}
@@ -937,6 +913,80 @@ i.e. the probability of reconstructing a \Dzero-jet with certain kinematic prope
 \end{frame}
 
 \subsection{Unfolding}
+
+\begin{frame}{Bayesian Unfolding: $15<\ptchjet<30$~\GeVc}
+\begin{columns}
+\column{0.36\textwidth}
+\scriptsize
+\centering
+Response Matrix\\
+\begin{overpic}[width=.81\textwidth, trim=0 240 290 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Response_PriorResponseTruth}
+\end{overpic}\\ 
+\scriptsize
+Good resolution (color log scale!)\\
+$\sim10$~\% off diagonal
+\column{0.30\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes}
+\end{overpic}\\
+\scriptsize
+\centering
+\textcolor{NavyBlue}{Unfolded / Measured}\\
+\vspace{2pt}
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes_UnfoldedOverMeasured}
+\end{overpic}
+\column{0.34\textwidth}
+\scriptsize
+\centering
+\textcolor{ForestGreen}{Refolded / Measured}\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingSummary_Bayes_RefoldedOverMeasured}
+\end{overpic}
+Statistical fluctuations are ``regularized'' in the unfolded solution \\
+$\rightarrow$ up to $\sim10$\% oscillations in the ratio \textcolor{ForestGreen}{refolded / measured}, but well
+below the statistical uncertainties in each bin\\
+\vspace{5pt}
+Unfolding correction on the yield up to $\sim30$\% (see \textcolor{NavyBlue}{Unfolded/Measured})
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Unfolding Stability: $15<\ptchjet<30$~\GeVc}
+\begin{columns}
+\column{0.32\textwidth}
+\centering
+\tiny 
+Number of iterations (Bayes)\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingRegularization_Bayes_PriorResponseTruth_Ratio}
+\end{overpic}\\
+\tiny
+Unfolding method\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingMethod_Ratio}
+\end{overpic}
+\column{0.68\textwidth}
+\scriptsize
+\begin{easylist}[itemize]
+@ Unfolding converges after $\sim3$ iterations
+@ Agreement with \textcolor{BrickRed}{bin-by-bin} correction and \textcolor{NavyBlue}{regularized SVD} (within $\sim20$\%)
+@ Prior variation: \textcolor{NavyBlue}{MC truth} (default), \textcolor{BrickRed}{softer}, \textcolor{ForestGreen}{harder} and \textcolor{orange}{flat} distribution
+@ Statistical fluctuations are ``regularized'' by unfolding, which causes fluctuations in the unfolding result of $\sim\pm10$\% (up to $15$\%)
+@@ Statistical uncertainties are large enough (see backup) to make this (potential) systematic bias negligible in all bins
+\end{easylist}
+\vspace{5pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\tiny
+Priors\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 20, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_Priors}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\tiny
+Prior effect\\
+\begin{overpic}[width=\textwidth, trim=0 0 0 20, clip]{img/unfolding/JetZ_SideBand_DPt_60_JetPt_15_30_UnfoldingPrior_Bayes_Ratio}
+\end{overpic}
+\end{columns}
+\end{columns}
+\end{frame}
 
 \begin{frame}[fragile]{Pearsons' coefficients (Bayesian Method): $5<\ptchjet<15$~\GeVc}
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/unfolding/JetZ_SideBand_DPt_20_JetPt_5_15_Pearson_Bayes_PriorResponseTruth}
@@ -1112,5 +1162,4 @@ Prior effect\\
 \end{columns}
 \end{columns}
 \end{frame}
-
 \end{document}
