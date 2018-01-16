@@ -178,8 +178,25 @@ January 17th, 2018}
 \end{columns}
 \end{frame}
 
-%\begin{frame}{Charm jets: recent theoretical progress}
-%\end{frame}
+\begin{frame}{Charm jets: recent theoretical progress}
+\begin{columns}
+\column{0.40\textwidth}
+\begin{overpic}[width=\textwidth, trim=125 365 120 45, clip]{img/misc/2017-Theory-DstainInJets}
+\end{overpic}\\
+\tiny
+\href{https://doi.org/10.1103/PhysRevD.96.034028}{PRD 96, 034028 (2017)}
+\column{0.6\textwidth}
+\begin{itemize}
+\item Recent theoretical progress in the description of single-hadron D spectra and \textbf{in-jet fragmentation} data
+\item Global QCD analysis
+\item In-jet fragmentation data needed to constrain contribution from gluon FFs
+\end{itemize}
+\vspace{20pt}
+\footnotesize
+``Our case study of \Dstar\ clearly reveals how powerful in-jet data can be in further constraining FFs. Based on the framework developed and applied in this paper, 
+in-jet data can be straightforwardly included in any future global fit of FFs once such data become available.''
+\end{columns}
+\end{frame}
 
 %\subsection{Analysis Overview}
 
@@ -272,16 +289,21 @@ $\zpar=\frac{\boldsymbol{p}_{\rm ch\,jet} \cdot \boldsymbol{p}_{\rm D}}{\boldsym
 }
 \only<2>{
 \item The fragmentation looks quite different for the two \ptchjet\ ranges
-\item Peak at $\zpar\approx1$ due to single-particle jets (not present for intermediate jet momenta)
+\item Peak at $\zpar\approx1$ due to single-particle jets not present for intermediate jet momenta
 }
 \only<3>{
 \item Theory: POWHEG+PYTHIA6
 \item The systematic uncertainty on the MC distribution is small because the overall normalization does not matter
-%\item Statistical analysis points to a softer fragmentation observed in data compared to theory
+\item Data supports a slightly softer fragmentation compared to theory in the intermediate jet momentum (about 1-$\sigma$ discrepancy)
 \item To do: separate different production mechanisms in MC
 }
 \end{itemize}
 \end{columns}
+\only<1>{
+\vspace{10pt}
+\footnotesize
+Distributions are normalized to $1$ and each bin content divided by the corresponding bin width
+}
 \end{frame}
 
 \subsection{Raw Yield Extraction}
@@ -301,6 +323,7 @@ $\zpar=\frac{\boldsymbol{p}_{\rm ch\,jet} \cdot \boldsymbol{p}_{\rm D}}{\boldsym
 \begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_20_JetPt_5_15_SideBand_TotalBkgVsSig}
 \end{overpic}
 \end{columns}
+\vspace{5pt}
 \centering
 $\textcolor{NavyBlue}{N_{\rm raw}(\zpar)}=\sum_{\ptd}\frac{1}{\epsilon\left(\ptd\right)}\left(\textcolor{BrickRed}{N_{\rm sig}(\zpar,\ptd)}-\frac{S}{B}\textcolor{ForestGreen}{N_{\rm SB}(\zpar,\ptd)}\right)$
 \end{frame}
