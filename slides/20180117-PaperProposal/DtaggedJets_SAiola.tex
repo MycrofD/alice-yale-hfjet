@@ -328,41 +328,6 @@ Distributions are normalized to $1$ and each bin content divided by the correspo
 $\textcolor{NavyBlue}{N_{\rm raw}(\zpar)}=\sum_{\ptd}\frac{1}{\epsilon\left(\ptd\right)}\left(\textcolor{BrickRed}{N_{\rm sig}(\zpar,\ptd)}-\frac{S}{B}\textcolor{ForestGreen}{N_{\rm SB}(\zpar,\ptd)}\right)$
 \end{frame}
 
-\begin{frame}{Comparison w/ fits in \zpar\ bins: $5<\ptchjet<15$~\GeVc}
-\begin{columns}
-\column{0.5\textwidth}
-\centering
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZBins_DPt_20_JetPt_5_15}
-\end{overpic}
-\column{0.5\textwidth}
-\centering
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodLow_d_z_2_10_SpectraComparison_Ratio}
-\end{overpic}
-\end{columns}
-\centering
-\vspace{20pt}
-Good agreement, except in the first bin where the invariant mass fit is not reliable
-\end{frame}
-
-\begin{frame}{Raw Yield Extraction: $15<\ptchjet<30$~\GeVc}
-\begin{columns}
-\column{0.5\textwidth}
-\centering
-\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
-\end{overpic}\\
-\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_BkgVsSig}
-\end{overpic}
-\column{0.5\textwidth}
-\centering
-\scriptsize
-Invariant mass fits in \zpar\ bins
-\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZBins_DPt_60_JetPt_15_30}
-\end{overpic}\\
-\centering
-Not enough statistics
-\end{columns}
-\end{frame}
-
 \begin{frame}[fragile]{Raw Yield Extraction: Systematic Uncertainty (Side-Band Method)}
 \begin{columns}
 \column{0.26\textwidth}
@@ -615,13 +580,28 @@ The bin [0.2, 0.4] is excluded from the final result.
 @ Minor updates for the \textbf{jet cross section} (preliminary approved for QM17)
 @@ Bug fix in configuration of the PID response task (shown at PWG-HF 26/9)
 @@ Switch to new cuts used in the re-analysis of the D mesons (shown at PWG-HF 26/9)
-@@ Attempt to optmize the topological cuts has brought no improvements so far (still working on it, but on lower priority)
-@@ Minimum \ptd\ cut: $2$ instead of $3$~\GeVc\ could be an option (see backup)
+@@ Attempt to optmize the topological cuts has brought no improvements so far
 @ Distribution of the \textbf{jet momentum fraction carried by the \Dzero} \alert{[NEW]}
 @@ Two ranges of jet \pt: $5<\ptchjet<15$~\GeVc\ and $15<\ptchjet<30$~\GeVc\
 @@ Raw yield extraction with the side-band method in \ptd\ bins (inv. mass fit in $z$ bins as a cross check)
 @@ B feed-down with POWHEG+PYTHIA6 (with systematic uncertainty)
 @@ Bayesian unfolding (also SVD and bin-by-bin)
+\end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{Open Points}
+\footnotesize
+\begin{easylist}[itemize]
+@ \textbf{Jet \pt\ cross section}
+@@ Minimum \ptd\ cut: $2$ instead of $3$~\GeVc\ could be an option (see backup)
+@@@ Smaller bias, slightly larger uncertainty
+@@@ Negligible difference in the physics output (and also in the data points themselves) $\rightarrow$ can be discussed with the IRC later
+@ Distribution of the \textbf{jet momentum fraction carried by the \Dzero}
+@@ Investigate possible correlation between statistical uncertainty and raw yield systematic uncertainty
+@@ Consider using EvtGen as baseline as decayer for B feed-down (and PYTHIA for the systematic uncertainty)
+@ Comparison with theory
+@@ Consider adding other MC generators (e.g. HERWIG)
+@@ Could use POWHEG at LO to suppress contribution from gluon splitting
 \end{easylist}
 \end{frame}
 
@@ -859,6 +839,121 @@ $15<\ptchjet<30$~\GeVc\\
 \end{frame}
 
 \subsection{Raw Yield Extraction}
+
+\begin{frame}{Raw Yield Extraction Method Comparison (efficiency corrected)}
+\centering
+Jet \pt\ cross section, $\ptd>3$~\GeVc \\
+\vspace{20pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Raw yield comparison
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodDPt3_jet_pt_50_300_SpectraComparison_Ratio}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Uncertainty comparison\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodDPt3_jet_pt_50_300_SpectraComparison_Uncertainty}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Extraction Method Comparison (efficiency corrected)}
+\centering
+Momentum fraction distribution, $\ptd>2$~\GeVc, $5<\ptchjet<15$~\GeVc \\
+\vspace{20pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Raw yield comparison
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodLow_d_z_2_10_SpectraComparison_Ratio}
+\end{overpic}\\
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Uncertainty comparison\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodLow_d_z_2_10_SpectraComparison_Uncertainty}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Extraction Method Comparison (not efficiency corrected)}
+\centering
+Jet \pt\ cross section, $\ptd>3$~\GeVc \\
+\vspace{20pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Raw yield comparison
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z_noeff/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodDPt3_jet_pt_50_300_SpectraComparison_Ratio}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Uncertainty comparison\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z_noeff/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodDPt3_jet_pt_50_300_SpectraComparison_Uncertainty}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Raw Yield Extraction Method Comparison (not efficiency corrected)}
+\centering
+Momentum fraction distribution, $\ptd>2$~\GeVc, $5<\ptchjet<15$~\GeVc \\
+\vspace{20pt}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Raw yield comparison
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z_noeff/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodLow_d_z_2_10_SpectraComparison_Ratio}
+\end{overpic}\\
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Uncertainty comparison\\
+\begin{overpic}[width=.8\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z_noeff/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodLow_d_z_2_10_SpectraComparison_Uncertainty}
+\end{overpic}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Comparison w/ fits in \zpar\ bins: $5<\ptchjet<15$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZBins_DPt_20_JetPt_5_15}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/Comparison_AnyINT_D0_D0toKpiCuts_Charged_R040_MethodLow_d_z_2_10_SpectraComparison_Ratio}
+\end{overpic}
+\end{columns}
+\centering
+\vspace{20pt}
+Good agreement, except in the first bin where the invariant mass fit is not reliable
+\end{frame}
+
+\begin{frame}{Raw Yield Extraction: $15<\ptchjet<30$~\GeVc}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_DPtBins_JetPt_15_30_SideBand_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand}
+\end{overpic}\\
+\begin{overpic}[width=.85\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZSpectrum_DPt_60_JetPt_15_30_SideBand_BkgVsSig}
+\end{overpic}
+\column{0.5\textwidth}
+\centering
+\scriptsize
+Invariant mass fits in \zpar\ bins
+\begin{overpic}[width=\textwidth, trim=0 0 0 0, clip]{img/raw_yield_z/AnyINT_D0_D0toKpiCuts_Charged_R040_JetZBins_DPt_60_JetPt_15_30}
+\end{overpic}\\
+\centering
+Not enough statistics
+\end{columns}
+\end{frame}
 
 \begin{frame}{\Dzero\ reflection systematics}
 \begin{columns}
