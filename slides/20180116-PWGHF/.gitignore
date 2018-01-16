@@ -1,0 +1,9 @@
+*.aux
+*.log
+*.nav
+*.out
+*.vrb
+DtaggedJets_SAiola.pdf
+*.snm
+*.synctex.gz
+*.toc
