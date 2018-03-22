@@ -110,8 +110,10 @@ class BinSet:
         return False
 
     def LoadEfficiency(self, inputPath, dmeson, jetName, eff, axis):
-        dmeson = dmeson.replace("_kSignalOnly", "")
-        dmeson = dmeson.replace("_WrongPID", "")
+        dmeson = dmeson.replace("_kSignalOnly", "")  # for backward compatibility
+        dmeson = dmeson.replace("_SignalOnly", "")  # for >= vAN-20180222
+        dmeson = dmeson.replace("_WrongPID", "")  # for backward compatibility
+        dmeson = dmeson.replace("_D0Reflection", "")  # for >= vAN-20180222
         if eff and "file_name" in eff:
             eff["file_name"] = "{0}/{1}".format(inputPath, eff["file_name"])
         if axis:
@@ -232,12 +234,10 @@ class BinSet:
         rlist = ROOT.TList()
         rlist.SetName(self.fName)
         for bin in self.fBins:
-            if bin.fInvMassHisto:
-                rlist.Add(bin.fInvMassHisto)
-            for fitter in bin.fMassFitters.itervalues():
-                rlist.Add(fitter)
-            for _, h in bin.fBinCountSpectra.itervalues():
-                rlist.Add(h)
+            if bin.fInvMassHisto: rlist.Add(bin.fInvMassHisto)
+            if bin.fSelectionHisto: rlist.Add(bin.fSelectionHisto)
+            for fitter in bin.fMassFitters.itervalues(): rlist.Add(fitter)
+            for _, h in bin.fBinCountSpectra.itervalues(): rlist.Add(h)
         return rlist
 
     def AddBinsRecursive(self, limitSetList, limits):
@@ -268,6 +268,7 @@ class BinLimits:
     def __init__(self, limits=dict()):
         self.fLimits = copy.deepcopy(limits)
         self.fInvMassHisto = None
+        self.fSelectionHisto = None
         self.fMassFitter = None
         self.fMassFitters = dict()
         self.fBinCountSpectra = None
@@ -285,8 +286,8 @@ class BinLimits:
         self.fEntries += 1
         self.fCounts += w
         self.fSumw2 += w * w
-        if self.fInvMassHisto:
-            self.fInvMassHisto.Fill(dmeson.fInvMass, w)
+        if self.fInvMassHisto: self.fInvMassHisto.Fill(dmeson.fInvMass, w)
+        if self.fSelectionHisto: self.fSelectionHisto.Fill(dmeson.fSelectionType, w)
 
         for axis, hist in self.fBinCountSpectra.itervalues():
             obsVal = []
@@ -440,7 +441,14 @@ class BinLimits:
         self.CreateQAHistos(trigger, DMesonDef, yAxis)
 
     def CreateQAHistos(self, trigger, DMesonDef, yAxis):
-        pass
+        xAxis = "Selection Type"
+        if trigger:
+            hname = "Selection_{0}_{1}_{2}".format(trigger, DMesonDef, self.GetName())
+            htitle = "{0} - {1} Selection Type: {2};{3};{4}".format(trigger, DMesonDef, self.GetTitle(), xAxis, yAxis)
+        else:
+            hname = "Selection_{0}_{1}".format(DMesonDef, self.GetName())
+            htitle = "{0} Selection Type: {1};{2};{3}".format(DMesonDef, self.GetTitle(), xAxis, yAxis)
+        self.fSelectionHisto = ROOT.TH1D(hname, htitle, 3, 0.5, 3.5)
 
     def CreateInvMassHisto(self, trigger, DMesonDef, xAxis, yAxis, nMassBins, minMass, maxMass):
         if trigger:

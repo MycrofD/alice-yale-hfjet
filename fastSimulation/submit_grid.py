@@ -18,14 +18,10 @@ import time
 import shutil
 import re
 import UserConfiguration
-
-# goodSites = ["ALICE::LUNARC::SLURM", "ALICE::ORNL::LCG", "ALICE::SNIC::SLURM", "ALICE::Torino::Torino-CREAM",
-#             "ALICE::Bari::CREAM", "ALICE::GRIF_IRFU::LCG", "ALICE::NIHAM::PBS64", "ALICE::RRC_KI_T1::LCG",
-#             "ALICE::Catania::Catania_VF", "ALICE::RRC_KI_T1::LCG"]
-# badSites = ["ALICE::UiB::ARC"]
-
-goodSites = []
-badSites = []
+import datetime
+import random
+import GeneratePowhegInput
+import glob
 
 
 def AlienDelete(fileName):
@@ -114,7 +110,8 @@ def CopyFilesToTheGrid(Files, AlienDest, LocalDest, Offline, GridUpdate):
         os.makedirs(LocalDest)
     for file in Files:
         if not Offline:
-            AlienCopy(file, "alien://{0}/{1}".format(AlienDest, file), 3, GridUpdate)
+            fname = os.path.basename(file)
+            AlienCopy(file, "alien://{}/{}".format(AlienDest, fname), 3, GridUpdate)
         shutil.copy(file, LocalDest)
 
 
@@ -128,7 +125,7 @@ def GenerateComments():
     return comments
 
 
-def GenerateProcessingJDL(Exe, AlienDest, AliPhysicsVersion, ValidationScript, FilesToCopy, TTL, Events, Jobs, yamlFileName, MinPtHard, MaxPtHard):
+def GenerateProcessingJDL(Exe, AlienDest, AliPhysicsVersion, ValidationScript, FilesToCopy, TTL, Events, Jobs, yamlFileName, MinPtHard, MaxPtHard, PowhegStage):
     comments = GenerateComments()
     jdlContent = "{comments} \n\
 Executable = \"{dest}/{executable}\"; \n\
@@ -139,7 +136,7 @@ Output = {{ \n\
 \"log_archive.zip:stderr,stdout,*.log@disk=1\", \n\
 \"root_archive.zip:AnalysisResults*.root@disk=2\" \n\
 }}; \n\
-Arguments = \"{yamlFileName} --numevents {Events} --minpthard {MinPtHard} --maxpthard {MaxPtHard} --grid\"; \n\
+Arguments = \"{yamlFileName} --numevents {Events} --minpthard {MinPtHard} --maxpthard {MaxPtHard} --batch-job grid --job-number #alien_counter# --powheg-stage {PowhegStage}\"; \n\
 Packages = {{ \n\
 \"VO_ALICE@AliPhysics::{aliphysics}\", \n\
 \"VO_ALICE@APISCONFIG::V1.1x\", \n\
@@ -155,7 +152,7 @@ JDLVariables = \n\
 Split=\"production:1-{Jobs}\"; \n\
 ValidationCommand = \"{dest}/{validationScript}\"; \n\
 # List of input files to be uploaded to workers \n\
-".format(yamlFileName=yamlFileName, MinPtHard=MinPtHard, MaxPtHard=MaxPtHard, comments=comments, executable=Exe, dest=AlienDest, aliphysics=AliPhysicsVersion, validationScript=ValidationScript, Jobs=Jobs, Events=Events, TTL=TTL)
+".format(yamlFileName=yamlFileName, MinPtHard=MinPtHard, MaxPtHard=MaxPtHard, comments=comments, executable=Exe, dest=AlienDest, aliphysics=AliPhysicsVersion, validationScript=ValidationScript, Jobs=Jobs, Events=Events, TTL=TTL, PowhegStage=PowhegStage)
 
     if len(FilesToCopy) > 0:
         jdlContent += "InputFile = {"
@@ -166,11 +163,9 @@ ValidationCommand = \"{dest}/{validationScript}\"; \n\
             else:
                 jdlContent += ", \n"
             start = False
-            jdlContent += "\"LF:{dest}/{f}\"".format(dest=AlienDest, f=file)
+            jdlContent += "\"LF:{dest}/{f}\"".format(dest=AlienDest, f=os.path.basename(file))
         jdlContent += "}; \n"
 
-    requirements = GenerateSiteRequirements()
-    jdlContent += requirements
     return jdlContent
 
 
@@ -189,7 +184,7 @@ Output = {{ \n\
 \"log_archive.zip:stderr,stdout,*.log@disk=1\", \n\
 \"root_archive.zip:AnalysisResults*.root@disk=2\" \n\
 }}; \n\
-Arguments = \"{trainName} --xml wn.xml --grid\"; \n\
+Arguments = \"{trainName} --xml wn.xml\"; \n\
 Packages = {{ \n\
 \"VO_ALICE@AliPhysics::{aliphysics}\", \n\
 \"VO_ALICE@APISCONFIG::V1.1x\", \n\
@@ -222,31 +217,7 @@ ValidationCommand = \"{dest}/{validationScript}\"; \n\
             jdlContent += "\"LF:{dest}/{f}\"".format(dest=AlienDest, f=file)
         jdlContent += "}; \n"
 
-    requirements = GenerateSiteRequirements()
-    jdlContent += requirements
     return jdlContent
-
-
-def GenerateSiteRequirements():
-    PosRequirements = ""
-    NegRequirements = ""
-    if len(goodSites) > 0:
-        for site in goodSites:
-            PosRequirements += "(other.CE == \"{0}\") ||".format(site)
-        PosRequirements = PosRequirements[:-3]
-    if len(badSites) > 0:
-        for site in badSites:
-            NegRequirements += "(other.CE != \"{0}\") &&".format(site)
-        NegRequirements = NegRequirements[:-3]
-    if PosRequirements and not NegRequirements:
-        requirements = "Requirements = ({0});\n".format(PosRequirements)
-    elif NegRequirements and not PosRequirements:
-        requirements = "Requirements = ({0});\n".format(NegRequirements)
-    elif NegRequirements and PosRequirements:
-        requirements = "Requirements = ({0} && {1});\n".format(PosRequirements, NegRequirements)
-    else:
-        requirements = ""
-    return requirements
 
 
 def DetermineMergingStage(AlienPath, TrainName):
@@ -331,19 +302,55 @@ def SubmitMergingJobs(TrainName, LocalPath, AlienPath, AliPhysicsVersion, Offlin
     subprocessCall(["ls", LocalDest])
 
 
-def SubmitProcessingJobs(TrainName, LocalPath, AlienPath, AliPhysicsVersion, Offline, GridUpdate, TTL, Events, Jobs, Gen, Proc, yamlFileName, PtHardList, OldPowhegInit):
+def SubmitProcessingJobs(TrainName, LocalPath, AlienPath, AliPhysicsVersion, Offline, GridUpdate, TTL, Events, Jobs, Gen, Proc, yamlFileName, PtHardList, OldPowhegInit, PowhegStage):
     print("Submitting processing jobs for train {0}".format(TrainName))
 
     ValidationScript = "FastSim_validation.sh"
     ExeFile = "runFastSim.py"
     JdlFile = "FastSim_{0}_{1}.jdl".format(Gen, Proc)
 
-    # "AliAnalysisTaskSEhfcjMCanalysis.cxx", "AliAnalysisTaskSEhfcjMCanalysis.h"
-    FilesToCopy = [yamlFileName, "OnTheFlySimulationGenerator.cxx", "OnTheFlySimulationGenerator.h", "runJetSimulation.C",
-                   "beauty-powheg.input", "charm-powheg.input", "dijet-powheg.input", "start_simulation.C",
-                   "AliGenEvtGen_dev.h", "AliGenEvtGen_dev.cxx", "Makefile"]
+    powhegEvents = int(Events * 1.1)
+    if Proc == "charm_jets" or Proc == "beauty_jets": powhegEvents *= 5
+
+    FilesToDelete = [JdlFile, "powheg.input"]
+
+    FilesToCopy = [yamlFileName, "OnTheFlySimulationGenerator.cxx", "OnTheFlySimulationGenerator.h",
+                   "runJetSimulation.C", "start_simulation.C",
+                   "powheg_pythia8_conf.cmnd", "powheg.input",
+                   "Makefile", "GeneratePowhegInput.py",
+                   "AliGenEvtGen_dev.h", "AliGenEvtGen_dev.cxx",
+                   "AliGenPythia_dev.h", "AliGenPythia_dev.cxx",
+                   "AliPythia6_dev.h", "AliPythia6_dev.cxx",
+                   "AliPythia8_dev.h", "AliPythia8_dev.cxx",
+                   "AliPythiaBase_dev.h", "AliPythiaBase_dev.cxx"]
     if OldPowhegInit:
-        FilesToCopy.extend(["pwggrid.dat", "pwggrid.dat", "pwgubound.dat"])
+        if PowhegStage == 0:
+            GeneratePowhegInput.main(yamlFileName, "./", powhegEvents, 0)
+            FilesToCopy.extend(["{}/pwggrid.dat".format(OldPowhegInit), "{}/pwgubound.dat".format(OldPowhegInit)])
+        elif PowhegStage == 4:
+            GeneratePowhegInput.main(yamlFileName, "./", powhegEvents, 4)
+            os.rename(GeneratePowhegInput.GetParallelInputFileName(4), "powheg.input")
+            EssentialFilesToCopy = ["pwggrid-????.dat", "pwggridinfo-btl-xg?-????.dat", "pwgubound-????.dat"]
+
+            for fpattern in EssentialFilesToCopy:
+                for file in glob.glob("{}/{}".format(OldPowhegInit, fpattern)): FilesToCopy.append(file)
+
+            seed_file_name = "pwgseeds.dat"
+            FilesToDelete.append(seed_file_name)
+            FilesToCopy.append(seed_file_name)
+            with open(seed_file_name, "w") as seed_file:
+                for iseed in range(0, Jobs + 1):
+                    seed_file.write(str(random.randint(0, 1073741824)))
+                    seed_file.write("\n")
+        else:
+            print("Not implemented for POWHEG stage {}".format(PowhegStage))
+            exit(1)
+    else:
+        if PowhegStage != 0:
+            print("Not implemented for POWHEG stage {}".format(PowhegStage))
+            exit(1)
+        else:
+            GeneratePowhegInput.main(yamlFileName, "./", powhegEvents, 0)
 
     if PtHardList and len(PtHardList) > 1:
         minPtHardBin = 0
@@ -365,7 +372,7 @@ def SubmitProcessingJobs(TrainName, LocalPath, AlienPath, AliPhysicsVersion, Off
             AlienDest = "{0}/{1}/{2}".format(AlienPath, TrainName, ptHardBin)
             LocalDest = "{0}/{1}/{2}".format(LocalPath, TrainName, ptHardBin)
             JobsPtHard = Jobs[ptHardBin]
-        JdlContent = GenerateProcessingJDL(ExeFile, AlienDest, AliPhysicsVersion, ValidationScript, FilesToCopy, TTL, Events, JobsPtHard, yamlFileName, minPtHard, maxPtHard)
+        JdlContent = GenerateProcessingJDL(ExeFile, AlienDest, AliPhysicsVersion, ValidationScript, FilesToCopy, TTL, Events, JobsPtHard, yamlFileName, minPtHard, maxPtHard, PowhegStage)
 
         f = open(JdlFile, 'w')
         f.write(JdlContent)
@@ -376,7 +383,7 @@ def SubmitProcessingJobs(TrainName, LocalPath, AlienPath, AliPhysicsVersion, Off
         CopyFilesToTheGrid(FilesToCopy, AlienDest, LocalDest, Offline, GridUpdate)
         if not Offline:
             subprocessCall(["alien_submit", "alien://{0}/{1}".format(AlienDest, JdlFile)])
-        os.remove(JdlFile)
+        for file in FilesToDelete: os.remove(file)
     print "Done."
 
     subprocessCall(["ls", LocalDest])
@@ -459,12 +466,20 @@ def GetLastTrainName(AlienPath, Gen, Proc):
     return TrainName
 
 
-def main(UserConf, yamlFileName, Offline, GridUpdate, OldPowhegInit, Merge, Download, MergingStage):
+def GetAliPhysicsVersion(ver):
+    if ver == "_last_":
+        now = datetime.datetime.now()
+        if now.hour < 18: now -= datetime.timedelta(days=1)
+        ver = now.strftime("vAN-%Y%m%d-1")
+    return ver
+
+
+def main(UserConf, yamlFileName, Offline, GridUpdate, OldPowhegInit, PowhegStage, Merge, Download, MergingStage):
     f = open(yamlFileName, 'r')
     config = yaml.load(f)
     f.close()
 
-    AliPhysicsVersion = config["aliphysics"]
+    AliPhysicsVersion = GetAliPhysicsVersion(config["aliphysics"])
     Events = config["numevents"]
     Jobs = config["numbjobs"]
     Gen = config["gen"]
@@ -523,7 +538,7 @@ def main(UserConf, yamlFileName, Offline, GridUpdate, OldPowhegInit, Merge, Down
         unixTS = int(time.time())
         print("The timestamp for this job is {0}. You will need it to submit merging jobs and download you final results.".format(unixTS))
         TrainName = "FastSim_{0}_{1}_{2}".format(Gen, Proc, unixTS)
-        SubmitProcessingJobs(TrainName, LocalPath, AlienPath, AliPhysicsVersion, Offline, GridUpdate, TTL, Events, Jobs, Gen, Proc, yamlFileName, PtHardList, OldPowhegInit)
+        SubmitProcessingJobs(TrainName, LocalPath, AlienPath, AliPhysicsVersion, Offline, GridUpdate, TTL, Events, Jobs, Gen, Proc, yamlFileName, PtHardList, OldPowhegInit, PowhegStage)
 
 
 if __name__ == '__main__':
@@ -547,11 +562,12 @@ if __name__ == '__main__':
                         default='')
     parser.add_argument('--stage', metavar='stage',
                         default=-1, type=int)
-    parser.add_argument("--old-powheg-init", action='store_const',
-                        default=False, const=True,
-                        help='Use old POWHEG init files.')
+    parser.add_argument('--old-powheg-init', metavar='folder',
+                        default=None)
+    parser.add_argument("--powheg-stage",
+                        default=0, type=int)
     args = parser.parse_args()
 
     userConf = UserConfiguration.LoadUserConfiguration(args.user_conf)
 
-    main(userConf, args.config, args.offline, args.update, args.old_powheg_init, args.merge, args.download, args.stage)
+    main(userConf, args.config, args.offline, args.update, args.old_powheg_init, args.powheg_stage, args.merge, args.download, args.stage)

@@ -10,31 +10,101 @@ import argparse
 import random
 import sys
 import yaml
+import GeneratePowhegInput
+import glob
 
 
-def main(pythiaEvents, gen, proc, qmass, facscfact, renscfact, lhans, beamType, ebeam1, ebeam2, nPDFset, nPDFerrSet, rejectISR, LHEfile, minpthard, maxpthard, grid, debug_level):
+class PowhegResult:
+
+    def __init__(self, events_generated, lhe_file, log_file):
+        self.lhe_file = lhe_file
+        self.log_file = log_file
+        self.events_generated = events_generated
+
+
+def RunPowhegParallel(powhegExe, powheg_stage, job_number):
+    print("Running POWHEG simulation at stage {}!".format(powheg_stage))
+
+    with open("powheg.input", 'r') as fin:
+        powheg_input = fin.read().splitlines()
+    for line in powheg_input:
+        print(line)
+
+    print("Running POWHEG...")
+    LogFileName = "Powheg_Stage_{}_Job_{:04d}.log".format(powheg_stage, job_number)
+    with open(LogFileName, "w") as myfile:
+        print([powhegExe, str(job_number)])
+        p = subprocess.Popen([powhegExe], stdout=myfile, stderr=myfile, stdin=subprocess.PIPE)
+        p.communicate(input=str(job_number))
+
+    if powheg_stage == 4:
+        result = PowhegResult(True, "pwgevents-{:04d}.lhe".format(job_number), LogFileName)
+    else:
+        result = PowhegResult(False, "", LogFileName)
+
+    return result
+
+
+def RunPowhegSingle(powhegExe, yamlConfigFile):
+    print("Running POWHEG simulation!")
+
+    with open("powheg.input", "a") as myfile:
+        rnd = random.randint(0, 1073741824)  # 2^30
+        myfile.write("iseed {0}\n".format(rnd))
+
+    with open("powheg.input", 'r') as fin:
+        powheg_input = fin.read().splitlines()
+    for line in powheg_input:
+        print(line)
+
+    print("Running POWHEG...")
+    with open("powheg.log", "w") as myfile:
+        subprocess.call([powhegExe], stdout=myfile, stderr=myfile)
+
+    result = PowhegResult(True, "pwgevents.lhe", "powheg.log")
+
+    return result
+
+
+def main(pythiaEvents, powheg_stage, job_number, yamlConfigFile, batch_job, LHEfile, minpthard, maxpthard, debug_level):
     print("------------------ job starts ---------------------")
     dateNow = datetime.datetime.now()
     print(dateNow)
 
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
+
     try:
         rootPath = subprocess.check_output(["which", "root"]).rstrip()
         alirootPath = subprocess.check_output(["which", "aliroot"]).rstrip()
-        alienPath = subprocess.check_output(["which", "alien-token-info"]).rstrip()
     except subprocess.CalledProcessError:
         print "Environment is not configured correctly!"
         exit()
 
     print "Root: " + rootPath
     print "AliRoot: " + alirootPath
-    print "Alien: " + alienPath
 
-    if qmass < 0:
-        if proc == "charm": qmass = 1.5
-        elif proc == "beauty": qmass = 4.75
+    f = open(args.config, 'r')
+    config = yaml.load(f)
+    f.close()
 
-    if grid:
+    gen = config["gen"]
+    proc = config["proc"]
+    beamType = config["beam_type"]
+    ebeam1 = config["ebeam1"]
+    ebeam2 = config["ebeam2"]
+    nPDFset = config["nPDFset"]
+    nPDFerrSet = config["nPDFerrSet"]
+    if "rejectISR" in config:
+        rejectISR = config["rejectISR"]
+    else:
+        rejectISR = False
+
+    if batch_job == "grid":
         fname = "{0}_{1}".format(gen, proc)
+    elif batch_job == "lbnl3":
+        fname = "{}_{}_{:04d}".format(gen, proc, job_number)
     else:
         unixTS = int(time.time())
         fname = "{0}_{1}_{2}".format(gen, proc, unixTS)
@@ -42,9 +112,10 @@ def main(pythiaEvents, gen, proc, qmass, facscfact, renscfact, lhans, beamType, 
     print("Running {0} MC production on: {1}".format(proc, " ".join(platform.uname())))
 
     if "powheg" in gen:
-        if os.path.isfile("pwgevents.lhe") or os.path.isfile("powheg.input") or os.path.isfile("powheg.log"):
-            print("Before running POWHEG again you must delete or move the following files: pwgevents.lhe, powheg.input, powheg.log")
-            exit(1)
+        if powheg_stage <= 0:
+            if os.path.isfile("pwgevents.lhe") or os.path.isfile("powheg.input") or os.path.isfile("powheg.log"):
+                print("Before running POWHEG again you must delete or move the following files: pwgevents.lhe, powheg.input, powheg.log")
+                exit(1)
 
         if LHEfile:
             print("Using previously generated POWHEG events from file {0}!".format(LHEfile))
@@ -55,52 +126,39 @@ def main(pythiaEvents, gen, proc, qmass, facscfact, renscfact, lhans, beamType, 
         runPOWHEG = False
 
     if runPOWHEG:
-        print("Running new POWHEG simulation!")
-        if proc == "dijet":
+        if proc == "charm_jets" or proc == "beauty_jets":
+            powheg_proc = "dijet"
+        else:
+            powheg_proc = proc
+
+        if powheg_proc == "dijet":
             powhegExe = "pwhg_main_dijet"
-        elif proc == "charm":
+        elif powheg_proc == "charm":
             powhegExe = "pwhg_main_hvq"
-        elif proc == "beauty":
+        elif powheg_proc == "beauty":
             powhegExe = "pwhg_main_hvq"
+        else:
+            print("Process '{}' not recognized!".format(powheg_proc))
+            exit(1)
 
-        if not grid:
-            powhegExe = "./POWHEG_bins/{0}".format(powhegExe)
+        if powheg_stage > 0 and powheg_stage <= 4:
+            powheg_result = RunPowhegParallel(powhegExe, powheg_stage, job_number)
+        else:
+            powheg_result = RunPowhegSingle(powhegExe, yamlConfigFile)
 
-        powhegEvents = int(pythiaEvents * 1.1)
-        shutil.copy("{0}-powheg.input".format(proc), "powheg.input")
-        rnd = random.randint(0, 1073741824)  # 2^30
+        if not powheg_result.events_generated:
+            if powheg_stage > 0 and powheg_stage <= 3:
+                print("POWHEG stage {} completed. Exiting.".format(powheg_stage))
+                exit(0)
+            else:
+                print("POWHEG at stage {} did not produce any event!!!".format(powheg_stage))
+                exit(1)
 
-        with open("powheg.input", "a") as myfile:
-            myfile.write("iseed {0}\n".format(rnd))
-            myfile.write("numevts {0}\n".format(powhegEvents))
-            if proc == "beauty" or proc == "charm":
-                myfile.write("qmass {0}\n".format(qmass))
-                myfile.write("facscfact {0}\n".format(facscfact))
-                myfile.write("renscfact {0}\n".format(renscfact))
-            myfile.write("lhans1 {0}\n".format(lhans))
-            myfile.write("lhans2 {0}\n".format(lhans))
-            myfile.write("ebeam1 {0}\n".format(ebeam1))
-            myfile.write("ebeam2 {0}\n".format(ebeam2))
-            if beamType == "pPb":
-                myfile.write("nPDFset {0}        ! (0:EKS98, 1:EPS08, 2:EPS09LO, 3:EPS09NLO)\n".format(nPDFset))
-                myfile.write("nPDFerrSet {0}     ! (1:central, 2:+1, 3:-1..., 30:+15, 31:-15)\n".format(nPDFerrSet))
-                myfile.write("AA1 208            ! (Atomic number of hadron 1)\n")
-                myfile.write("AA2 1              ! (Atomic number of hadron 2)\n")
-
-        with open("powheg.input", 'r') as fin:
-            powheg_input = fin.read().splitlines()
-        for line in powheg_input:
-            print(line)
-
-        print("Running POWHEG...")
-        with open("powheg.log", "w") as myfile:
-            subprocess.call([powhegExe], stdout=myfile, stderr=myfile)
-
-        if not os.path.isfile("pwgevents.lhe"):
-            print("Could not find POWHEG output pwgevents.lhe. Something went wrong, aborting...")
-            if os.path.isfile("powheg.log"):
+        if not os.path.isfile(powheg_result.lhe_file):
+            print("Could not find POWHEG output {}. Something went wrong, aborting...".format(powheg_result.lhe_file))
+            if os.path.isfile(powheg_result.log_file):
                 print("Check log file below.")
-                with open("powheg.log", "r") as myfile:
+                with open(powheg_result.log_file, "r") as myfile:
                     powheg_log = myfile.read().splitlines()
                 for line in powheg_log:
                     print(line)
@@ -108,13 +166,13 @@ def main(pythiaEvents, gen, proc, qmass, facscfact, renscfact, lhans, beamType, 
                 print("No log file was found.")
             exit(1)
 
-        if grid:
-            LHEfile = "pwgevents.lhe"
+        if batch_job == "grid" or batch_job == "lbnl3":
+            LHEfile = powheg_result.lhe_file
         else:
             LHEfile = "pwgevents_{0}.lhe".format(fname)
             os.rename("powheg.input", "{0}.input".format(fname))
             print("POWHEG configuration backed up in {0}.input".format(fname))
-            os.rename("pwgevents.lhe", LHEfile)
+            os.rename(powheg_result.lhe_file, LHEfile)
             print("POWHEG events backed up in {0}".format(LHEfile))
             os.rename("powheg.log", "{0}.log".format(fname))
             print("POWHEG log backed up in {0}.log".format(fname))
@@ -124,16 +182,26 @@ def main(pythiaEvents, gen, proc, qmass, facscfact, renscfact, lhans, beamType, 
     rnd = random.randint(0, 1073741824)  # 2^30
     print("Setting PYTHIA seed to {0}".format(rnd))
 
-    print("Compiling analysis code...")
-    subprocess.call(["make"])
+    if batch_job != "lbnl3":
+        print("Compiling analysis code...")
+        subprocess.call(["make"])
 
     print("Running PYTHIA simulation...")
-    with open("sim.log", "w") as myfile:
-        subprocess.call(["aliroot", "-b", "-l", "-q", "start_simulation.C(\"{0}\", {1}, \"{2}\", \"{3}\", {4}, \"{5}\", \"{6}\", {7}, {8}, {9}, {10}, {11}, {12})".format(fname, pythiaEvents, proc, gen, rnd, LHEfile, beamType, ebeam1, ebeam2, int(rejectISR), minpthard, maxpthard, debug_level)], stdout=myfile, stderr=myfile)
-
-    if not grid:
-        os.rename("sim.log", "sim_{0}.log".format(fname))
-        print("Simulation log backed up in sim_{0}.log".format(fname))
+    if batch_job == "lbnl3":
+        work_dir = "output/{}".format(fname)
+        os.makedirs(work_dir)
+        shutil.copy("AnalysisCode.so", work_dir)
+        shutil.copy("AnalysisCode.rootmap", work_dir)
+        shutil.copy("runJetSimulation.C", work_dir)
+        shutil.copy("start_simulation.C", work_dir)
+        for hdr_file in glob.glob(r'./*.h'): shutil.copy(hdr_file, work_dir)
+        LHEfile = "../../{}".format(LHEfile)
+        os.chdir(work_dir)
+        with open("sim_{0}.log".format(fname), "w") as myfile:
+            subprocess.call(["aliroot", "-b", "-l", "-q", "start_simulation.C(\"{0}\", {1}, \"{2}\", \"{3}\", {4}, \"{5}\", \"{6}\", {7}, {8}, {9}, {10}, {11}, {12})".format(fname, pythiaEvents, proc, gen, rnd, LHEfile, beamType, ebeam1, ebeam2, int(rejectISR), minpthard, maxpthard, debug_level)], stdout=myfile, stderr=myfile)
+    else:
+        with open("sim_{0}.log".format(fname), "w") as myfile:
+            subprocess.call(["aliroot", "-b", "-l", "-q", "start_simulation.C(\"{0}\", {1}, \"{2}\", \"{3}\", {4}, \"{5}\", \"{6}\", {7}, {8}, {9}, {10}, {11}, {12})".format(fname, pythiaEvents, proc, gen, rnd, LHEfile, beamType, ebeam1, ebeam2, int(rejectISR), minpthard, maxpthard, debug_level)], stdout=myfile, stderr=myfile)
 
     print("Done")
     print("...see results in the log files")
@@ -160,34 +228,14 @@ if __name__ == '__main__':
                         default=-1, type=float)
     parser.add_argument('--maxpthard', metavar='MAXPTHARD',
                         default=-1, type=float)
-    parser.add_argument("--grid", action='store_const',
-                        default=False, const=True,
-                        help='Grid analysis.')
+    parser.add_argument('--batch-job', metavar='job',
+                        default='local')
+    parser.add_argument('--powheg-stage', metavar='STAGE',
+                        default=0, type=int)
+    parser.add_argument('--job-number', metavar='STAGE',
+                        default=0, type=int)
     parser.add_argument('-d', metavar='debug_level',
                         default=0, type=int)
     args = parser.parse_args()
 
-    f = open(args.config, 'r')
-    config = yaml.load(f)
-    f.close()
-
-    Gen = config["gen"]
-    Proc = config["proc"]
-    if "qmass" in config: QMass = config["qmass"]
-    else: QMass = None
-    if "facscfact" in config: FacScFact = config["facscfact"]
-    else: FacScFact = None
-    if "renscfact" in config: RenScFact = config["renscfact"]
-    else: RenScFact = None
-    LHANS = config["lhans"]
-    BeamType = config["beam_type"]
-    EBeam1 = config["ebeam1"]
-    EBeam2 = config["ebeam2"]
-    nPDFset = config["nPDFset"]
-    nPDFerrSet = config["nPDFerrSet"]
-    if "rejectISR" in config:
-        rejectISR = config["rejectISR"]
-    else:
-        rejectISR = False
-
-    main(args.numevents, Gen, Proc, QMass, FacScFact, RenScFact, LHANS, BeamType, EBeam1, EBeam2, nPDFset, nPDFerrSet, rejectISR, args.lhe, args.minpthard, args.maxpthard, args.grid, args.d)
+    main(args.numevents, args.powheg_stage, args.job_number, args.config, args.batch_job, args.lhe, args.minpthard, args.maxpthard, args.d)

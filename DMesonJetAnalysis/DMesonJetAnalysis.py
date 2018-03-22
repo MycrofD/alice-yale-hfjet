@@ -19,7 +19,7 @@ globalList = []
 
 class DMesonJetContainer:
 
-    def __init__(self, trigger, DMesonDef, binMultiSets, nMassBins, minMass, maxMass,):
+    def __init__(self, trigger, DMesonDef, binMultiSets, nMassBins, minMass, maxMass):
         self.fBinMultiSets = binMultiSets
         self.fNMassBins = nMassBins
         self.fMinMass = minMass
@@ -31,6 +31,7 @@ class DMesonJetContainer:
 
     def Fill(self, event, eventWeight):
         dmeson = event.DmesonJet
+        if hasattr(dmeson, "fInvMass") and (dmeson.fInvMass < self.fMinMass or dmeson.fInvMass >= self.fMaxMass): return
 
         for (jtype, jradius), binMultiSet in self.fBinMultiSets.iteritems():
             if jtype or jradius:
@@ -245,17 +246,17 @@ class DMesonJetAnalysisEngine:
 
     def Start(self, ana):
         self.fEngines = ana.fAnalysisEngine
-        if not "MCTruth" in self.fDMeson and not "WrongPID" in self.fDMeson:
+        if not "MCTruth" in self.fDMeson and not "WrongPID" in self.fDMeson and not "D0Reflection" in self.fDMeson:
             self.FitInvMassPlots()
 
-        if not "BackgroundOnly" in self.fDMeson and not "WrongPID" in self.fDMeson:
+        if not "BackgroundOnly" in self.fDMeson and not "WrongPID" in self.fDMeson and not "D0Reflection" in self.fDMeson:
             print("Spectra generation for {0}".format(self.fDMeson))
             self.GenerateSpectra()
         else:
             print("Skipping spectra generation for {0}".format(self.fDMeson))
 
         self.PlotInvMassPlots()
-        if not "BackgroundOnly" in self.fDMeson and not "WrongPID" in self.fDMeson:
+        if not "BackgroundOnly" in self.fDMeson and not "WrongPID" in self.fDMeson and not "D0Reflection" in self.fDMeson:
             self.PlotSpectra()
 
     def PlotSpectra(self):

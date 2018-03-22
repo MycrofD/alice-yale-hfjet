@@ -5,6 +5,7 @@ import subprocess
 import argparse
 import yaml
 
+
 def AlienDelete(fileName):
     if fileName.find("alien://") == -1:
         fname = fileName
@@ -12,6 +13,7 @@ def AlienDelete(fileName):
         fname = fileName[8:]
 
     subprocessCall(["alien_rm", fname])
+
 
 def AlienFileExists(fileName):
     if fileName.find("alien://") == -1:
@@ -26,6 +28,7 @@ def AlienFileExists(fileName):
         fileExists = False
 
     return fileExists
+
 
 def AlienCopy(source, destination, attempts=3, overwrite=False):
     i = 0
@@ -54,17 +57,21 @@ def AlienCopy(source, destination, attempts=3, overwrite=False):
 
     return fileExists
 
+
 def subprocessCall(cmd):
     print(cmd)
     return  subprocess.call(cmd)
+
 
 def subprocessCheckCall(cmd):
     print(cmd)
     return subprocess.check_call(cmd)
 
+
 def subprocessCheckOutput(cmd):
     print(cmd)
     return subprocess.check_output(cmd, universal_newlines=True)
+
 
 def GetFullTrainNumber(SearchPath, TrainName, TrainNumber):
     output = subprocessCheckOutput(["alien_find", "-d", "-l", "2", SearchPath, TrainName + "/" + str(TrainNumber) + "_*"])
@@ -73,8 +80,9 @@ def GetFullTrainNumber(SearchPath, TrainName, TrainNumber):
     FullTrainNumber = output[i:j]
     return FullTrainNumber
 
-def PtHardBinMerging(LocalPath, Datasets, TrainName, TrainNumbers, MinPtHardBin, MaxPtHardBin, Year, AliPhysicsVersion, TestMode, GridTestMode, GridUpdate):
-    for Dataset, TrainNumber in zip(sorted(Datasets.iterkeys()), TrainNumbers):
+
+def PtHardBinMerging(LocalPath, Datasets, TrainName, TrainNumbers, MinPtHardBin, MaxPtHardBin, Year, InvertedScheme, AliPhysicsVersion, TTL, TestMode, GridTestMode, GridUpdate):
+    for Dataset, TrainNumber in zip(sorted(Datasets), TrainNumbers):
 
         AlienPath = "/alice/sim/" + str(Year) + "/" + Dataset
         FullTrainNumber = GetFullTrainNumber(AlienPath, TrainName, TrainNumber)
@@ -106,14 +114,19 @@ def PtHardBinMerging(LocalPath, Datasets, TrainName, TrainNumbers, MinPtHardBin,
 
             AlienDelete(alienOutputFile)
 
-            xmlColl = subprocessCheckOutput(["alien_find", "-x", "merge_files.xml", AlienPath, "*/{0}/PWGJE/{1}/{2}/AnalysisResults.root".format(PtHardBin, TrainName, FullTrainNumber)])
+            if InvertedScheme:
+                SearchPath = "/{0}/*/PWGJE/{1}/{2}/AnalysisResults.root".format(PtHardBin, TrainName, FullTrainNumber)
+            else:
+                SearchPath = "/*/{0}/PWGJE/{1}/{2}/AnalysisResults.root".format(PtHardBin, TrainName, FullTrainNumber)
+
+            xmlColl = subprocessCheckOutput(["alien_find", "-x", "merge_files.xml", AlienPath, SearchPath])
 
             subprocessCall(["alien_mkdir", "{0}/{1}".format(dest, PtHardBin)])
 
             jdlContent = "# This is the startup script \n\
 Executable = \"{executable}\"; \n\
 # Time after which the job is killed (500 min.) \n\
-TTL = \"14400\"; \n\
+TTL = \"{TTL}\"; \n\
 OutputDir = \"{dest}/{pt_hard}/output\"; \n\
 Output = {{ \n\
 \"AnalysisResults*.root\", \n\
@@ -142,7 +155,7 @@ InputDataCollection = {{ \n\
 \"LF:{dest}/{pt_hard}/merge_files.xml,nodownload\" \n\
 }}; \n\
 Validationcommand = \"{validationScript}\"; \n\
-".format(executable=executableFile, dest=dest, aliphysics=AliPhysicsVersion, pt_hard=PtHardBin, validationScript=validationScript)
+".format(executable=executableFile, dest=dest, aliphysics=AliPhysicsVersion, pt_hard=PtHardBin, validationScript=validationScript, TTL=TTL)
 
             localJdlFile = "{0}/grid_merge_train_pt_hard.jdl".format(localDest)
 
@@ -172,6 +185,7 @@ Validationcommand = \"{validationScript}\"; \n\
     print "Done."
 
     subprocessCall(["ls", LocalPath])
+
 
 def StartMerging(TrainNumbers, config, AliPhysicsVersion, TestMode, GridTestMode, GridUpdate):
     try:
@@ -231,11 +245,15 @@ def StartMerging(TrainNumbers, config, AliPhysicsVersion, TestMode, GridTestMode
         print "Creating directory " + LocalPath
         os.makedirs(LocalPath)
 
+    if "inverted_scheme" in config: InvertedScheme = config["inverted_scheme"]
+    else: InvertedScheme = False
+
     if config["pt_hard_bins"]:
         PtHardBinMerging(LocalPath, Datasets, config["train"], TrainNumbers, config["min_pt_hard_bin"], config["max_pt_hard_bin"],
-                         config["year"], AliPhysicsVersion, TestMode, GridTestMode, GridUpdate)
+                         config["year"], InvertedScheme, AliPhysicsVersion, config["ttl"], TestMode, GridTestMode, GridUpdate)
     else:
         print("Error! This is only for pt hard binned productions! Fix YAML file.")
+
 
 if __name__ == '__main__':
     # FinalMergeLocal.py executed as script

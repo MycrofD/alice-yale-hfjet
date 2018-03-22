@@ -10,13 +10,17 @@ import yaml
 import MergeFiles
 import ScaleResults
 
+
 def GetFullTrainNumber(SearchPath, TrainNumber):
     output = subprocess.check_output(["alien_find", "-d", "-l", "1", SearchPath, "{0}_20".format(TrainNumber)], universal_newlines=True)
-    # print(output)
+    if not output:
+        print("Could not find train {} in {}!".format(TrainNumber, SearchPath))
+        exit(1)
     i = output.rfind("{0}_".format(TrainNumber))
     j = len(str(TrainNumber)) + 14 + i
     FullTrainNumber = output[i:j]
     return FullTrainNumber
+
 
 def GetPtHardBins(SearchPath):
     output = subprocess.check_output(["alien_find", "-d", SearchPath, "merge_files.xml"], universal_newlines=True)
@@ -32,6 +36,7 @@ def GetPtHardBins(SearchPath):
 
     print(resList)
     return resList
+
 
 def StartDownload(LocalPath, Datasets, TrainNumbers, TrainName, Overwrite):
     FileName = "AnalysisResults.root"
@@ -51,6 +56,7 @@ def StartDownload(LocalPath, Datasets, TrainNumbers, TrainName, Overwrite):
                 continue
             print("Copying from alien location '{0}' to local location '{1}'".format(AlienPath, DestPath))
             subprocess.call(["alien_cp", AlienPath, DestPath])
+
 
 def main(TrainNumbers, config, Overwrite=0):
     try:
@@ -82,7 +88,7 @@ def main(TrainNumbers, config, Overwrite=0):
             print "Error: could not create the token!"
             exit()
 
-    Datasets = sorted(config["datasets"].keys())
+    Datasets = sorted(config["datasets"])
 
     if (len(Datasets) != len(TrainNumbers)):
         print "The number of datasets {0} must be the same as the number of trains {1}.".format(len(Datasets), len(TrainNumbers))
@@ -105,12 +111,12 @@ def main(TrainNumbers, config, Overwrite=0):
     print "Datasets are: "
     print Datasets
 
-
     if not os.path.isdir(LocalPath):
         print "Creating directory " + LocalPath
         os.makedirs(LocalPath)
 
     StartDownload(LocalPath, Datasets, TrainNumbers, config["train"], Overwrite)
+
 
 if __name__ == '__main__':
     # FinalMergeLocal.py executed as script

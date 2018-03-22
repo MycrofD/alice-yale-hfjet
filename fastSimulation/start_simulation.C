@@ -25,7 +25,10 @@ void start_simulation(TString name, Int_t pythiaEvents, TString procStr, TString
   gSystem->Load("libsiscone");
   gSystem->Load("libsiscone_spherical");
   gSystem->Load("libfastjetplugins");
+  gSystem->Load("libfastjettools");
   gSystem->Load("libfastjetcontribfragile");
+
+  gSystem->Load("liblhapdf_5_9_1.so");
 
   std::cout << "Loading libraries for PYTHIA6" << std::endl;
   gSystem->Load("libpythia6_4_28.so");
@@ -45,13 +48,16 @@ void start_simulation(TString name, Int_t pythiaEvents, TString procStr, TString
     gSystem->Load("libTEvtGen");
   }
 
+  gSystem->Load("libSTEER");
+  gSystem->Load("libAOD");
+  gSystem->Load("libPWGEMCALtasks");
+  gSystem->Load("libPWGJEEMCALJetTasks");
+
   gSystem->Load("AnalysisCode.so");
 
-  char command[500] = {0};
-
-  sprintf(command, ".x runJetSimulation.C+g(\"%s\", %d, \"%s\", \"%s\", %d, \"%s\", \"%s\", %f, %f, %d, %f, %f, %d)",
+  TString command = TString::Format(".x runJetSimulation.C+g(\"%s\", %d, \"%s\", \"%s\", %d, \"%s\", \"%s\", %f, %f, %d, %f, %f, %d)",
       name.Data(), pythiaEvents, procStr.Data(), gen.Data(), seed, lhe.Data(),
       beamType.Data(), ebeam1, ebeam2, rejectISR, minPtHard, maxPtHard, debug_level);
 
-  gROOT->ProcessLine(command);
+  gROOT->ProcessLine(command.Data());
 }
